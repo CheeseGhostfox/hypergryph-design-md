@@ -63,6 +63,22 @@ against it. These analyses are unofficial and are not affiliated with or endorse
 
 **Demo (English).** A sample page built strictly from `arknights.md` — *THE UNSENT SEVENTH*, a seven-chapter fictional archive of a civil-defence broadcast station. Self-contained single HTML file, no build step, no dependencies beyond web fonts. It demonstrates the specification; it is not part of it.
 
+## TODO / 下一步
+
+**下一目标：克制地逆向工程两个游戏本体。**
+
+现在这两份文件都建立在**公开网页**之上（官网样式表、官方 CDN 公开资源、公开页面截图）。下一步想进入游戏本体，但边界必须先写在前面：
+
+- [ ] **不碰代码** —— 不反编译、不注入、不 hook、不 dump 进程内存，不提取任何业务实现
+- [ ] **不抄袭美术资源** —— 不导出、不转载、不重制任何立绘、图标、字体或音频文件；**本仓库永远不出现游戏素材**
+- [ ] **只提取设计模式** —— 只归纳可复用的设计决策：色彩角色与语义、字阶与字距、间距节奏、形状语法、状态编码规则、动效时长与缓动
+- [ ] 产出仍然只是 `DESIGN.md`：写**规则与理由**，不是资产的复制品
+- [ ] 每条结论标注证据来源与可靠度，取不到的部分在 `Known Gaps` 里如实留白
+
+一句话：**要的是「怎么想」，不是「长什么样」。**
+
+> 现状说明：这一步目前被**加密**挡着，不是被意愿挡着。本机两个官方客户端都进不去——《明日方舟》客户端的 14,238 个 Unity 资源包带 asset-bundle-encryption 位（目录流解码 12/12 失败，安装目录内 0 个独立图片文件）；《终末地》客户端的 IL2CPP 元数据是 0 KB 占位文件。这也是本仓库至今只有分析、没有素材的原因。
+
 ## 友情链接 / Credits
 
 - 格式与撰写规范来自 **[VoltAgent/awesome-design-md](https://github.com/VoltAgent/awesome-design-md)**。本仓库沿用该项目定义的 `DESIGN.md` 格式与撰写规范。
