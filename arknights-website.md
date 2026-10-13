@@ -464,11 +464,18 @@ The four families are used as four distinct voices, not as a family-plus-weights
 
 ### Which Voices Are Shared With the Client
 
-The web surface and the PC client do not use the same four families, and the difference matters before substituting anything:
+> **Correction (superseded by the in-game analysis).** An earlier version of this section claimed Novecento Sans Wide and Bender were *web-only*. **That was wrong.** It was based on grepping `Arknights_Data\il2cpp_data\Metadata\global-metadata.dat` for font names — but that file holds IL2CPP string literals, not Unity asset names, so the absence proved nothing. The game's own Unity `Font` objects are in the plain serialized assets and carry these families directly. The list below is the corrected reading.
 
-- **Oswald is shared.** The client ships `sdkresources\font\Oswald-Regular.woff2`, so the condensed display voice exists on both surfaces — it is part of the brand, not a web-only choice.
-- **Source Han Sans is shared, and is the client's in-game face.** The client's unencrypted IL2CPP metadata references `Assets/UI/Common/Fonts/SourceHanSansCN-Bold.otf`, resolved at runtime by a `DynFontLoader`-reaching class — the only in-game font path exposed anywhere in the install. The client also ships locale cuts of the same superfamily for its web layer: Source Han Sans CN/JP/TW, Source Han Serif CN/JP/TW and Noto Sans CJK KR. The website ships none of the serif cuts.
-- **Novecento Sans Wide and Bender are web-only.** Neither name appears in the client's metadata (`Novecento` = 0 hits; the single `Bender` hit is a substring of `BitBenderGames`). Their tracked-out caps and technical metadata belong to the marketing surface, not to the game UI.
+The web surface and the PC client **share the same four families**. They are not two type systems:
+
+- **Novecento Sans Wide is in-game.** The client ships it as Unity `Font` objects `Novecentowide-Normal`, `Novecentowide-Medium` and `Novecentowide-Bold` (in `sharedassets0.assets` / `sharedassets1.assets`). Note the in-game family spells it *Novecentowide*, not "Novecento Sans Wide" — same face, two spellings.
+- **Bender is in-game.** Shipped as `JovannyLemonad-Bender` and `JovannyLemonad-Bender-Light` — the family's author credit is part of the asset name.
+- **Oswald is in-game.** `OSWALD-MEDIUM` (`sharedassets3.assets`), matching the website's Oswald Medium.
+- **Source Han Sans is in-game.** `SourceHanSansCN-Heavy` (`sharedassets3.assets`) plus `NotoSansHans-Medium`; the client also ships locale cuts of the same superfamily for its web layer (Source Han Sans CN/JP/TW, Source Han Serif CN/JP/TW, Noto Sans CJK KR). The website ships none of the serif cuts.
+
+The 20 in-game `Font` objects also include faces the website never uses — `AEwide`, `RoHMinSinkStd-UB`, `Nesatho`, `Dosis-Bold`, `Dosis-Regular`, `Arvo-Bold`, `OpenSans-Semibold`, `ADDWB__`, `GroovyScript`, `GroovyScriptExtrude` and a CJK face named `思源黑体_GBK`. So the client has a *wider* voice set than the site; the site uses a subset.
+
+The full in-game typographic system is analysed in `arknights.md`.
 
 ### Hierarchy
 
