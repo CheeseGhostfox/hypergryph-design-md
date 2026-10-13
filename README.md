@@ -48,11 +48,11 @@ against it. These analyses are unofficial and are not affiliated with or endorse
 
 ## 演示 / Demo
 
-[![demo preview](demo/arknights-eb07/verify-out/landscape-1440x900.hero.png)](https://cheseghostfox.github.io/hypergryph-design-md/demo/arknights-eb07/)
+[![demo preview](demo/arknights-eb07/verify-out/landscape-1440x900.hero.png)](https://cheeseghostfox.github.io/hypergryph-design-md/demo/arknights-eb07/)
 
 一份**只照着 `arknights.md` 做出来**的示例页面：**《未播出的第七段》// THE UNSENT SEVENTH** —— 虚构城市「白屿市」民防广播站 EB-07 的回收卷宗，七段记录，一个完整叙事弧线。
 
-- **在线预览**：<https://cheseghostfox.github.io/hypergryph-design-md/demo/arknights-eb07/>
+- **在线预览**：<https://cheeseghostfox.github.io/hypergryph-design-md/demo/arknights-eb07/>
 - **源码**：`demo/arknights-eb07/index.html` —— 自包含单文件，约 66 KB，零依赖、无构建步骤，双击就能开
 - **构建分片**：`demo/arknights-eb07/parts/` —— 其中 `05-style-tokens.css` 就是把 frontmatter 里的 token 落成 CSS 变量的那一层，可以直接对照着看规范怎么变成代码
 - **验收输出**：`demo/arknights-eb07/verify-out/` —— 横竖两版截图与 `audit.json`（`ok: true`、`errors: []`）
