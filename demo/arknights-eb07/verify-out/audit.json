@@ -1,6 +1,6 @@
 {
   "url": "file:///G:/awsome-design/demos/arknights-eb07/index.html",
-  "startedAt": "2026-10-13T14:42:54.025Z",
+  "startedAt": "2026-10-13T16:37:31.847Z",
   "viewports": [
     {
       "name": "landscape-1440x900",
@@ -12,22 +12,7 @@
       "failedRequests": [],
       "fontResponses": [
         {
-          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALRLoKI.woff2",
-          "status": 200,
-          "mime": "font/woff2"
-        },
-        {
           "url": "https://fonts.gstatic.com/s/barlow/v13/7cHpv4kjgoGqM7E_DMs5.woff2",
-          "status": 200,
-          "mime": "font/woff2"
-        },
-        {
-          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
-          "status": 200,
-          "mime": "font/woff2"
-        },
-        {
-          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
           "status": 200,
           "mime": "font/woff2"
         },
@@ -38,6 +23,26 @@
         },
         {
           "url": "https://fonts.gstatic.com/s/oswald/v57/TK3IWkUHHAIjg75cFRf3bXL8LICs1_Fv40pKlN4NNSeSASz7FmlWHYg.woff2",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALRLoKI.woff2",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
           "status": 200,
           "mime": "font/woff2"
         },
@@ -220,11 +225,6 @@
           "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
           "status": 200,
           "mime": "font/woff2"
-        },
-        {
-          "url": "https://fonts.gstatic.com/s/barlowcondensed/v13/HTxwL3I-JCGChYJ8VI-L6OO_au7B46r2z3bWuQ.woff2",
-          "status": 200,
-          "mime": "font/woff2"
         }
       ],
       "audit": {
@@ -243,7 +243,7 @@
           "ghostTooBright": []
         },
         "counts": {
-          "domNodes": 417,
+          "domNodes": 571,
           "boxShadow": 0,
           "radius": 1,
           "ghostTooBright": 0
@@ -251,7 +251,7 @@
         "structure": {
           "bodyBg": "rgb(0, 0, 0)",
           "htmlBg": "rgb(0, 0, 0)",
-          "docHeight": 8582,
+          "docHeight": 9411,
           "title": "《未播出的第七段》// THE UNSENT SEVENTH — 民防广播 EB-07 回收卷宗",
           "lang": "zh-CN",
           "nav": true,
@@ -270,8 +270,8 @@
           ],
           "largeType": 1,
           "cyanLeftRules": 8,
-          "cjkChars": 3747,
-          "totalChars": 6459
+          "cjkChars": 3919,
+          "totalChars": 6982
         },
         "fontsDeclared": {
           "Archivo": {
@@ -298,8 +298,8 @@
           "Noto Sans SC": {
             "faces": 404,
             "statuses": {
-              "unloaded": 328,
-              "loaded": 76
+              "unloaded": 326,
+              "loaded": 78
             }
           },
           "Oswald": {
@@ -342,7 +342,7 @@
           "mime": "font/woff2"
         },
         {
-          "url": "https://fonts.gstatic.com/s/barlowcondensed/v13/HTxwL3I-JCGChYJ8VI-L6OO_au7B46r2z3bWuQ.woff2",
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
           "status": 200,
           "mime": "font/woff2"
         },
@@ -540,6 +540,11 @@
           "url": "https://fonts.gstatic.com/s/oswald/v57/TK3IWkUHHAIjg75cFRf3bXL8LICs1_Fv40pKlN4NNSeSASz7FmlWHYg.woff2",
           "status": 200,
           "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/barlowcondensed/v13/HTxwL3I-JCGChYJ8VI-L6OO_au7B46r2z3bWuQ.woff2",
+          "status": 200,
+          "mime": "font/woff2"
         }
       ],
       "audit": {
@@ -547,7 +552,7 @@
           "Oswald": true,
           "Archivo": true,
           "Barlow": true,
-          "Barlow Condensed": true,
+          "Barlow Condensed": false,
           "Noto Sans SC": true
         },
         "drift": {
@@ -558,7 +563,7 @@
           "ghostTooBright": []
         },
         "counts": {
-          "domNodes": 417,
+          "domNodes": 571,
           "boxShadow": 0,
           "radius": 1,
           "ghostTooBright": 0
@@ -566,7 +571,7 @@
         "structure": {
           "bodyBg": "rgb(0, 0, 0)",
           "htmlBg": "rgb(0, 0, 0)",
-          "docHeight": 11801,
+          "docHeight": 12879,
           "title": "《未播出的第七段》// THE UNSENT SEVENTH — 民防广播 EB-07 回收卷宗",
           "lang": "zh-CN",
           "nav": true,
@@ -585,8 +590,8 @@
           ],
           "largeType": 1,
           "cyanLeftRules": 8,
-          "cjkChars": 3701,
-          "totalChars": 6317
+          "cjkChars": 3873,
+          "totalChars": 6840
         },
         "fontsDeclared": {
           "Archivo": {
@@ -607,14 +612,14 @@
             "faces": 6,
             "statuses": {
               "unloaded": 5,
-              "loaded": 1
+              "loading": 1
             }
           },
           "Noto Sans SC": {
             "faces": 404,
             "statuses": {
-              "unloaded": 328,
-              "loaded": 76
+              "unloaded": 326,
+              "loaded": 78
             }
           },
           "Oswald": {
@@ -626,7 +631,7 @@
           }
         },
         "fontsReady": {
-          "status": "loaded",
+          "status": "loading",
           "size": 429
         }
       },

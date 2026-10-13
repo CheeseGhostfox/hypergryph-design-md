@@ -310,7 +310,9 @@
   color: #ababab;
 }
 
-/* 4. 档案索引列表 (list-row: 360×96，两行截断标题) */
+/* 4. 档案索引列表 (list-row: 360×96，两行截断标题)
+   索引行本体现为 <summary>，其外层 <details> 承载「卷宗摘要」展开区。
+   保持 360×96 的既有观感，青色 +/− 字形钉在右缘。 */
 .list-row {
   width: 360px;
   height: 96px;
@@ -322,7 +324,66 @@
   justify-content: center;
   cursor: pointer;
   text-decoration: none;
-  transition: background-color 0.2s linear, border-left 0.2s linear;
+  position: relative;
+  transition: background-color 0.2s linear;
+}
+
+/* 去掉浏览器默认三角标与 WebKit 三角标 */
+.list-row {
+  list-style: none;
+}
+
+.list-row::-webkit-details-marker {
+  display: none;
+}
+
+.list-row::marker {
+  content: '';
+}
+
+/* 索引行内层链接：撑满 summary，保持既有的纵向栈式布局，
+   并让整行都可点（链接负责跳转，summary 负责展开摘要）。 */
+.list-row-link {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* 4.0.1 「回到上次读到」控件 (顶栏右缘，仅当存在跨会话进度时出现) */
+.resume-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  padding: 0 12px;
+  background-color: transparent;
+  border: 1px solid var(--color-hairline);
+  color: var(--color-ink-muted);
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: color var(--duration-fast) linear, border-color var(--duration-fast) linear;
+}
+
+.resume-button[hidden] {
+  display: none;
+}
+
+.resume-button:hover,
+.resume-button:focus-visible {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.resume-num {
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 12px;
+  color: var(--color-primary);
+  letter-spacing: 1px;
 }
 
 .list-row-meta {
@@ -360,6 +421,7 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  padding-right: 28px;
 }
 
 .list-row.active {
@@ -369,6 +431,60 @@
 
 .list-row.active .list-row-title {
   color: #18d1ff;
+}
+
+/* 4.1 索引行展开态标记: 青色 + / −，0.2s 字形切换 */
+.list-row::after {
+  content: '+';
+  position: absolute;
+  top: 50%;
+  right: 24px;
+  transform: translateY(-50%);
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-primary);
+  transition: color var(--duration-fast) linear;
+}
+
+.rail-entry[open] > .list-row::after {
+  content: '−';
+}
+
+/* 4.2 已读状态: 仅发丝级青色竖规 + 标题降一档灰度，不做任何填充 */
+.rail-entry.visited > .list-row::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: var(--color-primary-visited);
+}
+
+.rail-entry.visited > .list-row .list-row-title {
+  color: var(--color-ink-muted);
+}
+
+.rail-entry.visited > .list-row.active .list-row-title {
+  color: var(--color-primary);
+}
+
+/* 4.3 「卷宗摘要」展开区 (左栏内，随 details 展开而出现) */
+.rail-abstract {
+  display: block;
+  background-color: var(--color-surface-1);
+  border-bottom: 1px solid var(--color-hairline);
+  border-left: 2px solid var(--color-primary);
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 13px;
+  line-height: 1.70;
+  color: var(--color-ink-subtle);
+}
+
+.rail-abstract p {
+  padding: 12px 24px 16px 26px;
 }
 
 /* 5. 右栏控制器与计数器 */
@@ -582,4 +698,272 @@
 
 .scrim-overlay {
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.95) 100%);
+}
+
+/* 9. 磁带扫描 (磁带机走带读数: 一条 1px 青线扫过 + 一段表面块高亮)
+   全部为纯色与位移，无阴影、无发光、无模糊；0.45s 结束即回到常驻状态 */
+.list-row.is-scanning::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 2px;
+  background-color: var(--color-primary);
+  transform: translateX(-2px);
+  animation: eb-tape-scan var(--duration-scan) linear 1;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.list-row.is-scanning {
+  animation: eb-tape-block var(--duration-base) linear 1;
+}
+
+@keyframes eb-tape-scan {
+  from { transform: translateX(-2px); }
+  to { transform: translateX(360px); }
+}
+
+@keyframes eb-tape-block {
+  from { background-color: var(--color-primary-scan); }
+  to { background-color: var(--color-surface-2); }
+}
+
+/* 10. 解密附件 (章节内的可折叠档案块，原生 details/summary) */
+.annex {
+  margin: 32px 0 8px;
+  border-top: 1px solid var(--color-hairline);
+  background-color: var(--color-canvas);
+}
+
+.annex-summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 0;
+  cursor: pointer;
+  transition: color var(--duration-fast) linear;
+}
+
+.annex-summary::-webkit-details-marker {
+  display: none;
+}
+
+.annex-summary::marker {
+  content: '';
+}
+
+.annex-summary::before {
+  content: '▸';
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 12px;
+  line-height: 1;
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.annex[open] > .annex-summary::before {
+  content: '▾';
+}
+
+.annex-label {
+  font-family: 'Archivo', 'Encode Sans Expanded', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+.annex-title {
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 13px;
+  color: var(--color-ink-tertiary);
+}
+
+.annex-body {
+  padding: 4px 0 20px 24px;
+  border-left: 2px solid var(--color-hairline-soft);
+  margin-left: 5px;
+}
+
+.annex-sheet {
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--color-ink-deep);
+  margin-bottom: 12px;
+}
+
+.annex-record {
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 14px;
+  line-height: 1.70;
+  color: var(--color-ink-muted);
+  margin-bottom: 10px;
+}
+
+.annex-record:last-child {
+  margin-bottom: 0;
+}
+
+.annex-record .rec-key {
+  color: var(--color-ink-quaternary);
+  margin-right: 8px;
+}
+
+/* 11. 终局抉择 (第七章末，二选一分支) */
+.ending-block {
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--color-hairline);
+}
+
+.ending-label {
+  font-family: 'Archivo', 'Encode Sans Expanded', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: 10px;
+}
+
+.ending-prompt {
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 16px;
+  line-height: 1.70;
+  color: var(--color-ink);
+  margin-bottom: 20px;
+}
+
+/* 方角、黑底、发丝线描边；选中态由青色描边与青字承担 (黑底上唯一的许可状态色) */
+.ending-choice {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.ending-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 60px;
+  padding: 0 28px 0 16px;
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  border: 1px solid var(--color-hairline);
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color var(--duration-fast) linear, color var(--duration-fast) linear;
+}
+
+.ending-option .opt-en {
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: var(--color-ink-quaternary);
+  transition: color var(--duration-fast) linear;
+}
+
+.ending-option[aria-pressed="true"] {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.ending-option[aria-pressed="true"] .opt-en {
+  color: var(--color-primary);
+}
+
+.ending-note {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  background-color: var(--color-surface-1);
+  border-left: 2px solid var(--color-primary);
+}
+
+.ending-passage {
+  background-color: var(--color-surface-1);
+  border-top: 1px solid var(--color-hairline-soft);
+  padding: 24px;
+}
+
+.ending-passage .passage-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--color-primary);
+}
+
+.ending-passage p {
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--color-ink-muted);
+  margin-bottom: 14px;
+}
+
+.ending-passage p:last-child {
+  margin-bottom: 0;
+}
+
+.ending-passage .passage-last {
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+/* 12. 侧轨小控件 (回到上次读到 / 重新选择) */
+.rail-mini {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 36px;
+  padding: 0 10px;
+  background-color: var(--color-canvas);
+  color: var(--color-ink-subtle);
+  border: 1px solid var(--color-hairline);
+  cursor: pointer;
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 12px;
+  letter-spacing: 1px;
+  transition: border-color var(--duration-fast) linear, color var(--duration-fast) linear;
+}
+
+.rail-mini .mini-en {
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 11px;
+  color: var(--color-primary);
+  letter-spacing: 1px;
+}
+
+.rail-mini-block {
+  margin-bottom: 12px;
+}
+
+/* 13. 无脚本兜底: 让 <noscript> 提示块贴合档案语气 */
+.noscript-note {
+  background-color: var(--color-surface-1);
+  border-left: 2px solid var(--color-hairline);
+  padding: 16px 20px;
+  margin-top: 24px;
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 14px;
+  line-height: 1.70;
+  color: var(--color-ink-subtle);
 }

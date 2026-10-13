@@ -25,12 +25,22 @@
   --color-region-accent-blue: #2096e6;
   --color-region-surface-slate: #293f45;
 
+  /* 状态色:发丝级青色与扫描高亮,均为 .3 以下透明度,不得用作填充 */
+  --color-primary-hairline: rgba(24, 209, 255, 0.3);
+  --color-primary-visited: rgba(24, 209, 255, 0.35);
+  --color-primary-scan: rgba(24, 209, 255, 0.08);
+
   --font-tracked-caps: 'Archivo', 'Encode Sans Expanded', sans-serif;
   --font-ghost-display: 'Oswald', 'Barlow Semi Condensed', sans-serif;
   --font-technical: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
   --font-cjk: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
 
   --header-height: 120px;
+
+  /* 动效节拍:全系统只用 0.2s / 0.3s,磁带扫描为 0.45s */
+  --duration-fast: 0.2s;
+  --duration-base: 0.3s;
+  --duration-scan: 0.45s;
 }
 
 *, *::before, *::after {
@@ -38,6 +48,11 @@
   margin: 0;
   padding: 0;
   border-radius: 0;
+}
+
+/* hidden 属性必须真正隐藏,否则会被下方的 display 声明覆盖 */
+[hidden] {
+  display: none !important;
 }
 
 html {

@@ -150,6 +150,39 @@
     border-color: #18d1ff;
     color: #18d1ff;
   }
+
+  .rail-mini:hover {
+    border-color: #18d1ff;
+    color: #18d1ff;
+  }
+
+  .ending-option:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  .ending-option:hover .opt-en {
+    color: var(--color-primary);
+  }
+
+  .annex-summary:hover .annex-title {
+    color: #ffffff;
+  }
+}
+
+/* 减少动效偏好: 磁带扫描整体取消，直接落入稳定态 (不做位移与高亮)。
+   底色写显式字面值而不用 var() —— 该声明曾被计算值阶段判为无效而静默回落到
+   .list-row 的 #000000，写成字面值可确保稳定态真的落到 #181818。 */
+@media (prefers-reduced-motion: reduce) {
+  .list-row.is-scanning::before {
+    content: none;
+    animation: none;
+  }
+
+  .list-row.is-scanning {
+    animation: none;
+    background-color: #181818;
+  }
 }
 
 /* 减少动效偏好 */
@@ -250,6 +283,45 @@
   .news-card-title {
     font-size: 24px;
     line-height: 1.3;
+  }
+
+  /* 纵向: 左栏转为横向滑轨，索引行保持 240×88；
+     卷宗摘要就地展开为行内一段 (限三行)，不拉伸出屏高度 */
+  .rail-abstract p {
+    padding: 0 16px 10px;
+    font-size: 12px;
+    line-height: 1.55;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .list-row {
+    padding: 12px 16px;
+  }
+
+  .list-row-title {
+    padding-right: 20px;
+  }
+
+  .list-row::after {
+    right: 10px;
+    font-size: 16px;
+  }
+
+  /* 纵向: 附件与终局面板的缩进与内边距同步收窄 */
+  .annex-body {
+    padding-left: 16px;
+  }
+
+  .ending-option {
+    width: 100%;
+    padding: 0 16px;
+  }
+
+  .ending-passage {
+    padding: 20px 16px;
   }
 }
 

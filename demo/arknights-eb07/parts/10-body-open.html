@@ -77,67 +77,121 @@
         <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
       </svg>
     </button>
+    <button id="btn-resume" class="resume-button" type="button" hidden>
+      <span class="resume-label">回到上次读到</span>
+      <span id="resume-num" class="resume-num"></span>
+    </button>
   </div>
 </header>
 
 <div class="layout-container">
-  <!-- 左栏: 360px 档案索引列表 -->
+  <!-- 左栏: 360px 档案索引列表。每行为 <details>：<summary> 是索引行本体，
+       展开后露出该卷宗的摘要正文。 -->
   <aside class="left-rail" id="archive-index" aria-label="档案目录">
-    <a href="#sec-01" class="list-row" data-target="sec-01">
-      <div class="list-row-meta">
-        <span class="list-row-date">2026 // 10 / 09</span>
-        <span class="list-row-tag">例行</span>
+    <details class="rail-entry" data-section-num="01">
+      <summary class="list-row" data-target="sec-01">
+        <a href="#sec-01" class="list-row-link" data-target="sec-01">
+          <span class="list-row-meta">
+            <span class="list-row-date">2026 // 10 / 09</span>
+            <span class="list-row-tag">例行</span>
+          </span>
+          <span class="list-row-title">TX-01 发射机早班例行自检及地层零位校准记录</span>
+        </a>
+      </summary>
+      <div class="rail-abstract">
+        <p>三十八项晨检表全部合格，03 号基岩应力计正偏 0.04 毫米，稳态绿区。全表唯一可疑项为第 14 项：应力计零点漂移 0.02 毫米，超出校准容差。值班员按惯例记作「环境温漂」。这 0.02 毫米的偏差，是本站最后一次可以自行处置的异常。</p>
       </div>
-      <div class="list-row-title">TX-01 发射机早班例行自检及地层零位校准记录</div>
-    </a>
+    </details>
 
-    <a href="#sec-02" class="list-row" data-target="sec-02">
-      <div class="list-row-meta">
-        <span class="list-row-date">2026 // 10 / 10</span>
-        <span class="list-row-tag">监测</span>
+    <details class="rail-entry" data-section-num="02">
+      <summary class="list-row" data-target="sec-02">
+        <a href="#sec-02" class="list-row-link" data-target="sec-02">
+          <span class="list-row-meta">
+            <span class="list-row-date">2026 // 10 / 10</span>
+            <span class="list-row-tag">监测</span>
+          </span>
+          <span class="list-row-title">关于 03 号深井基岩应力计阶跃异动之呈报与批复</span>
+        </a>
+      </summary>
+      <div class="rail-abstract">
+        <p>EB-ERR-4029 特许呈报单于上午九时五十二分经加密专线提交，CDPC 于四十二分钟后电传批复：判定系深基坑注浆扰动致孔隙水压释放，维持二级待机。批复末行压深红公章。呈报表附页第 3 页载有 11 号孔同步越限数据，该页未列入复核范围。</p>
       </div>
-      <div class="list-row-title">关于 03 号深井基岩应力计阶跃异动之呈报与批复</div>
-    </a>
+    </details>
 
-    <a href="#sec-03" class="list-row" data-target="sec-03">
-      <div class="list-row-meta">
-        <span class="list-row-date">2026 // 10 / 11</span>
-        <span class="list-row-tag">疏散</span>
+    <details class="rail-entry" data-section-num="03">
+      <summary class="list-row" data-target="sec-03">
+        <a href="#sec-03" class="list-row-link" data-target="sec-03">
+          <span class="list-row-meta">
+            <span class="list-row-date">2026 // 10 / 11</span>
+            <span class="list-row-tag">疏散</span>
+          </span>
+          <span class="list-row-title">白屿市防汛防灾指挥部第 01 号全域撤离动员令</span>
+        </a>
+      </summary>
+      <div class="rail-abstract">
+        <p>CMD-EVAC-STAGE-3，涉及七十六万一千人。红区窗口 4.2 小时、金区需 14.5 小时、蓝区 2.5 小时，三区共用白屿二桥单一咽喉。调度台于零点二十三分同步收到红区储罐倾斜复测值与蓝区入桥匝道流量，两项数据互为死锁条件。</p>
       </div>
-      <div class="list-row-title">白屿市防汛防灾指挥部第 01 号全域撤离动员令</div>
-    </a>
+    </details>
 
-    <a href="#sec-04" class="list-row" data-target="sec-04">
-      <div class="list-row-meta">
-        <span class="list-row-date">2026 // 10 / 11</span>
-        <span class="list-row-tag">危机</span>
+    <details class="rail-entry" data-section-num="04">
+      <summary class="list-row" data-target="sec-04">
+        <a href="#sec-04" class="list-row-link" data-target="sec-04">
+          <span class="list-row-meta">
+            <span class="list-row-date">2026 // 10 / 11</span>
+            <span class="list-row-tag">危机</span>
+          </span>
+          <span class="list-row-title">跨江枢纽白屿二桥中跨基桩断裂与信标调度指令</span>
+        </a>
+      </summary>
+      <div class="rail-abstract">
+        <p>十三时五十五分，白屿二桥 4# 主沉井基桩剪切断裂，四百米主梁坠江，咽喉通行能力归零。指挥中心下达 CMD-FREQ-SPLIT-99，令切断金区 780kHz 中波以保全 104.2MHz 调频功率。值班员拒绝执行，代价为备用功放管熔断。</p>
       </div>
-      <div class="list-row-title">跨江枢纽白屿二桥中跨基桩断裂与信标调度指令</div>
-    </a>
+    </details>
 
-    <a href="#sec-05" class="list-row" data-target="sec-05">
-      <div class="list-row-meta">
-        <span class="list-row-date">2026 // 10 / 12</span>
-        <span class="list-row-tag">覆写</span>
+    <details class="rail-entry" data-section-num="05">
+      <summary class="list-row" data-target="sec-05">
+        <a href="#sec-05" class="list-row-link" data-target="sec-05">
+          <span class="list-row-meta">
+            <span class="list-row-date">2026 // 10 / 12</span>
+            <span class="list-row-tag">覆写</span>
+          </span>
+          <span class="list-row-title">市级自动轮播系统失效与人工麦克风物理覆写记事</span>
+        </a>
+      </summary>
+      <div class="rail-abstract">
+        <p>三点零三分市网高压归零，站内仅余 24V 铅酸蓄电池组（21.4V）。自动广播中枢进水短路，循环输出「留在地下等待救援」。值班员剪断数字同轴电缆，将话筒跳线焊接至调制栅极，随后旋死防爆门自锁。</p>
       </div>
-      <div class="list-row-title">市级自动轮播系统失效与人工麦克风物理覆写记事</div>
-    </a>
+    </details>
 
-    <a href="#sec-06" class="list-row" data-target="sec-06">
-      <div class="list-row-meta">
-        <span class="list-row-date">2026 // 10 / 12</span>
-        <span class="list-row-tag">静默</span>
+    <details class="rail-entry" data-section-num="06">
+      <summary class="list-row" data-target="sec-06">
+        <a href="#sec-06" class="list-row-link" data-target="sec-06">
+          <span class="list-row-meta">
+            <span class="list-row-date">2026 // 10 / 12</span>
+            <span class="list-row-tag">静默</span>
+          </span>
+          <span class="list-row-title">白屿市民防应急广播终末通告与全频段关机宣告</span>
+        </a>
+      </summary>
+      <div class="rail-abstract">
+        <p>早八点整，站外潮位淹没大门石阶第三级，地网没水，天线驻波比失谐至 ∞。依条例第七条第三款播发全域法定终末宣告，随后扳下发射机主刀闸，切断蓄电池母线。空中电波应答：0 个台站。</p>
       </div>
-      <div class="list-row-title">白屿市民防应急广播终末通告与全频段关机宣告</div>
-    </a>
+    </details>
 
-    <a href="#sec-07" class="list-row" data-target="sec-07">
-      <div class="list-row-meta">
-        <span class="list-row-date">2066 // 04 / 17</span>
-        <span class="list-row-tag">未播出</span>
+    <details class="rail-entry" data-section-num="07">
+      <summary class="list-row" data-target="sec-07">
+        <a href="#sec-07" class="list-row-link" data-target="sec-07">
+          <span class="list-row-meta">
+            <span class="list-row-date">2066 // 04 / 17</span>
+            <span class="list-row-tag">未播出</span>
+          </span>
+          <span class="list-row-title">新历四十二年水下勘探组在 EB-07 起获之未发射磁带</span>
+        </a>
+      </summary>
+      <div class="rail-abstract">
+        <p>水下 12m 避难舱内起获 1/4 英寸开盘磁带一盘，编号 TAPE-EB07-7，封套铅笔标注「未接天线」。三次全覆盖多波束声呐扫描确认：现场无人骨、无遗物、无救生设备痕迹。本盘为白屿市档案中唯一完整终结之物理记录。</p>
       </div>
-      <div class="list-row-title">新历四十二年水下勘探组在 EB-07 起获之未发射磁带</div>
-    </a>
+    </details>
   </aside>
 
   <!-- 中央主阅读区 -->

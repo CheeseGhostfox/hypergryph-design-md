@@ -39,12 +39,22 @@
   --color-region-accent-blue: #2096e6;
   --color-region-surface-slate: #293f45;
 
+  /* 状态色:发丝级青色与扫描高亮,均为 .3 以下透明度,不得用作填充 */
+  --color-primary-hairline: rgba(24, 209, 255, 0.3);
+  --color-primary-visited: rgba(24, 209, 255, 0.35);
+  --color-primary-scan: rgba(24, 209, 255, 0.08);
+
   --font-tracked-caps: 'Archivo', 'Encode Sans Expanded', sans-serif;
   --font-ghost-display: 'Oswald', 'Barlow Semi Condensed', sans-serif;
   --font-technical: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
   --font-cjk: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
 
   --header-height: 120px;
+
+  /* 动效节拍:全系统只用 0.2s / 0.3s,磁带扫描为 0.45s */
+  --duration-fast: 0.2s;
+  --duration-base: 0.3s;
+  --duration-scan: 0.45s;
 }
 
 *, *::before, *::after {
@@ -52,6 +62,11 @@
   margin: 0;
   padding: 0;
   border-radius: 0;
+}
+
+/* hidden 属性必须真正隐藏,否则会被下方的 display 声明覆盖 */
+[hidden] {
+  display: none !important;
 }
 
 html {
@@ -406,7 +421,9 @@ body {
   color: #ababab;
 }
 
-/* 4. 档案索引列表 (list-row: 360×96，两行截断标题) */
+/* 4. 档案索引列表 (list-row: 360×96，两行截断标题)
+   索引行本体现为 <summary>，其外层 <details> 承载「卷宗摘要」展开区。
+   保持 360×96 的既有观感，青色 +/− 字形钉在右缘。 */
 .list-row {
   width: 360px;
   height: 96px;
@@ -418,7 +435,66 @@ body {
   justify-content: center;
   cursor: pointer;
   text-decoration: none;
-  transition: background-color 0.2s linear, border-left 0.2s linear;
+  position: relative;
+  transition: background-color 0.2s linear;
+}
+
+/* 去掉浏览器默认三角标与 WebKit 三角标 */
+.list-row {
+  list-style: none;
+}
+
+.list-row::-webkit-details-marker {
+  display: none;
+}
+
+.list-row::marker {
+  content: '';
+}
+
+/* 索引行内层链接：撑满 summary，保持既有的纵向栈式布局，
+   并让整行都可点（链接负责跳转，summary 负责展开摘要）。 */
+.list-row-link {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* 4.0.1 「回到上次读到」控件 (顶栏右缘，仅当存在跨会话进度时出现) */
+.resume-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  padding: 0 12px;
+  background-color: transparent;
+  border: 1px solid var(--color-hairline);
+  color: var(--color-ink-muted);
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: color var(--duration-fast) linear, border-color var(--duration-fast) linear;
+}
+
+.resume-button[hidden] {
+  display: none;
+}
+
+.resume-button:hover,
+.resume-button:focus-visible {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.resume-num {
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 12px;
+  color: var(--color-primary);
+  letter-spacing: 1px;
 }
 
 .list-row-meta {
@@ -456,6 +532,7 @@ body {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  padding-right: 28px;
 }
 
 .list-row.active {
@@ -465,6 +542,60 @@ body {
 
 .list-row.active .list-row-title {
   color: #18d1ff;
+}
+
+/* 4.1 索引行展开态标记: 青色 + / −，0.2s 字形切换 */
+.list-row::after {
+  content: '+';
+  position: absolute;
+  top: 50%;
+  right: 24px;
+  transform: translateY(-50%);
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-primary);
+  transition: color var(--duration-fast) linear;
+}
+
+.rail-entry[open] > .list-row::after {
+  content: '−';
+}
+
+/* 4.2 已读状态: 仅发丝级青色竖规 + 标题降一档灰度，不做任何填充 */
+.rail-entry.visited > .list-row::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: var(--color-primary-visited);
+}
+
+.rail-entry.visited > .list-row .list-row-title {
+  color: var(--color-ink-muted);
+}
+
+.rail-entry.visited > .list-row.active .list-row-title {
+  color: var(--color-primary);
+}
+
+/* 4.3 「卷宗摘要」展开区 (左栏内，随 details 展开而出现) */
+.rail-abstract {
+  display: block;
+  background-color: var(--color-surface-1);
+  border-bottom: 1px solid var(--color-hairline);
+  border-left: 2px solid var(--color-primary);
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 13px;
+  line-height: 1.70;
+  color: var(--color-ink-subtle);
+}
+
+.rail-abstract p {
+  padding: 12px 24px 16px 26px;
 }
 
 /* 5. 右栏控制器与计数器 */
@@ -679,6 +810,274 @@ body {
 .scrim-overlay {
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.95) 100%);
 }
+
+/* 9. 磁带扫描 (磁带机走带读数: 一条 1px 青线扫过 + 一段表面块高亮)
+   全部为纯色与位移，无阴影、无发光、无模糊；0.45s 结束即回到常驻状态 */
+.list-row.is-scanning::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 2px;
+  background-color: var(--color-primary);
+  transform: translateX(-2px);
+  animation: eb-tape-scan var(--duration-scan) linear 1;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.list-row.is-scanning {
+  animation: eb-tape-block var(--duration-base) linear 1;
+}
+
+@keyframes eb-tape-scan {
+  from { transform: translateX(-2px); }
+  to { transform: translateX(360px); }
+}
+
+@keyframes eb-tape-block {
+  from { background-color: var(--color-primary-scan); }
+  to { background-color: var(--color-surface-2); }
+}
+
+/* 10. 解密附件 (章节内的可折叠档案块，原生 details/summary) */
+.annex {
+  margin: 32px 0 8px;
+  border-top: 1px solid var(--color-hairline);
+  background-color: var(--color-canvas);
+}
+
+.annex-summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 0;
+  cursor: pointer;
+  transition: color var(--duration-fast) linear;
+}
+
+.annex-summary::-webkit-details-marker {
+  display: none;
+}
+
+.annex-summary::marker {
+  content: '';
+}
+
+.annex-summary::before {
+  content: '▸';
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 12px;
+  line-height: 1;
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.annex[open] > .annex-summary::before {
+  content: '▾';
+}
+
+.annex-label {
+  font-family: 'Archivo', 'Encode Sans Expanded', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+.annex-title {
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 13px;
+  color: var(--color-ink-tertiary);
+}
+
+.annex-body {
+  padding: 4px 0 20px 24px;
+  border-left: 2px solid var(--color-hairline-soft);
+  margin-left: 5px;
+}
+
+.annex-sheet {
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--color-ink-deep);
+  margin-bottom: 12px;
+}
+
+.annex-record {
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 14px;
+  line-height: 1.70;
+  color: var(--color-ink-muted);
+  margin-bottom: 10px;
+}
+
+.annex-record:last-child {
+  margin-bottom: 0;
+}
+
+.annex-record .rec-key {
+  color: var(--color-ink-quaternary);
+  margin-right: 8px;
+}
+
+/* 11. 终局抉择 (第七章末，二选一分支) */
+.ending-block {
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--color-hairline);
+}
+
+.ending-label {
+  font-family: 'Archivo', 'Encode Sans Expanded', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: 10px;
+}
+
+.ending-prompt {
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 16px;
+  line-height: 1.70;
+  color: var(--color-ink);
+  margin-bottom: 20px;
+}
+
+/* 方角、黑底、发丝线描边；选中态由青色描边与青字承担 (黑底上唯一的许可状态色) */
+.ending-choice {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.ending-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 60px;
+  padding: 0 28px 0 16px;
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  border: 1px solid var(--color-hairline);
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color var(--duration-fast) linear, color var(--duration-fast) linear;
+}
+
+.ending-option .opt-en {
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: var(--color-ink-quaternary);
+  transition: color var(--duration-fast) linear;
+}
+
+.ending-option[aria-pressed="true"] {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.ending-option[aria-pressed="true"] .opt-en {
+  color: var(--color-primary);
+}
+
+.ending-note {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  background-color: var(--color-surface-1);
+  border-left: 2px solid var(--color-primary);
+}
+
+.ending-passage {
+  background-color: var(--color-surface-1);
+  border-top: 1px solid var(--color-hairline-soft);
+  padding: 24px;
+}
+
+.ending-passage .passage-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--color-primary);
+}
+
+.ending-passage p {
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--color-ink-muted);
+  margin-bottom: 14px;
+}
+
+.ending-passage p:last-child {
+  margin-bottom: 0;
+}
+
+.ending-passage .passage-last {
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+/* 12. 侧轨小控件 (回到上次读到 / 重新选择) */
+.rail-mini {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 36px;
+  padding: 0 10px;
+  background-color: var(--color-canvas);
+  color: var(--color-ink-subtle);
+  border: 1px solid var(--color-hairline);
+  cursor: pointer;
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 12px;
+  letter-spacing: 1px;
+  transition: border-color var(--duration-fast) linear, color var(--duration-fast) linear;
+}
+
+.rail-mini .mini-en {
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 11px;
+  color: var(--color-primary);
+  letter-spacing: 1px;
+}
+
+.rail-mini-block {
+  margin-bottom: 12px;
+}
+
+/* 13. 无脚本兜底: 让 <noscript> 提示块贴合档案语气 */
+.noscript-note {
+  background-color: var(--color-surface-1);
+  border-left: 2px solid var(--color-hairline);
+  padding: 16px 20px;
+  margin-top: 24px;
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 14px;
+  line-height: 1.70;
+  color: var(--color-ink-subtle);
+}
 </style>
 
 <!-- ==== 07-style-layout.css ==== -->
@@ -835,6 +1234,39 @@ body {
     border-color: #18d1ff;
     color: #18d1ff;
   }
+
+  .rail-mini:hover {
+    border-color: #18d1ff;
+    color: #18d1ff;
+  }
+
+  .ending-option:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  .ending-option:hover .opt-en {
+    color: var(--color-primary);
+  }
+
+  .annex-summary:hover .annex-title {
+    color: #ffffff;
+  }
+}
+
+/* 减少动效偏好: 磁带扫描整体取消，直接落入稳定态 (不做位移与高亮)。
+   底色写显式字面值而不用 var() —— 该声明曾被计算值阶段判为无效而静默回落到
+   .list-row 的 #000000，写成字面值可确保稳定态真的落到 #181818。 */
+@media (prefers-reduced-motion: reduce) {
+  .list-row.is-scanning::before {
+    content: none;
+    animation: none;
+  }
+
+  .list-row.is-scanning {
+    animation: none;
+    background-color: #181818;
+  }
 }
 
 /* 减少动效偏好 */
@@ -936,6 +1368,45 @@ body {
     font-size: 24px;
     line-height: 1.3;
   }
+
+  /* 纵向: 左栏转为横向滑轨，索引行保持 240×88；
+     卷宗摘要就地展开为行内一段 (限三行)，不拉伸出屏高度 */
+  .rail-abstract p {
+    padding: 0 16px 10px;
+    font-size: 12px;
+    line-height: 1.55;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .list-row {
+    padding: 12px 16px;
+  }
+
+  .list-row-title {
+    padding-right: 20px;
+  }
+
+  .list-row::after {
+    right: 10px;
+    font-size: 16px;
+  }
+
+  /* 纵向: 附件与终局面板的缩进与内边距同步收窄 */
+  .annex-body {
+    padding-left: 16px;
+  }
+
+  .ending-option {
+    width: 100%;
+    padding: 0 16px;
+  }
+
+  .ending-passage {
+    padding: 20px 16px;
+  }
 }
 </style>
 
@@ -1019,67 +1490,121 @@ body {
         <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
       </svg>
     </button>
+    <button id="btn-resume" class="resume-button" type="button" hidden>
+      <span class="resume-label">回到上次读到</span>
+      <span id="resume-num" class="resume-num"></span>
+    </button>
   </div>
 </header>
 
 <div class="layout-container">
-  <!-- 左栏: 360px 档案索引列表 -->
+  <!-- 左栏: 360px 档案索引列表。每行为 <details>：<summary> 是索引行本体，
+       展开后露出该卷宗的摘要正文。 -->
   <aside class="left-rail" id="archive-index" aria-label="档案目录">
-    <a href="#sec-01" class="list-row" data-target="sec-01">
-      <div class="list-row-meta">
-        <span class="list-row-date">2026 // 10 / 09</span>
-        <span class="list-row-tag">例行</span>
+    <details class="rail-entry" data-section-num="01">
+      <summary class="list-row" data-target="sec-01">
+        <a href="#sec-01" class="list-row-link" data-target="sec-01">
+          <span class="list-row-meta">
+            <span class="list-row-date">2026 // 10 / 09</span>
+            <span class="list-row-tag">例行</span>
+          </span>
+          <span class="list-row-title">TX-01 发射机早班例行自检及地层零位校准记录</span>
+        </a>
+      </summary>
+      <div class="rail-abstract">
+        <p>三十八项晨检表全部合格，03 号基岩应力计正偏 0.04 毫米，稳态绿区。全表唯一可疑项为第 14 项：应力计零点漂移 0.02 毫米，超出校准容差。值班员按惯例记作「环境温漂」。这 0.02 毫米的偏差，是本站最后一次可以自行处置的异常。</p>
       </div>
-      <div class="list-row-title">TX-01 发射机早班例行自检及地层零位校准记录</div>
-    </a>
+    </details>
 
-    <a href="#sec-02" class="list-row" data-target="sec-02">
-      <div class="list-row-meta">
-        <span class="list-row-date">2026 // 10 / 10</span>
-        <span class="list-row-tag">监测</span>
+    <details class="rail-entry" data-section-num="02">
+      <summary class="list-row" data-target="sec-02">
+        <a href="#sec-02" class="list-row-link" data-target="sec-02">
+          <span class="list-row-meta">
+            <span class="list-row-date">2026 // 10 / 10</span>
+            <span class="list-row-tag">监测</span>
+          </span>
+          <span class="list-row-title">关于 03 号深井基岩应力计阶跃异动之呈报与批复</span>
+        </a>
+      </summary>
+      <div class="rail-abstract">
+        <p>EB-ERR-4029 特许呈报单于上午九时五十二分经加密专线提交，CDPC 于四十二分钟后电传批复：判定系深基坑注浆扰动致孔隙水压释放，维持二级待机。批复末行压深红公章。呈报表附页第 3 页载有 11 号孔同步越限数据，该页未列入复核范围。</p>
       </div>
-      <div class="list-row-title">关于 03 号深井基岩应力计阶跃异动之呈报与批复</div>
-    </a>
+    </details>
 
-    <a href="#sec-03" class="list-row" data-target="sec-03">
-      <div class="list-row-meta">
-        <span class="list-row-date">2026 // 10 / 11</span>
-        <span class="list-row-tag">疏散</span>
+    <details class="rail-entry" data-section-num="03">
+      <summary class="list-row" data-target="sec-03">
+        <a href="#sec-03" class="list-row-link" data-target="sec-03">
+          <span class="list-row-meta">
+            <span class="list-row-date">2026 // 10 / 11</span>
+            <span class="list-row-tag">疏散</span>
+          </span>
+          <span class="list-row-title">白屿市防汛防灾指挥部第 01 号全域撤离动员令</span>
+        </a>
+      </summary>
+      <div class="rail-abstract">
+        <p>CMD-EVAC-STAGE-3，涉及七十六万一千人。红区窗口 4.2 小时、金区需 14.5 小时、蓝区 2.5 小时，三区共用白屿二桥单一咽喉。调度台于零点二十三分同步收到红区储罐倾斜复测值与蓝区入桥匝道流量，两项数据互为死锁条件。</p>
       </div>
-      <div class="list-row-title">白屿市防汛防灾指挥部第 01 号全域撤离动员令</div>
-    </a>
+    </details>
 
-    <a href="#sec-04" class="list-row" data-target="sec-04">
-      <div class="list-row-meta">
-        <span class="list-row-date">2026 // 10 / 11</span>
-        <span class="list-row-tag">危机</span>
+    <details class="rail-entry" data-section-num="04">
+      <summary class="list-row" data-target="sec-04">
+        <a href="#sec-04" class="list-row-link" data-target="sec-04">
+          <span class="list-row-meta">
+            <span class="list-row-date">2026 // 10 / 11</span>
+            <span class="list-row-tag">危机</span>
+          </span>
+          <span class="list-row-title">跨江枢纽白屿二桥中跨基桩断裂与信标调度指令</span>
+        </a>
+      </summary>
+      <div class="rail-abstract">
+        <p>十三时五十五分，白屿二桥 4# 主沉井基桩剪切断裂，四百米主梁坠江，咽喉通行能力归零。指挥中心下达 CMD-FREQ-SPLIT-99，令切断金区 780kHz 中波以保全 104.2MHz 调频功率。值班员拒绝执行，代价为备用功放管熔断。</p>
       </div>
-      <div class="list-row-title">跨江枢纽白屿二桥中跨基桩断裂与信标调度指令</div>
-    </a>
+    </details>
 
-    <a href="#sec-05" class="list-row" data-target="sec-05">
-      <div class="list-row-meta">
-        <span class="list-row-date">2026 // 10 / 12</span>
-        <span class="list-row-tag">覆写</span>
+    <details class="rail-entry" data-section-num="05">
+      <summary class="list-row" data-target="sec-05">
+        <a href="#sec-05" class="list-row-link" data-target="sec-05">
+          <span class="list-row-meta">
+            <span class="list-row-date">2026 // 10 / 12</span>
+            <span class="list-row-tag">覆写</span>
+          </span>
+          <span class="list-row-title">市级自动轮播系统失效与人工麦克风物理覆写记事</span>
+        </a>
+      </summary>
+      <div class="rail-abstract">
+        <p>三点零三分市网高压归零，站内仅余 24V 铅酸蓄电池组（21.4V）。自动广播中枢进水短路，循环输出「留在地下等待救援」。值班员剪断数字同轴电缆，将话筒跳线焊接至调制栅极，随后旋死防爆门自锁。</p>
       </div>
-      <div class="list-row-title">市级自动轮播系统失效与人工麦克风物理覆写记事</div>
-    </a>
+    </details>
 
-    <a href="#sec-06" class="list-row" data-target="sec-06">
-      <div class="list-row-meta">
-        <span class="list-row-date">2026 // 10 / 12</span>
-        <span class="list-row-tag">静默</span>
+    <details class="rail-entry" data-section-num="06">
+      <summary class="list-row" data-target="sec-06">
+        <a href="#sec-06" class="list-row-link" data-target="sec-06">
+          <span class="list-row-meta">
+            <span class="list-row-date">2026 // 10 / 12</span>
+            <span class="list-row-tag">静默</span>
+          </span>
+          <span class="list-row-title">白屿市民防应急广播终末通告与全频段关机宣告</span>
+        </a>
+      </summary>
+      <div class="rail-abstract">
+        <p>早八点整，站外潮位淹没大门石阶第三级，地网没水，天线驻波比失谐至 ∞。依条例第七条第三款播发全域法定终末宣告，随后扳下发射机主刀闸，切断蓄电池母线。空中电波应答：0 个台站。</p>
       </div>
-      <div class="list-row-title">白屿市民防应急广播终末通告与全频段关机宣告</div>
-    </a>
+    </details>
 
-    <a href="#sec-07" class="list-row" data-target="sec-07">
-      <div class="list-row-meta">
-        <span class="list-row-date">2066 // 04 / 17</span>
-        <span class="list-row-tag">未播出</span>
+    <details class="rail-entry" data-section-num="07">
+      <summary class="list-row" data-target="sec-07">
+        <a href="#sec-07" class="list-row-link" data-target="sec-07">
+          <span class="list-row-meta">
+            <span class="list-row-date">2066 // 04 / 17</span>
+            <span class="list-row-tag">未播出</span>
+          </span>
+          <span class="list-row-title">新历四十二年水下勘探组在 EB-07 起获之未发射磁带</span>
+        </a>
+      </summary>
+      <div class="rail-abstract">
+        <p>水下 12m 避难舱内起获 1/4 英寸开盘磁带一盘，编号 TAPE-EB07-7，封套铅笔标注「未接天线」。三次全覆盖多波束声呐扫描确认：现场无人骨、无遗物、无救生设备痕迹。本盘为白屿市档案中唯一完整终结之物理记录。</p>
       </div>
-      <div class="list-row-title">新历四十二年水下勘探组在 EB-07 起获之未发射磁带</div>
-    </a>
+    </details>
   </aside>
 
   <!-- 中央主阅读区 -->
@@ -1116,7 +1641,7 @@ body {
             <a href="#sec-01" class="button-primary">
               开始调阅档案 // READ DOSSIER <span class="chevron">&gt;</span>
             </a>
-            <span class="footnote">阅读预估时间：约 10 分钟 · 完整叙事弧线</span>
+            <span class="footnote">阅读预估时间：约 12 分钟（含展开的档案与附件约 18 分钟） · 完整叙事弧线 · 一处终局抉择</span>
           </div>
         </div>
 
@@ -1202,6 +1727,20 @@ body {
         我拿起调零手柄对 03 号潮汐基岩应力计进行每日常规校准。指针正偏 0.04 毫米，稳稳落在绿区。我在日志盖上“运转正常”印章，签下工号：EB-07-04。这是第一千四百二十个班次，平静得如同窗外机械重复的潮水。
       </div>
 
+      <!-- 解密附件 (原生 details/summary，默认折叠) -->
+      <details class="annex">
+        <summary class="annex-summary">
+          <span class="annex-label">DECLASSIFIED ANNEX // 解密附件</span>
+          <span class="annex-title">校准记录摘录 · EB07-ANNEX-01</span>
+        </summary>
+        <div class="annex-body">
+          <div class="annex-sheet">SHEET 01 // 零位校准原始记录摘录 · 与 4029 号卷宗并档</div>
+          <div class="annex-record"><span class="rec-key">[第 14 项]</span>03 号潮汐基岩应力计零点漂移读数 0.02 毫米，超出校准容差 0.01 毫米。处置意见：判定为环境温漂，当日不作复校。</div>
+          <div class="annex-record"><span class="rec-key">[同批记录]</span>11 号孔位同日漂移 0.03 毫米，同样记为温漂。两个孔位的漂移方向一致，均为负向。</div>
+          <div class="annex-record"><span class="rec-key">[归档附注]</span>新历 42 年补注：上述两项读数为台站最后一次自主处置之异常，未列入当日上报范围。</div>
+        </div>
+      </details>
+
       <div class="divider-soft"></div>
     </section>
 
@@ -1265,6 +1804,20 @@ body {
       <div class="body-text">
         深红公章压在末行。我在批复单空白下边缘，用铅笔推演着那条未被采信的剪应力曲线：临界点不在下周，而在今夜。窗外，成群海鸟惊恐成片腾空盘旋哀鸣，迟迟不敢落回防波堤。
       </div>
+
+      <!-- 解密附件 (原生 details/summary，默认折叠) -->
+      <details class="annex">
+        <summary class="annex-summary">
+          <span class="annex-label">DECLASSIFIED ANNEX // 解密附件</span>
+          <span class="annex-title">批复原件全文与孔位台账 · EB07-ANNEX-02</span>
+        </summary>
+        <div class="annex-body">
+          <div class="annex-sheet">SHEET 02 // CDPC 电传批复原件全文 · 抄件字轨 EB-4029-F2</div>
+          <div class="annex-record"><span class="rec-key">[批复全文]</span>「经专家组复核，传感器脉冲系新港区深基坑连续墙注浆引发之孔隙水压释放，属工程受控沉降。维持二级待机，暂不启动疏散警报。严禁擅自发布非确认信息，继续观察。」</div>
+          <div class="annex-record"><span class="rec-key">[孔位台账]</span>全台 560 枚石英传感器，当日越限 2 枚（03 号、11 号）。两孔间距 2.7 公里，越限时刻相差 96 秒。</div>
+          <div class="annex-record"><span class="rec-key">[时限记录]</span>特急呈报 09:52 发出，10:34 收到批复，用时 42 分钟，低于规程规定的 60 分钟复核时限。</div>
+        </div>
+      </details>
 
       <div class="divider-soft"></div>
     </section>
@@ -1355,6 +1908,21 @@ body {
         若三区同时涌向跨江桥，蓝区私家车流将在四十分钟内把金区步行老幼死死卡在引桥下；若扣留蓝区优先老城，红区储罐倾覆的毒气又将吞噬全湾。调度机里满是尖叫争吵。我在发烫的面板前按下广播钮，每句措辞背后都是生与死的冷酷博弈。
       </div>
 
+      <!-- 解密附件 (原生 details/summary，默认折叠) -->
+      <details class="annex">
+        <summary class="annex-summary">
+          <span class="annex-label">DECLASSIFIED ANNEX // 解密附件</span>
+          <span class="annex-title">三区疏散实绩统计 · EB07-ANNEX-03</span>
+        </summary>
+        <div class="annex-body">
+          <div class="annex-sheet">SHEET 03 // 三区疏散实绩统计表 · 截至 T-16:30 汇总</div>
+          <div class="annex-record"><span class="rec-key">[红区]</span>计划窗口 4.2 小时，实际完成 5.8 小时。缺口原因为单线工矿铁路在 T-27:40 因路基侧移限速至 15 公里/小时。</div>
+          <div class="annex-record"><span class="rec-key">[金区]</span>计划 14.5 小时，实际完成 19.2 小时。桥头断面前累计通过 41.7 万人次，其中步行 33.1 万人次。</div>
+          <div class="annex-record"><span class="rec-key">[蓝区]</span>计划 2.5 小时，实际完成 3.1 小时。入桥匝道于 T-29:10 起实行分时放行，放行间隔 6 分钟。</div>
+          <div class="annex-record"><span class="rec-key">[备注]</span>三区实绩均晚于计划，但与「全部越过山脊」这一终局结论并不冲突。</div>
+        </div>
+      </details>
+
       <div class="divider-soft"></div>
     </section>
 
@@ -1422,6 +1990,20 @@ body {
       <div class="body-text">
         配电柜猛地爆出耀眼电弧，备用功放管瞬间熔断焦糊。我以烧毁备用机为代价，将超短波信号强行并入中波天线，为金区保住了九十分钟全功率播报。我在日志写下：“工号 EB-07-04 自主启动双频并联。设备损坏后果与规程责任，由我一人承担。”
       </div>
+
+      <!-- 解密附件 (原生 details/summary，默认折叠) -->
+      <details class="annex">
+        <summary class="annex-summary">
+          <span class="annex-label">DECLASSIFIED ANNEX // 解密附件</span>
+          <span class="annex-title">双频并联设备损毁勘验 · EB07-ANNEX-04</span>
+        </summary>
+        <div class="annex-body">
+          <div class="annex-sheet">SHEET 04 // TX-01 发射机损毁勘验单 · 打捞后补做</div>
+          <div class="annex-record"><span class="rec-key">[损毁部位]</span>备用功放管 2 只击穿熔断，管座碳化；中波天线调谐线圈过热变形。主功放管与灯丝电路完好。</div>
+          <div class="annex-record"><span class="rec-key">[并联时长]</span>按灯丝累计计时器残值反推，双频并联持续 91 分钟，与 780kHz 恢复播音时段吻合。</div>
+          <div class="annex-record"><span class="rec-key">[磁带上关联]</span>第 7 盘磁带走带至 42 分 10 秒处，可辨识出金区中波频段之载波残余。设备损毁与并联合并列为同一责任人。</div>
+        </div>
+      </details>
 
       <div class="divider-soft"></div>
     </section>
@@ -1495,6 +2077,21 @@ body {
         “白屿市市民请注意。不要留在原地。不要进入地下设施。带上淡水与照明，沿着玄武岩背斜山脊向北走。山脊不会沉。重复一遍，沿着山脊走……”
       </div>
 
+      <!-- 解密附件 (原生 details/summary，默认折叠) -->
+      <details class="annex">
+        <summary class="annex-summary">
+          <span class="annex-label">DECLASSIFIED ANNEX // 解密附件</span>
+          <span class="annex-title">覆写作业线路处置单 · EB07-ANNEX-05</span>
+        </summary>
+        <div class="annex-body">
+          <div class="annex-sheet">SHEET 05 // 人工覆写作业线路处置单 · 依现场残迹复原</div>
+          <div class="annex-record"><span class="rec-key">[作业项 1]</span>数字同轴电缆一刀剪断，断口平整，剪口位于联锁铅封内侧 40 厘米处。剪断后自动化总线无输出。</div>
+          <div class="annex-record"><span class="rec-key">[作业项 2]</span>话筒前置跳线焊接于调制栅极，焊点两处，未加绝缘套管，属带电作业痕迹。</div>
+          <div class="annex-record"><span class="rec-key">[作业项 3]</span>防爆门铁转轮旋至止点，连杆已拔除并抛入电缆槽。门自内侧不可逆锁死。</div>
+          <div class="annex-record"><span class="rec-key">[备注]</span>三项作业均无第二人在场记录，处置单由事后勘验补填。</div>
+        </div>
+      </details>
+
       <div class="divider-soft"></div>
     </section>
 
@@ -1557,6 +2154,20 @@ body {
       <div class="body-text" style="color: #666666;">
         持续七十二小时的巨大电流轰鸣瞬间消失。世界陷入纯粹的绝对静默。只有门外浪涛拍打钢板，一下，又一下。室内唯余吞噬一切的纯黑。我没有站起来，也没有走向那扇无法开启的门。
       </div>
+
+      <!-- 解密附件 (原生 details/summary，默认折叠) -->
+      <details class="annex">
+        <summary class="annex-summary">
+          <span class="annex-label">DECLASSIFIED ANNEX // 解密附件</span>
+          <span class="annex-title">关机操作与潮位记录 · EB07-ANNEX-06</span>
+        </summary>
+        <div class="annex-body">
+          <div class="annex-sheet">SHEET 06 // 关机操作与站内潮位记录 · 依站房残迹与磁带复原</div>
+          <div class="annex-record"><span class="rec-key">[关机操作]</span>08:00 播发终末宣告；08:02 扳下发射机主刀闸；08:03 切断蓄电池母线，全站直流回路电压归零。</div>
+          <div class="annex-record"><span class="rec-key">[站内潮位]</span>06:40 漫过大门石阶第一级；07:20 第二级；08:00 第三级（+143.2 米）。室内进水速率约每小时 11 厘米。</div>
+          <div class="annex-record"><span class="rec-key">[勤务记录]</span>本时段无对外通话、无撤离登记、无求救信号。一切对外动作仅限无线电单向播发。</div>
+        </div>
+      </details>
 
       <div class="divider-soft"></div>
     </section>
@@ -1661,6 +2272,96 @@ body {
         </div>
       </div>
 
+      <!-- 解密附件 (原生 details/summary，默认折叠) -->
+      <details class="annex">
+        <summary class="annex-summary">
+          <span class="annex-label">DECLASSIFIED ANNEX // 解密附件</span>
+          <span class="annex-title">磁带物性检验与盒内夹存物 · EB07-ANNEX-07</span>
+        </summary>
+        <div class="annex-body">
+          <div class="annex-sheet">SHEET 07 // 磁带物性检验单 · 实验室编号 LAB-42-0417</div>
+          <div class="annex-record"><span class="rec-key">[带基]</span>1/4 英寸醋酸纤维素带基，7.5 英寸/秒，单声道。磁粉层完整，无霉变、无拉伸变形。可读段 100%，未做信号增强处理。</div>
+          <div class="annex-record"><span class="rec-key">[盒内夹存物]</span>无纸条、无照片、无第二件物品。封套铅笔字迹经比对为现场书写，笔压均匀，书写时手部无颤抖。</div>
+          <div class="annex-record"><span class="rec-key">[归档决定]</span>原件恒温封存，不作消磁与再转录。档案编号 EB-ARCHIVE-4029-VII，等级永久一级。</div>
+        </div>
+      </details>
+
+      <!-- 终局抉择 (第七章末，二选一分支；选择记录于 eb07:ending) -->
+      <div class="ending-block" id="ending-block" data-ending="none">
+        <div class="ending-label">FINAL DISPOSITION // 终局处置</div>
+        <p class="ending-prompt">
+          卷宗至此闭合。磁带仍可读，天线地网仍可临时架设。身为四十年后的调阅者，你对这盘磁带作出最后处置。
+        </p>
+
+        <div class="ending-choice" id="ending-choice" role="group" aria-label="终局处置选择">
+          <button class="ending-option" id="ending-opt-air" type="button" data-ending="air" aria-pressed="false">
+            <span class="opt-zh">重新发射最后一段</span>
+            <span class="opt-en">// RE-TRANSMIT</span>
+          </button>
+          <button class="ending-option" id="ending-opt-seal" type="button" data-ending="seal" aria-pressed="false">
+            <span class="opt-zh">维持静默封存</span>
+            <span class="opt-en">// KEEP SEALED</span>
+          </button>
+        </div>
+
+        <div class="ending-note" id="ending-note" hidden>
+          <button class="rail-mini" id="ending-reset" type="button">
+            <span>重新选择</span>
+            <span class="mini-en">// RESELECT</span>
+          </button>
+          <span class="footnote">本处置已记录于调阅终端，可在清除后重新选定。</span>
+        </div>
+
+        <!-- 结局 A: 重新发射最后一段 -->
+        <div class="ending-passage" id="ending-air" hidden>
+          <div class="passage-head">
+            <span>ENDING A // 处置结果 · 重新发射</span>
+            <span>OUTCOME: RE-TRANSMIT</span>
+          </div>
+          <p>
+            处置令于新历四十二年四月十七日十七时四十分生效：磁带以 7.5 英寸/秒原速回放，经修复后残存的 TX-01 发射机并入临时架设的天线地网，向 104.2MHz 与 780kHz 双频同播，功率 500 瓦，持续四分二十秒。
+          </p>
+          <p>
+            这是白屿市沉没四十年后，第一次有声音从狮子口方向升起。值班技术员在原地站完全程，没有按下任何一枚中止键。信号越过山脊，掠过已成浅滩的老城石桥，最终散入夜里的电离层，什么也没有留下，只是响过了。
+          </p>
+          <p>
+            当日值班日志补记一行：录音已播发，接收方一栏填写「全部」。磁带随后重新封装回原盒，编号不变，封套上「未接天线」四字以铅笔划去一道，未撕、未涂改。
+          </p>
+          <p class="passage-last">
+            那盘磁带在架子上又放了四十年。封套上多了一行铅笔小字：本次已接天线。
+          </p>
+        </div>
+
+        <!-- 结局 B: 维持静默封存 -->
+        <div class="ending-passage" id="ending-seal" hidden>
+          <div class="passage-head">
+            <span>ENDING B // 处置结果 · 维持封存</span>
+            <span>OUTCOME: KEEP SEALED</span>
+          </div>
+          <p>
+            处置令于新历四十二年四月十七日十七时四十分生效：磁带不作回放，原盒原封退回恒温库房，架位 EB-07-VII，温度 18℃、湿度 45%，年度抽检一次，不作消磁。临时架设的天线当日拆除，地网铜线卷回收库。
+          </p>
+          <p>
+            现场未留存任何复制件、转录稿或播放记录。调查结论备忘录维持原状，最后一栏仍是那两个字：空白。四十年后收到的这四分二十秒，就这样又被交还给了四十年后的沉默。
+          </p>
+          <p>
+            库房管理员在新历四十二年度的抽检表上，把这盘磁带的状态勾为「完好·未启用」。表下按规程附一句例注：本件不属于待播素材，不具备启封权限。没有人为它写过申诉。
+          </p>
+          <p class="passage-last">
+            封套上「未接天线」四个字，此后一直是这座城市最完整的一句话。
+          </p>
+        </div>
+
+        <!-- 无脚本兜底: 脚本未运行时给出两个结局的全文 -->
+        <noscript>
+          <div class="noscript-note">
+            调阅终端未启用脚本：以下为两种终局处置的完整结局文本，供直接阅读。<br>
+            <strong>处置 A // 重新发射最后一段：</strong>处置令于新历四十二年四月十七日十七时四十分生效：磁带以 7.5 英寸/秒原速回放，经修复后残存的 TX-01 发射机并入临时架设的天线地网，向 104.2MHz 与 780kHz 双频同播，功率 500 瓦，持续四分二十秒。这是白屿市沉没四十年后，第一次有声音从狮子口方向升起。信号越过山脊，掠过已成浅滩的老城石桥，最终散入夜里的电离层，什么也没有留下，只是响过了。那盘磁带在架子上又放了四十年。封套上多了一行铅笔小字：本次已接天线。<br>
+            <strong>处置 B // 维持静默封存：</strong>处置令于新历四十二年四月十七日十七时四十分生效：磁带不作回放，原盒原封退回恒温库房，架位 EB-07-VII，年度抽检一次，不作消磁。调查结论备忘录维持原状，最后一栏仍是那两个字：空白。四十年后收到的这四分二十秒，就这样又被交还给了四十年后的沉默。封套上「未接天线」四个字，此后一直是这座城市最完整的一句话。
+          </div>
+        </noscript>
+      </div>
+
       <div class="divider-soft"></div>
     </section>
 
@@ -1701,6 +2402,12 @@ body {
     </div>
 
     <div class="right-rail-bottom">
+      <!-- 上次阅读位置 (仅在已读进第一章之后出现；记录于 eb07:progress) -->
+      <button class="rail-mini rail-mini-block" id="btn-resume" type="button" hidden>
+        <span id="resume-label">回到上次读到</span>
+        <span class="mini-en" id="resume-num">// 01</span>
+      </button>
+
       <div class="divider-soft" style="margin: 16px 0;"></div>
       <div class="meta-item">
         <span class="meta-key">FACILITY ID</span>
@@ -1746,7 +2453,158 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let currentSectionIndex = 1; // 默认停留在第 1 章节
 
-  // 1. 滚动进度与章节感知
+  // ---------- 本地存储封装: 隐私模式下 localStorage 会直接抛错，全部读写都由此处兜住 ----------
+  const STORE_PREFIX = 'eb07:';
+  const KEY_AUDIO = STORE_PREFIX + 'audio';
+  const KEY_PROGRESS = STORE_PREFIX + 'progress';
+  const KEY_ENDING = STORE_PREFIX + 'ending';
+
+  function storeGet(key) {
+    try {
+      return window.localStorage.getItem(key);
+    } catch (e) {
+      return null; // 存储不可用：按「无记录」处理，页面继续工作
+    }
+  }
+
+  function storeSet(key, value) {
+    try {
+      window.localStorage.setItem(key, value);
+      return true;
+    } catch (e) {
+      return false; // 存储不可用：放弃写入，不影响任何交互
+    }
+  }
+
+  function storeRemove(key) {
+    try {
+      window.localStorage.removeItem(key);
+    } catch (e) {
+      /* 无存储可清 */
+    }
+  }
+
+  function gotoSection(index) {
+    const target = sections[index];
+    if (!target) return;
+    const el = document.getElementById(target.id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // ---------- 0. 左栏「卷宗摘要」: 原生 details 展开 + 磁带扫描读数 ----------
+  const railEntries = Array.prototype.slice.call(document.querySelectorAll('.rail-entry'));
+  const reduceMotion = window.matchMedia
+    ? window.matchMedia('(prefers-reduced-motion: reduce)')
+    : null;
+
+  function scanRow(row) {
+    if (!row || !row.classList) return;
+    const quiet = reduceMotion && reduceMotion.matches;
+    row.classList.remove('is-scanning');
+    void row.offsetWidth; // 强制重排，保证连续点击都能重新起振
+    // 减少动效偏好下 CSS 已把 .is-scanning 的动画置为 none 并给出稳定态底色，
+    // 所以这里仍然加类 —— 否则那条规则永远不会生效，点击也就没有任何反馈。
+    row.classList.add('is-scanning');
+    window.setTimeout(() => row.classList.remove('is-scanning'), quiet ? 180 : 520);
+  }
+
+  // 索引行点击 = 调阅该章节。整行 (summary) 都算调阅动作:
+  //   · 点在内层 <a> 上 —— summary 属于「交互内容」，浏览器不替它执行默认跳转，必须显式接管;
+  //   · 点在行内空白处 —— 浏览器只会切换 details，会留下「面板开了、页面没动」的错位;
+  // 两种情况统一为「跳转 + 展开本行摘要」，并阻断冒泡让 details 状态由脚本独占。
+  // (details 原生的切换在键盘激活时仍会触发，届时是「已展开 -> 收起」的二次切换，
+  //  由下面的 open 赋值收敛回 true，不产生可见抖动。)
+  function closestLink(node) {
+    let el = node;
+    while (el && el !== document) {
+      if (el.nodeType === 1 && el.classList && (el.classList.contains('list-row-link') || el.classList.contains('list-row'))) return el;
+      el = el.parentNode;
+    }
+    return null;
+  }
+
+  document.addEventListener('click', (event) => {
+    const hit = closestLink(event.target);
+    if (!hit) return;
+    event.preventDefault();
+    event.stopPropagation();
+    const entry = hit.closest ? hit.closest('.rail-entry') : null;
+    if (entry) entry.open = true;
+    const target = hit.getAttribute('data-target') || (hit.getAttribute('href') || '').slice(1);
+    const idx = sections.findIndex((sec) => sec.id === target);
+    if (idx > 0) gotoSection(idx);
+  });
+
+  listRows.forEach((row) => {
+    row.addEventListener('click', () => {
+      scanRow(row); // 磁带扫描读数
+      // 索引轨同时只保持一条摘要展开，避免整轨高度失控
+      const own = row.closest ? row.closest('.rail-entry') : null;
+      railEntries.forEach((entry) => {
+        if (entry !== own) entry.open = false;
+      });
+    });
+  });
+
+  // ---------- 0.1 已读行标记 (来自 eb07:progress，跨会话保留) ----------
+  // visitedUpTo 记录「读到过的最远章节序号」，与当前视口位置解耦，
+  // 否则刷新后视口停在首屏，刚标记的已读会立刻被抹掉。
+  let visitedUpTo = 0;
+  (function seedVisited() {
+    const stored = storeGet(KEY_PROGRESS);
+    const idx = sections.findIndex((sec) => sec.id === stored);
+    if (idx > visitedUpTo) visitedUpTo = idx;
+  })();
+
+  function syncVisitedState() {
+    if (currentSectionIndex > visitedUpTo) visitedUpTo = currentSectionIndex;
+    railEntries.forEach((entry) => {
+      const row = entry.querySelector('.list-row');
+      const target = row ? row.getAttribute('data-target') : null;
+      const idx = sections.findIndex((sec) => sec.id === target);
+      if (idx > 0 && idx <= visitedUpTo) {
+        entry.classList.add('visited');
+      } else {
+        entry.classList.remove('visited');
+      }
+    });
+  }
+
+  // ---------- 0.2 「回到上次读到」控件 ----------
+  const resumeBtn = document.getElementById('btn-resume');
+  const resumeNum = document.getElementById('resume-num');
+
+  function sectionNumById(id) {
+    const hit = sections.find((sec) => sec.id === id);
+    return hit ? hit.num : '01';
+  }
+
+  function syncResumeControl() {
+    if (!resumeBtn) return;
+    const stored = storeGet(KEY_PROGRESS);
+    if (!stored) {
+      resumeBtn.hidden = true;
+      return;
+    }
+    const idx = sections.findIndex((sec) => sec.id === stored);
+    if (idx <= 1) {
+      // 首屏与第一章视为「未读进去」，不显示回跳控件
+      resumeBtn.hidden = true;
+      return;
+    }
+    if (resumeNum) resumeNum.textContent = '// ' + sectionNumById(stored);
+    resumeBtn.hidden = false;
+  }
+
+  if (resumeBtn) {
+    resumeBtn.addEventListener('click', () => {
+      const stored = storeGet(KEY_PROGRESS);
+      const idx = sections.findIndex((sec) => sec.id === stored);
+      if (idx > 0) gotoSection(idx);
+    });
+  }
+
+  // ---------- 1. 滚动进度与章节感知 ----------
   function updateScrollState() {
     const scrollY = window.scrollY;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -1792,7 +2650,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // 更新左侧栏激活态
+    // 更新左侧栏激活态 (磁带扫描只做一次性叠加，不参与这里的常驻态)
     listRows.forEach((row) => {
       const target = row.getAttribute('data-target');
       if (target === sections[activeIdx].id) {
@@ -1801,43 +2659,136 @@ document.addEventListener('DOMContentLoaded', () => {
         row.classList.remove('active');
       }
     });
+
+    // 记录已读到的最远章节 (只前进，不回退)，并同步已读标记
+    if (activeIdx > 0) {
+      markProgress(sections[activeIdx].id);
+    }
+    syncVisitedState();
+  }
+
+  function markProgress(id) {
+    const stored = storeGet(KEY_PROGRESS);
+    const prevIdx = sections.findIndex((sec) => sec.id === stored);
+    if (sections.findIndex((sec) => sec.id === id) > prevIdx) {
+      storeSet(KEY_PROGRESS, id);
+      syncResumeControl();
+    }
   }
 
   window.addEventListener('scroll', updateScrollState, { passive: true });
   updateScrollState();
+  syncResumeControl();
 
-  // 2. 上一段 / 下一段按钮导航
+  // ---------- 2. 上一段 / 下一段按钮导航 ----------
   if (prevBtn) {
     prevBtn.addEventListener('click', () => {
-      const targetIdx = Math.max(1, currentSectionIndex - 1);
-      const targetEl = document.getElementById(sections[targetIdx].id);
-      if (targetEl) {
-        targetEl.scrollIntoView({ behavior: 'smooth' });
-      }
+      gotoSection(Math.max(1, currentSectionIndex - 1));
     });
   }
 
   if (nextBtn) {
     nextBtn.addEventListener('click', () => {
-      const targetIdx = Math.min(sections.length - 1, currentSectionIndex + 1);
-      const targetEl = document.getElementById(sections[targetIdx].id);
-      if (targetEl) {
-        targetEl.scrollIntoView({ behavior: 'smooth' });
-      }
+      gotoSection(Math.min(sections.length - 1, currentSectionIndex + 1));
     });
   }
 
-  // 3. Web Audio API 程序化环境底噪模拟 (纯代码合成，无任何音频文件)
+  // ---------- 3. 左右方向键翻段 (修饰键按下或在输入控件内时不接管) ----------
+  function isTypingTarget(el) {
+    if (!el || el.nodeType !== 1) return false;
+    const tag = el.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return true;
+    if (el.isContentEditable) return true;
+    if (el.closest && el.closest('[contenteditable="true"]')) return true;
+    return false;
+  }
+
+  document.addEventListener('keydown', (event) => {
+    if (event.ctrlKey || event.metaKey || event.altKey) return; // 组合键一律让给浏览器
+    if (isTypingTarget(event.target)) return;                    // 输入控件内不抢方向键
+    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+    event.preventDefault();
+    const delta = event.key === 'ArrowRight' ? 1 : -1;
+    // 下限必须允许 0 —— sections[0] 是「卷宗总览」(sec-index)，
+    // 顶栏里 INDEX 是可点选项，方向键不该在第 1 章留下一个回不去的死键。
+    const target = Math.min(sections.length - 1, Math.max(0, currentSectionIndex + delta));
+    gotoSection(target);
+  });
+
+  // ---------- 4. 终局抉择 (二选一分支，记录于 eb07:ending) ----------
+  const endingButtons = Array.prototype.slice.call(document.querySelectorAll('.ending-option'));
+  const endingBlock = document.getElementById('ending-block');
+  const endingChoice = document.getElementById('ending-choice');
+  const endingNote = document.getElementById('ending-note');
+  const endingReset = document.getElementById('ending-reset');
+  const endingKeys = ['air', 'seal'];
+
+  function renderEnding(choice) {
+    const active = endingKeys.indexOf(choice) >= 0 ? choice : null;
+    endingButtons.forEach((btn) => {
+      btn.setAttribute('aria-pressed', btn.getAttribute('data-ending') === active ? 'true' : 'false');
+    });
+    endingKeys.forEach((key) => {
+      const passage = document.getElementById('ending-' + key);
+      if (passage) passage.hidden = key !== active;
+    });
+    if (endingBlock) endingBlock.setAttribute('data-ending', active || 'none');
+    // 已作出处置后隐藏选项组，只留结局正文与「重新选择」
+    if (endingChoice) endingChoice.hidden = !!active;
+    if (endingNote) endingNote.hidden = !active;
+  }
+
+  endingButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const choice = btn.getAttribute('data-ending');
+      storeSet(KEY_ENDING, choice); // 存储不可用时仅本次会话生效，不报错
+      renderEnding(choice);
+    });
+  });
+
+  if (endingReset) {
+    endingReset.addEventListener('click', () => {
+      storeRemove(KEY_ENDING);
+      renderEnding(null);
+    });
+  }
+
+  // 载入即恢复既有处置
+  renderEnding(storeGet(KEY_ENDING));
+
+  // ---------- 5. Web Audio API 程序化环境底噪模拟 (纯代码合成，无任何音频文件) ----------
   let audioCtx = null;
   let noiseNode = null;
   let humNode = null;
   let gainNode = null;
   let isAudioPlaying = false;
   const audioBtn = document.getElementById('audio-toggle-btn');
+  // 存储中的开关只是「读者意图」：载入时仅还原按钮外观，绝不自动起振。
+  // 只有显式存过 'on' 才算开启；无记录 (首次到访 / 存储不可用) 一律按静音呈现。
+  const storedAudio = storeGet(KEY_AUDIO);
+  let audioToggleOn = storedAudio === 'on';
+  let audioHintShown = false;
+
+  function fadeAudio(target, seconds) {
+    const now = audioCtx.currentTime;
+    gainNode.gain.cancelScheduledValues(now);
+    gainNode.gain.setValueAtTime(gainNode.gain.value, now);
+    gainNode.gain.linearRampToValueAtTime(target, now + seconds);
+  }
+
+  function paintAudioButton() {
+    if (!audioBtn) return;
+    // 已表态时以读者意图为准，尚未表态时才跟随实际出声状态
+    const on = audioToggleOn || isAudioPlaying;
+    audioBtn.style.color = on ? '#18d1ff' : '#ffffff';
+    audioBtn.style.borderColor = on ? '#18d1ff' : '#4d4d4d';
+    audioBtn.title = on ? '环境底噪：已开启' : '环境底噪：已静音';
+    audioBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+  }
 
   function initProceduralAudio() {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
-    if (!AudioContext) return;
+    if (!AudioContext) return false;
     audioCtx = new AudioContext();
 
     // 变压器 50Hz 工频交流电声
@@ -1863,7 +2814,7 @@ document.addEventListener('DOMContentLoaded', () => {
     filter.frequency.setValueAtTime(800, audioCtx.currentTime);
 
     gainNode = audioCtx.createGain();
-    gainNode.gain.setValueAtTime(0.04, audioCtx.currentTime); // 保持微弱背景底噪
+    gainNode.gain.setValueAtTime(audioToggleOn ? 0 : 0.04, audioCtx.currentTime); // 开启时由 0 渐入，避免爆音
 
     // 节点连接
     noiseNode.connect(filter);
@@ -1873,32 +2824,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
     noiseNode.start();
     humNode.start();
+    return true;
   }
 
   if (audioBtn) {
     audioBtn.addEventListener('click', () => {
-      if (!audioCtx) {
-        initProceduralAudio();
+      // 首次交互: AudioContext 必须由用户手势创建。先建上下文，再走同一套切换逻辑 ——
+      // 早前把「建上下文」和「落实存储意图」合成一条分支，导致没有存储记录时首击成为
+      // 空操作；而以 isAudioPlaying 决定方向又会让「重载后存储为 on」的首击错误地打开。
+      // 唯一真值是 audioToggleOn（逻辑意图），每次点击只是把它翻转。
+      if (!audioCtx && !initProceduralAudio()) return; // 无 Web Audio: 按钮保持外观，不报错
+
+      audioToggleOn = !audioToggleOn;
+
+      if (audioToggleOn) {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        fadeAudio(0.04, 0.3);
         isAudioPlaying = true;
-        audioBtn.style.color = '#18d1ff';
-        audioBtn.style.borderColor = '#18d1ff';
-        audioBtn.title = '环境底噪：已开启';
+        storeSet(KEY_AUDIO, 'on');
       } else {
-        if (isAudioPlaying) {
-          audioCtx.suspend();
-          isAudioPlaying = false;
-          audioBtn.style.color = '#ffffff';
-          audioBtn.style.borderColor = '#4d4d4d';
-          audioBtn.title = '环境底噪：已静音';
-        } else {
-          audioCtx.resume();
-          isAudioPlaying = true;
-          audioBtn.style.color = '#18d1ff';
-          audioBtn.style.borderColor = '#18d1ff';
-          audioBtn.title = '环境底噪：已开启';
-        }
+        fadeAudio(0, 0.2);
+        const ctx = audioCtx;
+        window.setTimeout(() => {
+          if (!audioToggleOn && ctx.state === 'running') ctx.suspend();
+        }, 260);
+        isAudioPlaying = false;
+        storeSet(KEY_AUDIO, 'off');
       }
+      paintAudioButton();
     });
+  }
+
+  // 还原按钮外观与存储记录一致 (此处不会启动任何音频)
+  paintAudioButton();
+  if (audioToggleOn && audioBtn) {
+    audioBtn.addEventListener(
+      'pointerenter',
+      () => {
+        if (audioHintShown) return;
+        audioHintShown = true;
+        audioBtn.title = '环境底噪：待机中（点击开始）';
+      },
+      { passive: true }
+    );
   }
 });
 </script>

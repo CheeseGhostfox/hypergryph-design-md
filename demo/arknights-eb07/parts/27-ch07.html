@@ -97,5 +97,95 @@
         </div>
       </div>
 
+      <!-- 解密附件 (原生 details/summary，默认折叠) -->
+      <details class="annex">
+        <summary class="annex-summary">
+          <span class="annex-label">DECLASSIFIED ANNEX // 解密附件</span>
+          <span class="annex-title">磁带物性检验与盒内夹存物 · EB07-ANNEX-07</span>
+        </summary>
+        <div class="annex-body">
+          <div class="annex-sheet">SHEET 07 // 磁带物性检验单 · 实验室编号 LAB-42-0417</div>
+          <div class="annex-record"><span class="rec-key">[带基]</span>1/4 英寸醋酸纤维素带基，7.5 英寸/秒，单声道。磁粉层完整，无霉变、无拉伸变形。可读段 100%，未做信号增强处理。</div>
+          <div class="annex-record"><span class="rec-key">[盒内夹存物]</span>无纸条、无照片、无第二件物品。封套铅笔字迹经比对为现场书写，笔压均匀，书写时手部无颤抖。</div>
+          <div class="annex-record"><span class="rec-key">[归档决定]</span>原件恒温封存，不作消磁与再转录。档案编号 EB-ARCHIVE-4029-VII，等级永久一级。</div>
+        </div>
+      </details>
+
+      <!-- 终局抉择 (第七章末，二选一分支；选择记录于 eb07:ending) -->
+      <div class="ending-block" id="ending-block" data-ending="none">
+        <div class="ending-label">FINAL DISPOSITION // 终局处置</div>
+        <p class="ending-prompt">
+          卷宗至此闭合。磁带仍可读，天线地网仍可临时架设。身为四十年后的调阅者，你对这盘磁带作出最后处置。
+        </p>
+
+        <div class="ending-choice" id="ending-choice" role="group" aria-label="终局处置选择">
+          <button class="ending-option" id="ending-opt-air" type="button" data-ending="air" aria-pressed="false">
+            <span class="opt-zh">重新发射最后一段</span>
+            <span class="opt-en">// RE-TRANSMIT</span>
+          </button>
+          <button class="ending-option" id="ending-opt-seal" type="button" data-ending="seal" aria-pressed="false">
+            <span class="opt-zh">维持静默封存</span>
+            <span class="opt-en">// KEEP SEALED</span>
+          </button>
+        </div>
+
+        <div class="ending-note" id="ending-note" hidden>
+          <button class="rail-mini" id="ending-reset" type="button">
+            <span>重新选择</span>
+            <span class="mini-en">// RESELECT</span>
+          </button>
+          <span class="footnote">本处置已记录于调阅终端，可在清除后重新选定。</span>
+        </div>
+
+        <!-- 结局 A: 重新发射最后一段 -->
+        <div class="ending-passage" id="ending-air" hidden>
+          <div class="passage-head">
+            <span>ENDING A // 处置结果 · 重新发射</span>
+            <span>OUTCOME: RE-TRANSMIT</span>
+          </div>
+          <p>
+            处置令于新历四十二年四月十七日十七时四十分生效：磁带以 7.5 英寸/秒原速回放，经修复后残存的 TX-01 发射机并入临时架设的天线地网，向 104.2MHz 与 780kHz 双频同播，功率 500 瓦，持续四分二十秒。
+          </p>
+          <p>
+            这是白屿市沉没四十年后，第一次有声音从狮子口方向升起。值班技术员在原地站完全程，没有按下任何一枚中止键。信号越过山脊，掠过已成浅滩的老城石桥，最终散入夜里的电离层，什么也没有留下，只是响过了。
+          </p>
+          <p>
+            当日值班日志补记一行：录音已播发，接收方一栏填写「全部」。磁带随后重新封装回原盒，编号不变，封套上「未接天线」四字以铅笔划去一道，未撕、未涂改。
+          </p>
+          <p class="passage-last">
+            那盘磁带在架子上又放了四十年。封套上多了一行铅笔小字：本次已接天线。
+          </p>
+        </div>
+
+        <!-- 结局 B: 维持静默封存 -->
+        <div class="ending-passage" id="ending-seal" hidden>
+          <div class="passage-head">
+            <span>ENDING B // 处置结果 · 维持封存</span>
+            <span>OUTCOME: KEEP SEALED</span>
+          </div>
+          <p>
+            处置令于新历四十二年四月十七日十七时四十分生效：磁带不作回放，原盒原封退回恒温库房，架位 EB-07-VII，温度 18℃、湿度 45%，年度抽检一次，不作消磁。临时架设的天线当日拆除，地网铜线卷回收库。
+          </p>
+          <p>
+            现场未留存任何复制件、转录稿或播放记录。调查结论备忘录维持原状，最后一栏仍是那两个字：空白。四十年后收到的这四分二十秒，就这样又被交还给了四十年后的沉默。
+          </p>
+          <p>
+            库房管理员在新历四十二年度的抽检表上，把这盘磁带的状态勾为「完好·未启用」。表下按规程附一句例注：本件不属于待播素材，不具备启封权限。没有人为它写过申诉。
+          </p>
+          <p class="passage-last">
+            封套上「未接天线」四个字，此后一直是这座城市最完整的一句话。
+          </p>
+        </div>
+
+        <!-- 无脚本兜底: 脚本未运行时给出两个结局的全文 -->
+        <noscript>
+          <div class="noscript-note">
+            调阅终端未启用脚本：以下为两种终局处置的完整结局文本，供直接阅读。<br>
+            <strong>处置 A // 重新发射最后一段：</strong>处置令于新历四十二年四月十七日十七时四十分生效：磁带以 7.5 英寸/秒原速回放，经修复后残存的 TX-01 发射机并入临时架设的天线地网，向 104.2MHz 与 780kHz 双频同播，功率 500 瓦，持续四分二十秒。这是白屿市沉没四十年后，第一次有声音从狮子口方向升起。信号越过山脊，掠过已成浅滩的老城石桥，最终散入夜里的电离层，什么也没有留下，只是响过了。那盘磁带在架子上又放了四十年。封套上多了一行铅笔小字：本次已接天线。<br>
+            <strong>处置 B // 维持静默封存：</strong>处置令于新历四十二年四月十七日十七时四十分生效：磁带不作回放，原盒原封退回恒温库房，架位 EB-07-VII，年度抽检一次，不作消磁。调查结论备忘录维持原状，最后一栏仍是那两个字：空白。四十年后收到的这四分二十秒，就这样又被交还给了四十年后的沉默。封套上「未接天线」四个字，此后一直是这座城市最完整的一句话。
+          </div>
+        </noscript>
+      </div>
+
       <div class="divider-soft"></div>
     </section>
