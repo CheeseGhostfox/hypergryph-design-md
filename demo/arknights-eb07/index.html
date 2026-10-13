@@ -1,0 +1,1908 @@
+<!-- ==== 00-head.html ==== -->
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="白屿市民防紧急播报第七分站（EB-07）磁带回收档案 —— 《未播出的第七段》">
+  <title>《未播出的第七段》// THE UNSENT SEVENTH — 民防广播 EB-07 回收卷宗</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,600..800&family=Barlow:wght@400;700&family=Barlow+Condensed:wght@400;700&family=Oswald:wght@500;600&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+<!-- ==== 05-style-tokens.css ==== -->
+<style>
+:root {
+  --color-primary: #18d1ff;
+  --color-primary-strong: #06bbff;
+  --color-on-primary: #000000;
+  --color-canvas: #000000;
+  --color-surface-1: #121212;
+  --color-surface-2: #181818;
+  --color-surface-3: #1d1f20;
+  --color-surface-4: #242424;
+  --color-surface-5: #272727;
+  --color-surface-disabled: #585858;
+  --color-ink: #ffffff;
+  --color-ink-muted: #d2d2d2;
+  --color-ink-warm: #c4c2c2;
+  --color-ink-subtle: #ababab;
+  --color-ink-tertiary: #a4a4a4;
+  --color-ink-quaternary: #8d8d8d;
+  --color-ink-deep: #666666;
+  --color-hairline: #4d4d4d;
+  --color-hairline-soft: #333333;
+  --color-region-accent-red: #c7151e;
+  --color-region-surface-maroon: #4c2b2a;
+  --color-region-accent-gold: #eeb763;
+  --color-region-surface-taupe: #898175;
+  --color-region-accent-blue: #2096e6;
+  --color-region-surface-slate: #293f45;
+
+  --font-tracked-caps: 'Archivo', 'Encode Sans Expanded', sans-serif;
+  --font-ghost-display: 'Oswald', 'Barlow Semi Condensed', sans-serif;
+  --font-technical: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  --font-cjk: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+
+  --header-height: 120px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+}
+
+html {
+  background-color: #000000;
+  color: #ffffff;
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 16px;
+  line-height: 1.60;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: #000000;
+  color: #ffffff;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* 键盘可访问性高亮 */
+:focus-visible {
+  outline: 2px solid #18d1ff;
+  outline-offset: 2px;
+}
+
+/* 静态噪点滤镜层 (绝不逐帧重绘，保持纯静态与 GPU 合成) */
+.static-grain-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+}
+</style>
+
+<!-- ==== 06-style-components.css ==== -->
+<style>
+/* ==================== 组件系统 (DESIGN.md 实测规范) ==================== */
+
+/* 1. 顶栏 (top-nav: 120px 深度固定栏，双行栈) */
+.top-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 120px;
+  background-color: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid #4d4d4d;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  z-index: 100;
+}
+
+.nav-brand {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.brand-code {
+  font-family: 'Archivo', 'Encode Sans Expanded', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #18d1ff;
+  text-transform: uppercase;
+}
+
+.brand-name {
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #a4a4a4;
+  letter-spacing: 1px;
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  height: 120px;
+  gap: 28px;
+}
+
+.nav-item {
+  height: 120px;
+  display: flex;
+  align-items: center;
+}
+
+.nav-link {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 120px;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.2s linear;
+}
+
+.nav-link .link-en {
+  font-family: 'Archivo', 'Encode Sans Expanded', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.nav-link .link-zh {
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  color: #ababab;
+  letter-spacing: 1px;
+}
+
+/* 激活项: 青字 + 青下划线压在底发丝线上 */
+.nav-link.active .link-en,
+.nav-link.active .link-zh {
+  color: #18d1ff;
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #18d1ff;
+}
+
+.nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* 2. 按钮族 */
+.button-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  padding: 0 28px 0 16px;
+  background-color: #18d1ff;
+  color: #000000;
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s linear;
+}
+
+.button-primary .chevron {
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 16px;
+  margin-left: 12px;
+}
+
+.button-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  padding: 0 24px;
+  background-color: #000000;
+  color: #ffffff;
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid #4d4d4d;
+  cursor: pointer;
+  transition: border-color 0.2s linear;
+}
+
+.button-compact {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  padding: 0 10px;
+  background-color: #18d1ff;
+  color: #000000;
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border: none;
+  cursor: pointer;
+}
+
+.button-disabled {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  padding: 0 10px;
+  background-color: #585858;
+  color: #d2d2d2;
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border: none;
+  cursor: not-allowed;
+}
+
+/* 全系统唯一被允许圆角 (8px) 的图标按钮 */
+.icon-button {
+  width: 54px;
+  height: 54px;
+  border-radius: 8px;
+  background-color: #000000;
+  color: #ffffff;
+  border: 1px solid #4d4d4d;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s linear;
+}
+
+/* 3. 标题与排版声部 */
+.section-headline {
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.20;
+  letter-spacing: 0;
+  color: #ffffff;
+  border-left: 8px solid #18d1ff;
+  padding-left: 32px;
+  margin-bottom: 24px;
+}
+
+.section-idx {
+  font-family: 'Oswald', 'Barlow Semi Condensed', sans-serif;
+  color: #18d1ff;
+  margin-right: 8px;
+}
+
+.section-sep {
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  color: #ffffff;
+  margin-right: 8px;
+}
+
+.section-time {
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 24px;
+  color: #a4a4a4;
+  margin-right: 16px;
+}
+
+.display-lg {
+  font-family: 'Archivo', 'Encode Sans Expanded', sans-serif;
+  font-size: 60px;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -3.0px;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.display-lg .sub-en {
+  display: block;
+  font-size: 24px;
+  letter-spacing: 2px;
+  color: #18d1ff;
+  margin-top: 8px;
+}
+
+/* 幽灵巨字 (限制在 #242424，永不亮于此值，aria-hidden="true") */
+.ghost-display {
+  font-family: 'Oswald', 'Barlow Semi Condensed', sans-serif;
+  font-size: 112px;
+  font-weight: 500;
+  line-height: 1.00;
+  letter-spacing: -5.6px;
+  color: #242424;
+  user-select: none;
+  pointer-events: none;
+  position: absolute;
+  z-index: 0;
+}
+
+.micro {
+  font-family: 'Archivo', 'Encode Sans Expanded', sans-serif;
+  font-size: 6px;
+  font-weight: 500;
+  line-height: 1.00;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #a4a4a4;
+}
+
+.meta-label {
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.40;
+  letter-spacing: 1px;
+  color: #a4a4a4;
+}
+
+.footnote {
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.40;
+  letter-spacing: 1px;
+  color: #8d8d8d;
+}
+
+.body-lg {
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 18px;
+  line-height: 1.60;
+  color: #ffffff;
+}
+
+.body-text {
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 16px;
+  line-height: 1.70;
+  color: #d2d2d2;
+  margin-bottom: 20px;
+}
+
+.body-sm {
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 14px;
+  line-height: 1.60;
+  color: #ababab;
+}
+
+/* 4. 档案索引列表 (list-row: 360×96，两行截断标题) */
+.list-row {
+  width: 360px;
+  height: 96px;
+  background-color: #000000;
+  border-bottom: 1px solid #4d4d4d;
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.2s linear, border-left 0.2s linear;
+}
+
+.list-row-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.list-row-date {
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 12px;
+  color: #a4a4a4;
+  letter-spacing: 1px;
+}
+
+.list-row-tag {
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: #18d1ff;
+  border: 1px solid #18d1ff;
+  padding: 0 4px;
+  line-height: 1.2;
+}
+
+.list-row-title {
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.40;
+  letter-spacing: 1px;
+  color: #ffffff;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.list-row.active {
+  background-color: #121212;
+  border-left: none;
+}
+
+.list-row.active .list-row-title {
+  color: #18d1ff;
+}
+
+/* 5. 右栏控制器与计数器 */
+.counter {
+  font-family: 'Oswald', 'Barlow Semi Condensed', sans-serif;
+  font-size: 36px;
+  line-height: 1.0;
+  letter-spacing: -1px;
+  margin-bottom: 16px;
+}
+
+.counter-current {
+  color: #18d1ff;
+}
+
+.counter-sep {
+  color: #ffffff;
+  margin: 0 4px;
+}
+
+.counter-total {
+  color: #ffffff;
+}
+
+.section-tab-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.section-tab {
+  height: 64px;
+  padding: 0 24px;
+  background-color: #000000;
+  border-left: 8px solid #4d4d4d;
+  color: #ababab;
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+  transition: color 0.2s linear, border-left-color 0.2s linear;
+}
+
+.progress-bar-container {
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: #4d4d4d;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: #18d1ff;
+  width: 0%;
+  transition: width 0.3s linear;
+}
+
+/* 6. 三区色对与新闻卡片 (严格独立成对，永不混用) */
+.region-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 32px 0;
+}
+
+.region-card-red {
+  background-color: #4c2b2a;
+  color: #c7151e;
+  padding: 20px;
+  border: 1px solid #c7151e;
+}
+
+.region-card-gold {
+  background-color: #898175;
+  color: #eeb763;
+  padding: 20px;
+  border: 1px solid #eeb763;
+}
+
+.region-card-blue {
+  background-color: #293f45;
+  color: #2096e6;
+  padding: 20px;
+  border: 1px solid #2096e6;
+}
+
+.region-title {
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.region-meta {
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 12px;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+.region-desc {
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #d2d2d2;
+}
+
+/* 全系统唯一被许可的白字压青 (WCAG AA 展示尺寸装饰性色块) */
+.news-card {
+  height: 180px;
+  background-color: #18d1ff;
+  color: #ffffff;
+  padding: 32px 40px;
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.news-card-title {
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 2px;
+  color: #ffffff;
+}
+
+/* 动员令正文通告面板 (移出青底，置于黑底表面，确保阅读对比度与字号规范) */
+.news-dispatch-panel {
+  background-color: #121212;
+  border-top: 1px solid #333333;
+  padding: 20px 24px;
+  margin-top: 16px;
+  margin-bottom: 32px;
+}
+
+.dispatch-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.dispatch-body {
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 15px;
+  line-height: 1.70;
+  color: #d2d2d2;
+}
+
+
+/* 7. 过滤选项卡与控制覆写 */
+.filter-tabs-row {
+  display: flex;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.filter-tab-active {
+  height: 24px;
+  background-color: #18d1ff;
+  color: #000000;
+  padding: 0 10px 0 6px;
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  border: none;
+}
+
+.filter-tab-default {
+  height: 24px;
+  background-color: #000000;
+  color: #ffffff;
+  padding: 0 10px;
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  border: 1px solid #4d4d4d;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* 8. 发丝线与暗区 */
+.divider-soft {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, #333333 50%, transparent 100%);
+  border: none;
+  margin: 48px 0;
+}
+
+.scrim-overlay {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.95) 100%);
+}
+</style>
+
+<!-- ==== 07-style-layout.css ==== -->
+<style>
+/* ==================== 布局与朝向响应式规范 ==================== */
+
+.layout-container {
+  display: flex;
+  min-height: calc(100vh - 120px);
+  margin-top: 120px;
+  background-color: #000000;
+  position: relative;
+}
+
+/* 左侧栏: 360px 档案列表固定轨 */
+.left-rail {
+  width: 360px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 120px;
+  height: calc(100vh - 120px);
+  overflow-y: auto;
+  border-right: 1px solid #4d4d4d;
+  background-color: #000000;
+  scrollbar-width: thin;
+  scrollbar-color: #333333 #000000;
+}
+
+/* 中央叙事区 */
+.content-main {
+  flex: 1;
+  min-width: 0;
+  padding: 60px 48px;
+  background-color: #000000;
+}
+
+.content-inner {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+/* 右侧栏: 236px 控制与状态轨 */
+.right-rail {
+  width: 236px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 120px;
+  height: calc(100vh - 120px);
+  padding: 40px 24px;
+  border-left: 1px solid #4d4d4d;
+  background-color: #000000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.right-rail-top {
+  display: flex;
+  flex-direction: column;
+}
+
+.right-rail-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 章节通用样式 */
+.dossier-section {
+  padding-bottom: 80px;
+  position: relative;
+}
+
+.section-card-meta {
+  background-color: #121212;
+  border-left: 2px solid #4d4d4d;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.meta-key {
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 11px;
+  color: #8d8d8d;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.meta-val {
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 13px;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+/* 程序化矢量画面容器 */
+.vector-plate {
+  width: 100%;
+  border: 1px solid #333333;
+  background-color: #121212;
+  margin: 28px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.vector-plate svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* 动效与悬浮隔离 (@media (any-hover: hover)) */
+@media (any-hover: hover) {
+  .button-primary:hover {
+    background-color: #06bbff;
+  }
+
+  .button-secondary:hover {
+    border-color: #18d1ff;
+    color: #18d1ff;
+  }
+
+  .icon-button:hover {
+    border-color: #18d1ff;
+    color: #18d1ff;
+  }
+
+  .nav-link:hover .link-en {
+    color: #18d1ff;
+  }
+
+  .nav-link:hover .link-zh {
+    color: #ffffff;
+  }
+
+  .list-row:hover {
+    background-color: #181818;
+  }
+
+  .section-tab:hover {
+    border-left-color: #18d1ff;
+    color: #ffffff;
+  }
+
+  .filter-tab-default:hover {
+    border-color: #18d1ff;
+    color: #18d1ff;
+  }
+}
+
+/* 减少动效偏好 */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* 基于朝向的响应式 (@media (orientation: portrait)) */
+@media (orientation: portrait) {
+  .top-nav {
+    height: 72px;
+    padding: 0 16px;
+  }
+
+  .nav-brand .brand-name {
+    display: none;
+  }
+
+  .nav-menu {
+    display: none;
+  }
+
+  .layout-container {
+    margin-top: 72px;
+    flex-direction: column;
+  }
+
+  .left-rail {
+    width: 100%;
+    height: 88px;
+    position: static;
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    border-right: none;
+    border-bottom: 1px solid #4d4d4d;
+  }
+
+  .list-row {
+    width: 240px;
+    height: 88px;
+    flex-shrink: 0;
+    border-right: 1px solid #4d4d4d;
+    border-bottom: none;
+    padding: 12px 16px;
+  }
+
+  .content-main {
+    padding: 32px 16px;
+  }
+
+  .right-rail {
+    width: 100%;
+    height: auto;
+    position: static;
+    border-left: none;
+    border-top: 1px solid #4d4d4d;
+    padding: 24px 16px;
+  }
+
+  /* 保持 8px 青色左规结构签名在纵向朝向下的严谨一致 */
+  .section-headline {
+    font-size: 26px;
+    padding-left: 20px;
+    border-left: 8px solid #18d1ff;
+  }
+
+  .section-time {
+    font-size: 16px;
+  }
+
+  .display-lg {
+    font-size: 38px;
+    letter-spacing: -1.5px;
+  }
+
+  /* 纵向下的幽灵巨字步退至 64px，保留大字号纹理感 */
+  .ghost-display {
+    font-size: 64px;
+    letter-spacing: -3.2px;
+  }
+
+  .region-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .news-card {
+    height: auto;
+    min-height: 180px;
+    padding: 24px 20px;
+  }
+
+  .news-card-title {
+    font-size: 24px;
+    line-height: 1.3;
+  }
+}
+</style>
+
+<!-- ==== 10-body-open.html ==== -->
+</head>
+<body>
+
+<!-- 静态噪点纹理背景 (纯静态光栅化，不执行逐帧计算) -->
+<svg class="static-grain-overlay" aria-hidden="true" width="100%" height="100%">
+  <filter id="noiseFilter">
+    <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch" />
+  </filter>
+  <rect width="100%" height="100%" filter="url(#noiseFilter)" />
+</svg>
+
+<!-- 顶栏 (top-nav: 120px 深度固定栏，双行栈) -->
+<header class="top-nav">
+  <a href="#sec-index" class="nav-brand" aria-label="返回档案首屏">
+    <span class="brand-code">EB-07 // ARCHIVE</span>
+    <span class="brand-name">白屿市民防紧急播报站回收卷宗</span>
+  </a>
+
+  <nav aria-label="全宗章节导航">
+    <ul class="nav-menu">
+      <li class="nav-item">
+        <a href="#sec-index" class="nav-link active" data-target="sec-index">
+          <span class="link-en">INDEX</span>
+          <span class="link-zh">卷宗总览</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#sec-01" class="nav-link" data-target="sec-01">
+          <span class="link-en">01 ROUTINE</span>
+          <span class="link-zh">例行自检</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#sec-02" class="nav-link" data-target="sec-02">
+          <span class="link-en">02 SEISMIC</span>
+          <span class="link-zh">监测越界</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#sec-03" class="nav-link" data-target="sec-03">
+          <span class="link-en">03 EVACUATION</span>
+          <span class="link-zh">三区疏散</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#sec-04" class="nav-link" data-target="sec-04">
+          <span class="link-en">04 CRISIS</span>
+          <span class="link-zh">现场断裂</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#sec-05" class="nav-link" data-target="sec-05">
+          <span class="link-en">05 OVERRIDE</span>
+          <span class="link-zh">人工覆写</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#sec-06" class="nav-link" data-target="sec-06">
+          <span class="link-en">06 SILENCE</span>
+          <span class="link-zh">全域静默</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#sec-07" class="nav-link" data-target="sec-07">
+          <span class="link-en">07 RECOVERY</span>
+          <span class="link-zh">起获磁带</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="nav-controls">
+    <button id="audio-toggle-btn" class="icon-button" type="button" aria-label="切换环境音频模拟" title="环境底噪模拟开关">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="square">
+        <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<div class="layout-container">
+  <!-- 左栏: 360px 档案索引列表 -->
+  <aside class="left-rail" id="archive-index" aria-label="档案目录">
+    <a href="#sec-01" class="list-row" data-target="sec-01">
+      <div class="list-row-meta">
+        <span class="list-row-date">2026 // 10 / 09</span>
+        <span class="list-row-tag">例行</span>
+      </div>
+      <div class="list-row-title">TX-01 发射机早班例行自检及地层零位校准记录</div>
+    </a>
+
+    <a href="#sec-02" class="list-row" data-target="sec-02">
+      <div class="list-row-meta">
+        <span class="list-row-date">2026 // 10 / 10</span>
+        <span class="list-row-tag">监测</span>
+      </div>
+      <div class="list-row-title">关于 03 号深井基岩应力计阶跃异动之呈报与批复</div>
+    </a>
+
+    <a href="#sec-03" class="list-row" data-target="sec-03">
+      <div class="list-row-meta">
+        <span class="list-row-date">2026 // 10 / 11</span>
+        <span class="list-row-tag">疏散</span>
+      </div>
+      <div class="list-row-title">白屿市防汛防灾指挥部第 01 号全域撤离动员令</div>
+    </a>
+
+    <a href="#sec-04" class="list-row" data-target="sec-04">
+      <div class="list-row-meta">
+        <span class="list-row-date">2026 // 10 / 11</span>
+        <span class="list-row-tag">危机</span>
+      </div>
+      <div class="list-row-title">跨江枢纽白屿二桥中跨基桩断裂与信标调度指令</div>
+    </a>
+
+    <a href="#sec-05" class="list-row" data-target="sec-05">
+      <div class="list-row-meta">
+        <span class="list-row-date">2026 // 10 / 12</span>
+        <span class="list-row-tag">覆写</span>
+      </div>
+      <div class="list-row-title">市级自动轮播系统失效与人工麦克风物理覆写记事</div>
+    </a>
+
+    <a href="#sec-06" class="list-row" data-target="sec-06">
+      <div class="list-row-meta">
+        <span class="list-row-date">2026 // 10 / 12</span>
+        <span class="list-row-tag">静默</span>
+      </div>
+      <div class="list-row-title">白屿市民防应急广播终末通告与全频段关机宣告</div>
+    </a>
+
+    <a href="#sec-07" class="list-row" data-target="sec-07">
+      <div class="list-row-meta">
+        <span class="list-row-date">2066 // 04 / 17</span>
+        <span class="list-row-tag">未播出</span>
+      </div>
+      <div class="list-row-title">新历四十二年水下勘探组在 EB-07 起获之未发射磁带</div>
+    </a>
+  </aside>
+
+  <!-- 中央主阅读区 -->
+  <main class="content-main" id="reading-content">
+    <div class="content-inner">
+
+<!-- ==== 15-hero.html ==== -->
+    <!-- ==================== 首屏 / INDEX ==================== -->
+    <section id="sec-index" class="dossier-section" style="padding-top: 20px;">
+      <div style="position: relative; overflow: hidden; min-height: 480px; padding: 48px 0; border-bottom: 1px solid #4d4d4d;">
+        <!-- 幽灵巨字 (限制在 #242424，aria-hidden="true") -->
+        <div class="ghost-display" aria-hidden="true" style="top: 0; left: -10px;">
+          ARCHIVE // 07
+        </div>
+
+        <div style="position: relative; z-index: 1;">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+            <span class="micro">CLASSIFIED DOSSIER // DECLASSIFIED 2066</span>
+            <span style="height: 8px; width: 1px; background-color: #4d4d4d;"></span>
+            <span class="meta-label">卷宗编号：EB-ARCHIVE-4029-VII</span>
+          </div>
+
+          <!-- 全页面唯一 h1 标签 -->
+          <h1 class="display-lg">
+            未播出的第七段
+            <span class="sub-en">THE UNSENT SEVENTH // EB-07</span>
+          </h1>
+
+          <p class="body-lg" style="margin-top: 24px; max-width: 680px; color: #d2d2d2;">
+            虚构城市「白屿市」防灾广播第 07 号哨戒台（EB-07）最后录音卷宗。涵盖地质沉降爆发前七十二小时至沉没终末之七段完整档案记录。
+          </p>
+
+          <div style="margin-top: 36px; display: flex; gap: 16px; align-items: center;">
+            <a href="#sec-01" class="button-primary">
+              开始调阅档案 // READ DOSSIER <span class="chevron">&gt;</span>
+            </a>
+            <span class="footnote">阅读预估时间：约 10 分钟 · 完整叙事弧线</span>
+          </div>
+        </div>
+
+        <!-- 程序化全出血遮罩画面: 白屿市地层网络拓扑图 (纯 SVG + Scrim 遮罩，零外部图片) -->
+        <div class="vector-plate" style="margin-top: 40px; mask-image: linear-gradient(180deg, #ffffff 60%, transparent 100%); -webkit-mask-image: linear-gradient(180deg, #ffffff 60%, transparent 100%);">
+          <svg viewBox="0 0 800 240" fill="none" style="background-color: #000000;">
+            <!-- 坐标网格 -->
+            <defs>
+              <pattern id="gridPattern" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#242424" stroke-width="1" />
+              </pattern>
+            </defs>
+            <rect width="800" height="240" fill="url(#gridPattern)" />
+
+            <!-- 地层断裂带与等深线 -->
+            <path d="M 0 160 Q 200 130 400 170 T 800 140" stroke="#333333" stroke-width="1.5" stroke-dasharray="4 4" />
+            <path d="M 0 200 Q 250 180 500 210 T 800 190" stroke="#272727" stroke-width="2" />
+            <line x1="120" y1="40" x2="680" y2="40" stroke="#4d4d4d" stroke-width="1" />
+            <line x1="120" y1="40" x2="120" y2="200" stroke="#4d4d4d" stroke-width="1" />
+
+            <!-- 560 传感阵列采样点指示 -->
+            <circle cx="240" cy="110" r="3" fill="#18d1ff" />
+            <text x="250" y="114" fill="#18d1ff" font-family="Barlow, sans-serif" font-size="10" letter-spacing="1">NODE-03 [STRAIN-CRITICAL]</text>
+
+            <circle cx="480" cy="80" r="2.5" fill="#ffffff" />
+            <text x="490" y="84" fill="#a4a4a4" font-family="Barlow, sans-serif" font-size="9" letter-spacing="1">NODE-11 [BOREHOLE]</text>
+
+            <circle cx="620" cy="160" r="2.5" fill="#ffffff" />
+            <text x="630" y="164" fill="#a4a4a4" font-family="Barlow, sans-serif" font-size="9" letter-spacing="1">EB-07 [STATION ANTENNA]</text>
+
+            <!-- 沉陷漏斗雷达圈 -->
+            <circle cx="360" cy="140" r="50" stroke="#18d1ff" stroke-width="1" stroke-opacity="0.4" />
+            <circle cx="360" cy="140" r="80" stroke="#18d1ff" stroke-width="1" stroke-opacity="0.2" stroke-dasharray="2 4" />
+            <circle cx="360" cy="140" r="2" fill="#18d1ff" />
+            <text x="370" y="144" fill="#18d1ff" font-family="Barlow, sans-serif" font-size="10">SUBSIDENCE EPICENTER</text>
+          </svg>
+        </div>
+      </div>
+
+      <div class="divider-soft"></div>
+    </section>
+
+<!-- ==== 21-ch01.html ==== -->
+    <!-- ==================== 01 // [T-72:00] 例行 ==================== -->
+    <section id="sec-01" class="dossier-section">
+      <h2 class="section-headline">
+        <span class="section-idx">01</span><span class="section-sep">//</span><span class="section-time">T-72:00</span>
+        例行巡检与零位校准
+      </h2>
+
+      <div class="section-card-meta">
+        <div class="meta-item">
+          <span class="meta-key">RECORD TIME // 记录时间</span>
+          <span class="meta-val">2026-10-09 08:00:00 (T-72:00)</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-key">OPERATOR // 执勤工号</span>
+          <span class="meta-val">EB-07-04（技术三级值班员）</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-key">TRANSMITTER // 发射机工况</span>
+          <span class="meta-val">TX-01 超短波 500W · 104.2MHz 正常</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-key">SUBSIDENCE // 03#基岩应力</span>
+          <span class="meta-val">0.04 mm/d（稳态绿区）</span>
+        </div>
+      </div>
+
+      <div class="body-text">
+        早晨七点四十五分，交接班签字。夜班员老吴把铝制夹板递过来，四角磨出了灰白铝芯。他在三十八项晨检表上打满规整的勾，嘴里嚼着薄荷糖，抱怨靠海的气窗合页又锈死了，清晨海雾让配电柜铜端子泛出一层绿斑；又叮嘱我茶水间那个老式电热咖啡壶底座接触不良，插头得往左拧半圈再垫块橡皮擦。他在更衣柜翻找降压药无果，低声骂了一句便匆匆下山赶班车。
+      </div>
+
+      <div class="body-text">
+        八点整，我推上 TX-01 发射机主灯丝刀闸。两枚真空管在铁丝防爆网深处亮起迟钝温热的橘红辉光。变压器发出恒定而沉闷的微弱嗡鸣，直流屏流表稳稳咬在 180 毫安上。单耳耳机里传出规整的调频载波沙沙声与早间简报：微雨，偏东风三级，湿度 89%，潮位平缓。
+      </div>
+
+      <div class="body-text">
+        白屿市建在冲积陆缘与溶洞群之上。从海拔一百四十二米的狮子口哨戒机房望去，老城金区的瓦顶浸泡在晨雾中，早市三轮车冒着蓝烟驶过石板路，远方新城蓝区的钢结构高楼反射着灰冷微光。地下深部五百六十枚石英传感器每四秒脉冲一次，平淡如恒定心率。
+      </div>
+
+      <div class="body-text">
+        我拿起调零手柄对 03 号潮汐基岩应力计进行每日常规校准。指针正偏 0.04 毫米，稳稳落在绿区。我在日志盖上“运转正常”印章，签下工号：EB-07-04。这是第一千四百二十个班次，平静得如同窗外机械重复的潮水。
+      </div>
+
+      <div class="divider-soft"></div>
+    </section>
+
+<!-- ==== 22-ch02.html ==== -->
+    <!-- ==================== 02 // [T-46:12] 监测 ==================== -->
+    <section id="sec-02" class="dossier-section">
+      <h2 class="section-headline">
+        <span class="section-idx">02</span><span class="section-sep">//</span><span class="section-time">T-46:12</span>
+        地层应力越界与驳回批复
+      </h2>
+
+      <div class="section-card-meta">
+        <div class="meta-item">
+          <span class="meta-key">ANOMALY CODE // 异况代码</span>
+          <span class="meta-val">EB-ERR-4029（地质应力越界）</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-key">INSTANT RATE // 瞬时沉降率</span>
+          <span class="meta-val">12.8 mm/h（超限 32.0 倍）</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-key">INFRASOUND // 地音共振频</span>
+          <span class="meta-val">2.4 Hz 微震持续脉冲 (420s)</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-key">RESPONSE STATUS // 处理状态</span>
+          <span class="meta-val">CDPC 驳回：维持二级观察待机</span>
+        </div>
+      </div>
+
+      <div class="body-text">
+        上午九时四十八分，机架最右侧的蜂鸣器突然尖锐嘶叫，撕破了机房的沉闷。记录纸带滚筒高速旋转，紫色墨水针头在带格标尺上剧烈弹跳：03 号与 11 号孔位深井石英应力计读数失控飙升，沉降速率自 0.04 毫米/日骤增至每小时 12.8 毫米，超过一级警报阈值三十二倍。地下深处溶洞顶板的水听探头同时捕捉到低频次声波震颤——那是数百万吨基岩在巨大抗剪剪切力下发出的呻吟。
+      </div>
+
+      <!-- 程序化矢量图: 03# 应力计突变折线图 (纯数学 SVG，无外部 xmlns) -->
+      <div class="vector-plate">
+        <svg viewBox="0 0 800 200" fill="none" style="background-color: #000000;">
+          <line x1="60" y1="40" x2="760" y2="40" stroke="#4c2b2a" stroke-width="1" stroke-dasharray="2 4" />
+          <text x="65" y="34" fill="#c7151e" font-family="Barlow, sans-serif" font-size="10" letter-spacing="1">CRITICAL THRESHOLD: 0.40 mm/h (EXCEEDED)</text>
+
+          <line x1="60" y1="160" x2="760" y2="160" stroke="#333333" stroke-width="1" />
+          <text x="65" y="174" fill="#8d8d8d" font-family="Barlow, sans-serif" font-size="10" letter-spacing="1">NOMINAL BASELINE: 0.04 mm/d</text>
+
+          <line x1="60" y1="20" x2="60" y2="180" stroke="#4d4d4d" stroke-width="1" />
+          <line x1="60" y1="180" x2="760" y2="180" stroke="#4d4d4d" stroke-width="1" />
+
+          <path d="M 60 160 L 280 159 L 420 158 L 540 148 L 620 90 L 700 45 L 750 25" stroke="#18d1ff" stroke-width="2" fill="none" />
+          <circle cx="750" cy="25" r="4" fill="#18d1ff" />
+          <text x="670" y="20" fill="#18d1ff" font-family="Barlow, sans-serif" font-size="11" font-weight="700">12.8 mm/h (PEAK)</text>
+        </svg>
+      </div>
+
+      <div class="body-text">
+        我的指尖瞬间冰凉。我依照手册第四条第二款迅速截取应力斜率，打印成特急呈报单《EB-ERR-4029》，加盖红印通过加密专线向市防灾减灾中心（CDPC）提交。
+      </div>
+
+      <div class="body-text">
+        四十二分钟后电传打字机吐出批复，措辞冰冷齐整：“经专家组复核，传感器脉冲系新港区深基坑连续墙注浆施工引发之浅层孔隙水压局部释放，属工程受控沉降。维持二级常规待机，暂不启动防灾疏散警报。严禁擅自发布非确认信息，继续观察。”
+      </div>
+
+      <div class="body-text">
+        深红公章压在末行。我在批复单空白下边缘，用铅笔推演着那条未被采信的剪应力曲线：临界点不在下周，而在今夜。窗外，成群海鸟惊恐成片腾空盘旋哀鸣，迟迟不敢落回防波堤。
+      </div>
+
+      <div class="divider-soft"></div>
+    </section>
+
+<!-- ==== 23-ch03.html ==== -->
+    <!-- ==================== 03 // [T-31:40] 疏散 ==================== -->
+    <section id="sec-03" class="dossier-section">
+      <h2 class="section-headline">
+        <span class="section-idx">03</span><span class="section-sep">//</span><span class="section-time">T-31:40</span>
+        全域疏散令与三区时空死局
+      </h2>
+
+      <div class="section-card-meta">
+        <div class="meta-item">
+          <span class="meta-key">EVACUATION ORDER // 动员令号</span>
+          <span class="meta-val">CMD-EVAC-STAGE-3 (全域三级)</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-key">AFFECTED CITIZENS // 涉及人口</span>
+          <span class="meta-val">76.1 万人（全城三区）</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-key">SINKHOLE EXPANSION // 塌陷漏斗</span>
+          <span class="meta-val">直径 11.2 km · 扩展速率 45,000 m³/h</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-key">ESCAPE CHOKEPOINT // 唯一逃生咽喉</span>
+          <span class="meta-val">白屿二桥（跨江干线）· 负荷 320%</span>
+        </div>
+      </div>
+
+      <div class="body-text">
+        午夜零点二十分，猩红警报灯疯狂闪烁。市指挥部特级直通线路覆写了发射机夜间音乐。地下承压水层大范围穿孔贯通，连锁剪切下陷全面爆发，全域三级疏散令紧急下达。
+      </div>
+
+      <!-- 全系统唯一被许可的白字压青展示卡片 (news-card: 180px, 纯青实心，纯展示尺寸标题) -->
+      <div class="news-card">
+        <div class="news-card-title">白屿市防汛防地质灾害应急指挥部第 01 号全域撤离动员令</div>
+      </div>
+
+      <!-- 动员令正文通告 (移至高对比度黑底面板，确保正文字号符合规范与阅读对比度) -->
+      <div class="news-dispatch-panel">
+        <div class="dispatch-header">
+          <span class="meta-key">OFFICIAL PROCLAMATION // 法定通告正文</span>
+          <span class="meta-val" style="color: #18d1ff;">BROADCAST MANDATORY</span>
+        </div>
+        <div class="dispatch-body">
+          “全域基岩承载力已达破坏极限。即刻起，红、金、蓝三区启动疏散。全体市民听从民防应急广播（104.2MHz / 780kHz）引导，向北侧跨江生命线分批后撤。”
+        </div>
+      </div>
+
+
+      <div class="body-text">
+        然而，摊在播报台上的三区时序表是一道无解的数学死局：
+      </div>
+
+      <!-- 三区色对卡片: 严格成对，永不混用色彩 -->
+      <div class="region-grid">
+        <!-- 红区: 重化工业港区 (#4c2b2a 底 + #c7151e 字) -->
+        <div class="region-card-red">
+          <div class="region-title">红区 // 重化工业港区</div>
+          <div class="region-meta">POPULATION: 18.4 万人 · 窗口: 4.2 小时</div>
+          <div class="region-desc">
+            处于沉陷中心。集聚液化烃与光气化工基地，储罐倾斜率破极值。储罐一旦剪切破裂将封死海湾，撤离仅靠单线工矿铁路。
+          </div>
+        </div>
+
+        <!-- 金区: 旧城历史与平民区 (#898175 底 + #eeb763 字) -->
+        <div class="region-card-gold">
+          <div class="region-title">金区 // 老城生活街区</div>
+          <div class="region-meta">POPULATION: 42.1 万人 · 需求: 14.5 小时</div>
+          <div class="region-desc">
+            人口最密。深巷狭窄，多为老旧石桥，通行阻尼极大。居民以老幼为主，安全撤离理论耗时十四个半小时。
+          </div>
+        </div>
+
+        <!-- 蓝区: 新城行政与金融区 (#293f45 底 + #2096e6 字) -->
+        <div class="region-card-blue">
+          <div class="region-title">蓝区 // 行政与滨海新城</div>
+          <div class="meta-meta" style="font-family: 'Barlow', sans-serif; font-size: 12px; color: #ffffff; margin-bottom: 8px;">POPULATION: 15.6 万人 · 窗口: 2.5 小时</div>
+          <div class="region-desc">
+            市政等级最高，拥双向八车道高架。但其入桥匝道与金区唯一逃生省道在跨江桥头呈剪刀状交汇死锁。
+          </div>
+        </div>
+      </div>
+
+      <div class="body-text">
+        若三区同时涌向跨江桥，蓝区私家车流将在四十分钟内把金区步行老幼死死卡在引桥下；若扣留蓝区优先老城，红区储罐倾覆的毒气又将吞噬全湾。调度机里满是尖叫争吵。我在发烫的面板前按下广播钮，每句措辞背后都是生与死的冷酷博弈。
+      </div>
+
+      <div class="divider-soft"></div>
+    </section>
+
+<!-- ==== 24-ch04.html ==== -->
+    <!-- ==================== 04 // [T-18:05] 现场 ==================== -->
+    <section id="sec-04" class="dossier-section">
+      <h2 class="section-headline">
+        <span class="section-idx">04</span><span class="section-sep">//</span><span class="section-time">T-18:05</span>
+        跨江通道断裂与信标强行并联
+      </h2>
+
+      <div class="section-card-meta">
+        <div class="meta-item">
+          <span class="meta-key">CRITICAL FAILURE // 结构失效</span>
+          <span class="meta-val">白屿二桥 4# 主沉井基桩剪切断开</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-key">CHOKEPOINT THROUGHPUT // 咽喉通行能力</span>
+          <span class="meta-val">0%（主梁垮塌坠江 · 全线阻断）</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-key">DISPATCH DIRECTIVE // 调度指令</span>
+          <span class="meta-val">CMD-FREQ-SPLIT-99（强行切断中波）</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-key">OPERATOR DECISION // 操作决断</span>
+          <span class="meta-val">拒执行 · 强行双频并联 · 烧毁备用机</span>
+        </div>
+      </div>
+
+      <div class="body-text">
+        下午一时五十五分，大地剧烈抽搐。瞭望窗外江心腾起数丈高的泥浆与白雾。白屿二桥第四号深水沉井在巨大剪应力下轰然折断，四百米主梁带着金属扭曲巨响倾覆坠入江底，断口高压电缆迸出数道青白电弧。
+      </div>
+
+      <!-- 程序化矢量图: 4# 基桩剪切破坏示意 (纯 SVG，无外部 xmlns) -->
+      <div class="vector-plate">
+        <svg viewBox="0 0 800 180" fill="none" style="background-color: #000000;">
+          <rect x="0" y="80" width="800" height="100" fill="#121212" />
+          <line x1="0" y1="80" x2="800" y2="80" stroke="#293f45" stroke-width="2" />
+          <text x="20" y="100" fill="#2096e6" font-family="Barlow, sans-serif" font-size="10">WATER LEVEL: +4.2m (HIGH TIDE INFLUX)</text>
+
+          <path d="M 40 50 L 340 50 L 370 70" stroke="#ffffff" stroke-width="4" />
+          <path d="M 450 120 L 480 50 L 760 50" stroke="#ffffff" stroke-width="4" stroke-dasharray="8 4" />
+          <circle cx="340" cy="50" r="4" fill="#c7151e" />
+          <text x="350" y="45" fill="#c7151e" font-family="Barlow, sans-serif" font-size="11" font-weight="700">SHEAR FRACTURE POINT</text>
+
+          <line x1="390" y1="80" x2="390" y2="160" stroke="#c7151e" stroke-width="2" stroke-dasharray="3 3" />
+          <line x1="370" y1="120" x2="410" y2="120" stroke="#c7151e" stroke-width="2" />
+          <text x="420" y="125" fill="#c7151e" font-family="Barlow, sans-serif" font-size="10">DISPLACEMENT &gt; 3.8m</text>
+        </svg>
+      </div>
+
+      <div class="body-text">
+        通道断了。车队在引桥失控冲撞，将金区仅存的步行便桥死死封堵。指挥中心急电命令《CMD-FREQ-SPLIT-99》：“立即切断金区 780kHz 中波，功率全部汇聚至 104.2MHz 蓝区调频，播报浅滩渡口，优先保全重点车队。”
+      </div>
+
+      <div class="body-text">
+        蓝区私家车配有调频屏显；而断电的金区老街里，四十万平民唯一的工具是两节干电池的老式晶体管中波半导体。切断 780kHz，他们将瞬间坠入无声死渊，无人知道主桥已塌，只能盲目走向绝路。
+      </div>
+
+      <div class="body-text">
+        控制台前并排着红色的“依规切断”与黑色的“强行并联”两枚按键。指挥官在耳机里尖叫催促。我没有碰红色，大拇指重重按下了黑色按键。
+      </div>
+
+      <div class="body-text">
+        配电柜猛地爆出耀眼电弧，备用功放管瞬间熔断焦糊。我以烧毁备用机为代价，将超短波信号强行并入中波天线，为金区保住了九十分钟全功率播报。我在日志写下：“工号 EB-07-04 自主启动双频并联。设备损坏后果与规程责任，由我一人承担。”
+      </div>
+
+      <div class="divider-soft"></div>
+    </section>
+
+<!-- ==== 25-ch05.html ==== -->
+    <!-- ==================== 05 // [T-04:57] 覆写 ==================== -->
+    <section id="sec-05" class="dossier-section">
+      <h2 class="section-headline">
+        <span class="section-idx">05</span><span class="section-sep">//</span><span class="section-time">T-04:57</span>
+        自动化瘫痪与人工声带覆写
+      </h2>
+
+      <div class="section-card-meta">
+        <div class="meta-item">
+          <span class="meta-key">GRID POWER // 市网高压供电</span>
+          <span class="meta-val">0 kV（全域断电 · 变电枢纽落水）</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-key">STATION POWER // 站内储备电源</span>
+          <span class="meta-val">24V 铅酸蓄电池单组维持（21.4V）</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-key">AUTOMATION TTS // 自动中枢状态</span>
+          <span class="meta-val">进水短路死循环 · 错误指令锁死</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-key">EVACUATION STATUS // 站内人员撤离</span>
+          <span class="meta-val">抗命拒退 · 铅门内旋死自锁</span>
+        </div>
+      </div>
+
+      <!-- 组件: 疏散进度监视条 (progress-bar) -->
+      <div style="margin: 28px 0;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+          <span class="meta-label">全域人员向北撤离进度监视 // EVACUATION PROGRESS</span>
+          <span class="meta-label" style="color: #18d1ff;">74.8% COMPLETED</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-bar-fill" style="width: 74.8%;"></div>
+        </div>
+      </div>
+
+      <!-- 组件: 频道切换与覆写状态卡 (filter-tab-active / filter-tab-default) -->
+      <div class="filter-tabs-row">
+        <button class="filter-tab-active" type="button">人工麦克风覆写 // MANUAL OVERRIDE &gt;</button>
+        <button class="filter-tab-default" type="button" disabled>数字自动化总线 [已物理切断]</button>
+        <button class="filter-tab-default" type="button" disabled>指挥中心微波干线 [失锁]</button>
+      </div>
+
+      <div class="body-text">
+        凌晨三点零三分，主电网全面崩溃，山坳间高压铁塔连环倒塌，幽蓝电火花如流星雨般消散。荧光灯熄灭，机房跌入黑暗，唯余蓄电池微弱绿光。
+      </div>
+
+      <div class="body-text">
+        更致命的是自动化广播服务器进水短路陷入死循环，天线不断重复着冰冷机械的女声：“请市民留在原地，地下民防设施具备一级抗压……留在地下等待救援……”。
+      </div>
+
+      <div class="body-text">
+        而海水早已沿着排污管道倒灌，地势低洼的地下防空洞正变成被水灌满的混凝土水牢！不能让机器继续杀人。我抓起一字螺丝刀砸碎联锁铅封，被毛刺划破食指，伸手用斜口钳一刀剪断数字同轴电缆。女声戛然而止。我借手电光亮，把话筒前置跳线直接焊在调制栅极上。
+      </div>
+
+      <div class="body-text">
+        院外传来刺目车灯，末班巡查撤离车狂鸣汽笛，喇叭嘶喊：“EB-07！滑坡带已切入地基！半小时内山体崩塌！立刻登车撤离！”
+      </div>
+
+      <div class="body-text">
+        我走到半吨重的防爆门前，握住铁转轮用尽全力向右旋紧，锁舌深嵌入框。我拔下连杆抛入电缆槽，走回台前把工号胸卡推进自锁槽。抓起冰冷锈涩的金属话筒，我深吸一口气按下通话键：
+      </div>
+
+      <div class="body-text" style="color: #ffffff; font-weight: 700;">
+        “白屿市市民请注意。不要留在原地。不要进入地下设施。带上淡水与照明，沿着玄武岩背斜山脊向北走。山脊不会沉。重复一遍，沿着山脊走……”
+      </div>
+
+      <div class="divider-soft"></div>
+    </section>
+
+<!-- ==== 26-ch06.html ==== -->
+    <!-- ==================== 06 // [T-00:00] 静默 ==================== -->
+    <section id="sec-06" class="dossier-section scrim-overlay" style="padding: 60px 0; background-color: #000000;">
+      <h2 class="section-headline">
+        <span class="section-idx">06</span><span class="section-sep">//</span><span class="section-time">T-00:00</span>
+        终末宣告与全域绝对静默
+      </h2>
+
+      <div class="section-card-meta">
+        <div class="meta-item">
+          <span class="meta-key">CITY STATUS // 白屿全域态势</span>
+          <span class="meta-val">冲积平原沉陷入海 · 城市全域灭灯</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-key">WATER LEVEL // 站外潮位</span>
+          <span class="meta-val">淹没大门石阶第三级（+143.2m）</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-key">ANTENNA SWR // 天线阻抗匹配</span>
+          <span class="meta-val">地网没水 · 驻波比失谐至 ∞</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-key">CHANNEL RESPONSE // 空中电波应答</span>
+          <span class="meta-val">0 个台站 · 全频段底噪 100%</span>
+        </div>
+      </div>
+
+      <div class="body-text" style="color: #ababab;">
+        早晨八点整。沉陷到达终局。
+      </div>
+
+      <div class="body-text" style="color: #8d8d8d;">
+        浑浊海浪漫过正门石阶第三级，拍打铸铁铅门发出沉闷回响。机房弥漫电解液酸雾与绝缘胶焦味。天线基座沉入水下，放电管跳跃微弱幽蓝电晕。窗外的平原街区已尽数沉入灰黑浪涛，唯余几栋摩天楼尖顶如墓碑刺破水面，破裂的天然气管在海浪中燃烧着残烛孤火。
+      </div>
+
+      <div class="body-text">
+        但在视线尽头，那道黑色的玄武岩山脊高高隆起。漫长的撤离人流如同一条黑色细线，全部跨过了山脊北端的最高关口。他们走过去了。
+      </div>
+
+      <div class="body-text">
+        对讲机里全是纯粹白噪声，无人应答。依照条例第七条第三款，我拿起话筒，发出白屿市在空中的最后一段宣告：
+      </div>
+
+      <div style="background-color: #121212; border-left: 8px solid #18d1ff; padding: 24px 32px; margin: 32px 0;">
+        <div style="font-family: 'Barlow', sans-serif; font-size: 11px; color: #18d1ff; letter-spacing: 2px; margin-bottom: 8px;">
+          FINAL STATUTORY TRANSMISSION // 全域法定终末宣告
+        </div>
+        <div style="font-family: 'Noto Sans SC', sans-serif; font-size: 18px; font-weight: 700; color: #ffffff; line-height: 1.5;">
+          “白屿市全域紧急疏散引导播报结束。当前时间，新历二十六年十月十二日早八点整。全频段关机。”
+        </div>
+      </div>
+
+      <div class="body-text">
+        我松开按键，伸手扳下发射机主刀闸，切断蓄电池母线。
+      </div>
+
+      <div class="body-text" style="color: #666666;">
+        持续七十二小时的巨大电流轰鸣瞬间消失。世界陷入纯粹的绝对静默。只有门外浪涛拍打钢板，一下，又一下。室内唯余吞噬一切的纯黑。我没有站起来，也没有走向那扇无法开启的门。
+      </div>
+
+      <div class="divider-soft"></div>
+    </section>
+
+<!-- ==== 27-ch07.html ==== -->
+    <!-- ==================== 07 // [——] 未播出 ==================== -->
+    <section id="sec-07" class="dossier-section">
+      <h2 class="section-headline">
+        <span class="section-idx">07</span><span class="section-sep">//</span><span class="section-time">——:——</span>
+        起获磁带与未曾寄出的名字
+      </h2>
+
+      <div class="section-card-meta">
+        <div class="meta-item">
+          <span class="meta-key">RECOVERY DATE // 打捞归档日期</span>
+          <span class="meta-val">新历 42 年 4 月 17 日（四十年后）</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-key">RECOVERY SITE // 起获遗址地点</span>
+          <span class="meta-val">白屿市狮子口玄武岩残礁（水下 12m 避难舱）</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-key">PHYSICAL OBJECT // 物件技术特征</span>
+          <span class="meta-val">1/4 英寸开盘磁带 · 铅笔标注「未接天线」</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-key">SEARCH VERDICT // 遗骸与人员勘验</span>
+          <span class="meta-val">未发现任何遗骨与随身物品 · 空白存留</span>
+        </div>
+      </div>
+
+      <div class="body-text">
+        新历四十二年春，地质搜寻组登上退潮时露出海面的狮子口孤礁。站房已风化为残破混凝土空壳。在水下避难舱深处，搜寻队起获了一盘保存完好的开盘磁带（编号 `TAPE-EB07-7`）。封套上留有铅笔划过的字迹：<strong style="color: #18d1ff;">“未接天线”</strong>。
+      </div>
+
+      <!-- 程序化开盘机视觉组件 (纯 SVG，无外部 xmlns) -->
+      <div class="vector-plate" style="padding: 24px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+          <span class="micro">MAGNETIC TAPE REEL TELEMETRY // TAPE-EB07-7</span>
+          <span class="meta-label" style="color: #18d1ff;">SPEED: 7.5 IPS · TRACK: MONO ANALOG</span>
+        </div>
+
+        <svg viewBox="0 0 600 120" fill="none" style="background-color: #121212; width: 100%; height: auto;">
+          <circle cx="160" cy="60" r="45" stroke="#4d4d4d" stroke-width="2" />
+          <circle cx="160" cy="60" r="18" fill="#242424" stroke="#18d1ff" stroke-width="1.5" />
+          <circle cx="160" cy="60" r="6" fill="#18d1ff" />
+
+          <circle cx="440" cy="60" r="45" stroke="#4d4d4d" stroke-width="2" />
+          <circle cx="440" cy="60" r="18" fill="#242424" stroke="#ffffff" stroke-width="1.5" />
+          <circle cx="440" cy="60" r="6" fill="#ffffff" />
+
+          <line x1="160" y1="105" x2="270" y2="105" stroke="#8d8d8d" stroke-width="3" />
+          <line x1="330" y1="105" x2="440" y2="105" stroke="#8d8d8d" stroke-width="3" />
+
+          <rect x="270" y="90" width="60" height="24" fill="#000000" stroke="#18d1ff" stroke-width="1" />
+          <text x="282" y="106" fill="#18d1ff" font-family="Barlow, sans-serif" font-size="10">HEAD 01</text>
+        </svg>
+      </div>
+
+      <!-- 录音转录文稿 (真实姓名出现且仅出现一次) -->
+      <div style="background-color: #121212; border-top: 1px solid #333333; padding: 28px 32px; margin: 28px 0;">
+        <div style="font-family: 'Barlow', sans-serif; font-size: 11px; color: #18d1ff; letter-spacing: 2px; margin-bottom: 12px;">
+          AUDIO TRANSCRIPTION // DECLASSIFIED TAPE TRANSCRIPT
+        </div>
+
+        <p class="body-text" style="color: #8d8d8d; font-style: italic; margin-bottom: 12px;">
+          （走带电机嗡鸣与微弱摩擦声……打火机滑动的轻响，随后是一声微弱的吐气声）
+        </p>
+
+        <p class="body-text" style="color: #ffffff; margin-bottom: 14px;">
+          “……主发射机停了。天线电缆也拔掉了。外面很安静，除了水浪撞门的声响，什么也听不见。
+        </p>
+        <p class="body-text" style="color: #ffffff; margin-bottom: 14px;">
+          刚才从窗缝最后看了一眼，山脊路上的人已经全走过了风口。他们走得真慢啊，但确实走过去了。老吴留下的半壶咖啡完全凉透了，不过喝起来居然还行。
+        </p>
+        <p class="body-text" style="color: #ffffff; margin-bottom: 14px;">
+          这盘磁带不会播出去，它根本没接在发射机上。四五十年后可能没人记得这座城市本来的样子，没人记得老城石桥有多窄，也没人记得大桥塌掉的声音。但总得有人在一切归于泥沙前，给它划上最后一个句号。
+        </p>
+        <p class="body-text" style="color: #ffffff; margin-bottom: 14px;">
+          电池快放尽了。白屿市全域避难引导播报完毕。记录结束。
+        </p>
+        <p class="body-text" style="color: #18d1ff; font-weight: 700; margin-bottom: 14px;">
+          工号 EB-07-04。技术员林述。”
+        </p>
+
+        <p class="body-text" style="color: #8d8d8d; font-style: italic; margin-bottom: 12px;">
+          （话筒开关弹起的回弹声。人声完整收尾并主动停止）
+        </p>
+        <p class="body-text" style="color: #666666; font-style: italic; margin-bottom: 0;">
+          （磁带继续平稳走动了四分二十秒，记录着机房底噪与海潮声，直至磁带走完停转）
+        </p>
+      </div>
+
+      <!-- 搜寻组调查结论 (保住空白) -->
+      <div style="background-color: #181818; border-left: 2px solid #8d8d8d; padding: 20px 24px; margin-top: 28px;">
+        <div class="micro" style="color: #a4a4a4; margin-bottom: 6px;">HISTORICAL ARCHIVE VERDICT // 调查结论备忘录</div>
+        <div class="body-sm" style="color: #d2d2d2; line-height: 1.7;">
+          搜寻组在对遗址及周边二百米残骸区进行三次全覆盖多波束声呐扫描后确认：
+          <span style="color: #ffffff; font-weight: 700;">现场未发现任何人体骨骼、随身生活遗物或救生设备痕迹</span>。去向未明，不作推测判定。
+          本盘磁带为白屿市档案中唯一完整终结之物理记录。归档定名《未播出的第七段》，列为永久一级历史文献。
+          空白留存于此。
+        </div>
+      </div>
+
+      <div class="divider-soft"></div>
+    </section>
+
+<!-- ==== 70-body-close.html ==== -->
+    </div> <!-- .content-inner -->
+  </main> <!-- .content-main -->
+
+  <!-- 右栏: 236px 控制与状态轨 -->
+  <aside class="right-rail" id="control-rail" aria-label="卷宗控制与进度面板">
+    <div class="right-rail-top">
+      <div class="meta-label" style="margin-bottom: 8px;">CURRENT LOG // 当前章节</div>
+      <div class="counter" aria-live="polite">
+        <span id="counter-current" class="counter-current">01</span>
+        <span class="counter-sep">//</span>
+        <span class="counter-total">07</span>
+      </div>
+
+      <div class="progress-bar-container">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+          <span class="meta-label">卷宗阅读进度</span>
+          <span id="reading-progress-text" class="meta-label" style="color: #18d1ff;">14%</span>
+        </div>
+        <div class="progress-bar">
+          <div id="reading-progress-fill" class="progress-bar-fill" style="width: 14%;"></div>
+        </div>
+      </div>
+
+      <div class="section-tab-group">
+        <button id="btn-prev-section" class="section-tab" type="button" aria-label="滚动至上一段记录">
+          <span>&lt; PREV</span>
+          <span class="micro">上一段</span>
+        </button>
+        <button id="btn-next-section" class="section-tab" type="button" aria-label="滚动至下一段记录">
+          <span>NEXT &gt;</span>
+          <span class="micro">下一段</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="right-rail-bottom">
+      <div class="divider-soft" style="margin: 16px 0;"></div>
+      <div class="meta-item">
+        <span class="meta-key">FACILITY ID</span>
+        <span class="meta-val">EB-07 (LION RIDGE)</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-key">CARRIER BAND</span>
+        <span class="meta-val">104.2MHz / 780kHz</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-key">CLASSIFICATION</span>
+        <span class="meta-val" style="color: #18d1ff;">PERMANENT ARCHIVE</span>
+      </div>
+      <div class="footnote" style="margin-top: 8px;">
+        白屿市民防防灾广播总台 · 终末磁带回收联合调查卷宗
+      </div>
+    </div>
+  </aside>
+</div> <!-- .layout-container -->
+
+<!-- ==== 80-script.js ==== -->
+<script>
+// ==================== 交互控制与音频模拟 (零外部依赖) ====================
+document.addEventListener('DOMContentLoaded', () => {
+  const sections = [
+    { id: 'sec-index', num: '00' },
+    { id: 'sec-01', num: '01' },
+    { id: 'sec-02', num: '02' },
+    { id: 'sec-03', num: '03' },
+    { id: 'sec-04', num: '04' },
+    { id: 'sec-05', num: '05' },
+    { id: 'sec-06', num: '06' },
+    { id: 'sec-07', num: '07' },
+  ];
+
+  const counterCurrent = document.getElementById('counter-current');
+  const progressFill = document.getElementById('reading-progress-fill');
+  const progressText = document.getElementById('reading-progress-text');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const listRows = document.querySelectorAll('.list-row');
+  const prevBtn = document.getElementById('btn-prev-section');
+  const nextBtn = document.getElementById('btn-next-section');
+
+  let currentSectionIndex = 1; // 默认停留在第 1 章节
+
+  // 1. 滚动进度与章节感知
+  function updateScrollState() {
+    const scrollY = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? Math.min(100, Math.max(0, (scrollY / docHeight) * 100)) : 0;
+
+    if (progressFill) {
+      progressFill.style.width = `${progress.toFixed(1)}%`;
+    }
+    if (progressText) {
+      progressText.textContent = `${Math.round(progress)}%`;
+    }
+
+    // 检测当前视口中心落在哪个章节
+    const midPoint = scrollY + window.innerHeight * 0.4;
+    let activeIdx = 0;
+
+    sections.forEach((sec, idx) => {
+      const el = document.getElementById(sec.id);
+      if (el) {
+        const top = el.offsetTop;
+        const height = el.offsetHeight;
+        if (midPoint >= top && midPoint < top + height) {
+          activeIdx = idx;
+        }
+      }
+    });
+
+    currentSectionIndex = activeIdx;
+
+    // 更新计数器 (01 // 07，首屏为 01)
+    if (counterCurrent) {
+      const displayNum = activeIdx === 0 ? '01' : sections[activeIdx].num;
+      counterCurrent.textContent = displayNum;
+    }
+
+    // 更新顶栏激活态
+    navLinks.forEach((link) => {
+      const target = link.getAttribute('data-target');
+      if (target === sections[activeIdx].id) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+
+    // 更新左侧栏激活态
+    listRows.forEach((row) => {
+      const target = row.getAttribute('data-target');
+      if (target === sections[activeIdx].id) {
+        row.classList.add('active');
+      } else {
+        row.classList.remove('active');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateScrollState, { passive: true });
+  updateScrollState();
+
+  // 2. 上一段 / 下一段按钮导航
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      const targetIdx = Math.max(1, currentSectionIndex - 1);
+      const targetEl = document.getElementById(sections[targetIdx].id);
+      if (targetEl) {
+        targetEl.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      const targetIdx = Math.min(sections.length - 1, currentSectionIndex + 1);
+      const targetEl = document.getElementById(sections[targetIdx].id);
+      if (targetEl) {
+        targetEl.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  }
+
+  // 3. Web Audio API 程序化环境底噪模拟 (纯代码合成，无任何音频文件)
+  let audioCtx = null;
+  let noiseNode = null;
+  let humNode = null;
+  let gainNode = null;
+  let isAudioPlaying = false;
+  const audioBtn = document.getElementById('audio-toggle-btn');
+
+  function initProceduralAudio() {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+    audioCtx = new AudioContext();
+
+    // 变压器 50Hz 工频交流电声
+    humNode = audioCtx.createOscillator();
+    humNode.type = 'sine';
+    humNode.frequency.setValueAtTime(50, audioCtx.currentTime);
+
+    // 短波电台与磁带白噪声生成器
+    const bufferSize = 2 * audioCtx.sampleRate;
+    const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+    const output = noiseBuffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      output[i] = Math.random() * 2 - 1;
+    }
+
+    noiseNode = audioCtx.createBufferSource();
+    noiseNode.buffer = noiseBuffer;
+    noiseNode.loop = true;
+
+    // 低通滤波器模拟老旧收音机受限频响 (800Hz 截止)
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(800, audioCtx.currentTime);
+
+    gainNode = audioCtx.createGain();
+    gainNode.gain.setValueAtTime(0.04, audioCtx.currentTime); // 保持微弱背景底噪
+
+    // 节点连接
+    noiseNode.connect(filter);
+    filter.connect(gainNode);
+    humNode.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+
+    noiseNode.start();
+    humNode.start();
+  }
+
+  if (audioBtn) {
+    audioBtn.addEventListener('click', () => {
+      if (!audioCtx) {
+        initProceduralAudio();
+        isAudioPlaying = true;
+        audioBtn.style.color = '#18d1ff';
+        audioBtn.style.borderColor = '#18d1ff';
+        audioBtn.title = '环境底噪：已开启';
+      } else {
+        if (isAudioPlaying) {
+          audioCtx.suspend();
+          isAudioPlaying = false;
+          audioBtn.style.color = '#ffffff';
+          audioBtn.style.borderColor = '#4d4d4d';
+          audioBtn.title = '环境底噪：已静音';
+        } else {
+          audioCtx.resume();
+          isAudioPlaying = true;
+          audioBtn.style.color = '#18d1ff';
+          audioBtn.style.borderColor = '#18d1ff';
+          audioBtn.title = '环境底噪：已开启';
+        }
+      }
+    });
+  }
+});
+</script>
+
+<!-- ==== 90-tail.html ==== -->
+</body>
+</html>

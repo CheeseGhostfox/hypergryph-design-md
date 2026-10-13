@@ -1,0 +1,55 @@
+    </div> <!-- .content-inner -->
+  </main> <!-- .content-main -->
+
+  <!-- 右栏: 236px 控制与状态轨 -->
+  <aside class="right-rail" id="control-rail" aria-label="卷宗控制与进度面板">
+    <div class="right-rail-top">
+      <div class="meta-label" style="margin-bottom: 8px;">CURRENT LOG // 当前章节</div>
+      <div class="counter" aria-live="polite">
+        <span id="counter-current" class="counter-current">01</span>
+        <span class="counter-sep">//</span>
+        <span class="counter-total">07</span>
+      </div>
+
+      <div class="progress-bar-container">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+          <span class="meta-label">卷宗阅读进度</span>
+          <span id="reading-progress-text" class="meta-label" style="color: #18d1ff;">14%</span>
+        </div>
+        <div class="progress-bar">
+          <div id="reading-progress-fill" class="progress-bar-fill" style="width: 14%;"></div>
+        </div>
+      </div>
+
+      <div class="section-tab-group">
+        <button id="btn-prev-section" class="section-tab" type="button" aria-label="滚动至上一段记录">
+          <span>&lt; PREV</span>
+          <span class="micro">上一段</span>
+        </button>
+        <button id="btn-next-section" class="section-tab" type="button" aria-label="滚动至下一段记录">
+          <span>NEXT &gt;</span>
+          <span class="micro">下一段</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="right-rail-bottom">
+      <div class="divider-soft" style="margin: 16px 0;"></div>
+      <div class="meta-item">
+        <span class="meta-key">FACILITY ID</span>
+        <span class="meta-val">EB-07 (LION RIDGE)</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-key">CARRIER BAND</span>
+        <span class="meta-val">104.2MHz / 780kHz</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-key">CLASSIFICATION</span>
+        <span class="meta-val" style="color: #18d1ff;">PERMANENT ARCHIVE</span>
+      </div>
+      <div class="footnote" style="margin-top: 8px;">
+        白屿市民防防灾广播总台 · 终末磁带回收联合调查卷宗
+      </div>
+    </div>
+  </aside>
+</div> <!-- .layout-container -->

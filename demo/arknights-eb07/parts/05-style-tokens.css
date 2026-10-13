@@ -1,0 +1,78 @@
+:root {
+  --color-primary: #18d1ff;
+  --color-primary-strong: #06bbff;
+  --color-on-primary: #000000;
+  --color-canvas: #000000;
+  --color-surface-1: #121212;
+  --color-surface-2: #181818;
+  --color-surface-3: #1d1f20;
+  --color-surface-4: #242424;
+  --color-surface-5: #272727;
+  --color-surface-disabled: #585858;
+  --color-ink: #ffffff;
+  --color-ink-muted: #d2d2d2;
+  --color-ink-warm: #c4c2c2;
+  --color-ink-subtle: #ababab;
+  --color-ink-tertiary: #a4a4a4;
+  --color-ink-quaternary: #8d8d8d;
+  --color-ink-deep: #666666;
+  --color-hairline: #4d4d4d;
+  --color-hairline-soft: #333333;
+  --color-region-accent-red: #c7151e;
+  --color-region-surface-maroon: #4c2b2a;
+  --color-region-accent-gold: #eeb763;
+  --color-region-surface-taupe: #898175;
+  --color-region-accent-blue: #2096e6;
+  --color-region-surface-slate: #293f45;
+
+  --font-tracked-caps: 'Archivo', 'Encode Sans Expanded', sans-serif;
+  --font-ghost-display: 'Oswald', 'Barlow Semi Condensed', sans-serif;
+  --font-technical: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  --font-cjk: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+
+  --header-height: 120px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+}
+
+html {
+  background-color: #000000;
+  color: #ffffff;
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 16px;
+  line-height: 1.60;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: #000000;
+  color: #ffffff;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* 键盘可访问性高亮 */
+:focus-visible {
+  outline: 2px solid #18d1ff;
+  outline-offset: 2px;
+}
+
+/* 静态噪点滤镜层 (绝不逐帧重绘，保持纯静态与 GPU 合成) */
+.static-grain-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+}

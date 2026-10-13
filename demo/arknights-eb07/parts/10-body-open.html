@@ -1,0 +1,145 @@
+</head>
+<body>
+
+<!-- 静态噪点纹理背景 (纯静态光栅化，不执行逐帧计算) -->
+<svg class="static-grain-overlay" aria-hidden="true" width="100%" height="100%">
+  <filter id="noiseFilter">
+    <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch" />
+  </filter>
+  <rect width="100%" height="100%" filter="url(#noiseFilter)" />
+</svg>
+
+<!-- 顶栏 (top-nav: 120px 深度固定栏，双行栈) -->
+<header class="top-nav">
+  <a href="#sec-index" class="nav-brand" aria-label="返回档案首屏">
+    <span class="brand-code">EB-07 // ARCHIVE</span>
+    <span class="brand-name">白屿市民防紧急播报站回收卷宗</span>
+  </a>
+
+  <nav aria-label="全宗章节导航">
+    <ul class="nav-menu">
+      <li class="nav-item">
+        <a href="#sec-index" class="nav-link active" data-target="sec-index">
+          <span class="link-en">INDEX</span>
+          <span class="link-zh">卷宗总览</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#sec-01" class="nav-link" data-target="sec-01">
+          <span class="link-en">01 ROUTINE</span>
+          <span class="link-zh">例行自检</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#sec-02" class="nav-link" data-target="sec-02">
+          <span class="link-en">02 SEISMIC</span>
+          <span class="link-zh">监测越界</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#sec-03" class="nav-link" data-target="sec-03">
+          <span class="link-en">03 EVACUATION</span>
+          <span class="link-zh">三区疏散</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#sec-04" class="nav-link" data-target="sec-04">
+          <span class="link-en">04 CRISIS</span>
+          <span class="link-zh">现场断裂</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#sec-05" class="nav-link" data-target="sec-05">
+          <span class="link-en">05 OVERRIDE</span>
+          <span class="link-zh">人工覆写</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#sec-06" class="nav-link" data-target="sec-06">
+          <span class="link-en">06 SILENCE</span>
+          <span class="link-zh">全域静默</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#sec-07" class="nav-link" data-target="sec-07">
+          <span class="link-en">07 RECOVERY</span>
+          <span class="link-zh">起获磁带</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="nav-controls">
+    <button id="audio-toggle-btn" class="icon-button" type="button" aria-label="切换环境音频模拟" title="环境底噪模拟开关">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="square">
+        <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<div class="layout-container">
+  <!-- 左栏: 360px 档案索引列表 -->
+  <aside class="left-rail" id="archive-index" aria-label="档案目录">
+    <a href="#sec-01" class="list-row" data-target="sec-01">
+      <div class="list-row-meta">
+        <span class="list-row-date">2026 // 10 / 09</span>
+        <span class="list-row-tag">例行</span>
+      </div>
+      <div class="list-row-title">TX-01 发射机早班例行自检及地层零位校准记录</div>
+    </a>
+
+    <a href="#sec-02" class="list-row" data-target="sec-02">
+      <div class="list-row-meta">
+        <span class="list-row-date">2026 // 10 / 10</span>
+        <span class="list-row-tag">监测</span>
+      </div>
+      <div class="list-row-title">关于 03 号深井基岩应力计阶跃异动之呈报与批复</div>
+    </a>
+
+    <a href="#sec-03" class="list-row" data-target="sec-03">
+      <div class="list-row-meta">
+        <span class="list-row-date">2026 // 10 / 11</span>
+        <span class="list-row-tag">疏散</span>
+      </div>
+      <div class="list-row-title">白屿市防汛防灾指挥部第 01 号全域撤离动员令</div>
+    </a>
+
+    <a href="#sec-04" class="list-row" data-target="sec-04">
+      <div class="list-row-meta">
+        <span class="list-row-date">2026 // 10 / 11</span>
+        <span class="list-row-tag">危机</span>
+      </div>
+      <div class="list-row-title">跨江枢纽白屿二桥中跨基桩断裂与信标调度指令</div>
+    </a>
+
+    <a href="#sec-05" class="list-row" data-target="sec-05">
+      <div class="list-row-meta">
+        <span class="list-row-date">2026 // 10 / 12</span>
+        <span class="list-row-tag">覆写</span>
+      </div>
+      <div class="list-row-title">市级自动轮播系统失效与人工麦克风物理覆写记事</div>
+    </a>
+
+    <a href="#sec-06" class="list-row" data-target="sec-06">
+      <div class="list-row-meta">
+        <span class="list-row-date">2026 // 10 / 12</span>
+        <span class="list-row-tag">静默</span>
+      </div>
+      <div class="list-row-title">白屿市民防应急广播终末通告与全频段关机宣告</div>
+    </a>
+
+    <a href="#sec-07" class="list-row" data-target="sec-07">
+      <div class="list-row-meta">
+        <span class="list-row-date">2066 // 04 / 17</span>
+        <span class="list-row-tag">未播出</span>
+      </div>
+      <div class="list-row-title">新历四十二年水下勘探组在 EB-07 起获之未发射磁带</div>
+    </a>
+  </aside>
+
+  <!-- 中央主阅读区 -->
+  <main class="content-main" id="reading-content">
+    <div class="content-inner">

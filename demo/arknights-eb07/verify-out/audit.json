@@ -1,0 +1,638 @@
+{
+  "url": "file:///G:/awsome-design/demos/arknights-eb07/index.html",
+  "startedAt": "2026-10-13T14:42:54.025Z",
+  "viewports": [
+    {
+      "name": "landscape-1440x900",
+      "width": 1440,
+      "height": 900,
+      "console": [],
+      "allConsole": [],
+      "exceptions": [],
+      "failedRequests": [],
+      "fontResponses": [
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALRLoKI.woff2",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/barlow/v13/7cHpv4kjgoGqM7E_DMs5.woff2",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/archivo/v25/k3kPo8UDI-1M0wlSV9XAw6lQkqWY8Q8EsLydOxI.woff2",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/oswald/v57/TK3IWkUHHAIjg75cFRf3bXL8LICs1_Fv40pKlN4NNSeSASz7FmlWHYg.woff2",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/barlow/v13/7cHqv4kjgoGqM7E3t-4s51os.woff2",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/barlowcondensed/v13/HTxwL3I-JCGChYJ8VI-L6OO_au7B46r2z3bWuQ.woff2",
+          "status": 200,
+          "mime": "font/woff2"
+        }
+      ],
+      "audit": {
+        "fonts": {
+          "Oswald": true,
+          "Archivo": true,
+          "Barlow": true,
+          "Barlow Condensed": false,
+          "Noto Sans SC": true
+        },
+        "drift": {
+          "radiusValues": {
+            "8px": 1
+          },
+          "shadows": [],
+          "ghostTooBright": []
+        },
+        "counts": {
+          "domNodes": 417,
+          "boxShadow": 0,
+          "radius": 1,
+          "ghostTooBright": 0
+        },
+        "structure": {
+          "bodyBg": "rgb(0, 0, 0)",
+          "htmlBg": "rgb(0, 0, 0)",
+          "docHeight": 8582,
+          "title": "《未播出的第七段》// THE UNSENT SEVENTH — 民防广播 EB-07 回收卷宗",
+          "lang": "zh-CN",
+          "nav": true,
+          "sections": 8,
+          "h1": 1,
+          "h2": 7,
+          "headings": [
+            "H1: 未播出的第七段\n            THE UNSENT SEVENTH /",
+            "H2: 01//T-72:00\n        例行巡检与零位校准",
+            "H2: 02//T-46:12\n        地层应力越界与驳回批复",
+            "H2: 03//T-31:40\n        全域疏散令与三区时空死局",
+            "H2: 04//T-18:05\n        跨江通道断裂与信标强行并联",
+            "H2: 05//T-04:57\n        自动化瘫痪与人工声带覆写",
+            "H2: 06//T-00:00\n        终末宣告与全域绝对静默",
+            "H2: 07//——:——\n        起获磁带与未曾寄出的名字"
+          ],
+          "largeType": 1,
+          "cyanLeftRules": 8,
+          "cjkChars": 3747,
+          "totalChars": 6459
+        },
+        "fontsDeclared": {
+          "Archivo": {
+            "faces": 3,
+            "statuses": {
+              "unloaded": 2,
+              "loaded": 1
+            }
+          },
+          "Barlow": {
+            "faces": 6,
+            "statuses": {
+              "unloaded": 4,
+              "loaded": 2
+            }
+          },
+          "Barlow Condensed": {
+            "faces": 6,
+            "statuses": {
+              "unloaded": 5,
+              "loading": 1
+            }
+          },
+          "Noto Sans SC": {
+            "faces": 404,
+            "statuses": {
+              "unloaded": 328,
+              "loaded": 76
+            }
+          },
+          "Oswald": {
+            "faces": 10,
+            "statuses": {
+              "unloaded": 8,
+              "loaded": 2
+            }
+          }
+        },
+        "fontsReady": {
+          "status": "loading",
+          "size": 429
+        }
+      },
+      "screenshot": "G:\\awsome-design\\demos\\arknights-eb07\\verify-out\\landscape-1440x900.full.png"
+    },
+    {
+      "name": "portrait-390x844",
+      "width": 390,
+      "height": 844,
+      "console": [],
+      "allConsole": [],
+      "exceptions": [],
+      "failedRequests": [],
+      "fontResponses": [
+        {
+          "url": "https://fonts.gstatic.com/s/archivo/v25/k3kPo8UDI-1M0wlSV9XAw6lQkqWY8Q8EsLydOxI.woff2",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/barlow/v13/7cHpv4kjgoGqM7E_DMs5.woff2",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/barlow/v13/7cHqv4kjgoGqM7E3t-4s51os.woff2",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/barlowcondensed/v13/HTxwL3I-JCGChYJ8VI-L6OO_au7B46r2z3bWuQ.woff2",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALRLoKI.woff2",
+          "status": 200,
+          "mime": "font/woff2"
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/oswald/v57/TK3IWkUHHAIjg75cFRf3bXL8LICs1_Fv40pKlN4NNSeSASz7FmlWHYg.woff2",
+          "status": 200,
+          "mime": "font/woff2"
+        }
+      ],
+      "audit": {
+        "fonts": {
+          "Oswald": true,
+          "Archivo": true,
+          "Barlow": true,
+          "Barlow Condensed": true,
+          "Noto Sans SC": true
+        },
+        "drift": {
+          "radiusValues": {
+            "8px": 1
+          },
+          "shadows": [],
+          "ghostTooBright": []
+        },
+        "counts": {
+          "domNodes": 417,
+          "boxShadow": 0,
+          "radius": 1,
+          "ghostTooBright": 0
+        },
+        "structure": {
+          "bodyBg": "rgb(0, 0, 0)",
+          "htmlBg": "rgb(0, 0, 0)",
+          "docHeight": 11801,
+          "title": "《未播出的第七段》// THE UNSENT SEVENTH — 民防广播 EB-07 回收卷宗",
+          "lang": "zh-CN",
+          "nav": true,
+          "sections": 8,
+          "h1": 1,
+          "h2": 7,
+          "headings": [
+            "H1: 未播出的第七段\n            THE UNSENT SEVENTH /",
+            "H2: 01//T-72:00\n        例行巡检与零位校准",
+            "H2: 02//T-46:12\n        地层应力越界与驳回批复",
+            "H2: 03//T-31:40\n        全域疏散令与三区时空死局",
+            "H2: 04//T-18:05\n        跨江通道断裂与信标强行并联",
+            "H2: 05//T-04:57\n        自动化瘫痪与人工声带覆写",
+            "H2: 06//T-00:00\n        终末宣告与全域绝对静默",
+            "H2: 07//——:——\n        起获磁带与未曾寄出的名字"
+          ],
+          "largeType": 1,
+          "cyanLeftRules": 8,
+          "cjkChars": 3701,
+          "totalChars": 6317
+        },
+        "fontsDeclared": {
+          "Archivo": {
+            "faces": 3,
+            "statuses": {
+              "unloaded": 2,
+              "loaded": 1
+            }
+          },
+          "Barlow": {
+            "faces": 6,
+            "statuses": {
+              "unloaded": 4,
+              "loaded": 2
+            }
+          },
+          "Barlow Condensed": {
+            "faces": 6,
+            "statuses": {
+              "unloaded": 5,
+              "loaded": 1
+            }
+          },
+          "Noto Sans SC": {
+            "faces": 404,
+            "statuses": {
+              "unloaded": 328,
+              "loaded": 76
+            }
+          },
+          "Oswald": {
+            "faces": 10,
+            "statuses": {
+              "unloaded": 8,
+              "loaded": 2
+            }
+          }
+        },
+        "fontsReady": {
+          "status": "loaded",
+          "size": 429
+        }
+      },
+      "screenshot": "G:\\awsome-design\\demos\\arknights-eb07\\verify-out\\portrait-390x844.full.png"
+    }
+  ],
+  "ok": true,
+  "errors": []
+}

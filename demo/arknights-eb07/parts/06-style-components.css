@@ -1,0 +1,585 @@
+/* ==================== 组件系统 (DESIGN.md 实测规范) ==================== */
+
+/* 1. 顶栏 (top-nav: 120px 深度固定栏，双行栈) */
+.top-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 120px;
+  background-color: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid #4d4d4d;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  z-index: 100;
+}
+
+.nav-brand {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.brand-code {
+  font-family: 'Archivo', 'Encode Sans Expanded', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #18d1ff;
+  text-transform: uppercase;
+}
+
+.brand-name {
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #a4a4a4;
+  letter-spacing: 1px;
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  height: 120px;
+  gap: 28px;
+}
+
+.nav-item {
+  height: 120px;
+  display: flex;
+  align-items: center;
+}
+
+.nav-link {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 120px;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.2s linear;
+}
+
+.nav-link .link-en {
+  font-family: 'Archivo', 'Encode Sans Expanded', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.nav-link .link-zh {
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  color: #ababab;
+  letter-spacing: 1px;
+}
+
+/* 激活项: 青字 + 青下划线压在底发丝线上 */
+.nav-link.active .link-en,
+.nav-link.active .link-zh {
+  color: #18d1ff;
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #18d1ff;
+}
+
+.nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* 2. 按钮族 */
+.button-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  padding: 0 28px 0 16px;
+  background-color: #18d1ff;
+  color: #000000;
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s linear;
+}
+
+.button-primary .chevron {
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 16px;
+  margin-left: 12px;
+}
+
+.button-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  padding: 0 24px;
+  background-color: #000000;
+  color: #ffffff;
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid #4d4d4d;
+  cursor: pointer;
+  transition: border-color 0.2s linear;
+}
+
+.button-compact {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  padding: 0 10px;
+  background-color: #18d1ff;
+  color: #000000;
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border: none;
+  cursor: pointer;
+}
+
+.button-disabled {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  padding: 0 10px;
+  background-color: #585858;
+  color: #d2d2d2;
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border: none;
+  cursor: not-allowed;
+}
+
+/* 全系统唯一被允许圆角 (8px) 的图标按钮 */
+.icon-button {
+  width: 54px;
+  height: 54px;
+  border-radius: 8px;
+  background-color: #000000;
+  color: #ffffff;
+  border: 1px solid #4d4d4d;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s linear;
+}
+
+/* 3. 标题与排版声部 */
+.section-headline {
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.20;
+  letter-spacing: 0;
+  color: #ffffff;
+  border-left: 8px solid #18d1ff;
+  padding-left: 32px;
+  margin-bottom: 24px;
+}
+
+.section-idx {
+  font-family: 'Oswald', 'Barlow Semi Condensed', sans-serif;
+  color: #18d1ff;
+  margin-right: 8px;
+}
+
+.section-sep {
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  color: #ffffff;
+  margin-right: 8px;
+}
+
+.section-time {
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 24px;
+  color: #a4a4a4;
+  margin-right: 16px;
+}
+
+.display-lg {
+  font-family: 'Archivo', 'Encode Sans Expanded', sans-serif;
+  font-size: 60px;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -3.0px;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.display-lg .sub-en {
+  display: block;
+  font-size: 24px;
+  letter-spacing: 2px;
+  color: #18d1ff;
+  margin-top: 8px;
+}
+
+/* 幽灵巨字 (限制在 #242424，永不亮于此值，aria-hidden="true") */
+.ghost-display {
+  font-family: 'Oswald', 'Barlow Semi Condensed', sans-serif;
+  font-size: 112px;
+  font-weight: 500;
+  line-height: 1.00;
+  letter-spacing: -5.6px;
+  color: #242424;
+  user-select: none;
+  pointer-events: none;
+  position: absolute;
+  z-index: 0;
+}
+
+.micro {
+  font-family: 'Archivo', 'Encode Sans Expanded', sans-serif;
+  font-size: 6px;
+  font-weight: 500;
+  line-height: 1.00;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #a4a4a4;
+}
+
+.meta-label {
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.40;
+  letter-spacing: 1px;
+  color: #a4a4a4;
+}
+
+.footnote {
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.40;
+  letter-spacing: 1px;
+  color: #8d8d8d;
+}
+
+.body-lg {
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 18px;
+  line-height: 1.60;
+  color: #ffffff;
+}
+
+.body-text {
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 16px;
+  line-height: 1.70;
+  color: #d2d2d2;
+  margin-bottom: 20px;
+}
+
+.body-sm {
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 14px;
+  line-height: 1.60;
+  color: #ababab;
+}
+
+/* 4. 档案索引列表 (list-row: 360×96，两行截断标题) */
+.list-row {
+  width: 360px;
+  height: 96px;
+  background-color: #000000;
+  border-bottom: 1px solid #4d4d4d;
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.2s linear, border-left 0.2s linear;
+}
+
+.list-row-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.list-row-date {
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 12px;
+  color: #a4a4a4;
+  letter-spacing: 1px;
+}
+
+.list-row-tag {
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: #18d1ff;
+  border: 1px solid #18d1ff;
+  padding: 0 4px;
+  line-height: 1.2;
+}
+
+.list-row-title {
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.40;
+  letter-spacing: 1px;
+  color: #ffffff;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.list-row.active {
+  background-color: #121212;
+  border-left: none;
+}
+
+.list-row.active .list-row-title {
+  color: #18d1ff;
+}
+
+/* 5. 右栏控制器与计数器 */
+.counter {
+  font-family: 'Oswald', 'Barlow Semi Condensed', sans-serif;
+  font-size: 36px;
+  line-height: 1.0;
+  letter-spacing: -1px;
+  margin-bottom: 16px;
+}
+
+.counter-current {
+  color: #18d1ff;
+}
+
+.counter-sep {
+  color: #ffffff;
+  margin: 0 4px;
+}
+
+.counter-total {
+  color: #ffffff;
+}
+
+.section-tab-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.section-tab {
+  height: 64px;
+  padding: 0 24px;
+  background-color: #000000;
+  border-left: 8px solid #4d4d4d;
+  color: #ababab;
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+  transition: color 0.2s linear, border-left-color 0.2s linear;
+}
+
+.progress-bar-container {
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: #4d4d4d;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: #18d1ff;
+  width: 0%;
+  transition: width 0.3s linear;
+}
+
+/* 6. 三区色对与新闻卡片 (严格独立成对，永不混用) */
+.region-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 32px 0;
+}
+
+.region-card-red {
+  background-color: #4c2b2a;
+  color: #c7151e;
+  padding: 20px;
+  border: 1px solid #c7151e;
+}
+
+.region-card-gold {
+  background-color: #898175;
+  color: #eeb763;
+  padding: 20px;
+  border: 1px solid #eeb763;
+}
+
+.region-card-blue {
+  background-color: #293f45;
+  color: #2096e6;
+  padding: 20px;
+  border: 1px solid #2096e6;
+}
+
+.region-title {
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.region-meta {
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 12px;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+.region-desc {
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #d2d2d2;
+}
+
+/* 全系统唯一被许可的白字压青 (WCAG AA 展示尺寸装饰性色块) */
+.news-card {
+  height: 180px;
+  background-color: #18d1ff;
+  color: #ffffff;
+  padding: 32px 40px;
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.news-card-title {
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 2px;
+  color: #ffffff;
+}
+
+/* 动员令正文通告面板 (移出青底，置于黑底表面，确保阅读对比度与字号规范) */
+.news-dispatch-panel {
+  background-color: #121212;
+  border-top: 1px solid #333333;
+  padding: 20px 24px;
+  margin-top: 16px;
+  margin-bottom: 32px;
+}
+
+.dispatch-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.dispatch-body {
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 15px;
+  line-height: 1.70;
+  color: #d2d2d2;
+}
+
+
+/* 7. 过滤选项卡与控制覆写 */
+.filter-tabs-row {
+  display: flex;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.filter-tab-active {
+  height: 24px;
+  background-color: #18d1ff;
+  color: #000000;
+  padding: 0 10px 0 6px;
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  border: none;
+}
+
+.filter-tab-default {
+  height: 24px;
+  background-color: #000000;
+  color: #ffffff;
+  padding: 0 10px;
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  border: 1px solid #4d4d4d;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* 8. 发丝线与暗区 */
+.divider-soft {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, #333333 50%, transparent 100%);
+  border: none;
+  margin: 48px 0;
+}
+
+.scrim-overlay {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.95) 100%);
+}

@@ -46,6 +46,23 @@ against it. These analyses are unofficial and are not affiliated with or endorse
 | `arknights.md` | 《明日方舟》 | 硬工业近黑界面，纯 `#000000` 画布 + 单一电光青 `#18d1ff`，直角、发丝线分隔、`#242424` 巨大幽灵字；四声部字体（Novecento Sans Wide / Oswald / Bender / 思源黑体） | 依据 `ak.hypergryph.com` 官方样式表（约 152 KB CSS）与官方页面截图，并与本机官方 PC 客户端交叉核对 |
 | `endfield.md` | 《明日方舟：终末地》 | 信号黄工业科技界面，近黑 `#191919` 与近白双地色 + 单一高压黄 `#fffa00`，圆形/胶囊控件与 4px 卡片、环境阴影、斜纹警示渐层；元素有专属色相、职业只用单色字形 | 依据 `endfield.hypergryph.com` 官方样式表（370,417 字节 / 9 个 CSS）与官方页面截图，元素色取自官方 CDN 的 `ele-*.jpg` 图标量化取样 |
 
+## 演示 / Demo
+
+[![demo preview](demo/arknights-eb07/verify-out/landscape-1440x900.hero.png)](https://cheseghostfox.github.io/hypergryph-design-md/demo/arknights-eb07/)
+
+一份**只照着 `arknights.md` 做出来**的示例页面：**《未播出的第七段》// THE UNSENT SEVENTH** —— 虚构城市「白屿市」民防广播站 EB-07 的回收卷宗，七段记录，一个完整叙事弧线。
+
+- **在线预览**：<https://cheseghostfox.github.io/hypergryph-design-md/demo/arknights-eb07/>
+- **源码**：`demo/arknights-eb07/index.html` —— 自包含单文件，约 66 KB，零依赖、无构建步骤，双击就能开
+- **构建分片**：`demo/arknights-eb07/parts/` —— 其中 `05-style-tokens.css` 就是把 frontmatter 里的 token 落成 CSS 变量的那一层，可以直接对照着看规范怎么变成代码
+- **验收输出**：`demo/arknights-eb07/verify-out/` —— 横竖两版截图与 `audit.json`（`ok: true`、`errors: []`）
+
+这是一段**演示，不是规范的一部分**：它回答的是「照着 `arknights.md` 能长出什么」，而不是「必须这样写」。它只用到了 `arknights.md` 这一份文件，没有引用 `endfield.md`。
+
+> **字体说明**：示例页用的是公开替身字体（Archivo / Barlow / Oswald / Noto Sans SC，从 Google Fonts 加载），因为 `arknights.md` 里记录的原版字体 Novecento Sans Wide 与 Bender 并不公开分发 —— 这正是该文件「Note on Font Substitutes」一节建议的做法。
+
+**Demo (English).** A sample page built strictly from `arknights.md` — *THE UNSENT SEVENTH*, a seven-chapter fictional archive of a civil-defence broadcast station. Self-contained single HTML file, no build step, no dependencies beyond web fonts. It demonstrates the specification; it is not part of it.
+
 ## 友情链接 / Credits
 
 - 格式与撰写规范来自 **[VoltAgent/awesome-design-md](https://github.com/VoltAgent/awesome-design-md)**。本仓库沿用该项目定义的 `DESIGN.md` 格式与撰写规范。

@@ -1,0 +1,255 @@
+/* ==================== 布局与朝向响应式规范 ==================== */
+
+.layout-container {
+  display: flex;
+  min-height: calc(100vh - 120px);
+  margin-top: 120px;
+  background-color: #000000;
+  position: relative;
+}
+
+/* 左侧栏: 360px 档案列表固定轨 */
+.left-rail {
+  width: 360px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 120px;
+  height: calc(100vh - 120px);
+  overflow-y: auto;
+  border-right: 1px solid #4d4d4d;
+  background-color: #000000;
+  scrollbar-width: thin;
+  scrollbar-color: #333333 #000000;
+}
+
+/* 中央叙事区 */
+.content-main {
+  flex: 1;
+  min-width: 0;
+  padding: 60px 48px;
+  background-color: #000000;
+}
+
+.content-inner {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+/* 右侧栏: 236px 控制与状态轨 */
+.right-rail {
+  width: 236px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 120px;
+  height: calc(100vh - 120px);
+  padding: 40px 24px;
+  border-left: 1px solid #4d4d4d;
+  background-color: #000000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.right-rail-top {
+  display: flex;
+  flex-direction: column;
+}
+
+.right-rail-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 章节通用样式 */
+.dossier-section {
+  padding-bottom: 80px;
+  position: relative;
+}
+
+.section-card-meta {
+  background-color: #121212;
+  border-left: 2px solid #4d4d4d;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.meta-key {
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 11px;
+  color: #8d8d8d;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.meta-val {
+  font-family: 'Barlow', 'Barlow Condensed', 'Roboto Condensed', sans-serif;
+  font-size: 13px;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+/* 程序化矢量画面容器 */
+.vector-plate {
+  width: 100%;
+  border: 1px solid #333333;
+  background-color: #121212;
+  margin: 28px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.vector-plate svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* 动效与悬浮隔离 (@media (any-hover: hover)) */
+@media (any-hover: hover) {
+  .button-primary:hover {
+    background-color: #06bbff;
+  }
+
+  .button-secondary:hover {
+    border-color: #18d1ff;
+    color: #18d1ff;
+  }
+
+  .icon-button:hover {
+    border-color: #18d1ff;
+    color: #18d1ff;
+  }
+
+  .nav-link:hover .link-en {
+    color: #18d1ff;
+  }
+
+  .nav-link:hover .link-zh {
+    color: #ffffff;
+  }
+
+  .list-row:hover {
+    background-color: #181818;
+  }
+
+  .section-tab:hover {
+    border-left-color: #18d1ff;
+    color: #ffffff;
+  }
+
+  .filter-tab-default:hover {
+    border-color: #18d1ff;
+    color: #18d1ff;
+  }
+}
+
+/* 减少动效偏好 */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* 基于朝向的响应式 (@media (orientation: portrait)) */
+@media (orientation: portrait) {
+  .top-nav {
+    height: 72px;
+    padding: 0 16px;
+  }
+
+  .nav-brand .brand-name {
+    display: none;
+  }
+
+  .nav-menu {
+    display: none;
+  }
+
+  .layout-container {
+    margin-top: 72px;
+    flex-direction: column;
+  }
+
+  .left-rail {
+    width: 100%;
+    height: 88px;
+    position: static;
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    border-right: none;
+    border-bottom: 1px solid #4d4d4d;
+  }
+
+  .list-row {
+    width: 240px;
+    height: 88px;
+    flex-shrink: 0;
+    border-right: 1px solid #4d4d4d;
+    border-bottom: none;
+    padding: 12px 16px;
+  }
+
+  .content-main {
+    padding: 32px 16px;
+  }
+
+  .right-rail {
+    width: 100%;
+    height: auto;
+    position: static;
+    border-left: none;
+    border-top: 1px solid #4d4d4d;
+    padding: 24px 16px;
+  }
+
+  /* 保持 8px 青色左规结构签名在纵向朝向下的严谨一致 */
+  .section-headline {
+    font-size: 26px;
+    padding-left: 20px;
+    border-left: 8px solid #18d1ff;
+  }
+
+  .section-time {
+    font-size: 16px;
+  }
+
+  .display-lg {
+    font-size: 38px;
+    letter-spacing: -1.5px;
+  }
+
+  /* 纵向下的幽灵巨字步退至 64px，保留大字号纹理感 */
+  .ghost-display {
+    font-size: 64px;
+    letter-spacing: -3.2px;
+  }
+
+  .region-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .news-card {
+    height: auto;
+    min-height: 180px;
+    padding: 24px 20px;
+  }
+
+  .news-card-title {
+    font-size: 24px;
+    line-height: 1.3;
+  }
+}
+

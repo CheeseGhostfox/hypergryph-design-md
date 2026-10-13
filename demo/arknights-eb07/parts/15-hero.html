@@ -1,0 +1,71 @@
+    <!-- ==================== 首屏 / INDEX ==================== -->
+    <section id="sec-index" class="dossier-section" style="padding-top: 20px;">
+      <div style="position: relative; overflow: hidden; min-height: 480px; padding: 48px 0; border-bottom: 1px solid #4d4d4d;">
+        <!-- 幽灵巨字 (限制在 #242424，aria-hidden="true") -->
+        <div class="ghost-display" aria-hidden="true" style="top: 0; left: -10px;">
+          ARCHIVE // 07
+        </div>
+
+        <div style="position: relative; z-index: 1;">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+            <span class="micro">CLASSIFIED DOSSIER // DECLASSIFIED 2066</span>
+            <span style="height: 8px; width: 1px; background-color: #4d4d4d;"></span>
+            <span class="meta-label">卷宗编号：EB-ARCHIVE-4029-VII</span>
+          </div>
+
+          <!-- 全页面唯一 h1 标签 -->
+          <h1 class="display-lg">
+            未播出的第七段
+            <span class="sub-en">THE UNSENT SEVENTH // EB-07</span>
+          </h1>
+
+          <p class="body-lg" style="margin-top: 24px; max-width: 680px; color: #d2d2d2;">
+            虚构城市「白屿市」防灾广播第 07 号哨戒台（EB-07）最后录音卷宗。涵盖地质沉降爆发前七十二小时至沉没终末之七段完整档案记录。
+          </p>
+
+          <div style="margin-top: 36px; display: flex; gap: 16px; align-items: center;">
+            <a href="#sec-01" class="button-primary">
+              开始调阅档案 // READ DOSSIER <span class="chevron">&gt;</span>
+            </a>
+            <span class="footnote">阅读预估时间：约 10 分钟 · 完整叙事弧线</span>
+          </div>
+        </div>
+
+        <!-- 程序化全出血遮罩画面: 白屿市地层网络拓扑图 (纯 SVG + Scrim 遮罩，零外部图片) -->
+        <div class="vector-plate" style="margin-top: 40px; mask-image: linear-gradient(180deg, #ffffff 60%, transparent 100%); -webkit-mask-image: linear-gradient(180deg, #ffffff 60%, transparent 100%);">
+          <svg viewBox="0 0 800 240" fill="none" style="background-color: #000000;">
+            <!-- 坐标网格 -->
+            <defs>
+              <pattern id="gridPattern" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#242424" stroke-width="1" />
+              </pattern>
+            </defs>
+            <rect width="800" height="240" fill="url(#gridPattern)" />
+
+            <!-- 地层断裂带与等深线 -->
+            <path d="M 0 160 Q 200 130 400 170 T 800 140" stroke="#333333" stroke-width="1.5" stroke-dasharray="4 4" />
+            <path d="M 0 200 Q 250 180 500 210 T 800 190" stroke="#272727" stroke-width="2" />
+            <line x1="120" y1="40" x2="680" y2="40" stroke="#4d4d4d" stroke-width="1" />
+            <line x1="120" y1="40" x2="120" y2="200" stroke="#4d4d4d" stroke-width="1" />
+
+            <!-- 560 传感阵列采样点指示 -->
+            <circle cx="240" cy="110" r="3" fill="#18d1ff" />
+            <text x="250" y="114" fill="#18d1ff" font-family="Barlow, sans-serif" font-size="10" letter-spacing="1">NODE-03 [STRAIN-CRITICAL]</text>
+
+            <circle cx="480" cy="80" r="2.5" fill="#ffffff" />
+            <text x="490" y="84" fill="#a4a4a4" font-family="Barlow, sans-serif" font-size="9" letter-spacing="1">NODE-11 [BOREHOLE]</text>
+
+            <circle cx="620" cy="160" r="2.5" fill="#ffffff" />
+            <text x="630" y="164" fill="#a4a4a4" font-family="Barlow, sans-serif" font-size="9" letter-spacing="1">EB-07 [STATION ANTENNA]</text>
+
+            <!-- 沉陷漏斗雷达圈 -->
+            <circle cx="360" cy="140" r="50" stroke="#18d1ff" stroke-width="1" stroke-opacity="0.4" />
+            <circle cx="360" cy="140" r="80" stroke="#18d1ff" stroke-width="1" stroke-opacity="0.2" stroke-dasharray="2 4" />
+            <circle cx="360" cy="140" r="2" fill="#18d1ff" />
+            <text x="370" y="144" fill="#18d1ff" font-family="Barlow, sans-serif" font-size="10">SUBSIDENCE EPICENTER</text>
+          </svg>
+        </div>
+      </div>
+
+      <div class="divider-soft"></div>
+    </section>
