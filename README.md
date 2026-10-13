@@ -60,15 +60,26 @@ against it. These analyses are unofficial and are not affiliated with or endorse
 一份**只照着 `arknights-website.md` 做出来**的示例页面：**《未播出的第七段》// THE UNSENT SEVENTH** —— 虚构城市「白屿市」民防广播站 EB-07 的回收卷宗，七段记录，一个完整叙事弧线。
 
 - **在线预览**：<https://cheeseghostfox.github.io/hypergryph-design-md/demo/arknights-eb07/>
-- **源码**：`demo/arknights-eb07/index.html` —— 自包含单文件，约 66 KB，零依赖、无构建步骤，双击就能开
+- **源码**：`demo/arknights-eb07/index.html` —— 自包含单文件，约 106 KB，零依赖、无构建步骤，双击就能开
 - **构建分片**：`demo/arknights-eb07/parts/` —— 其中 `05-style-tokens.css` 就是把 frontmatter 里的 token 落成 CSS 变量的那一层，可以直接对照着看规范怎么变成代码
 - **验收输出**：`demo/arknights-eb07/verify-out/` —— 横竖两版截图与 `audit.json`（`ok: true`、`errors: []`）
 
-这是一段**演示，不是规范的一部分**：它回答的是「照着 `arknights-website.md` 能长出什么」，而不是「必须这样写」。它只用到了 `arknights-website.md` 这一份文件，没有引用 `endfield-website.md`。
+**它不是一张静态长图。** 页面里有四项真实交互：
+
+| 能力 | 说明 |
+| --- | --- |
+| **可展开档案** | 14 处原生 `<details>`：左栏 7 行索引可展开「卷宗摘要」，章节内 7 个「解密附件」块；默认全部收起 |
+| **终局抉择** | 章末二选一（重新发射最后一段 / 维持静默封存），两段互斥收尾正文，选择记入 `localStorage` 并可清除重选 |
+| **键盘与持久化** | `ArrowLeft` / `ArrowRight` 切章；已读行标记 +「回到上次读到」；阅读进度与音频意图跨会话保留 |
+| **磁带扫描** | 点击索引行时一道 0.3–0.5s 的青色扫描读数；`prefers-reduced-motion` 下取消动画并直落稳定态 |
+
+零依赖是认真的：没有框架、没有第三方脚本、没有音频文件——那段环境底噪是 Web Audio 用 50 Hz 正弦加低通白噪声**现场合成**的。
+
+这是一段**演示，不是规范的一部分**：它回答的是「照着 `arknights-website.md` 能长出什么」，而不是「必须这样写」。它只用到了 `arknights-website.md` 这一份文件，没有引用 `endfield-website.md`，也没有用上后来从游戏本体提取的 `arknights.md`。
 
 > **字体说明**：示例页用的是公开替身字体（Archivo / Barlow / Oswald / Noto Sans SC，从 Google Fonts 加载），因为 `arknights-website.md` 里记录的原版字体 Novecento Sans Wide 与 Bender 并不公开分发 —— 这正是该文件「Note on Font Substitutes」一节建议的做法。
 
-**Demo (English).** A sample page built strictly from `arknights-website.md` — *THE UNSENT SEVENTH*, a seven-chapter fictional archive of a civil-defence broadcast station. Self-contained single HTML file, no build step, no dependencies beyond web fonts. It demonstrates the specification; it is not part of it.
+**Demo (English).** A sample page built strictly from `arknights-website.md` — *THE UNSENT SEVENTH*, a seven-chapter fictional archive of a civil-defence broadcast station. Self-contained single HTML file (~106 KB), no build step, no dependencies beyond web fonts. **It is not a static page**: it ships 14 native `<details>` dossiers, a two-way ending choice persisted to `localStorage`, arrow-key chapter navigation with cross-session reading progress, and a tape-scan animation that honours `prefers-reduced-motion`. Even the ambient hum is synthesised live with Web Audio rather than loaded from a file. It demonstrates the specification; it is not part of it.
 
 ## TODO / 下一步
 
