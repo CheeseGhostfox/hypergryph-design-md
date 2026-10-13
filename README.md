@@ -1,16 +1,22 @@
-# hypergryph-design-md
+# 讲鹰语.md
+
+> 让您的 agent 交付物充斥鹰角叔叔的香甜舟味
 
 鹰角网络（Hypergryph）旗下游戏界面的 `DESIGN.md` 设计系统分析 —— 一个风格，一份文件。
 
+仓库 slug 是 `hypergryph-design-md`。GitHub 的仓库名只接受 ASCII 字母、数字与 `.-_`，所以「讲鹰语.md」作为中文名展示在标题与仓库简介里，链接地址仍用 slug。
+
 ## English summary
 
-Two standalone `DESIGN.md` design-system documents analysing the interfaces of Hypergryph titles:
-**Arknights** and **Arknights: Endfield**. Each file is a complete, self-contained `DESIGN.md`
-following the format defined by [VoltAgent/awesome-design-md](https://github.com/VoltAgent/awesome-design-md)
-— one style, one file, flat: no index, no registry, no per-style subdirectories, and no
-cross-references between files. Copy the one you want into your project root as `DESIGN.md` and let
-your AI coding agent build UI against it. These analyses are unofficial and are not affiliated with
-or endorsed by Hypergryph.
+**讲鹰语.md** — "Hypergryph-speak". Unofficial `DESIGN.md` design-system analyses for Hypergryph
+titles: **Arknights** and **Arknights: Endfield**. Tagline: *let your agent's deliverables brim with
+Uncle Hypergryph's sweet Arknights flavour.*
+
+Each file is a complete, self-contained `DESIGN.md` following the format defined by
+[VoltAgent/awesome-design-md](https://github.com/VoltAgent/awesome-design-md) — one style, one file,
+flat: no index, no registry, no per-style subdirectories, and no cross-references between files.
+Copy the one you want into your project root as `DESIGN.md` and let your AI coding agent build UI
+against it. These analyses are unofficial and are not affiliated with or endorsed by Hypergryph.
 
 ## 这是什么
 
