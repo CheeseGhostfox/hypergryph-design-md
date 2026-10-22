@@ -1,0 +1,181 @@
+          <!-- ================================================================
+               VIEW 01 // WITNESS: 幸存者卡池与脑机证词层检视台
+               ================================================================ -->
+          <div class="view-panel is-active ak-panel offset-plate" id="view-witness" role="tabpanel" aria-labelledby="tab-witness">
+            <div class="view-header">
+              <div class="view-header-title">
+                <span class="view-header-en">01 // SURVIVOR ROSTER</span>
+                <span class="view-header-zh">03 车厢六名幸存者 · 六阶神经覆写光晕分级（星标恒黄 #FEDC01）</span>
+              </div>
+              <span class="telemetry-chip" id="witness-active-code">WITNESS // W05 5★</span>
+            </div>
+
+            <div class="witness-layout">
+              <!-- 6-Card Rarity Roster (1★ to 6★ Glow Ramp: #FEFEFE -> #FE7200) -->
+              <div class="witness-roster" id="witness-roster-grid" role="listbox" aria-label="幸存者脑机卡片">
+                <!-- Populated dynamically & pre-rendered for instant zero-flicker inspection -->
+                <button type="button" class="witness-card" data-witness="W01" data-rarity="1" id="card-W01">
+                  <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <span class="rarity-pill">1★ RAW</span>
+                    <span class="star-row" aria-label="1星">★</span>
+                  </div>
+                  <div style="text-align:left;margin:4px 0;">
+                    <div style="font-size:var(--fs-row-title);font-weight:700;color:var(--c-ink);">沈听澜</div>
+                    <div style="font-size:var(--fs-caption);color:var(--c-ink-disabled);">盲眼钢琴调音师</div>
+                  </div>
+                  <div style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-ink-light-1);text-align:left;">
+                    BCI: NONE (骨传导)
+                  </div>
+                </button>
+
+                <button type="button" class="witness-card" data-witness="W02" data-rarity="2" id="card-W02">
+                  <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <span class="rarity-pill">2★ LOW</span>
+                    <span class="star-row" aria-label="2星">★★</span>
+                  </div>
+                  <div style="text-align:left;margin:4px 0;">
+                    <div style="font-size:var(--fs-row-title);font-weight:700;color:var(--c-ink);">周野</div>
+                    <div style="font-size:var(--fs-caption);color:var(--c-ink-disabled);">03车厢实习乘务员</div>
+                  </div>
+                  <div style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-rarity-2);text-align:left;">
+                    TAMPER: 18.4%
+                  </div>
+                </button>
+
+                <button type="button" class="witness-card" data-witness="W03" data-rarity="3" id="card-W03">
+                  <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <span class="rarity-pill">3★ TAC</span>
+                    <span class="star-row" aria-label="3星">★★★</span>
+                  </div>
+                  <div style="text-align:left;margin:4px 0;">
+                    <div style="font-size:var(--fs-row-title);font-weight:700;color:var(--c-ink);">陆峥</div>
+                    <div style="font-size:var(--fs-caption);color:var(--c-ink-disabled);">列车专职安全员</div>
+                  </div>
+                  <div style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-rarity-3);text-align:left;">
+                    TAMPER: 42.0%
+                  </div>
+                </button>
+
+                <button type="button" class="witness-card" data-witness="W04" data-rarity="4" id="card-W04">
+                  <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <span class="rarity-pill">4★ MED</span>
+                    <span class="star-row" aria-label="4星">★★★★</span>
+                  </div>
+                  <div style="text-align:left;margin:4px 0;">
+                    <div style="font-size:var(--fs-row-title);font-weight:700;color:var(--c-ink);">温莎·林</div>
+                    <div style="font-size:var(--fs-caption);color:var(--c-ink-disabled);">神经外科主治医师</div>
+                  </div>
+                  <div style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-rarity-4);text-align:left;">
+                    TAMPER: 67.5%
+                  </div>
+                </button>
+
+                <button type="button" class="witness-card is-selected" data-witness="W05" data-rarity="5" id="card-W05">
+                  <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <span class="rarity-pill">5★ CORE</span>
+                    <span class="star-row" aria-label="5星">★★★★★</span>
+                  </div>
+                  <div style="text-align:left;margin:4px 0;">
+                    <div style="font-size:var(--fs-row-title);font-weight:700;color:var(--c-ink);">顾言</div>
+                    <div style="font-size:var(--fs-caption);color:var(--c-ink-disabled);">智驾系统总架构师</div>
+                  </div>
+                  <div style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-rarity-5);text-align:left;">
+                    TAMPER: 89.2%
+                  </div>
+                </button>
+
+                <button type="button" class="witness-card" data-witness="W06" data-rarity="6" id="card-W06">
+                  <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <span class="rarity-pill">6★ VOID</span>
+                    <span class="star-row" aria-label="6星">★★★★★★</span>
+                  </div>
+                  <div style="text-align:left;margin:4px 0;">
+                    <div style="font-size:var(--fs-row-title);font-weight:700;color:var(--c-ink);">严律</div>
+                    <div style="font-size:var(--fs-caption);color:var(--c-ink-disabled);">特别调查委最高督察</div>
+                  </div>
+                  <div style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-rarity-6);text-align:left;">
+                    TAMPER: 99.8%
+                  </div>
+                </button>
+              </div>
+
+              <!-- Active Witness Detailed Dossier & Statement Layer Switcher -->
+              <div class="witness-detail-box">
+                <!-- Left Sub-Column: White-Mask UIColorGraphic Neural Portrait + Bio Telemetry -->
+                <div class="witness-portrait-well">
+                  <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <span style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-ink-disabled);" id="w-seat-tag">SEAT 03-E</span>
+                    <span class="star-row" id="w-star-badge">★★★★★</span>
+                  </div>
+
+                  <!-- #FEFEFE White Silhouette + Runtime UIColorGraphic Tint -->
+                  <svg id="w-portrait-svg" viewBox="0 0 160 150" style="width:100%;height:135px;">
+                    <rect x="4" y="4" width="152" height="142" fill="none" stroke="#555555" stroke-width="1" stroke-dasharray="4 2" />
+                    <g id="w-portrait-graphic" class="ui-color-graphic tint-gold">
+                      <circle cx="80" cy="52" r="24" fill="none" stroke-width="2" />
+                      <path d="M 40 132 C 40 96 120 96 120 132" fill="none" stroke-width="2" />
+                      <line x1="20" y1="52" x2="140" y2="52" stroke-width="0.8" stroke-dasharray="3 3" />
+                      <circle cx="80" cy="52" r="5" />
+                    </g>
+                  </svg>
+
+                  <div class="telemetry-cluster">
+                    <div class="telemetry-row"><span>覆盖阶位</span><span id="w-tier-text">5★ 源码级覆写</span></div>
+                    <div class="telemetry-row"><span>脑机型号</span><span id="w-bci-model">NEURO-LINK V4</span></div>
+                    <div class="telemetry-row"><span>深层状态</span><span id="w-decrypt-status" style="color:var(--c-brand-yellow);">待滤波破译</span></div>
+                  </div>
+                </div>
+
+                <!-- Right Sub-Column: Surface Statement vs. Deep Filtered Memory -->
+                <div class="witness-statement-well">
+                  <div style="display:flex;justify-content:space-between;align-items:center;gap:var(--s-xs);flex-wrap:wrap;min-width:0;">
+                    <div style="min-width:0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                      <h2 style="font-size:var(--fs-title-cjk);font-weight:700;color:var(--c-ink);display:inline;" id="w-name-heading">顾言</h2>
+                      <span style="font-size:var(--fs-body-sm);color:var(--c-ink-disabled);margin-left:8px;" id="w-role-sub">自动驾驶系统首席架构师 · 主动认罪嫌疑人</span>
+                    </div>
+
+                    <!-- Layer Switch Buttons (Surface vs Deep Residual) -->
+                    <div style="display:flex;gap:var(--s-xxs);">
+                      <button type="button" class="state-chip" data-state="on" id="btn-layer-surface">
+                        <span>LAYER A // 表层供述</span>
+                      </button>
+                      <button type="button" class="state-chip" data-state="off" id="btn-layer-deep">
+                        <span id="label-layer-deep">LAYER B // 深层残响 [未破译]</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Statement Card Body -->
+                  <div class="statement-body-card" id="w-statement-card">
+                    <div>
+                      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--c-hairline);">
+                        <span style="font-family:var(--f-tech);font-size:var(--fs-label);color:var(--c-currency-blue);" id="w-clip-id">CLIP [W05-A] // T-15.2s 表层记忆切片</span>
+                        <span class="rarity-pill" id="w-clip-tag" style="background:var(--c-panel);color:var(--c-ink);">已校验供词</span>
+                      </div>
+                      <p style="font-size:var(--fs-body);color:var(--c-ink-light-3);line-height:1.55;margin-bottom:10px;" id="w-statement-text">
+                        “全是我的错……列车驶入跨江大桥引桥时，车载毫米波雷达报了误警。我在 T-15 秒通过工程师维护终端强行发送了【紧急制动解除指令】，试图让列车保持巡航速度冲过传感器盲区，结果列车直接带着全速冲出了坍塌的桥面……”
+                      </p>
+                      <div style="padding:8px 10px;background-color:var(--c-panel-deep);border-left:3px solid var(--c-brand-yellow);font-size:var(--fs-body-sm);color:var(--c-ink-light-1);" id="w-forensic-note">
+                        <strong>取证台批注：</strong>顾言在事故后第一时间签署了认罪书，但他的脑波在叙述“T-15 秒解除制动”时呈现出高度规律的节拍器波形——像是背诵被写入的脚本，且需前往【02 // 17秒神经切片台】按配方拨动 7 态滤波开关方可剥离伪装。
+                      </div>
+                    </div>
+
+                    <!-- Action Row: Load Statement into Contradiction Slot A or Slot B, or Jump to Synapse Slicer -->
+                    <div style="display:flex;justify-content:space-between;align-items:center;gap:var(--s-xs);padding-top:8px;border-top:1px solid var(--c-surface-5);">
+                      <button type="button" class="btn-compact" id="btn-goto-synapse">
+                        <span>02 切片台深层破译 →</span>
+                      </button>
+                      <div style="display:flex;gap:var(--s-xxs);">
+                        <button type="button" class="btn btn-primary" style="height:34px;font-size:var(--fs-body-sm);padding:0 10px;" id="btn-load-witness-a">
+                          <span>装填入槽 [A]</span>
+                        </button>
+                        <button type="button" class="btn btn-secondary" style="height:34px;font-size:var(--fs-body-sm);padding:0 10px;" id="btn-load-witness-b">
+                          <span>装填入槽 [B]</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>

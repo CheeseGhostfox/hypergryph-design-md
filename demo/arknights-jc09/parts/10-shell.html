@@ -1,0 +1,109 @@
+</head>
+<body>
+  <div class="jc09-viewport" id="app-root">
+    <!-- Architectural Void Layer (45%–55% Open Ground + #242424 Ghost Wordmark + White-Mask SVG) -->
+    <div class="void-backdrop" aria-hidden="true">
+      <div class="void-ghost-sub">JUDICIAL BCI FORENSICS // CASE 2026-K9-17S</div>
+      <div class="void-ghost-word">JACKDAW-09</div>
+      <svg class="void-schematic-svg" viewBox="0 0 1280 720" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <pattern id="grid-lattice" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#555555" stroke-width="0.6" />
+            <rect x="0" y="0" width="2" height="2" fill="#FEFEFE" />
+          </pattern>
+        </defs>
+        <rect width="1280" height="720" fill="url(#grid-lattice)" />
+        <!-- Bridge Fracture & 17-Second Neural Arc Schematic (#FEFEFE White Mask) -->
+        <g class="ui-color-graphic tint-primary" opacity="0.55">
+          <line x1="50" y1="620" x2="780" y2="620" stroke-width="2" />
+          <line x1="780" y1="620" x2="960" y2="710" stroke-width="2" stroke-dasharray="6 4" />
+          <circle cx="780" cy="620" r="6" fill="none" stroke-width="2" />
+          <path d="M 120 140 Q 440 60 780 260 T 1180 180" fill="none" stroke-width="1.5" stroke-dasharray="4 4" />
+        </g>
+      </svg>
+    </div>
+
+    <!-- Main 1280x720 Locked Tactical Stage -->
+    <main class="jc09-stage" aria-label="寒鸦审讯室：第 09 号记忆取证台">
+      <!-- Top Tactical HUD Bar (50px height) -->
+      <header class="top-hud">
+        <div class="top-hud-brand">
+          <span class="top-hud-code">JC-09</span>
+          <h1 class="top-hud-title">寒鸦审讯室：第 09 号记忆取证台 · 断桥空白十七秒</h1>
+        </div>
+
+        <!-- Four-Act Deduction Progress Pills -->
+        <nav class="top-hud-acts" aria-label="审讯推演幕次" id="act-progress-bar">
+          <button type="button" class="act-pill is-unlocked is-current" data-act="1" id="act-pill-1">
+            <span>ACT I</span><span>完美背锅者</span>
+          </button>
+          <button type="button" class="act-pill" data-act="2" id="act-pill-2">
+            <span>ACT II</span><span>静止的十七秒</span>
+          </button>
+          <button type="button" class="act-pill" data-act="3" id="act-pill-3">
+            <span>ACT III</span><span>共谋手术刀</span>
+          </button>
+          <button type="button" class="act-pill" data-act="4" id="act-pill-4">
+            <span>ACT IV</span><span>寒鸦照影</span>
+          </button>
+        </nav>
+
+        <!-- Global Tactical Toggles (Hint Assist · Web Audio · Reset) -->
+        <div class="top-hud-controls">
+          <button type="button" class="state-chip" data-state="off" id="btn-hint-toggle" title="高亮当前幕次的关键矛盾证词与物证">
+            <span>推演辅助</span><strong id="hint-state-label">OFF</strong>
+          </button>
+          <button type="button" class="state-chip" data-state="off" id="btn-audio-toggle" title="切换 Web Audio 实时合成审讯室声效">
+            <span>声效合成</span><strong id="audio-state-label">OFF</strong>
+          </button>
+          <button type="button" class="btn-compact" id="btn-reset-save" title="清除本地审讯进度并重新开始">
+            <span>重置卷宗</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Core 3-Column Deck -->
+      <div class="deck-grid tilt-stage">
+        <!-- Left Column: View Switcher Rail + Zero-Slack Telemetry Cluster -->
+        <aside class="nav-rail" aria-label="主视图切换">
+          <div class="nav-rail-tabs" role="tablist">
+            <button type="button" class="nav-tab is-active" role="tab" aria-selected="true" data-view="witness" id="tab-witness">
+              <span class="nav-tab-en">01 // WITNESS <kbd class="hotkey-badge">1</kbd></span>
+              <span class="nav-tab-zh">幸存者卡池 (6)</span>
+            </button>
+            <button type="button" class="nav-tab" role="tab" aria-selected="false" data-view="synapse" id="tab-synapse">
+              <span class="nav-tab-en">02 // SYNAPSE <kbd class="hotkey-badge">2</kbd></span>
+              <span class="nav-tab-zh">17秒神经切片台</span>
+            </button>
+            <button type="button" class="nav-tab" role="tab" aria-selected="false" data-view="blackbox" id="tab-blackbox">
+              <span class="nav-tab-en">03 // BLACKBOX <kbd class="hotkey-badge">3</kbd></span>
+              <span class="nav-tab-zh">黑匣与物证库 (6)</span>
+            </button>
+            <button type="button" class="nav-tab" role="tab" aria-selected="false" data-view="verdict" id="tab-verdict">
+              <span class="nav-tab-en">04 // VERDICT <kbd class="hotkey-badge">4</kbd></span>
+              <span class="nav-tab-zh">审讯卷宗与公诉</span>
+            </button>
+          </div>
+
+          <!-- Zero-Slack 2px Telemetry Cluster -->
+          <div class="nav-rail-telemetry ak-panel-deep">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+              <span style="font-family:var(--f-display);font-size:var(--fs-caption);color:var(--c-brand-yellow);">BCI TELEMETRY</span>
+              <span class="rarity-pill" style="background:var(--c-primary);color:var(--c-on-primary);">LIVE</span>
+            </div>
+            <div class="telemetry-cluster">
+              <div class="telemetry-row"><span>CASE ID</span><span>K9-03-CAR</span></div>
+              <div class="telemetry-row"><span>GAP WINDOW</span><span style="color:var(--c-brand-yellow);">17.00 SEC</span></div>
+              <div class="telemetry-row"><span>DECRYPTED</span><span id="stat-decrypted-count">1 / 6</span></div>
+              <div class="telemetry-row"><span>BREAKTHROUGHS</span><span id="stat-act-count">0 / 4</span></div>
+            </div>
+            <div style="margin-top:8px;">
+              <div class="ak-progress-track">
+                <div class="ak-progress-fill" id="global-progress-fill" style="width: 15%;"></div>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Center Column: Active Tactical View (Zero Scroll, Offset Backing Plate + 1.2deg Tilt) -->
+        <section class="workspace-pane tilt-plane" id="workspace-pane">

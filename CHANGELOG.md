@@ -4,9 +4,18 @@
 
 ---
 
-## [2026-10-22] 审美与视觉工程校准（Aesthetic & Optical Scale Calibration）
+## [2026-10-22] 新增 `arknights.md` 游戏本体交互演示《寒鸦审讯室：第 09 号记忆取证台》与三份 `DESIGN.md` 审美校准
 
-本次更新从审美还原度与 AI 代码生成可落地性的角度，对仓库收录的三份 `DESIGN.md`（[`arknights.md`](arknights.md)、[`arknights-website.md`](arknights-website.md)、[`endfield-website.md`](endfield-website.md)）进行了系统性校准。所有文件均通过官方 `@google/design.md` 校验（`0 errors`、`0 orphaned-tokens`）。
+### 0. 新增非滚动交互式推理解谜演示 [`demo/arknights-jc09/`](demo/arknights-jc09/)（基于 [`arknights.md`](arknights.md)）
+- **100% 独立原创悬疑叙事《寒鸦审讯室：第 09 号记忆取证台》**：围绕自动驾驶列车断桥坠江前消失的 17 秒，构建了包含 6 名幸存者（1★–6★ 神经覆写阶位，双层记忆切片）、5 个时间轴节点、6 件物理黑匣物证、四幕递进「逻辑击穿」与三向终局公诉裁决的完整悬疑故事（全案卷约 8,470 汉字，交互体验约 15–18 分钟）。
+- **严格落地 `arknights.md` 游戏本体设计语言**：
+  - **非滚动锁屏舞台**：横竖双朝向根容器均严格 `overflow: hidden` 零滚动条，依靠四视图主控台（`01 // WITNESS`、`02 // SYNAPSE`、`03 // BLACKBOX`、`04 // VERDICT`）与卡片/抽屉交互驱动；
+  - **40 色严选令牌与白模动态染色（`UIColorGraphic`）**：面板体 `#313131` + 内嵌槽 `#1B1B1B` 错位背板与 `1.2°` Y 轴微倾透视；全部 SVG 采用 `#FEFEFE` 纯白遮罩 + 运行时语义染色；
+  - **六阶光晕 + 恒黄星标（`#FEDC01`）**：6 张证人卡底边对应 `#FEFEFE` → `#FE7200` 六阶光晕，星标恒为 `#FEDC01`；
+  - **七态开关家族**：在 17 秒神经切片台中完整实现 `normal / on / off / select / selected / unselect / unselected` 七态滤波开关；
+  - **自动化验收**：通过 `scripts/verify/tokens-jc09.mjs`（`FAIL 0 · REVIEW 0 · WARN 0`）与 `scripts/verify/interact-jc09.mjs`（Chrome CDP `14/14` 全链路断言通过，0 报错）。
+
+---
 
 ### 1. 视觉尺度与物理/画布尺度解耦（Optical vs. Physical Scale Decoupling）
 - **`arknights.md`（明日方舟 · 游戏本体）**

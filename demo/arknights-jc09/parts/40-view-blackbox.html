@@ -1,0 +1,116 @@
+          <!-- ================================================================
+               VIEW 03 // BLACKBOX: 列车物理黑匣与物证检视台
+               ================================================================ -->
+          <div class="view-panel ak-panel offset-plate" id="view-blackbox" role="tabpanel" aria-labelledby="tab-blackbox">
+            <div class="view-header">
+              <div class="view-header-title">
+                <span class="view-header-en">03 // PHYSICAL BLACKBOX & EXHIBITS</span>
+                <span class="view-header-zh">车载机械黑匣与现场打捞物证库 · 白色遮罩运行时染色（UIColorGraphic）</span>
+              </div>
+              <span class="telemetry-chip" id="blackbox-active-code">EXHIBIT // B01 HYDRAULIC</span>
+            </div>
+
+            <div class="blackbox-layout">
+              <!-- Left Column: 6 Physical Exhibits (Zero-Slack 2px Lattice List) -->
+              <div class="evidence-list" id="evidence-list-box" role="listbox" aria-label="物理黑匣物证列表">
+                <button type="button" class="evidence-row is-selected" data-evidence="B01" id="ev-row-B01">
+                  <div style="text-align:left;">
+                    <div style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-currency-blue);">EXHIBIT B-01</div>
+                    <div style="font-size:var(--fs-body-sm);font-weight:700;color:var(--c-ink);">转向架液压抱死曲线</div>
+                  </div>
+                  <span class="rarity-pill" style="background:var(--c-rarity-3);color:var(--c-ink);">ACT I</span>
+                </button>
+
+                <button type="button" class="evidence-row" data-evidence="B02" id="ev-row-B02">
+                  <div style="text-align:left;">
+                    <div style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-currency-blue);">EXHIBIT B-02</div>
+                    <div style="font-size:var(--fs-body-sm);font-weight:700;color:var(--c-ink);">03车厢气密门电磁反锁日志</div>
+                  </div>
+                  <span class="rarity-pill" style="background:var(--c-rarity-2);color:var(--c-canvas);">ACT II</span>
+                </button>
+
+                <button type="button" class="evidence-row" data-evidence="B03" id="ev-row-B03">
+                  <div style="text-align:left;">
+                    <div style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-currency-blue);">EXHIBIT B-03</div>
+                    <div style="font-size:var(--fs-body-sm);font-weight:700;color:var(--c-ink);">盲眼调音师骨传导助听器残片</div>
+                  </div>
+                  <span class="rarity-pill" style="background:var(--c-rarity-1);color:var(--c-canvas);">ACT II</span>
+                </button>
+
+                <button type="button" class="evidence-row" data-evidence="B04" id="ev-row-B04">
+                  <div style="text-align:left;">
+                    <div style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-currency-blue);">EXHIBIT B-04</div>
+                    <div style="font-size:var(--fs-body-sm);font-weight:700;color:var(--c-ink);">便携式经颅覆写仪 MAC 签名</div>
+                  </div>
+                  <span class="rarity-pill" style="background:var(--c-rarity-4);color:var(--c-canvas);">ACT III</span>
+                </button>
+
+                <button type="button" class="evidence-row" data-evidence="B05" id="ev-row-B05">
+                  <div style="text-align:left;">
+                    <div style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-currency-blue);">EXHIBIT B-05</div>
+                    <div style="font-size:var(--fs-body-sm);font-weight:700;color:var(--c-ink);">车钩爆炸螺栓起爆电雷管残骸</div>
+                  </div>
+                  <span class="rarity-pill" style="background:var(--c-rarity-5);color:var(--c-canvas);">ACT III</span>
+                </button>
+
+                <button type="button" class="evidence-row" data-evidence="B06" id="ev-row-B06">
+                  <div style="text-align:left;">
+                    <div style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-currency-blue);">EXHIBIT B-06</div>
+                    <div style="font-size:var(--fs-body-sm);font-weight:700;color:var(--c-ink);">寒鸦09号台最高督察硬件密钥</div>
+                  </div>
+                  <span class="rarity-pill" style="background:var(--c-rarity-6);color:var(--c-ink);">ACT IV</span>
+                </button>
+              </div>
+
+              <!-- Right Column: Detailed Exhibit Schematic & Telemetry -->
+              <div class="statement-body-card">
+                <div>
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--c-hairline);">
+                    <div>
+                      <h2 style="font-size:var(--fs-title-cjk);font-weight:700;color:var(--c-ink);display:inline;" id="ev-title-heading">转向架液压抱死曲线</h2>
+                      <span style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-brand-yellow);margin-left:8px;" id="ev-id-sub">[EXHIBIT B-01 // BOGIE-HYD-LOG]</span>
+                    </div>
+                    <span class="rarity-pill" id="ev- authenticity-tag" style="background:var(--c-accent-green);color:var(--c-ink);">物理不可篡改</span>
+                  </div>
+
+                  <!-- White-Mask (#FEFEFE) Procedural SVG Schematic with Runtime UIColorGraphic Tint -->
+                  <div style="background-color:var(--c-canvas);border:1px solid var(--c-surface-5);padding:8px;margin-bottom:10px;">
+                    <svg id="ev-schematic-svg" viewBox="0 0 520 105" style="width:100%;height:96px;">
+                      <g stroke="#313131" stroke-width="1">
+                        <line x1="0" y1="25" x2="520" y2="25" />
+                        <line x1="0" y1="55" x2="520" y2="55" />
+                        <line x1="0" y1="85" x2="520" y2="85" />
+                        <line x1="120" y1="0" x2="120" y2="105" stroke-dasharray="3 3" />
+                      </g>
+                      <g id="ev-svg-graphic" class="ui-color-graphic tint-cyan">
+                        <polyline fill="none" stroke-width="2.5" points="10,20 70,22 120,85 500,85" />
+                        <circle cx="120" cy="85" r="5" />
+                        <text x="130" y="76" font-family="Barlow, monospace" font-size="11" stroke="none">T-17.0s VELOCITY = 0.0 km/h (HARD LOCK)</text>
+                      </g>
+                    </svg>
+                  </div>
+
+                  <p style="font-size:var(--fs-body);color:var(--c-ink-light-3);line-height:1.55;margin-bottom:8px;" id="ev-desc-text">
+                    打捞自江底的 03 车厢主转向架机械制动盘磨损拓片与液压黑匣记录：早在 T-17.0 秒，机械急停卡钳即已完全锁死车轮，列车在断桥缺口前 4.2 米处彻底刹停（速度归零）。所谓“T-15 秒软件解除制动并全速冲出桥面”在物理上根本没有发生。
+                  </p>
+
+                  <div style="padding:6px 10px;background-color:var(--c-panel-deep);border-left:3px solid var(--c-primary);font-size:var(--fs-body-sm);color:var(--c-ink-light-1);" id="ev-forensic-note">
+                    <strong>取证交叉点：</strong>既然列车在 T-17.0s 就已经稳稳停在桥面上，那么直到 T-00.0s 车厢坠入江中的这 17 秒里，03 车厢实际上处于完全静止状态。
+                  </div>
+                </div>
+
+                <!-- Load Physical Exhibit into Contradiction Slot A or B -->
+                <div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px solid var(--c-surface-5);">
+                  <span style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-ink-disabled);" id="ev-hash-code">SHA-256: 9F4A...7C1E // VERIFIED</span>
+                  <div style="display:flex;gap:var(--s-xs);">
+                    <button type="button" class="btn btn-primary" style="height:36px;font-size:var(--fs-body-sm);padding:0 14px;" id="btn-load-ev-a">
+                      <span>装填入指证槽 [A]</span>
+                    </button>
+                    <button type="button" class="btn btn-secondary" style="height:36px;font-size:var(--fs-body-sm);padding:0 14px;" id="btn-load-ev-b">
+                      <span>装填入指证槽 [B]</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>

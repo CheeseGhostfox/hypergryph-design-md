@@ -1,0 +1,641 @@
+/* ==========================================================================
+   07-style-layout.css
+   1280x720 Locked Tactical Stage · Zero Root Scroll · Void-to-Cluster Contrast
+   ========================================================================== */
+
+.jc09-viewport {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--c-canvas);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Background Architectural Void Layer (45%–55% Dark Canvas + #242424 Ghost Type) */
+.void-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+.void-ghost-word {
+  position: absolute;
+  right: 40px;
+  bottom: 20px;
+  font-family: var(--f-display);
+  font-size: var(--fs-display);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -2px;
+  color: var(--c-surface-2); /* #242424 on #000000 */
+  white-space: nowrap;
+}
+.void-ghost-sub {
+  position: absolute;
+  left: 50px;
+  top: 64px;
+  font-family: var(--f-display);
+  font-size: var(--fs-headline);
+  font-weight: 600;
+  color: var(--c-surface-3);
+  letter-spacing: 2px;
+}
+.void-schematic-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.16;
+}
+
+/* Main 1280x720 Console Shell */
+.jc09-stage {
+  position: relative;
+  z-index: 2;
+  width: min(100vw, 1440px);
+  height: min(100vh, 860px);
+  padding: var(--s-sm) var(--s-gutter); /* 20px 50px per arknights.md 50px screen gutter */
+  display: grid;
+  grid-template-rows: 50px 1fr 40px;
+  gap: var(--s-xs);
+  overflow: hidden;
+}
+
+/* ---- Top Tactical Status Bar (50px height) ---- */
+.top-hud {
+  height: var(--bh-headline); /* 50px */
+  background-color: var(--c-panel-deep);
+  border: 1px solid var(--c-surface-4);
+  border-radius: var(--r-slice-sm);
+  padding: 0 var(--s-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-sm);
+}
+.top-hud-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--s-xs);
+}
+.top-hud-code {
+  font-family: var(--f-display);
+  font-size: var(--fs-card-title);
+  font-weight: 700;
+  color: var(--c-ink);
+  letter-spacing: -1px;
+}
+.top-hud-title {
+  font-family: var(--f-cjk);
+  font-size: var(--fs-body);
+  font-weight: 500;
+  color: var(--c-ink-light-1);
+  border-left: 2px solid var(--c-brand-yellow);
+  padding-left: var(--s-xs);
+}
+.top-hud-acts {
+  display: flex;
+  align-items: center;
+  gap: var(--s-xxs);
+}
+.act-pill {
+  height: var(--s-row); /* 30px */
+  padding: 0 var(--s-xs);
+  border-radius: var(--r-xs);
+  background-color: var(--c-surface-3);
+  color: var(--c-ink-muted);
+  font-family: var(--f-tech);
+  font-size: var(--fs-caption);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-xxs);
+  border: 1px solid var(--c-surface-4);
+  cursor: pointer;
+}
+.act-pill.is-unlocked {
+  background-color: var(--c-panel);
+  color: var(--c-ink);
+  border-color: var(--c-hairline);
+}
+.act-pill.is-current {
+  background-color: var(--c-primary);
+  color: var(--c-on-primary);
+  border-color: var(--c-currency-blue);
+  font-weight: 700;
+}
+.top-hud-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--s-xs);
+}
+
+/* ---- Core 3-Column Deck (Left Nav Rail · Center Active View · Right Contradiction Lock) ---- */
+.deck-grid {
+  display: grid;
+  grid-template-columns: 190px 1fr 310px;
+  gap: var(--s-sm);
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Left View Switcher Rail */
+.nav-rail {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--s-xs);
+  height: 100%;
+  min-height: 0;
+}
+.nav-rail-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-xs);
+}
+.nav-tab {
+  position: relative;
+  height: 60px;
+  padding: 0 var(--s-xs) 0 var(--s-sm);
+  background-color: var(--c-panel-deep);
+  color: var(--c-ink-disabled);
+  border: 1px solid var(--c-surface-4);
+  border-radius: var(--r-slice-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.nav-tab::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--s-xxs); /* 5px control step */
+  background-color: var(--c-surface-5);
+}
+.nav-tab.is-active {
+  background-color: var(--c-panel);
+  color: var(--c-ink);
+  border-color: var(--c-primary);
+}
+.nav-tab.is-active::before {
+  background-color: var(--c-brand-yellow);
+}
+.nav-tab-en {
+  font-family: var(--f-display);
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--c-currency-blue);
+}
+.nav-tab-zh {
+  font-family: var(--f-cjk);
+  font-size: var(--fs-row-title);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+/* Center Tactical Workspace (One Active View at a Time, Zero Scroll) */
+.workspace-pane {
+  position: relative;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+  padding: 0 8px 8px 0; /* Reserve 8px for 6px bottom-right offset backing plate */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.view-panel {
+  display: none;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--s-xs);
+}
+.view-panel.is-active {
+  display: flex;
+}
+
+/* View Header Bar */
+.view-header {
+  height: var(--bh-card-title); /* 40px */
+  min-height: var(--bh-card-title);
+  padding: 0 var(--s-xs);
+  background-color: var(--c-panel-deep);
+  border-left: var(--s-xxs) solid var(--c-primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-xs);
+  overflow: hidden;
+}
+.view-header-title {
+  display: flex;
+  align-items: center;
+  gap: var(--s-xs);
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.view-header-en {
+  font-family: var(--f-display);
+  font-size: var(--fs-row-title);
+  font-weight: 700;
+  color: var(--c-ink);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.view-header-zh {
+  font-family: var(--f-cjk);
+  font-size: var(--fs-body-sm);
+  color: var(--c-brand-yellow);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---- View 01: Witness Deck (6-Card Roster + Active Dossier Inspector) ---- */
+.witness-layout {
+  display: grid;
+  grid-template-rows: 130px 1fr;
+  gap: var(--s-xs);
+  height: 100%;
+  min-height: 0;
+}
+.witness-roster {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--s-xs);
+  height: 130px;
+}
+.witness-detail-box {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: var(--s-sm);
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+.witness-portrait-well {
+  position: relative;
+  background-color: var(--c-canvas);
+  border: 1px solid var(--c-surface-5);
+  border-radius: var(--r-slice-sm);
+  padding: var(--s-xs);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+.witness-statement-well {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--s-xs);
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+}
+.statement-body-card {
+  flex: 1;
+  min-width: 0;
+  background-color: var(--c-surface-3);
+  border: 1px solid var(--c-surface-5);
+  border-radius: var(--r-slice-sm);
+  padding: var(--s-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+/* ---- View 02: 17-Second Neural Synapse Slicer + 7-State Filter Matrix ---- */
+.synapse-layout {
+  display: grid;
+  grid-template-rows: auto 135px 1fr;
+  gap: var(--s-xs);
+  height: 100%;
+  min-height: 0;
+}
+.filter-matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--s-xs);
+}
+.filter-channel-card {
+  background-color: var(--c-panel-deep);
+  border: 1px solid var(--c-surface-5);
+  border-radius: var(--r-slice-sm);
+  padding: var(--s-xs);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-xxs);
+}
+.timeline-oscilloscope {
+  position: relative;
+  background-color: var(--c-canvas);
+  border: 1px solid var(--c-hairline);
+  border-radius: var(--r-slice-sm);
+  padding: var(--s-xs);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+.time-nodes-bar {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--s-xs);
+}
+
+/* ---- View 03: Train Blackbox & Physical Evidence Vault ---- */
+.blackbox-layout {
+  display: grid;
+  grid-template-columns: 230px 1fr;
+  gap: var(--s-sm);
+  height: 100%;
+  min-height: 0;
+}
+.evidence-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-unit); /* 2px lattice step */
+}
+.evidence-row {
+  height: 52px;
+  padding: 0 var(--s-xs);
+  background-color: var(--c-panel-deep);
+  border: 1px solid var(--c-surface-4);
+  border-left: 3px solid var(--c-surface-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.evidence-row.is-selected {
+  background-color: var(--c-panel);
+  border-color: var(--c-primary);
+  border-left-color: var(--c-brand-yellow);
+}
+.evidence-row.is-hinted {
+  border-left-color: var(--c-accent-green);
+}
+
+/* ---- View 04: Four-Act Case Reconstruction & Final Indictment ---- */
+.verdict-layout {
+  display: grid;
+  grid-template-columns: 1fr 290px;
+  gap: var(--s-sm);
+  height: 100%;
+  min-height: 0;
+}
+.act-dossier-tabs {
+  display: flex;
+  gap: var(--s-xxs);
+}
+
+/* ---- Right Column: Contradiction Lock Inspector ---- */
+.inspector-rail {
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--s-xs);
+}
+.slot-card {
+  background-color: var(--c-canvas);
+  border: 1px solid var(--c-surface-5);
+  border-left: 4px solid var(--c-primary);
+  border-radius: var(--r-slice-sm);
+  padding: var(--s-xs);
+  min-height: 92px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.slot-card.slot-b {
+  border-left-color: var(--c-brand-yellow);
+}
+.slot-card.is-empty {
+  border-style: dashed;
+  color: var(--c-ink-muted);
+}
+
+/* ---- Bottom Status & Telemetry Ticker (40px height) ---- */
+.bottom-bar {
+  height: var(--bh-card-title); /* 40px */
+  background-color: var(--c-panel-deep);
+  border: 1px solid var(--c-surface-4);
+  padding: 0 var(--s-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-sm);
+}
+
+/* ---- Portrait Orientation & Compact Viewport Adaptation (Zero Root Scroll) ---- */
+@media (orientation: portrait), (max-width: 1024px) {
+  .jc09-stage {
+    width: 100vw;
+    height: 100vh;
+    padding: 6px;
+    grid-template-rows: 36px 32px 1fr 94px;
+    gap: 4px;
+  }
+  .top-hud {
+    height: 36px;
+    padding: 0 8px;
+  }
+  .top-hud-code {
+    font-size: var(--fs-row-title);
+  }
+  .top-hud-title,
+  .top-hud-acts {
+    display: none;
+  }
+  .top-hud-controls .state-chip,
+  .top-hud-controls .btn-compact {
+    height: 24px;
+    padding: 0 6px;
+    font-size: var(--fs-caption);
+  }
+  .deck-grid {
+    display: contents;
+  }
+  .tilt-plane {
+    transform: none;
+  }
+  .offset-plate::after {
+    display: none;
+  }
+  .nav-rail {
+    height: 32px;
+    flex-direction: row;
+  }
+  .nav-rail-tabs {
+    flex-direction: row;
+    width: 100%;
+    gap: 4px;
+  }
+  .nav-tab {
+    flex: 1;
+    height: 32px;
+    padding: 0 4px;
+    align-items: center;
+  }
+  .nav-tab-en {
+    display: none;
+  }
+  .nav-tab-zh {
+    font-size: var(--fs-caption);
+    white-space: nowrap;
+  }
+  .nav-rail-telemetry {
+    display: none;
+  }
+  .view-panel {
+    padding: 8px;
+    gap: 6px;
+  }
+  .view-header {
+    height: 28px;
+    min-height: 28px;
+  }
+  .view-header-en {
+    font-size: var(--fs-body-sm);
+  }
+  .view-header-zh,
+  .view-header .telemetry-chip {
+    display: none;
+  }
+  .witness-layout {
+    grid-template-rows: 104px 1fr;
+    gap: 6px;
+  }
+  .witness-roster {
+    height: 104px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 4px;
+  }
+  .witness-card {
+    padding: 4px 6px;
+  }
+  .witness-card > div:last-child {
+    display: none;
+  }
+  .witness-detail-box {
+    grid-template-columns: 1fr;
+  }
+  .witness-portrait-well {
+    display: none;
+  }
+  .statement-body-card {
+    padding: 8px;
+  }
+  #w-statement-text,
+  #ev-desc-text,
+  #dossier-act-body {
+    font-size: var(--fs-body-sm) !important;
+    line-height: 1.38 !important;
+    margin-bottom: 6px !important;
+  }
+  #w-forensic-note,
+  #ev-forensic-note,
+  #dossier-act-conclusion {
+    font-size: var(--fs-caption) !important;
+    padding: 4px 6px !important;
+  }
+  #btn-goto-synapse {
+    display: none;
+  }
+  .filter-matrix-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
+  }
+  .filter-channel-card {
+    padding: 4px 6px;
+  }
+  .filter-channel-card > div:last-child {
+    display: none;
+  }
+  .blackbox-layout,
+  .verdict-layout {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  .evidence-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+  }
+  .evidence-row {
+    height: 36px;
+    padding: 0 4px;
+  }
+  .evidence-row .rarity-pill {
+    display: none;
+  }
+  .inspector-rail {
+    height: 94px;
+    flex-direction: row;
+    align-items: center;
+    padding: 6px !important;
+    gap: 6px;
+  }
+  .inspector-rail .inspector-header,
+  .inspector-rail .inspector-brief {
+    display: none;
+  }
+  .inspector-slots-wrap {
+    display: flex;
+    flex-direction: row !important;
+    flex: 1;
+    gap: 4px;
+    height: 100%;
+  }
+  .slot-card {
+    flex: 1;
+    min-height: 0;
+    height: 100%;
+    padding: 4px 6px;
+    overflow: hidden;
+  }
+  #slot-a-summary,
+  #slot-b-summary {
+    display: none;
+  }
+  #btn-execute-break {
+    width: 108px !important;
+    height: 100%;
+    padding: 0 8px;
+    font-size: var(--fs-body-sm);
+    white-space: normal;
+    line-height: 1.2;
+  }
+  .bottom-bar {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

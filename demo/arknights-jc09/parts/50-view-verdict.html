@@ -1,0 +1,147 @@
+          <!-- ================================================================
+               VIEW 04 // VERDICT: 四幕案情重构卷宗与终局三向公诉裁决台
+               ================================================================ -->
+          <div class="view-panel ak-panel offset-plate" id="view-verdict" role="tabpanel" aria-labelledby="tab-verdict">
+            <div class="view-header">
+              <div class="view-header-title">
+                <span class="view-header-en">04 // CASE RECONSTRUCTION & VERDICT</span>
+                <span class="view-header-zh">四幕逻辑重构卷宗与第 09 号取证台终局裁决书</span>
+              </div>
+              <span class="telemetry-chip" id="verdict-status-badge">CASE STATUS: IN PROGRESS</span>
+            </div>
+
+            <div class="verdict-layout">
+              <!-- Left Column: Act I–IV Dossier Reader -->
+              <div class="statement-body-card">
+                <div>
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--c-hairline);">
+                    <div class="act-dossier-tabs" id="verdict-act-tabs">
+                      <button type="button" class="btn-compact is-active" data-dossier-act="1">第一幕卷宗</button>
+                      <button type="button" class="btn-compact" data-dossier-act="2">第二幕卷宗</button>
+                      <button type="button" class="btn-compact" data-dossier-act="3">第三幕卷宗</button>
+                      <button type="button" class="btn-compact" data-dossier-act="4">第四幕终章</button>
+                    </div>
+                    <span class="rarity-pill" id="dossier-lock-badge" style="background:var(--c-primary);color:var(--c-on-primary);">当前审理中</span>
+                  </div>
+
+                  <h2 style="font-family:var(--f-cjk-serif);font-size:var(--fs-cjk-serif);color:var(--c-brand-yellow);margin-bottom:8px;" id="dossier-act-heading">
+                    第一幕：完美背锅者与静止的列车
+                  </h2>
+                  <p style="font-size:var(--fs-body);color:var(--c-ink-light-3);line-height:1.6;margin-bottom:10px;" id="dossier-act-body">
+                    跨江大桥坍塌当晚，03 车厢坠入深水航道，车内六人全数生还，但所有植入商用脑机接口的乘员均缺失了坠桥前 T-17.0s 至 T-00.0s 的原始记忆，仅剩高度一致的“列车全速冲出断桥”表层供词。智驾系统总架构师顾言主动认罪，声称自己在 T-15 秒误发了紧急制动解除指令。请将顾言的表层证词与物理黑匣制动曲线装填入右侧指证槽，击穿这层拙劣的顶罪谎言。
+                  </p>
+                  <div style="padding:8px 10px;background-color:var(--c-panel-deep);border-left:3px solid var(--c-confirm-gold);font-size:var(--fs-body-sm);color:var(--c-ink-light-1);" id="dossier-act-conclusion">
+                    <strong>当前推演指引：</strong>在【01 幸存者卡池】装填 <code>W05-A 顾言表层供述</code>，在【03 黑匣与物证库】装填 <code>B-01 转向架液压抱死曲线</code>，点击右侧「执行逻辑击穿」。
+                  </div>
+                </div>
+
+                <!-- Epilogue / Ending Output Box (Shown when a verdict is chosen) -->
+                <div style="padding-top:8px;border-top:1px solid var(--c-surface-5);display:flex;justify-content:space-between;align-items:center;gap:var(--s-xs);">
+                  <div style="font-size:var(--fs-body-sm);color:var(--c-ink-light-2);flex:1;" id="verdict-epilogue-summary">
+                    完成全部四幕逻辑击穿后，右侧公诉操作台将解锁三向终局裁决。
+                  </div>
+                  <button type="button" class="btn-compact" id="btn-clear-verdict" style="display:none;">
+                    <span>撤回裁决重新选择</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Right Sub-Column: Three-Way Final Indictment Console -->
+              <div class="ak-panel-deep" style="display:flex;flex-direction:column;justify-content:space-between;gap:var(--s-xs);">
+                <div>
+                  <div style="font-family:var(--f-display);font-size:var(--fs-label);color:var(--c-brand-yellow);margin-bottom:4px;">
+                    FINAL INDICTMENT // 终局公诉台
+                  </div>
+                  <p style="font-size:var(--fs-body-sm);color:var(--c-ink-light-1);line-height:1.45;margin-bottom:10px;" id="verdict-prompt-desc">
+                    当第 09 号取证台自身的督察密钥被证实在场时，你作为终端操作员握有最后一次签名权。请选择结案方向：
+                  </p>
+                </div>
+
+                <div style="display:flex;flex-direction:column;gap:var(--s-xs);">
+                  <button type="button" class="btn btn-confirm" style="width:100%;height:46px;font-size:var(--fs-body-sm);" data-ending="broadcast" id="btn-ending-broadcast">
+                    <span>[A] 全网强制广播骨传导原声（公诉严律）</span>
+                  </button>
+                  <button type="button" class="btn btn-danger" style="width:100%;height:46px;font-size:var(--fs-body-sm);" data-ending="coverup" id="btn-ending-coverup">
+                    <span>[B] 签署 AI 故障免责协议（顺应最高督察）</span>
+                  </button>
+                  <button type="button" class="btn btn-primary" style="width:100%;height:46px;font-size:var(--fs-body-sm);" data-ending="silence" id="btn-ending-silence">
+                    <span>[C] 抹除密钥并私下归还琴音切片（静默封存）</span>
+                  </button>
+                </div>
+
+                <div class="telemetry-cluster">
+                  <div class="telemetry-row"><span>SIGNATURE</span><span id="verdict-sig-code">PENDING</span></div>
+                  <div class="telemetry-row"><span>STORAGE</span><span>LOCAL PERSISTED</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Right Column: Persistent Dual-Slot Contradiction Lock Inspector -->
+        <aside class="inspector-rail ak-panel-deep" aria-label="双槽矛盾指证比对器">
+          <div class="inspector-header">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+              <span style="font-family:var(--f-display);font-size:var(--fs-row-title);font-weight:700;color:var(--c-ink);">CONTRADICTION LOCK</span>
+              <button type="button" class="btn-compact" id="btn-clear-slots" style="height:22px;font-size:var(--fs-caption);">清空槽位</button>
+            </div>
+            <div style="font-size:var(--fs-body-sm);color:var(--c-brand-yellow);" id="inspector-act-goal">
+              第一幕目标：击穿“T-15秒软件解除制动冲出断桥”的顶罪伪证
+            </div>
+          </div>
+
+          <div class="inspector-slots-wrap" style="display:flex;flex-direction:column;gap:var(--s-xs);flex:1;justify-content:center;">
+            <!-- Slot A -->
+            <div class="slot-card is-empty" id="slot-a-box" data-slot="A">
+              <div style="display:flex;justify-content:space-between;font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-currency-blue);">
+                <span>SLOT [A] // 基准证词或物证</span>
+                <span id="slot-a-id">EMPTY</span>
+              </div>
+              <div style="font-size:var(--fs-body-sm);font-weight:500;color:var(--c-ink-light-2);margin:4px 0;" id="slot-a-title">
+                尚未装填（请在视图 01 或 03 点击装填）
+              </div>
+              <div style="font-size:var(--fs-caption);color:var(--c-ink-disabled);" id="slot-a-summary">
+                等待脑机切片或物理黑匣输入…
+              </div>
+            </div>
+
+            <!-- Slot B -->
+            <div class="slot-card slot-b is-empty" id="slot-b-box" data-slot="B">
+              <div style="display:flex;justify-content:space-between;font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-brand-yellow);">
+                <span>SLOT [B] // 交叉比对项</span>
+                <span id="slot-b-id">EMPTY</span>
+              </div>
+              <div style="font-size:var(--fs-body-sm);font-weight:500;color:var(--c-ink-light-2);margin:4px 0;" id="slot-b-title">
+                尚未装填（请在视图 01 或 03 点击装填）
+              </div>
+              <div style="font-size:var(--fs-caption);color:var(--c-ink-disabled);" id="slot-b-summary">
+                等待第二项矛盾证据输入…
+              </div>
+            </div>
+          </div>
+
+          <!-- Feedback Toast / Status Banner inside Inspector -->
+          <div class="inspector-brief" style="padding:8px 10px;background-color:var(--c-canvas);border-left:3px solid var(--c-hairline);font-size:var(--fs-caption);color:var(--c-ink-light-1);min-height:44px;" id="inspector-feedback">
+            系统就绪：装填两项存在物理或时间戳冲突的证据后，按下方确认金按钮执行逻辑击穿。
+          </div>
+
+          <!-- Execute Contradiction Breakthrough Button -->
+          <button type="button" class="btn btn-confirm" style="width:100%;" id="btn-execute-break">
+            <span>执行逻辑击穿 // VERIFY</span>
+          </button>
+        </aside>
+      </div>
+
+      <!-- Bottom Tactical Status Bar (40px height) -->
+      <footer class="bottom-bar">
+        <div style="display:flex;align-items:center;gap:var(--s-sm);font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-ink-disabled);">
+          <span>DESIGN SPEC: <strong style="color:var(--c-ink);">ARKNIGHTS.MD (IN-GAME CLIENT UI)</strong></span>
+          <span>LATTICE: <strong style="color:var(--c-currency-blue);">1280×720 // 2PX GRID // ZERO ROOT SCROLL</strong></span>
+          <span>CHROME: <strong style="color:var(--c-brand-yellow);">#FEFEFE MASK + UICOLORGRAPHIC</strong></span>
+        </div>
+        <div style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-ink-light-1);" id="bottom-live-log">
+          [LOG] 寒鸦审讯室第 09 号记忆取证台已挂载 · 快捷键 1-4 切换视图 / Space 执行比对
+        </div>
+      </footer>
+    </main>
+  </div>

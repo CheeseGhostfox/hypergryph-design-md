@@ -1,0 +1,3077 @@
+<!-- ==== 00-head.html ==== -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>寒鸦审讯室：第 09 号记忆取证台 // JACKDAW-09: NEURAL FORENSICS CONSOLE</title>
+  <meta name="description" content="司法脑机接口（BCI）证物交叉核验终端 · 坠桥前消失的 17 秒 · 基于 arknights.md 游戏本体 UI 规范构建">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,400;125,600;125,700&family=Barlow:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- ==== 05-style-tokens.css ==== -->
+<style>
+/* ==========================================================================
+   05-style-tokens.css
+   Design System: arknights.md (In-Game Client UI Specification)
+   40 Colors · 13 Typography Scales (Optical + Box Height) · 10 Radii · 11 Spacings
+   ========================================================================== */
+
+:root {
+  /* ---- 1. Colors (40 exact tokens from arknights.md) ---- */
+  --c-primary: #0098DC;
+  --c-on-primary: #FEFEFE;
+  --c-canvas: #000000;
+  --c-ink: #FEFEFE;
+  --c-ink-pure: #FFFFFF;
+  --c-panel: #313131;
+  --c-panel-deep: #1B1B1B;
+  --c-surface-2: #242424;
+  --c-surface-3: #202020;
+  --c-surface-4: #434343;
+  --c-surface-5: #4B4B4B;
+  --c-surface-6: #535353;
+  --c-surface-raised: #303030;
+  --c-hairline: #555555;
+  --c-ink-disabled: #898989;
+  --c-ink-muted: #707070;
+  --c-ink-soft: #626262;
+  --c-ink-light-1: #D2D2D2;
+  --c-ink-light-2: #E5E5E5;
+  --c-ink-light-3: #F4F4F4;
+  --c-brand-yellow: #FED800;
+  --c-brand-yellow-light: #FFD704;
+  --c-confirm-gold: #E8C400;
+  --c-star: #FEDC01;
+  --c-currency-blue: #22BBFE;
+  --c-deep-blue: #0074A9;
+  --c-upgrade-orange: #FE7800;
+  --c-upgrade-orange-deep: #FE6800;
+  --c-danger-red: #EC3140;
+  --c-danger-red-deep: #C82A36;
+  --c-danger-void: #A40000;
+  --c-accent-violet: #A67DFE;
+  --c-accent-green: #7EA403;
+  --c-rarity-1: #FEFEFE;
+  --c-rarity-2: #DCE535;
+  --c-rarity-3: #00B1FE;
+  --c-rarity-4: #D4B9C1;
+  --c-rarity-5: #FED879;
+  --c-rarity-6: #FE7200;
+  --c-elite-surface: #141516;
+
+  /* ---- 2. Font Stacks (Three-Voice + CJK Display/Serif + Bitmap) ---- */
+  --f-display: 'Novecento Wide', 'Archivo', sans-serif;
+  --f-tech: 'Bender', 'Barlow', 'JetBrains Mono', monospace;
+  --f-cjk: 'Noto Sans S Chinese Medium', 'Source Han Sans CN', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --f-cjk-heavy: 'Source Han Sans CN Heavy', 'Noto Sans SC', 'PingFang SC', sans-serif;
+  --f-cjk-serif: 'FZYaSong H GBK', 'Noto Serif SC', 'Songti SC', serif;
+  --f-bitmap: 'AddWBitmap09', 'JetBrains Mono', 'Barlow', monospace;
+
+  /* ---- 3. Typography (Calibrated Optical Sizes + Container Box Heights) ---- */
+  --fs-display: 72px;       --bh-display: 100px;
+  --fs-headline: 32px;      --bh-headline: 50px;
+  --fs-card-title: 24px;    --bh-card-title: 40px;
+  --fs-title-cjk: 24px;     --bh-title-cjk: 40px;
+  --fs-row-title: 18px;     --bh-row-title: 30px;
+  --fs-body: 16px;          --bh-body: 25px;
+  --fs-body-sm: 13px;       --bh-body-sm: 20px;
+  --fs-label: 13px;         --bh-label: 20px;
+  --fs-numeric: 20px;       --bh-numeric: 30px;
+  --fs-caption: 11px;       --bh-caption: 16px;
+  --fs-cjk-display: 32px;   --bh-cjk-display: 50px;
+  --fs-cjk-serif: 22px;     --bh-cjk-serif: 36px;
+  --fs-bitmap: 14px;        --bh-bitmap: 24px;
+
+  /* ---- 4. Rounding Levels + Nine-Slice Signatures (N,N,N,0) ---- */
+  --r-none: 0px;
+  --r-xs: 3px;
+  --r-sm: 5px;
+  --r-md: 10px;
+  --r-lg: 12px;
+  --r-xl: 15px;
+  --r-xxl: 19px;
+  --r-display: 27px;
+  --r-banner: 46px;
+  --r-full: 9999px;
+  /* Signature top-rounded bottom-square nine-slice borders */
+  --r-slice-sm: 5px 5px 0px 0px;
+  --r-slice-md: 10px 10px 0px 0px;
+
+  /* ---- 5. Spacing Lattice (2px Grid / 5px Control / 10px Screen / 50px Gutter) ---- */
+  --s-unit: 2px;
+  --s-xxs: 5px;
+  --s-xs: 10px;
+  --s-sm: 20px;
+  --s-md: 30px;
+  --s-lg: 40px;
+  --s-xl: 50px;
+  --s-row: 30px;
+  --s-gutter: 50px;
+  --s-screen-w: 1280px;
+  --s-screen-h: 720px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--c-canvas);
+  color: var(--c-ink);
+  font-family: var(--f-cjk);
+  font-size: var(--fs-body);
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+</style>
+
+<!-- ==== 06-style-components.css ==== -->
+<style>
+/* ==========================================================================
+   06-style-components.css
+   Components mapped strictly from arknights.md (54-component vocabulary)
+   Zero box-shadow · (N,N,N,0) Nine-Slice Frames · Offset Backing Plates
+   6-Step Rarity Glow (Stars Always #FEDC01) · 7-Way Toggle Family
+   ========================================================================== */
+
+/* ---- Panels & Offset Backing Plates (Zero-Shadow Depth) ---- */
+.ak-panel {
+  position: relative;
+  background-color: var(--c-panel);
+  color: var(--c-ink);
+  border-radius: var(--r-slice-md);
+  border: 1px solid var(--c-hairline);
+  padding: var(--s-sm);
+}
+
+.ak-panel-deep {
+  position: relative;
+  background-color: var(--c-panel-deep);
+  color: var(--c-ink);
+  border-radius: var(--r-slice-md);
+  border: 1px solid var(--c-surface-4);
+  padding: var(--s-sm);
+}
+
+/* Offset Backing Plate (#313131 shifted 6px right-down behind #1B1B1B) */
+.offset-plate {
+  position: relative;
+  z-index: 1;
+}
+.offset-plate::after {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  right: -6px;
+  bottom: -6px;
+  background-color: var(--c-panel);
+  border: 1px solid var(--c-hairline);
+  border-radius: var(--r-slice-md);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Subtle Camera-Space Plane Tilt (1.5deg Y-axis perspective on tactical deck) */
+.tilt-stage {
+  perspective: 1400px;
+}
+.tilt-plane {
+  transform: rotateY(-1.2deg);
+  transform-style: preserve-3d;
+}
+
+/* ---- Buttons (50px Primary/Confirm/Danger/Secondary · 30px Compact) ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-xs);
+  font-family: var(--f-cjk);
+  font-size: var(--fs-row-title);
+  font-weight: 500;
+  height: var(--bh-headline); /* 50px */
+  padding: 0 var(--s-sm);
+  border-radius: var(--r-slice-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn[disabled] {
+  background-color: var(--c-panel-deep) !important;
+  color: var(--c-ink-soft) !important;
+  border-color: var(--c-surface-4) !important;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background-color: var(--c-primary);
+  color: var(--c-on-primary);
+  border-bottom: 3px solid var(--c-deep-blue);
+}
+.btn-primary:active {
+  background-color: var(--c-deep-blue);
+}
+
+.btn-confirm {
+  background-color: var(--c-confirm-gold);
+  color: var(--c-canvas);
+  font-weight: 700;
+  border-bottom: 3px solid var(--c-upgrade-orange);
+}
+
+.btn-danger {
+  background-color: var(--c-danger-red);
+  color: var(--c-on-primary);
+  border-bottom: 3px solid var(--c-danger-red-deep);
+}
+.btn-danger:active {
+  background-color: var(--c-danger-red-deep);
+}
+
+.btn-secondary {
+  background-color: var(--c-panel);
+  color: var(--c-ink);
+  border: 1px solid var(--c-hairline);
+  border-bottom: 3px solid var(--c-surface-6);
+}
+
+.btn-compact {
+  height: var(--s-row); /* 30px */
+  padding: 0 var(--s-xs);
+  font-size: var(--fs-body-sm);
+  border-radius: var(--r-xs);
+  background-color: var(--c-panel);
+  color: var(--c-ink);
+  border: 1px solid var(--c-hairline);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-xxs);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.btn-compact.is-active {
+  background-color: var(--c-primary);
+  color: var(--c-on-primary);
+  border-color: var(--c-currency-blue);
+}
+
+/* ---- Seven-Way Toggle State Family (Touch-First, No Hover Dependency) ---- */
+.state-chip {
+  height: var(--s-row); /* 30px */
+  padding: 0 var(--s-xs);
+  border-radius: var(--r-xs);
+  font-family: var(--f-cjk);
+  font-size: var(--fs-body-sm);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-xs);
+  cursor: pointer;
+  border: 1px solid var(--c-surface-5);
+  transition: background-color 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+}
+
+.state-chip[data-state="normal"] {
+  background-color: var(--c-panel);
+  color: var(--c-ink);
+  border-color: var(--c-hairline);
+}
+.state-chip[data-state="on"] {
+  background-color: var(--c-primary);
+  color: var(--c-on-primary);
+  border-color: var(--c-currency-blue);
+}
+.state-chip[data-state="off"] {
+  background-color: var(--c-panel-deep);
+  color: var(--c-ink-disabled);
+  border-color: var(--c-surface-4);
+}
+.state-chip[data-state="select"],
+.state-chip[data-state="selected"] {
+  background-color: var(--c-brand-yellow);
+  color: var(--c-canvas);
+  border-color: var(--c-confirm-gold);
+  font-weight: 700;
+}
+.state-chip[data-state="unselect"],
+.state-chip[data-state="unselected"] {
+  background-color: var(--c-surface-3);
+  color: var(--c-ink-muted);
+  border-color: var(--c-surface-4);
+}
+.state-chip[data-state="locked"] {
+  background-color: var(--c-panel-deep);
+  color: var(--c-ink-soft);
+  border-color: var(--c-surface-3);
+  cursor: not-allowed;
+}
+
+/* ---- Six-Step Rarity / Neural Tamper Cards (Stars Always #FEDC01) ---- */
+.witness-card {
+  position: relative;
+  background-color: var(--c-elite-surface);
+  border: 1px solid var(--c-surface-5);
+  border-radius: var(--r-slice-sm);
+  padding: var(--s-xs);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+.witness-card.is-selected {
+  border-color: var(--c-brand-yellow);
+  background-color: var(--c-surface-2);
+}
+.witness-card.is-hinted {
+  border-color: var(--c-accent-green);
+}
+
+/* Rarity Bottom Glow Bar + Top Corner Accent */
+.witness-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 5px;
+  background-color: var(--rarity-color, var(--c-rarity-1));
+}
+.witness-card[data-rarity="1"] { --rarity-color: var(--c-rarity-1); }
+.witness-card[data-rarity="2"] { --rarity-color: var(--c-rarity-2); }
+.witness-card[data-rarity="3"] { --rarity-color: var(--c-rarity-3); }
+.witness-card[data-rarity="4"] { --rarity-color: var(--c-rarity-4); }
+.witness-card[data-rarity="5"] { --rarity-color: var(--c-rarity-5); }
+.witness-card[data-rarity="6"] { --rarity-color: var(--c-rarity-6); }
+
+.rarity-pill {
+  display: inline-flex;
+  align-items: center;
+  height: var(--bh-caption); /* 16px */
+  padding: 0 var(--s-xxs);
+  border-radius: var(--r-xs);
+  font-family: var(--f-tech);
+  font-size: var(--fs-caption);
+  font-weight: 700;
+  background-color: var(--rarity-color, var(--c-rarity-1));
+  color: var(--c-canvas);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.witness-card[data-rarity="3"] .rarity-pill,
+.witness-card[data-rarity="6"] .rarity-pill {
+  color: var(--c-ink);
+}
+
+/* Star glyphs stay yellow (#FEDC01) at EVERY rarity per arknights.md */
+.star-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  color: var(--c-star);
+  font-family: var(--f-tech);
+  font-size: var(--fs-label);
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+/* ---- White Mask + Runtime UIColorGraphic Tinting ---- */
+.ui-color-graphic {
+  fill: var(--tint-color, var(--c-ink));
+  stroke: var(--tint-color, var(--c-ink));
+  transition: fill 0.2s ease, stroke 0.2s ease;
+}
+.ui-color-graphic[fill="none"],
+.ui-color-graphic [fill="none"] {
+  fill: none !important;
+}
+.ui-color-graphic [stroke="none"] {
+  stroke: none !important;
+}
+.tint-primary { --tint-color: var(--c-primary); }
+.tint-yellow  { --tint-color: var(--c-brand-yellow); }
+.tint-gold    { --tint-color: var(--c-confirm-gold); }
+.tint-danger  { --tint-color: var(--c-danger-red); }
+.tint-green   { --tint-color: var(--c-accent-green); }
+.tint-violet  { --tint-color: var(--c-accent-violet); }
+.tint-cyan    { --tint-color: var(--c-currency-blue); }
+
+/* ---- Progress Track & Highlight Bar ---- */
+.ak-progress-track {
+  width: 100%;
+  height: var(--s-xs); /* 10px */
+  background-color: var(--c-surface-4);
+  overflow: hidden;
+}
+.ak-progress-fill {
+  height: 100%;
+  background-color: var(--c-brand-yellow);
+  transition: width 0.25s ease;
+}
+
+/* ---- Hotkey Prompt & Currency/Telemetry Chip ---- */
+.hotkey-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--r-full);
+  background-color: var(--c-canvas);
+  color: var(--c-star);
+  border: 1px solid var(--c-hairline);
+  font-family: var(--f-tech);
+  font-size: var(--fs-caption);
+}
+
+.telemetry-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-xxs);
+  height: var(--s-row); /* 30px */
+  padding: 0 var(--s-xs);
+  background-color: var(--c-panel-deep);
+  color: var(--c-currency-blue);
+  font-family: var(--f-tech);
+  font-size: var(--fs-label);
+  border-left: 2px solid var(--c-primary);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ---- Zero-Slack Telemetry Cluster vs. Void Ground ---- */
+.telemetry-cluster {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-unit); /* 2px zero-slack cluster */
+}
+.telemetry-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 24px;
+  padding: 0 var(--s-xs);
+  background-color: var(--c-surface-3);
+  font-family: var(--f-tech);
+  font-size: var(--fs-caption);
+  color: var(--c-ink-light-1);
+}
+</style>
+
+<!-- ==== 07-style-layout.css ==== -->
+<style>
+/* ==========================================================================
+   07-style-layout.css
+   1280x720 Locked Tactical Stage · Zero Root Scroll · Void-to-Cluster Contrast
+   ========================================================================== */
+
+.jc09-viewport {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--c-canvas);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Background Architectural Void Layer (45%–55% Dark Canvas + #242424 Ghost Type) */
+.void-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+.void-ghost-word {
+  position: absolute;
+  right: 40px;
+  bottom: 20px;
+  font-family: var(--f-display);
+  font-size: var(--fs-display);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -2px;
+  color: var(--c-surface-2); /* #242424 on #000000 */
+  white-space: nowrap;
+}
+.void-ghost-sub {
+  position: absolute;
+  left: 50px;
+  top: 64px;
+  font-family: var(--f-display);
+  font-size: var(--fs-headline);
+  font-weight: 600;
+  color: var(--c-surface-3);
+  letter-spacing: 2px;
+}
+.void-schematic-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.16;
+}
+
+/* Main 1280x720 Console Shell */
+.jc09-stage {
+  position: relative;
+  z-index: 2;
+  width: min(100vw, 1440px);
+  height: min(100vh, 860px);
+  padding: var(--s-sm) var(--s-gutter); /* 20px 50px per arknights.md 50px screen gutter */
+  display: grid;
+  grid-template-rows: 50px 1fr 40px;
+  gap: var(--s-xs);
+  overflow: hidden;
+}
+
+/* ---- Top Tactical Status Bar (50px height) ---- */
+.top-hud {
+  height: var(--bh-headline); /* 50px */
+  background-color: var(--c-panel-deep);
+  border: 1px solid var(--c-surface-4);
+  border-radius: var(--r-slice-sm);
+  padding: 0 var(--s-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-sm);
+}
+.top-hud-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--s-xs);
+}
+.top-hud-code {
+  font-family: var(--f-display);
+  font-size: var(--fs-card-title);
+  font-weight: 700;
+  color: var(--c-ink);
+  letter-spacing: -1px;
+}
+.top-hud-title {
+  font-family: var(--f-cjk);
+  font-size: var(--fs-body);
+  font-weight: 500;
+  color: var(--c-ink-light-1);
+  border-left: 2px solid var(--c-brand-yellow);
+  padding-left: var(--s-xs);
+}
+.top-hud-acts {
+  display: flex;
+  align-items: center;
+  gap: var(--s-xxs);
+}
+.act-pill {
+  height: var(--s-row); /* 30px */
+  padding: 0 var(--s-xs);
+  border-radius: var(--r-xs);
+  background-color: var(--c-surface-3);
+  color: var(--c-ink-muted);
+  font-family: var(--f-tech);
+  font-size: var(--fs-caption);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-xxs);
+  border: 1px solid var(--c-surface-4);
+  cursor: pointer;
+}
+.act-pill.is-unlocked {
+  background-color: var(--c-panel);
+  color: var(--c-ink);
+  border-color: var(--c-hairline);
+}
+.act-pill.is-current {
+  background-color: var(--c-primary);
+  color: var(--c-on-primary);
+  border-color: var(--c-currency-blue);
+  font-weight: 700;
+}
+.top-hud-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--s-xs);
+}
+
+/* ---- Core 3-Column Deck (Left Nav Rail · Center Active View · Right Contradiction Lock) ---- */
+.deck-grid {
+  display: grid;
+  grid-template-columns: 190px 1fr 310px;
+  gap: var(--s-sm);
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Left View Switcher Rail */
+.nav-rail {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--s-xs);
+  height: 100%;
+  min-height: 0;
+}
+.nav-rail-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-xs);
+}
+.nav-tab {
+  position: relative;
+  height: 60px;
+  padding: 0 var(--s-xs) 0 var(--s-sm);
+  background-color: var(--c-panel-deep);
+  color: var(--c-ink-disabled);
+  border: 1px solid var(--c-surface-4);
+  border-radius: var(--r-slice-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.nav-tab::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--s-xxs); /* 5px control step */
+  background-color: var(--c-surface-5);
+}
+.nav-tab.is-active {
+  background-color: var(--c-panel);
+  color: var(--c-ink);
+  border-color: var(--c-primary);
+}
+.nav-tab.is-active::before {
+  background-color: var(--c-brand-yellow);
+}
+.nav-tab-en {
+  font-family: var(--f-display);
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--c-currency-blue);
+}
+.nav-tab-zh {
+  font-family: var(--f-cjk);
+  font-size: var(--fs-row-title);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+/* Center Tactical Workspace (One Active View at a Time, Zero Scroll) */
+.workspace-pane {
+  position: relative;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+  padding: 0 8px 8px 0; /* Reserve 8px for 6px bottom-right offset backing plate */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.view-panel {
+  display: none;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--s-xs);
+}
+.view-panel.is-active {
+  display: flex;
+}
+
+/* View Header Bar */
+.view-header {
+  height: var(--bh-card-title); /* 40px */
+  min-height: var(--bh-card-title);
+  padding: 0 var(--s-xs);
+  background-color: var(--c-panel-deep);
+  border-left: var(--s-xxs) solid var(--c-primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-xs);
+  overflow: hidden;
+}
+.view-header-title {
+  display: flex;
+  align-items: center;
+  gap: var(--s-xs);
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.view-header-en {
+  font-family: var(--f-display);
+  font-size: var(--fs-row-title);
+  font-weight: 700;
+  color: var(--c-ink);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.view-header-zh {
+  font-family: var(--f-cjk);
+  font-size: var(--fs-body-sm);
+  color: var(--c-brand-yellow);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---- View 01: Witness Deck (6-Card Roster + Active Dossier Inspector) ---- */
+.witness-layout {
+  display: grid;
+  grid-template-rows: 130px 1fr;
+  gap: var(--s-xs);
+  height: 100%;
+  min-height: 0;
+}
+.witness-roster {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--s-xs);
+  height: 130px;
+}
+.witness-detail-box {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: var(--s-sm);
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+.witness-portrait-well {
+  position: relative;
+  background-color: var(--c-canvas);
+  border: 1px solid var(--c-surface-5);
+  border-radius: var(--r-slice-sm);
+  padding: var(--s-xs);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+.witness-statement-well {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--s-xs);
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+}
+.statement-body-card {
+  flex: 1;
+  min-width: 0;
+  background-color: var(--c-surface-3);
+  border: 1px solid var(--c-surface-5);
+  border-radius: var(--r-slice-sm);
+  padding: var(--s-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+/* ---- View 02: 17-Second Neural Synapse Slicer + 7-State Filter Matrix ---- */
+.synapse-layout {
+  display: grid;
+  grid-template-rows: auto 135px 1fr;
+  gap: var(--s-xs);
+  height: 100%;
+  min-height: 0;
+}
+.filter-matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--s-xs);
+}
+.filter-channel-card {
+  background-color: var(--c-panel-deep);
+  border: 1px solid var(--c-surface-5);
+  border-radius: var(--r-slice-sm);
+  padding: var(--s-xs);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-xxs);
+}
+.timeline-oscilloscope {
+  position: relative;
+  background-color: var(--c-canvas);
+  border: 1px solid var(--c-hairline);
+  border-radius: var(--r-slice-sm);
+  padding: var(--s-xs);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+.time-nodes-bar {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--s-xs);
+}
+
+/* ---- View 03: Train Blackbox & Physical Evidence Vault ---- */
+.blackbox-layout {
+  display: grid;
+  grid-template-columns: 230px 1fr;
+  gap: var(--s-sm);
+  height: 100%;
+  min-height: 0;
+}
+.evidence-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-unit); /* 2px lattice step */
+}
+.evidence-row {
+  height: 52px;
+  padding: 0 var(--s-xs);
+  background-color: var(--c-panel-deep);
+  border: 1px solid var(--c-surface-4);
+  border-left: 3px solid var(--c-surface-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.evidence-row.is-selected {
+  background-color: var(--c-panel);
+  border-color: var(--c-primary);
+  border-left-color: var(--c-brand-yellow);
+}
+.evidence-row.is-hinted {
+  border-left-color: var(--c-accent-green);
+}
+
+/* ---- View 04: Four-Act Case Reconstruction & Final Indictment ---- */
+.verdict-layout {
+  display: grid;
+  grid-template-columns: 1fr 290px;
+  gap: var(--s-sm);
+  height: 100%;
+  min-height: 0;
+}
+.act-dossier-tabs {
+  display: flex;
+  gap: var(--s-xxs);
+}
+
+/* ---- Right Column: Contradiction Lock Inspector ---- */
+.inspector-rail {
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--s-xs);
+}
+.slot-card {
+  background-color: var(--c-canvas);
+  border: 1px solid var(--c-surface-5);
+  border-left: 4px solid var(--c-primary);
+  border-radius: var(--r-slice-sm);
+  padding: var(--s-xs);
+  min-height: 92px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.slot-card.slot-b {
+  border-left-color: var(--c-brand-yellow);
+}
+.slot-card.is-empty {
+  border-style: dashed;
+  color: var(--c-ink-muted);
+}
+
+/* ---- Bottom Status & Telemetry Ticker (40px height) ---- */
+.bottom-bar {
+  height: var(--bh-card-title); /* 40px */
+  background-color: var(--c-panel-deep);
+  border: 1px solid var(--c-surface-4);
+  padding: 0 var(--s-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-sm);
+}
+
+/* ---- Portrait Orientation & Compact Viewport Adaptation (Zero Root Scroll) ---- */
+@media (orientation: portrait), (max-width: 1024px) {
+  .jc09-stage {
+    width: 100vw;
+    height: 100vh;
+    padding: 6px;
+    grid-template-rows: 36px 32px 1fr 94px;
+    gap: 4px;
+  }
+  .top-hud {
+    height: 36px;
+    padding: 0 8px;
+  }
+  .top-hud-code {
+    font-size: var(--fs-row-title);
+  }
+  .top-hud-title,
+  .top-hud-acts {
+    display: none;
+  }
+  .top-hud-controls .state-chip,
+  .top-hud-controls .btn-compact {
+    height: 24px;
+    padding: 0 6px;
+    font-size: var(--fs-caption);
+  }
+  .deck-grid {
+    display: contents;
+  }
+  .tilt-plane {
+    transform: none;
+  }
+  .offset-plate::after {
+    display: none;
+  }
+  .nav-rail {
+    height: 32px;
+    flex-direction: row;
+  }
+  .nav-rail-tabs {
+    flex-direction: row;
+    width: 100%;
+    gap: 4px;
+  }
+  .nav-tab {
+    flex: 1;
+    height: 32px;
+    padding: 0 4px;
+    align-items: center;
+  }
+  .nav-tab-en {
+    display: none;
+  }
+  .nav-tab-zh {
+    font-size: var(--fs-caption);
+    white-space: nowrap;
+  }
+  .nav-rail-telemetry {
+    display: none;
+  }
+  .view-panel {
+    padding: 8px;
+    gap: 6px;
+  }
+  .view-header {
+    height: 28px;
+    min-height: 28px;
+  }
+  .view-header-en {
+    font-size: var(--fs-body-sm);
+  }
+  .view-header-zh,
+  .view-header .telemetry-chip {
+    display: none;
+  }
+  .witness-layout {
+    grid-template-rows: 104px 1fr;
+    gap: 6px;
+  }
+  .witness-roster {
+    height: 104px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 4px;
+  }
+  .witness-card {
+    padding: 4px 6px;
+  }
+  .witness-card > div:last-child {
+    display: none;
+  }
+  .witness-detail-box {
+    grid-template-columns: 1fr;
+  }
+  .witness-portrait-well {
+    display: none;
+  }
+  .statement-body-card {
+    padding: 8px;
+  }
+  #w-statement-text,
+  #ev-desc-text,
+  #dossier-act-body {
+    font-size: var(--fs-body-sm) !important;
+    line-height: 1.38 !important;
+    margin-bottom: 6px !important;
+  }
+  #w-forensic-note,
+  #ev-forensic-note,
+  #dossier-act-conclusion {
+    font-size: var(--fs-caption) !important;
+    padding: 4px 6px !important;
+  }
+  #btn-goto-synapse {
+    display: none;
+  }
+  .filter-matrix-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
+  }
+  .filter-channel-card {
+    padding: 4px 6px;
+  }
+  .filter-channel-card > div:last-child {
+    display: none;
+  }
+  .blackbox-layout,
+  .verdict-layout {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  .evidence-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+  }
+  .evidence-row {
+    height: 36px;
+    padding: 0 4px;
+  }
+  .evidence-row .rarity-pill {
+    display: none;
+  }
+  .inspector-rail {
+    height: 94px;
+    flex-direction: row;
+    align-items: center;
+    padding: 6px !important;
+    gap: 6px;
+  }
+  .inspector-rail .inspector-header,
+  .inspector-rail .inspector-brief {
+    display: none;
+  }
+  .inspector-slots-wrap {
+    display: flex;
+    flex-direction: row !important;
+    flex: 1;
+    gap: 4px;
+    height: 100%;
+  }
+  .slot-card {
+    flex: 1;
+    min-height: 0;
+    height: 100%;
+    padding: 4px 6px;
+    overflow: hidden;
+  }
+  #slot-a-summary,
+  #slot-b-summary {
+    display: none;
+  }
+  #btn-execute-break {
+    width: 108px !important;
+    height: 100%;
+    padding: 0 8px;
+    font-size: var(--fs-body-sm);
+    white-space: normal;
+    line-height: 1.2;
+  }
+  .bottom-bar {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+</style>
+
+<!-- ==== 10-shell.html ==== -->
+</head>
+<body>
+  <div class="jc09-viewport" id="app-root">
+    <!-- Architectural Void Layer (45%–55% Open Ground + #242424 Ghost Wordmark + White-Mask SVG) -->
+    <div class="void-backdrop" aria-hidden="true">
+      <div class="void-ghost-sub">JUDICIAL BCI FORENSICS // CASE 2026-K9-17S</div>
+      <div class="void-ghost-word">JACKDAW-09</div>
+      <svg class="void-schematic-svg" viewBox="0 0 1280 720" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <pattern id="grid-lattice" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#555555" stroke-width="0.6" />
+            <rect x="0" y="0" width="2" height="2" fill="#FEFEFE" />
+          </pattern>
+        </defs>
+        <rect width="1280" height="720" fill="url(#grid-lattice)" />
+        <!-- Bridge Fracture & 17-Second Neural Arc Schematic (#FEFEFE White Mask) -->
+        <g class="ui-color-graphic tint-primary" opacity="0.55">
+          <line x1="50" y1="620" x2="780" y2="620" stroke-width="2" />
+          <line x1="780" y1="620" x2="960" y2="710" stroke-width="2" stroke-dasharray="6 4" />
+          <circle cx="780" cy="620" r="6" fill="none" stroke-width="2" />
+          <path d="M 120 140 Q 440 60 780 260 T 1180 180" fill="none" stroke-width="1.5" stroke-dasharray="4 4" />
+        </g>
+      </svg>
+    </div>
+
+    <!-- Main 1280x720 Locked Tactical Stage -->
+    <main class="jc09-stage" aria-label="寒鸦审讯室：第 09 号记忆取证台">
+      <!-- Top Tactical HUD Bar (50px height) -->
+      <header class="top-hud">
+        <div class="top-hud-brand">
+          <span class="top-hud-code">JC-09</span>
+          <h1 class="top-hud-title">寒鸦审讯室：第 09 号记忆取证台 · 断桥空白十七秒</h1>
+        </div>
+
+        <!-- Four-Act Deduction Progress Pills -->
+        <nav class="top-hud-acts" aria-label="审讯推演幕次" id="act-progress-bar">
+          <button type="button" class="act-pill is-unlocked is-current" data-act="1" id="act-pill-1">
+            <span>ACT I</span><span>完美背锅者</span>
+          </button>
+          <button type="button" class="act-pill" data-act="2" id="act-pill-2">
+            <span>ACT II</span><span>静止的十七秒</span>
+          </button>
+          <button type="button" class="act-pill" data-act="3" id="act-pill-3">
+            <span>ACT III</span><span>共谋手术刀</span>
+          </button>
+          <button type="button" class="act-pill" data-act="4" id="act-pill-4">
+            <span>ACT IV</span><span>寒鸦照影</span>
+          </button>
+        </nav>
+
+        <!-- Global Tactical Toggles (Hint Assist · Web Audio · Reset) -->
+        <div class="top-hud-controls">
+          <button type="button" class="state-chip" data-state="off" id="btn-hint-toggle" title="高亮当前幕次的关键矛盾证词与物证">
+            <span>推演辅助</span><strong id="hint-state-label">OFF</strong>
+          </button>
+          <button type="button" class="state-chip" data-state="off" id="btn-audio-toggle" title="切换 Web Audio 实时合成审讯室声效">
+            <span>声效合成</span><strong id="audio-state-label">OFF</strong>
+          </button>
+          <button type="button" class="btn-compact" id="btn-reset-save" title="清除本地审讯进度并重新开始">
+            <span>重置卷宗</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Core 3-Column Deck -->
+      <div class="deck-grid tilt-stage">
+        <!-- Left Column: View Switcher Rail + Zero-Slack Telemetry Cluster -->
+        <aside class="nav-rail" aria-label="主视图切换">
+          <div class="nav-rail-tabs" role="tablist">
+            <button type="button" class="nav-tab is-active" role="tab" aria-selected="true" data-view="witness" id="tab-witness">
+              <span class="nav-tab-en">01 // WITNESS <kbd class="hotkey-badge">1</kbd></span>
+              <span class="nav-tab-zh">幸存者卡池 (6)</span>
+            </button>
+            <button type="button" class="nav-tab" role="tab" aria-selected="false" data-view="synapse" id="tab-synapse">
+              <span class="nav-tab-en">02 // SYNAPSE <kbd class="hotkey-badge">2</kbd></span>
+              <span class="nav-tab-zh">17秒神经切片台</span>
+            </button>
+            <button type="button" class="nav-tab" role="tab" aria-selected="false" data-view="blackbox" id="tab-blackbox">
+              <span class="nav-tab-en">03 // BLACKBOX <kbd class="hotkey-badge">3</kbd></span>
+              <span class="nav-tab-zh">黑匣与物证库 (6)</span>
+            </button>
+            <button type="button" class="nav-tab" role="tab" aria-selected="false" data-view="verdict" id="tab-verdict">
+              <span class="nav-tab-en">04 // VERDICT <kbd class="hotkey-badge">4</kbd></span>
+              <span class="nav-tab-zh">审讯卷宗与公诉</span>
+            </button>
+          </div>
+
+          <!-- Zero-Slack 2px Telemetry Cluster -->
+          <div class="nav-rail-telemetry ak-panel-deep">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+              <span style="font-family:var(--f-display);font-size:var(--fs-caption);color:var(--c-brand-yellow);">BCI TELEMETRY</span>
+              <span class="rarity-pill" style="background:var(--c-primary);color:var(--c-on-primary);">LIVE</span>
+            </div>
+            <div class="telemetry-cluster">
+              <div class="telemetry-row"><span>CASE ID</span><span>K9-03-CAR</span></div>
+              <div class="telemetry-row"><span>GAP WINDOW</span><span style="color:var(--c-brand-yellow);">17.00 SEC</span></div>
+              <div class="telemetry-row"><span>DECRYPTED</span><span id="stat-decrypted-count">1 / 6</span></div>
+              <div class="telemetry-row"><span>BREAKTHROUGHS</span><span id="stat-act-count">0 / 4</span></div>
+            </div>
+            <div style="margin-top:8px;">
+              <div class="ak-progress-track">
+                <div class="ak-progress-fill" id="global-progress-fill" style="width: 15%;"></div>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Center Column: Active Tactical View (Zero Scroll, Offset Backing Plate + 1.2deg Tilt) -->
+        <section class="workspace-pane tilt-plane" id="workspace-pane">
+
+<!-- ==== 20-view-witness.html ==== -->
+          <!-- ================================================================
+               VIEW 01 // WITNESS: 幸存者卡池与脑机证词层检视台
+               ================================================================ -->
+          <div class="view-panel is-active ak-panel offset-plate" id="view-witness" role="tabpanel" aria-labelledby="tab-witness">
+            <div class="view-header">
+              <div class="view-header-title">
+                <span class="view-header-en">01 // SURVIVOR ROSTER</span>
+                <span class="view-header-zh">03 车厢六名幸存者 · 六阶神经覆写光晕分级（星标恒黄 #FEDC01）</span>
+              </div>
+              <span class="telemetry-chip" id="witness-active-code">WITNESS // W05 5★</span>
+            </div>
+
+            <div class="witness-layout">
+              <!-- 6-Card Rarity Roster (1★ to 6★ Glow Ramp: #FEFEFE -> #FE7200) -->
+              <div class="witness-roster" id="witness-roster-grid" role="listbox" aria-label="幸存者脑机卡片">
+                <!-- Populated dynamically & pre-rendered for instant zero-flicker inspection -->
+                <button type="button" class="witness-card" data-witness="W01" data-rarity="1" id="card-W01">
+                  <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <span class="rarity-pill">1★ RAW</span>
+                    <span class="star-row" aria-label="1星">★</span>
+                  </div>
+                  <div style="text-align:left;margin:4px 0;">
+                    <div style="font-size:var(--fs-row-title);font-weight:700;color:var(--c-ink);">沈听澜</div>
+                    <div style="font-size:var(--fs-caption);color:var(--c-ink-disabled);">盲眼钢琴调音师</div>
+                  </div>
+                  <div style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-ink-light-1);text-align:left;">
+                    BCI: NONE (骨传导)
+                  </div>
+                </button>
+
+                <button type="button" class="witness-card" data-witness="W02" data-rarity="2" id="card-W02">
+                  <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <span class="rarity-pill">2★ LOW</span>
+                    <span class="star-row" aria-label="2星">★★</span>
+                  </div>
+                  <div style="text-align:left;margin:4px 0;">
+                    <div style="font-size:var(--fs-row-title);font-weight:700;color:var(--c-ink);">周野</div>
+                    <div style="font-size:var(--fs-caption);color:var(--c-ink-disabled);">03车厢实习乘务员</div>
+                  </div>
+                  <div style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-rarity-2);text-align:left;">
+                    TAMPER: 18.4%
+                  </div>
+                </button>
+
+                <button type="button" class="witness-card" data-witness="W03" data-rarity="3" id="card-W03">
+                  <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <span class="rarity-pill">3★ TAC</span>
+                    <span class="star-row" aria-label="3星">★★★</span>
+                  </div>
+                  <div style="text-align:left;margin:4px 0;">
+                    <div style="font-size:var(--fs-row-title);font-weight:700;color:var(--c-ink);">陆峥</div>
+                    <div style="font-size:var(--fs-caption);color:var(--c-ink-disabled);">列车专职安全员</div>
+                  </div>
+                  <div style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-rarity-3);text-align:left;">
+                    TAMPER: 42.0%
+                  </div>
+                </button>
+
+                <button type="button" class="witness-card" data-witness="W04" data-rarity="4" id="card-W04">
+                  <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <span class="rarity-pill">4★ MED</span>
+                    <span class="star-row" aria-label="4星">★★★★</span>
+                  </div>
+                  <div style="text-align:left;margin:4px 0;">
+                    <div style="font-size:var(--fs-row-title);font-weight:700;color:var(--c-ink);">温莎·林</div>
+                    <div style="font-size:var(--fs-caption);color:var(--c-ink-disabled);">神经外科主治医师</div>
+                  </div>
+                  <div style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-rarity-4);text-align:left;">
+                    TAMPER: 67.5%
+                  </div>
+                </button>
+
+                <button type="button" class="witness-card is-selected" data-witness="W05" data-rarity="5" id="card-W05">
+                  <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <span class="rarity-pill">5★ CORE</span>
+                    <span class="star-row" aria-label="5星">★★★★★</span>
+                  </div>
+                  <div style="text-align:left;margin:4px 0;">
+                    <div style="font-size:var(--fs-row-title);font-weight:700;color:var(--c-ink);">顾言</div>
+                    <div style="font-size:var(--fs-caption);color:var(--c-ink-disabled);">智驾系统总架构师</div>
+                  </div>
+                  <div style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-rarity-5);text-align:left;">
+                    TAMPER: 89.2%
+                  </div>
+                </button>
+
+                <button type="button" class="witness-card" data-witness="W06" data-rarity="6" id="card-W06">
+                  <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <span class="rarity-pill">6★ VOID</span>
+                    <span class="star-row" aria-label="6星">★★★★★★</span>
+                  </div>
+                  <div style="text-align:left;margin:4px 0;">
+                    <div style="font-size:var(--fs-row-title);font-weight:700;color:var(--c-ink);">严律</div>
+                    <div style="font-size:var(--fs-caption);color:var(--c-ink-disabled);">特别调查委最高督察</div>
+                  </div>
+                  <div style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-rarity-6);text-align:left;">
+                    TAMPER: 99.8%
+                  </div>
+                </button>
+              </div>
+
+              <!-- Active Witness Detailed Dossier & Statement Layer Switcher -->
+              <div class="witness-detail-box">
+                <!-- Left Sub-Column: White-Mask UIColorGraphic Neural Portrait + Bio Telemetry -->
+                <div class="witness-portrait-well">
+                  <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <span style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-ink-disabled);" id="w-seat-tag">SEAT 03-E</span>
+                    <span class="star-row" id="w-star-badge">★★★★★</span>
+                  </div>
+
+                  <!-- #FEFEFE White Silhouette + Runtime UIColorGraphic Tint -->
+                  <svg id="w-portrait-svg" viewBox="0 0 160 150" style="width:100%;height:135px;">
+                    <rect x="4" y="4" width="152" height="142" fill="none" stroke="#555555" stroke-width="1" stroke-dasharray="4 2" />
+                    <g id="w-portrait-graphic" class="ui-color-graphic tint-gold">
+                      <circle cx="80" cy="52" r="24" fill="none" stroke-width="2" />
+                      <path d="M 40 132 C 40 96 120 96 120 132" fill="none" stroke-width="2" />
+                      <line x1="20" y1="52" x2="140" y2="52" stroke-width="0.8" stroke-dasharray="3 3" />
+                      <circle cx="80" cy="52" r="5" />
+                    </g>
+                  </svg>
+
+                  <div class="telemetry-cluster">
+                    <div class="telemetry-row"><span>覆盖阶位</span><span id="w-tier-text">5★ 源码级覆写</span></div>
+                    <div class="telemetry-row"><span>脑机型号</span><span id="w-bci-model">NEURO-LINK V4</span></div>
+                    <div class="telemetry-row"><span>深层状态</span><span id="w-decrypt-status" style="color:var(--c-brand-yellow);">待滤波破译</span></div>
+                  </div>
+                </div>
+
+                <!-- Right Sub-Column: Surface Statement vs. Deep Filtered Memory -->
+                <div class="witness-statement-well">
+                  <div style="display:flex;justify-content:space-between;align-items:center;gap:var(--s-xs);flex-wrap:wrap;min-width:0;">
+                    <div style="min-width:0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                      <h2 style="font-size:var(--fs-title-cjk);font-weight:700;color:var(--c-ink);display:inline;" id="w-name-heading">顾言</h2>
+                      <span style="font-size:var(--fs-body-sm);color:var(--c-ink-disabled);margin-left:8px;" id="w-role-sub">自动驾驶系统首席架构师 · 主动认罪嫌疑人</span>
+                    </div>
+
+                    <!-- Layer Switch Buttons (Surface vs Deep Residual) -->
+                    <div style="display:flex;gap:var(--s-xxs);">
+                      <button type="button" class="state-chip" data-state="on" id="btn-layer-surface">
+                        <span>LAYER A // 表层供述</span>
+                      </button>
+                      <button type="button" class="state-chip" data-state="off" id="btn-layer-deep">
+                        <span id="label-layer-deep">LAYER B // 深层残响 [未破译]</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Statement Card Body -->
+                  <div class="statement-body-card" id="w-statement-card">
+                    <div>
+                      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--c-hairline);">
+                        <span style="font-family:var(--f-tech);font-size:var(--fs-label);color:var(--c-currency-blue);" id="w-clip-id">CLIP [W05-A] // T-15.2s 表层记忆切片</span>
+                        <span class="rarity-pill" id="w-clip-tag" style="background:var(--c-panel);color:var(--c-ink);">已校验供词</span>
+                      </div>
+                      <p style="font-size:var(--fs-body);color:var(--c-ink-light-3);line-height:1.55;margin-bottom:10px;" id="w-statement-text">
+                        “全是我的错……列车驶入跨江大桥引桥时，车载毫米波雷达报了误警。我在 T-15 秒通过工程师维护终端强行发送了【紧急制动解除指令】，试图让列车保持巡航速度冲过传感器盲区，结果列车直接带着全速冲出了坍塌的桥面……”
+                      </p>
+                      <div style="padding:8px 10px;background-color:var(--c-panel-deep);border-left:3px solid var(--c-brand-yellow);font-size:var(--fs-body-sm);color:var(--c-ink-light-1);" id="w-forensic-note">
+                        <strong>取证台批注：</strong>顾言在事故后第一时间签署了认罪书，但他的脑波在叙述“T-15 秒解除制动”时呈现出高度规律的节拍器波形——像是背诵被写入的脚本，且需前往【02 // 17秒神经切片台】按配方拨动 7 态滤波开关方可剥离伪装。
+                      </div>
+                    </div>
+
+                    <!-- Action Row: Load Statement into Contradiction Slot A or Slot B, or Jump to Synapse Slicer -->
+                    <div style="display:flex;justify-content:space-between;align-items:center;gap:var(--s-xs);padding-top:8px;border-top:1px solid var(--c-surface-5);">
+                      <button type="button" class="btn-compact" id="btn-goto-synapse">
+                        <span>02 切片台深层破译 →</span>
+                      </button>
+                      <div style="display:flex;gap:var(--s-xxs);">
+                        <button type="button" class="btn btn-primary" style="height:34px;font-size:var(--fs-body-sm);padding:0 10px;" id="btn-load-witness-a">
+                          <span>装填入槽 [A]</span>
+                        </button>
+                        <button type="button" class="btn btn-secondary" style="height:34px;font-size:var(--fs-body-sm);padding:0 10px;" id="btn-load-witness-b">
+                          <span>装填入槽 [B]</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+<!-- ==== 30-view-synapse.html ==== -->
+          <!-- ================================================================
+               VIEW 02 // SYNAPSE: 17秒神经切片台与七态滤波开关矩阵
+               ================================================================ -->
+          <div class="view-panel ak-panel offset-plate" id="view-synapse" role="tabpanel" aria-labelledby="tab-synapse">
+            <div class="view-header">
+              <div class="view-header-title">
+                <span class="view-header-en">02 // 17-SEC NEURAL SYNAPSE SLICER</span>
+                <span class="view-header-zh">七态开关滤波矩阵（normal / on / off / select / selected / unselect / unselected）</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:var(--s-xs);">
+                <span class="telemetry-chip" id="synapse-target-badge">TARGET: W05 顾言</span>
+                <button type="button" class="btn-compact" id="btn-auto-tune" title="按当前目标的推荐特征码一键校准七态开关">
+                  <span>校准目标特征码</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="synapse-layout">
+              <!-- Target Witness Selector Strip + Required Filter Signature -->
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:var(--s-xs);background:var(--c-panel-deep);padding:6px 10px;border:1px solid var(--c-surface-4);">
+                <div style="display:flex;align-items:center;gap:var(--s-xxs);flex-wrap:wrap;" id="synapse-witness-strip">
+                  <span style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-ink-disabled);margin-right:4px;">破译对象:</span>
+                  <button type="button" class="btn-compact" data-syn-witness="W01">1★ 沈听澜</button>
+                  <button type="button" class="btn-compact" data-syn-witness="W02">2★ 周野</button>
+                  <button type="button" class="btn-compact" data-syn-witness="W03">3★ 陆峥</button>
+                  <button type="button" class="btn-compact" data-syn-witness="W04">4★ 温莎·林</button>
+                  <button type="button" class="btn-compact is-active" data-syn-witness="W05">5★ 顾言</button>
+                  <button type="button" class="btn-compact" data-syn-witness="W06">6★ 严律</button>
+                </div>
+                <div style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-brand-yellow);" id="synapse-recipe-hint">
+                  目标解锁配方: CH1[ON] · CH2[SELECTED] · CH3[OFF] · CH4[ON]
+                </div>
+              </div>
+
+              <!-- 4-Channel Seven-State Toggle Switch Matrix -->
+              <div class="filter-matrix-grid" role="group" aria-label="七态神经滤波开关组">
+                <div class="filter-channel-card">
+                  <div style="display:flex;justify-content:space-between;font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-ink-disabled);">
+                    <span>CH-01 // ACOUSTIC</span><span>声学反相门</span>
+                  </div>
+                  <button type="button" class="state-chip" data-channel="0" data-state="normal" id="filter-ch-0">
+                    <span>当前态</span><strong class="chip-state-text">NORMAL</strong>
+                  </button>
+                  <div style="font-size:var(--fs-caption);color:var(--c-ink-muted);">剥离伪造的轨道轰鸣声与警报背景</div>
+                </div>
+
+                <div class="filter-channel-card">
+                  <div style="display:flex;justify-content:space-between;font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-ink-disabled);">
+                    <span>CH-02 // NOCICEPTOR</span><span>痛觉与眩晕剥离</span>
+                  </div>
+                  <button type="button" class="state-chip" data-channel="1" data-state="off" id="filter-ch-1">
+                    <span>当前态</span><strong class="chip-state-text">OFF</strong>
+                  </button>
+                  <div style="font-size:var(--fs-caption);color:var(--c-ink-muted);">过滤经颅磁脉冲诱发的皮层闪白</div>
+                </div>
+
+                <div class="filter-channel-card">
+                  <div style="display:flex;justify-content:space-between;font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-ink-disabled);">
+                    <span>CH-03 // LIMBIC</span><span>边缘系统情绪钳制</span>
+                  </div>
+                  <button type="button" class="state-chip" data-channel="2" data-state="unselected" id="filter-ch-2">
+                    <span>当前态</span><strong class="chip-state-text">UNSELECTED</strong>
+                  </button>
+                  <div style="font-size:var(--fs-caption);color:var(--c-ink-muted);">抑制植入式恐慌与虚假负罪感</div>
+                </div>
+
+                <div class="filter-channel-card">
+                  <div style="display:flex;justify-content:space-between;font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-ink-disabled);">
+                    <span>CH-04 // CHRONO</span><span>石英时钟重同步</span>
+                  </div>
+                  <button type="button" class="state-chip" data-channel="3" data-state="select" id="filter-ch-3">
+                    <span>当前态</span><strong class="chip-state-text">SELECT</strong>
+                  </button>
+                  <div style="font-size:var(--fs-caption);color:var(--c-ink-muted);">对齐坠桥前 17.0s 真实物理时间戳</div>
+                </div>
+              </div>
+
+              <!-- 17-Second Neural Waveform Oscilloscope & 5 Time Nodes -->
+              <div class="timeline-oscilloscope">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                  <span style="font-family:var(--f-tech);font-size:var(--fs-label);color:var(--c-currency-blue);" id="osc-status-title">
+                    WAVEFORM // 17.0s NEURAL ENVELOPE (点击上方七态开关匹配配方以解开深层残响)
+                  </span>
+                  <span class="rarity-pill" id="osc-match-badge" style="background:var(--c-panel);color:var(--c-ink);">匹配度 25%</span>
+                </div>
+
+                <!-- Procedural White-Mask Oscilloscope SVG Tinted at Runtime -->
+                <svg id="synapse-wave-svg" viewBox="0 0 760 88" style="width:100%;height:84px;">
+                  <line x1="0" y1="44" x2="760" y2="44" stroke="#434343" stroke-width="1" stroke-dasharray="4 4" />
+                  <path id="wave-path-surface" class="ui-color-graphic tint-primary" fill="none" stroke-width="2"
+                    d="M 0 44 Q 40 12 80 44 T 160 44 T 240 44 T 320 44 T 400 44 T 480 44 T 560 44 T 640 44 T 760 44" />
+                  <path id="wave-path-deep" class="ui-color-graphic tint-yellow" fill="none" stroke-width="2" stroke-dasharray="5 3"
+                    d="M 0 44 C 70 78 130 10 210 56 C 290 80 350 8 430 44 C 510 82 610 14 760 44" />
+                </svg>
+
+                <!-- 5 Time Slice Nodes (T-17.0s to T-00.0s) -->
+                <div class="time-nodes-bar" id="time-nodes-bar">
+                  <button type="button" class="btn-compact is-active" data-time-node="0">T-17.0s 制动抱死</button>
+                  <button type="button" class="btn-compact" data-time-node="1">T-12.4s 车门落锁</button>
+                  <button type="button" class="btn-compact" data-time-node="2">T-08.8s 440Hz磁脉冲</button>
+                  <button type="button" class="btn-compact" data-time-node="3">T-04.2s 覆写广播</button>
+                  <button type="button" class="btn-compact" data-time-node="4">T-00.0s 爆炸脱钩</button>
+                </div>
+
+                <!-- Decrypted Deep Memory Readout + Direct Slot Load -->
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:var(--s-xs);padding-top:6px;border-top:1px solid var(--c-surface-4);">
+                  <div style="font-size:var(--fs-body-sm);color:var(--c-ink-light-2);flex:1;" id="synapse-readout-text">
+                    <strong>[T-17.0s 切片摘要]</strong> 列车早在引桥段即已完成物理液压抱死，车体完全静止，与“全速冲出断桥”的表层记忆完全相悖。
+                  </div>
+                  <div style="display:flex;gap:var(--s-xxs);">
+                    <button type="button" class="btn btn-confirm" style="height:32px;font-size:var(--fs-body-sm);padding:0 12px;" id="btn-unlock-deep">
+                      <span>执行深层剥离并查阅证词</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+<!-- ==== 40-view-blackbox.html ==== -->
+          <!-- ================================================================
+               VIEW 03 // BLACKBOX: 列车物理黑匣与物证检视台
+               ================================================================ -->
+          <div class="view-panel ak-panel offset-plate" id="view-blackbox" role="tabpanel" aria-labelledby="tab-blackbox">
+            <div class="view-header">
+              <div class="view-header-title">
+                <span class="view-header-en">03 // PHYSICAL BLACKBOX & EXHIBITS</span>
+                <span class="view-header-zh">车载机械黑匣与现场打捞物证库 · 白色遮罩运行时染色（UIColorGraphic）</span>
+              </div>
+              <span class="telemetry-chip" id="blackbox-active-code">EXHIBIT // B01 HYDRAULIC</span>
+            </div>
+
+            <div class="blackbox-layout">
+              <!-- Left Column: 6 Physical Exhibits (Zero-Slack 2px Lattice List) -->
+              <div class="evidence-list" id="evidence-list-box" role="listbox" aria-label="物理黑匣物证列表">
+                <button type="button" class="evidence-row is-selected" data-evidence="B01" id="ev-row-B01">
+                  <div style="text-align:left;">
+                    <div style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-currency-blue);">EXHIBIT B-01</div>
+                    <div style="font-size:var(--fs-body-sm);font-weight:700;color:var(--c-ink);">转向架液压抱死曲线</div>
+                  </div>
+                  <span class="rarity-pill" style="background:var(--c-rarity-3);color:var(--c-ink);">ACT I</span>
+                </button>
+
+                <button type="button" class="evidence-row" data-evidence="B02" id="ev-row-B02">
+                  <div style="text-align:left;">
+                    <div style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-currency-blue);">EXHIBIT B-02</div>
+                    <div style="font-size:var(--fs-body-sm);font-weight:700;color:var(--c-ink);">03车厢气密门电磁反锁日志</div>
+                  </div>
+                  <span class="rarity-pill" style="background:var(--c-rarity-2);color:var(--c-canvas);">ACT II</span>
+                </button>
+
+                <button type="button" class="evidence-row" data-evidence="B03" id="ev-row-B03">
+                  <div style="text-align:left;">
+                    <div style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-currency-blue);">EXHIBIT B-03</div>
+                    <div style="font-size:var(--fs-body-sm);font-weight:700;color:var(--c-ink);">盲眼调音师骨传导助听器残片</div>
+                  </div>
+                  <span class="rarity-pill" style="background:var(--c-rarity-1);color:var(--c-canvas);">ACT II</span>
+                </button>
+
+                <button type="button" class="evidence-row" data-evidence="B04" id="ev-row-B04">
+                  <div style="text-align:left;">
+                    <div style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-currency-blue);">EXHIBIT B-04</div>
+                    <div style="font-size:var(--fs-body-sm);font-weight:700;color:var(--c-ink);">便携式经颅覆写仪 MAC 签名</div>
+                  </div>
+                  <span class="rarity-pill" style="background:var(--c-rarity-4);color:var(--c-canvas);">ACT III</span>
+                </button>
+
+                <button type="button" class="evidence-row" data-evidence="B05" id="ev-row-B05">
+                  <div style="text-align:left;">
+                    <div style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-currency-blue);">EXHIBIT B-05</div>
+                    <div style="font-size:var(--fs-body-sm);font-weight:700;color:var(--c-ink);">车钩爆炸螺栓起爆电雷管残骸</div>
+                  </div>
+                  <span class="rarity-pill" style="background:var(--c-rarity-5);color:var(--c-canvas);">ACT III</span>
+                </button>
+
+                <button type="button" class="evidence-row" data-evidence="B06" id="ev-row-B06">
+                  <div style="text-align:left;">
+                    <div style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-currency-blue);">EXHIBIT B-06</div>
+                    <div style="font-size:var(--fs-body-sm);font-weight:700;color:var(--c-ink);">寒鸦09号台最高督察硬件密钥</div>
+                  </div>
+                  <span class="rarity-pill" style="background:var(--c-rarity-6);color:var(--c-ink);">ACT IV</span>
+                </button>
+              </div>
+
+              <!-- Right Column: Detailed Exhibit Schematic & Telemetry -->
+              <div class="statement-body-card">
+                <div>
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--c-hairline);">
+                    <div>
+                      <h2 style="font-size:var(--fs-title-cjk);font-weight:700;color:var(--c-ink);display:inline;" id="ev-title-heading">转向架液压抱死曲线</h2>
+                      <span style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-brand-yellow);margin-left:8px;" id="ev-id-sub">[EXHIBIT B-01 // BOGIE-HYD-LOG]</span>
+                    </div>
+                    <span class="rarity-pill" id="ev- authenticity-tag" style="background:var(--c-accent-green);color:var(--c-ink);">物理不可篡改</span>
+                  </div>
+
+                  <!-- White-Mask (#FEFEFE) Procedural SVG Schematic with Runtime UIColorGraphic Tint -->
+                  <div style="background-color:var(--c-canvas);border:1px solid var(--c-surface-5);padding:8px;margin-bottom:10px;">
+                    <svg id="ev-schematic-svg" viewBox="0 0 520 105" style="width:100%;height:96px;">
+                      <g stroke="#313131" stroke-width="1">
+                        <line x1="0" y1="25" x2="520" y2="25" />
+                        <line x1="0" y1="55" x2="520" y2="55" />
+                        <line x1="0" y1="85" x2="520" y2="85" />
+                        <line x1="120" y1="0" x2="120" y2="105" stroke-dasharray="3 3" />
+                      </g>
+                      <g id="ev-svg-graphic" class="ui-color-graphic tint-cyan">
+                        <polyline fill="none" stroke-width="2.5" points="10,20 70,22 120,85 500,85" />
+                        <circle cx="120" cy="85" r="5" />
+                        <text x="130" y="76" font-family="Barlow, monospace" font-size="11" stroke="none">T-17.0s VELOCITY = 0.0 km/h (HARD LOCK)</text>
+                      </g>
+                    </svg>
+                  </div>
+
+                  <p style="font-size:var(--fs-body);color:var(--c-ink-light-3);line-height:1.55;margin-bottom:8px;" id="ev-desc-text">
+                    打捞自江底的 03 车厢主转向架机械制动盘磨损拓片与液压黑匣记录：早在 T-17.0 秒，机械急停卡钳即已完全锁死车轮，列车在断桥缺口前 4.2 米处彻底刹停（速度归零）。所谓“T-15 秒软件解除制动并全速冲出桥面”在物理上根本没有发生。
+                  </p>
+
+                  <div style="padding:6px 10px;background-color:var(--c-panel-deep);border-left:3px solid var(--c-primary);font-size:var(--fs-body-sm);color:var(--c-ink-light-1);" id="ev-forensic-note">
+                    <strong>取证交叉点：</strong>既然列车在 T-17.0s 就已经稳稳停在桥面上，那么直到 T-00.0s 车厢坠入江中的这 17 秒里，03 车厢实际上处于完全静止状态。
+                  </div>
+                </div>
+
+                <!-- Load Physical Exhibit into Contradiction Slot A or B -->
+                <div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px solid var(--c-surface-5);">
+                  <span style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-ink-disabled);" id="ev-hash-code">SHA-256: 9F4A...7C1E // VERIFIED</span>
+                  <div style="display:flex;gap:var(--s-xs);">
+                    <button type="button" class="btn btn-primary" style="height:36px;font-size:var(--fs-body-sm);padding:0 14px;" id="btn-load-ev-a">
+                      <span>装填入指证槽 [A]</span>
+                    </button>
+                    <button type="button" class="btn btn-secondary" style="height:36px;font-size:var(--fs-body-sm);padding:0 14px;" id="btn-load-ev-b">
+                      <span>装填入指证槽 [B]</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+<!-- ==== 50-view-verdict.html ==== -->
+          <!-- ================================================================
+               VIEW 04 // VERDICT: 四幕案情重构卷宗与终局三向公诉裁决台
+               ================================================================ -->
+          <div class="view-panel ak-panel offset-plate" id="view-verdict" role="tabpanel" aria-labelledby="tab-verdict">
+            <div class="view-header">
+              <div class="view-header-title">
+                <span class="view-header-en">04 // CASE RECONSTRUCTION & VERDICT</span>
+                <span class="view-header-zh">四幕逻辑重构卷宗与第 09 号取证台终局裁决书</span>
+              </div>
+              <span class="telemetry-chip" id="verdict-status-badge">CASE STATUS: IN PROGRESS</span>
+            </div>
+
+            <div class="verdict-layout">
+              <!-- Left Column: Act I–IV Dossier Reader -->
+              <div class="statement-body-card">
+                <div>
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--c-hairline);">
+                    <div class="act-dossier-tabs" id="verdict-act-tabs">
+                      <button type="button" class="btn-compact is-active" data-dossier-act="1">第一幕卷宗</button>
+                      <button type="button" class="btn-compact" data-dossier-act="2">第二幕卷宗</button>
+                      <button type="button" class="btn-compact" data-dossier-act="3">第三幕卷宗</button>
+                      <button type="button" class="btn-compact" data-dossier-act="4">第四幕终章</button>
+                    </div>
+                    <span class="rarity-pill" id="dossier-lock-badge" style="background:var(--c-primary);color:var(--c-on-primary);">当前审理中</span>
+                  </div>
+
+                  <h2 style="font-family:var(--f-cjk-serif);font-size:var(--fs-cjk-serif);color:var(--c-brand-yellow);margin-bottom:8px;" id="dossier-act-heading">
+                    第一幕：完美背锅者与静止的列车
+                  </h2>
+                  <p style="font-size:var(--fs-body);color:var(--c-ink-light-3);line-height:1.6;margin-bottom:10px;" id="dossier-act-body">
+                    跨江大桥坍塌当晚，03 车厢坠入深水航道，车内六人全数生还，但所有植入商用脑机接口的乘员均缺失了坠桥前 T-17.0s 至 T-00.0s 的原始记忆，仅剩高度一致的“列车全速冲出断桥”表层供词。智驾系统总架构师顾言主动认罪，声称自己在 T-15 秒误发了紧急制动解除指令。请将顾言的表层证词与物理黑匣制动曲线装填入右侧指证槽，击穿这层拙劣的顶罪谎言。
+                  </p>
+                  <div style="padding:8px 10px;background-color:var(--c-panel-deep);border-left:3px solid var(--c-confirm-gold);font-size:var(--fs-body-sm);color:var(--c-ink-light-1);" id="dossier-act-conclusion">
+                    <strong>当前推演指引：</strong>在【01 幸存者卡池】装填 <code>W05-A 顾言表层供述</code>，在【03 黑匣与物证库】装填 <code>B-01 转向架液压抱死曲线</code>，点击右侧「执行逻辑击穿」。
+                  </div>
+                </div>
+
+                <!-- Epilogue / Ending Output Box (Shown when a verdict is chosen) -->
+                <div style="padding-top:8px;border-top:1px solid var(--c-surface-5);display:flex;justify-content:space-between;align-items:center;gap:var(--s-xs);">
+                  <div style="font-size:var(--fs-body-sm);color:var(--c-ink-light-2);flex:1;" id="verdict-epilogue-summary">
+                    完成全部四幕逻辑击穿后，右侧公诉操作台将解锁三向终局裁决。
+                  </div>
+                  <button type="button" class="btn-compact" id="btn-clear-verdict" style="display:none;">
+                    <span>撤回裁决重新选择</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Right Sub-Column: Three-Way Final Indictment Console -->
+              <div class="ak-panel-deep" style="display:flex;flex-direction:column;justify-content:space-between;gap:var(--s-xs);">
+                <div>
+                  <div style="font-family:var(--f-display);font-size:var(--fs-label);color:var(--c-brand-yellow);margin-bottom:4px;">
+                    FINAL INDICTMENT // 终局公诉台
+                  </div>
+                  <p style="font-size:var(--fs-body-sm);color:var(--c-ink-light-1);line-height:1.45;margin-bottom:10px;" id="verdict-prompt-desc">
+                    当第 09 号取证台自身的督察密钥被证实在场时，你作为终端操作员握有最后一次签名权。请选择结案方向：
+                  </p>
+                </div>
+
+                <div style="display:flex;flex-direction:column;gap:var(--s-xs);">
+                  <button type="button" class="btn btn-confirm" style="width:100%;height:46px;font-size:var(--fs-body-sm);" data-ending="broadcast" id="btn-ending-broadcast">
+                    <span>[A] 全网强制广播骨传导原声（公诉严律）</span>
+                  </button>
+                  <button type="button" class="btn btn-danger" style="width:100%;height:46px;font-size:var(--fs-body-sm);" data-ending="coverup" id="btn-ending-coverup">
+                    <span>[B] 签署 AI 故障免责协议（顺应最高督察）</span>
+                  </button>
+                  <button type="button" class="btn btn-primary" style="width:100%;height:46px;font-size:var(--fs-body-sm);" data-ending="silence" id="btn-ending-silence">
+                    <span>[C] 抹除密钥并私下归还琴音切片（静默封存）</span>
+                  </button>
+                </div>
+
+                <div class="telemetry-cluster">
+                  <div class="telemetry-row"><span>SIGNATURE</span><span id="verdict-sig-code">PENDING</span></div>
+                  <div class="telemetry-row"><span>STORAGE</span><span>LOCAL PERSISTED</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Right Column: Persistent Dual-Slot Contradiction Lock Inspector -->
+        <aside class="inspector-rail ak-panel-deep" aria-label="双槽矛盾指证比对器">
+          <div class="inspector-header">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+              <span style="font-family:var(--f-display);font-size:var(--fs-row-title);font-weight:700;color:var(--c-ink);">CONTRADICTION LOCK</span>
+              <button type="button" class="btn-compact" id="btn-clear-slots" style="height:22px;font-size:var(--fs-caption);">清空槽位</button>
+            </div>
+            <div style="font-size:var(--fs-body-sm);color:var(--c-brand-yellow);" id="inspector-act-goal">
+              第一幕目标：击穿“T-15秒软件解除制动冲出断桥”的顶罪伪证
+            </div>
+          </div>
+
+          <div class="inspector-slots-wrap" style="display:flex;flex-direction:column;gap:var(--s-xs);flex:1;justify-content:center;">
+            <!-- Slot A -->
+            <div class="slot-card is-empty" id="slot-a-box" data-slot="A">
+              <div style="display:flex;justify-content:space-between;font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-currency-blue);">
+                <span>SLOT [A] // 基准证词或物证</span>
+                <span id="slot-a-id">EMPTY</span>
+              </div>
+              <div style="font-size:var(--fs-body-sm);font-weight:500;color:var(--c-ink-light-2);margin:4px 0;" id="slot-a-title">
+                尚未装填（请在视图 01 或 03 点击装填）
+              </div>
+              <div style="font-size:var(--fs-caption);color:var(--c-ink-disabled);" id="slot-a-summary">
+                等待脑机切片或物理黑匣输入…
+              </div>
+            </div>
+
+            <!-- Slot B -->
+            <div class="slot-card slot-b is-empty" id="slot-b-box" data-slot="B">
+              <div style="display:flex;justify-content:space-between;font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-brand-yellow);">
+                <span>SLOT [B] // 交叉比对项</span>
+                <span id="slot-b-id">EMPTY</span>
+              </div>
+              <div style="font-size:var(--fs-body-sm);font-weight:500;color:var(--c-ink-light-2);margin:4px 0;" id="slot-b-title">
+                尚未装填（请在视图 01 或 03 点击装填）
+              </div>
+              <div style="font-size:var(--fs-caption);color:var(--c-ink-disabled);" id="slot-b-summary">
+                等待第二项矛盾证据输入…
+              </div>
+            </div>
+          </div>
+
+          <!-- Feedback Toast / Status Banner inside Inspector -->
+          <div class="inspector-brief" style="padding:8px 10px;background-color:var(--c-canvas);border-left:3px solid var(--c-hairline);font-size:var(--fs-caption);color:var(--c-ink-light-1);min-height:44px;" id="inspector-feedback">
+            系统就绪：装填两项存在物理或时间戳冲突的证据后，按下方确认金按钮执行逻辑击穿。
+          </div>
+
+          <!-- Execute Contradiction Breakthrough Button -->
+          <button type="button" class="btn btn-confirm" style="width:100%;" id="btn-execute-break">
+            <span>执行逻辑击穿 // VERIFY</span>
+          </button>
+        </aside>
+      </div>
+
+      <!-- Bottom Tactical Status Bar (40px height) -->
+      <footer class="bottom-bar">
+        <div style="display:flex;align-items:center;gap:var(--s-sm);font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-ink-disabled);">
+          <span>DESIGN SPEC: <strong style="color:var(--c-ink);">ARKNIGHTS.MD (IN-GAME CLIENT UI)</strong></span>
+          <span>LATTICE: <strong style="color:var(--c-currency-blue);">1280×720 // 2PX GRID // ZERO ROOT SCROLL</strong></span>
+          <span>CHROME: <strong style="color:var(--c-brand-yellow);">#FEFEFE MASK + UICOLORGRAPHIC</strong></span>
+        </div>
+        <div style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-ink-light-1);" id="bottom-live-log">
+          [LOG] 寒鸦审讯室第 09 号记忆取证台已挂载 · 快捷键 1-4 切换视图 / Space 执行比对
+        </div>
+      </footer>
+    </main>
+  </div>
+
+<!-- ==== 80-data-witness.js ==== -->
+<script>
+// ==========================================================================
+// 80-data-witness.js
+// Narrative Dataset Part 1: 6 Survivors (1★ to 6★ Neural Tamper Tiers)
+// ==========================================================================
+
+window.JC09_WITNESSES = {
+  W01: {
+    id: 'W01',
+    rarity: 1,
+    stars: '★',
+    name: '沈听澜',
+    role: '盲眼钢琴调音师 · 03 车厢独立目击者',
+    seat: 'SEAT 03-A',
+    tierText: '1★ 原始声学残响（无脑机）',
+    bciModel: 'BONE-CONDUCTION A2',
+    tintClass: 'tint-cyan',
+    recipe: ['on', 'selected', 'off', 'normal'],
+    recipeLabel: 'CH1[ON] · CH2[SELECTED] · CH3[OFF] · CH4[NORMAL]',
+    portraitSvg: '<circle cx="80" cy="48" r="22" fill="none" stroke-width="2"/><path d="M 38 134 C 38 94 122 94 122 134" fill="none" stroke-width="2"/><path d="M 52 48 L 108 48" stroke-width="3"/><circle cx="48" cy="52" r="6" fill="none" stroke-width="1.5"/><circle cx="112" cy="52" r="6" fill="none" stroke-width="1.5"/>',
+    surface: {
+      clipId: 'CLIP [W01-A] // T-16.8s 骨传导表层笔录',
+      tag: '急诊室问询记录',
+      title: '沈听澜表层笔录：失控的警报与耳鸣',
+      summary: '记忆被强声波震碎，仅记得刺耳的防空蜂鸣与身体失重感。',
+      text: '“我没有植入脑机接口，靠左耳的骨传导助听器辨别方向。列车进桥前我原本在闭目调校一枚标准音叉。突然间，助听器里炸开了一阵极其尖锐的高频啸叫，震得我颅骨剧痛、当场跌倒在过道上。等我再恢复听觉时，江水已经漫过了我的脚踝……我以为那就是脱轨撞击的声音。”',
+      note: '取证台批注：沈听澜是全车唯一没有商用脑机接口的乘员，因此覆盖全车厢的无线神经篡改协议无法改写她的大脑。但她的骨传导助听器闪存里留下了一段被强声波掩盖的底噪，需在【02 切片台】开启「声学反相 = ON」与「痛觉剥离 = SELECTED」将其分离。'
+    },
+    deep: {
+      clipId: 'CLIP [W01-B] // T-11.5s 骨传导反相还原录音',
+      tag: '深层声学证据',
+      title: '沈听澜深层记忆：静止车厢里的落锁声与 440Hz 充能脉冲',
+      summary: '车体在 T-17s 已完全静止，听见乘务员反锁气密门与医用磁脉冲仪充能。',
+      text: '“【声学反相滤波完成后，刺耳的伪造警报被抵消，露出绝对安静的车厢底噪】……不对，列车根本没有在晃！地板一点震动都没有，车早就停稳了！我听见实习乘务员周野喘着粗气把前后的气密门机械插销推死了，接着高跟鞋停在我头顶——是温莎医生的声音，她对着电话那头低声说：‘盲人的骨传导器录下了您刚才的话，脑机覆写对她无效，我得用经颅磁脉冲直接烧掉她的海马体短时记忆区……’”',
+      note: '核心突破：沈听澜的骨传导录音铁证如山地证明——在坠桥前那消失的 17 秒里，03 车厢不仅完全静止，而且被人为锁死成了一间密室！可用此深层切片击穿 2★ 周野的疏散谎言。'
+    }
+  },
+  W02: {
+    id: 'W02',
+    rarity: 2,
+    stars: '★★',
+    name: '周野',
+    role: '03 车厢实习乘务员 · 现场封门执行者',
+    seat: 'SEAT 03-B',
+    tierText: '2★ 浅层恐惧嫁接（18.4%）',
+    bciModel: 'CIVIC-BCI LITE',
+    tintClass: 'tint-green',
+    recipe: ['on', 'off', 'selected', 'normal'],
+    recipeLabel: 'CH1[ON] · CH2[OFF] · CH3[SELECTED] · CH4[NORMAL]',
+    portraitSvg: '<rect x="58" y="26" width="44" height="44" rx="20" fill="none" stroke-width="2"/><path d="M 36 134 L 54 86 L 106 86 L 124 134" fill="none" stroke-width="2"/><line x1="56" y1="36" x2="104" y2="36" stroke-width="2"/>',
+    surface: {
+      clipId: 'CLIP [W02-A] // T-14.0s 乘务员表层供词',
+      tag: '表层覆写供词',
+      title: '周野表层供述：在剧烈颠簸中开门疏散乘客',
+      summary: '声称车厢在 T-14s 剧烈摇晃，自己一直试图拉开气密门疏散众人。',
+      text: '“当时车身摇晃得连站都站不稳！警报灯全红了，我按照乘务手册冲到 03 车厢前端，拼命去扳气密门的紧急解锁把手，想把大家往 02 车厢疏散。可是车门被变形的船体框架卡死了，直到整节车厢掉进江里，我都没能把门打开……”',
+      note: '取证台批注：周野的表层供述声称他在“剧烈摇晃中试图开门疏散”，这与 1★ 沈听澜骨传导还原出的“静止车厢内亲手推死门锁”以及 03 车厢气密门日志直接冲突。'
+    },
+    deep: {
+      clipId: 'CLIP [W02-B] // T-12.4s 边缘系统去钳制残响',
+      tag: '深层真实记忆',
+      title: '周野深层残响：受安全员陆峥枪口胁迫反锁车门',
+      summary: '承认在列车刹停后被陆峥用防暴电击枪指着头，亲手反锁了前后气密门。',
+      text: '“【边缘系统植入的脱轨恐慌被剥离】……别开枪！我锁，我现在就锁！列车猛地刹停在断桥边上的时候，安全员陆峥一把揪住我的衣领，把防暴脉冲枪顶在我后颈的脑机接口上，命令我用乘务员机械钥匙把 03 与 02 车厢之间的气密门彻底反锁，不准任何一名前排乘客跑过来。我看见车厢尽头那个戴金丝眼镜的六号首长正冷冷地看着我……”',
+      note: '取证台批注：周野只是链条最底端的从犯。真正控制物理隔断并拔掉副黑匣保险丝的是 3★ 列车安全员陆峥。'
+    }
+  },
+  W03: {
+    id: 'W03',
+    rarity: 3,
+    stars: '★★★',
+    name: '陆峥',
+    role: '前军方防务承包商 · 列车专职安全员',
+    seat: 'SEAT 03-C',
+    tierText: '3★ 战术级扇区掩码（42.0%）',
+    bciModel: 'AEGIS-MIL V2',
+    tintClass: 'tint-primary',
+    recipe: ['off', 'on', 'selected', 'on'],
+    recipeLabel: 'CH1[OFF] · CH2[ON] · CH3[SELECTED] · CH4[ON]',
+    portraitSvg: '<polygon points="80,22 108,42 102,76 58,76 52,42" fill="none" stroke-width="2"/><path d="M 32 136 L 48 88 L 112 88 L 128 136" fill="none" stroke-width="2.2"/><line x1="64" y1="50" x2="96" y2="50" stroke-width="2"/>',
+    surface: {
+      clipId: 'CLIP [W03-A] // T-12.0s 安全员表层报告',
+      tag: '表层战术掩码',
+      title: '陆峥表层供述：指控顾言违规接入驾驶台',
+      summary: '声称自己全程在座位上固定安全带，目睹顾言用终端破坏制动。',
+      text: '“作为跟车安全员，我在冲击发生前一直系着四点式安全带坐在 C 座。我亲眼看见 5 座的架构师顾言打开了工程调试平板，嘴里喊着什么‘雷达误报’，然后列车就失去了制动力。我连解开安全带去制止他的时间都没有，车厢就已经坠江了。”',
+      note: '取证台批注：陆峥的军规脑机设置了战术掩码，将自己摘得一干二净。但车钩爆炸螺栓的雷管激发电流与他的安全员战术手环存在毫秒级同步。'
+    },
+    deep: {
+      clipId: 'CLIP [W03-B] // T-03.8s 战术掩码击穿切片',
+      tag: '深层真实记忆',
+      title: '陆峥深层残响：安装车钩分离雷管并听令于六号首长',
+      summary: '承认在 T-03.8s 按下车钩爆炸螺栓起爆器，人为制造单节车厢坠江。',
+      text: '“【石英时钟同步还原】……列车早在断桥前停稳了。但六号座那位首长发现盲眼调音师没有脑机接口、温莎医生的磁脉冲也没能彻底抹掉她的听觉记忆后，首长看了一眼手表，对我说：‘既然洗不干净，就把 03 车厢变成一起彻底的断桥坠江事故。我们六个穿救生衣的死不了，但所有的现场痕迹都会沉进三十米深的江底。’我在 T-00.0 秒按下了 02 与 03 车厢连接处的爆炸螺栓起爆器。”',
+      note: '关键证据：03 车厢根本不是因为桥面坍塌而顺势滑落，而是停稳 17 秒后被陆峥人为引爆车钩分离螺栓推下断桥的！'
+    }
+  },
+  W04: {
+    id: 'W04',
+    rarity: 4,
+    stars: '★★★★',
+    name: '温莎·林',
+    role: '圣卢克医院神经外科主治医师 · 现场执刀人',
+    seat: 'SEAT 03-D',
+    tierText: '4★ 临床级海马体伪装（67.5%）',
+    bciModel: 'MED-SYNAPSE PRO',
+    tintClass: 'tint-violet',
+    recipe: ['off', 'selected', 'selected', 'on'],
+    recipeLabel: 'CH1[OFF] · CH2[SELECTED] · CH3[SELECTED] · CH4[ON]',
+    portraitSvg: '<circle cx="80" cy="48" r="23" fill="none" stroke-width="2"/><path d="M 42 134 C 46 92 114 92 118 134" fill="none" stroke-width="2"/><line x1="80" y1="34" x2="80" y2="62" stroke-width="1.8"/><line x1="66" y1="48" x2="94" y2="48" stroke-width="1.8"/>',
+    surface: {
+      clipId: 'CLIP [W04-A] // T-08.8s 医师表层供述',
+      tag: '临床级伪装层',
+      title: '温莎·林表层供述：使用便携除颤仪抢救休克的调音师',
+      summary: '声称自己打开随身医疗箱是为了对休克的沈听澜进行心肺复苏。',
+      text: '“沈小姐在急刹车时撞伤了头部倒在过道里。出于医生的本能，我立刻打开随身携带的神经急救箱，在 T-09 秒左右启动了便携式神经电刺激仪，试图稳定她的迷走神经反射。车厢里的 440Hz 蜂鸣声只是医疗仪器的正常自检音，绝不是什么记忆清洗设备！”',
+      note: '取证台批注：温莎·林试图把便携式经颅覆写仪解释为普通急救设备。请先在【02 切片台】破译她的 4★ 深层切片，再与【03 物证库】中的 B-04 覆写仪授权签名比对。'
+    },
+    deep: {
+      clipId: 'CLIP [W04-B] // T-08.8s 临床伪装剥离切片',
+      tag: '深层真实记忆',
+      title: '温莎·林深层残响：向 03-F 座最高督察请求司法豁免权签名',
+      summary: '承认使用违禁经颅覆写仪，并要求 03-F 座的严律督察输入最高司法授权码。',
+      text: '“【痛觉与情绪双通道剥离】……我的手在发抖，便携式经颅覆写仪的电容正在以 440Hz 满负荷充能。我转过头对着坐在 03-F 阴影里的严律督察喊道：‘严督察，私自对无脑机公民使用高能磁脉冲会触发医疗器械黑匣锁死！您必须现在把您的司法部最高督察密钥插进我的设备里签署豁免，否则我绝不按下发射键！’一秒钟后，他的硬件密钥插进了我的终端，屏幕亮起了 0x7F-YAN 的绿灯……”',
+      note: '核心突破：温莎·林的深层切片直接锁定了坐在 03-F 座的幕后主使——持有司法部最高督察密钥（0x7F-YAN）的第六名乘客！可与【物证 B-04】进行第三幕逻辑击穿。'
+    }
+  },
+  W05: {
+    id: 'W05',
+    rarity: 5,
+    stars: '★★★★★',
+    name: '顾言',
+    role: '智驾系统总架构师 · 17秒全局覆写广播者',
+    seat: 'SEAT 03-E',
+    tierText: '5★ 源码级双轨覆写（89.2%）',
+    bciModel: 'NEURO-LINK V4',
+    tintClass: 'tint-gold',
+    recipe: ['on', 'selected', 'off', 'on'],
+    recipeLabel: 'CH1[ON] · CH2[SELECTED] · CH3[OFF] · CH4[ON]',
+    portraitSvg: '<circle cx="80" cy="52" r="24" fill="none" stroke-width="2"/><path d="M 40 132 C 40 96 120 96 120 132" fill="none" stroke-width="2"/><line x1="20" y1="52" x2="140" y2="52" stroke-width="0.8" stroke-dasharray="3 3"/><circle cx="80" cy="52" r="5"/>',
+    surface: {
+      clipId: 'CLIP [W05-A] // T-15.2s 架构师表层认罪书',
+      tag: '已校验供词',
+      title: '顾言表层供述：T-15秒通过终端人为解除紧急制动',
+      summary: '主动背锅，声称自己在 T-15s 解除了紧急制动导致列车全速冲出断桥。',
+      text: '“全是我的错……列车驶入跨江大桥引桥时，车载毫米波雷达报了误警。我在 T-15 秒通过工程师维护终端强行发送了【紧急制动解除指令】，试图让列车保持巡航速度冲过传感器盲区，结果列车直接带着全速冲出了坍塌的桥面……”',
+      note: '取证台批注：顾言在事故后第一时间签署了认罪书，但他的供述与【03 物证库】中不可篡改的 B-01 转向架液压抱死物理曲线正面冲突！这是第一幕逻辑击穿的突破口。'
+    },
+    deep: {
+      clipId: 'CLIP [W05-B] // T-04.2s 源码级覆写协议逆向',
+      tag: '深层源码残响',
+      title: '顾言深层残响：用 17 秒虚假脱轨记忆覆盖全车厢脑机',
+      summary: '承认自己并未解除刹车，而是在静止的 17 秒内向全车乘员植入“高速冲出断桥”的假记忆。',
+      text: '“【源码级双轨覆写破译成功】……刹车根本不是我关的，自动驾驶系统早在断桥前 4.2 米就完美刹停了！可就在停稳的那一秒，坐在我对面的严律督察亮出了我三年前挪用智驾算力私跑黑市模型的把柄。他命令我利用车载局域网，在 17 秒内把一段事先合成好的‘雷达误判、全速坠桥’假记忆无线刷进车厢所有人的脑机里，再由我出面顶下一桩交通肇事罪——因为过失致人重伤最多判三年，而他们真正在车厢里干的事一旦曝光，所有人都会把牢底坐穿！”',
+      note: '真相大白：所谓“17 秒空白与失控冲出断桥”，其实是顾言在静止的车厢里向全员脑机广播的合成剧本！'
+    }
+  },
+  W06: {
+    id: 'W06',
+    rarity: 6,
+    stars: '★★★★★★',
+    name: '严律',
+    role: '司法部特别调查委员会最高督察 · 寒鸦09号台授权人',
+    seat: 'SEAT 03-F',
+    tierText: '6★ 司法级绝对黑洞（99.8%）',
+    bciModel: 'JUDICIAL-CORE X9',
+    tintClass: 'tint-danger',
+    recipe: ['on', 'on', 'selected', 'selected'],
+    recipeLabel: 'CH1[ON] · CH2[ON] · CH3[SELECTED] · CH4[SELECTED]',
+    portraitSvg: '<polygon points="80,18 114,48 100,88 60,88 46,48" fill="none" stroke-width="2.2"/><path d="M 30 136 L 50 92 L 110 92 L 130 136" fill="none" stroke-width="2.5"/><circle cx="80" cy="54" r="10" fill="none" stroke-width="2"/><line x1="80" y1="18" x2="80" y2="90" stroke-width="1" stroke-dasharray="2 2"/>',
+    surface: {
+      clipId: 'CLIP [W06-A] // 督察办公室外部指令函',
+      tag: '最高权限封条',
+      title: '严律表层指令：以督察身份督办断桥技术事故案',
+      summary: '声称自己当晚在司法部大楼值班，要求 09 号取证台尽快按顾言认罪结案。',
+      text: '“【寒鸦审讯室督办令】致第 09 号记忆取证台操作员：跨江专线 03 车厢坠桥一案事实清楚，智驾架构师顾言已对人为关闭制动系统的渎职行为供认不讳。本督察当晚坐镇司法部指挥中心，现授权你台在 20 分钟内完成形式核验并归档结案，切勿在无关证人的听觉幻觉上浪费司法算力。”',
+      note: '取证台批注：严律声称自己当晚远在司法部大楼指挥中心，但随着前三幕被逐一击穿，所有的加密签名都指向了 03 车厢最后一个空座位 03-F。请在第三幕击穿后前往【02 切片台】破译严律的 6★ 终极残响！'
+    },
+    deep: {
+      clipId: 'CLIP [W06-B] // T-01.8s 6★ 终极黑洞残响',
+      tag: '6★ 绝密记忆核心',
+      title: '严律深层残响：车厢密谈泄露与“把黑匣交给09号台自审”',
+      summary: '承认自己就在 03-F 座密谈非法神经监控法案，并在炸断车钩前指定由 09 号台结案。',
+      text: '“【6★ 司法核心锁死被强行击穿】……T-18 秒，我正坐在 03-F 座与陆峥、温莎和顾言进行跨江密会，商定在下周上线的城市脑机固件里植入司法部后门‘寒鸦棱镜’。列车因前方引桥塌方急停的瞬间，前排那个瞎眼调音师的助听器跌落在地——我们四个人同时意识到，她那台没有联网的纯硬件骨传导器把刚才整整十分钟的违宪密谈录得一清二楚！我当场签发了 0x7F-YAN 豁免码命温莎洗掉她的记忆、命顾言刷写全车假记忆、命陆峥炸断车钩沉江。至于打捞上来的黑匣子？呵，直接派发给我麾下的第 09 号取证台——也就是你，我最信任的部下，亲手把它做成铁案。”',
+      note: '终局真相：正在审理此案的第 09 号取证台本身就在严律的管辖之下！将此 6★ 深层残响与【03 物证库】的 B-06 硬件密钥装填比对，即可完成第四幕终极击穿！'
+    }
+  }
+};
+</script>
+
+<!-- ==== 82-data-case.js ==== -->
+<script>
+// ==========================================================================
+// 82-data-case.js
+// Narrative Dataset Part 2: 6 Physical Exhibits · 5 Time Nodes · 4 Acts · 3 Endings
+// ==========================================================================
+
+window.JC09_TIME_NODES = [
+  {
+    idx: 0,
+    time: 'T-17.0s',
+    label: '制动抱死',
+    text: '<strong>[T-17.0s 切片摘要]</strong> 列车主转向架机械液压卡钳在断桥缺口前 4.2 米处彻底抱死，车速归零。此后整整 17 秒内，03 车厢在桥面上处于绝对静止状态。'
+  },
+  {
+    idx: 1,
+    time: 'T-12.4s',
+    label: '车门落锁',
+    text: '<strong>[T-12.4s 切片摘要]</strong> 实习乘务员周野在安全员陆峥的防暴脉冲枪胁迫下，用乘务员机械钥匙反锁了 03 车厢前后端气密门，将车厢隔离为封闭手术舱。'
+  },
+  {
+    idx: 2,
+    time: 'T-08.8s',
+    label: '440Hz磁脉冲',
+    text: '<strong>[T-08.8s 切片摘要]</strong> 神经外科医师温莎·林在获得 03-F 座最高督察的 0x7F-YAN 硬件密钥豁免签名后，对倒地的盲眼调音师沈听澜发射了高能经颅磁脉冲。'
+  },
+  {
+    idx: 3,
+    time: 'T-04.2s',
+    label: '覆写广播',
+    text: '<strong>[T-04.2s 切片摘要]</strong> 智驾架构师顾言通过车载局域网向全车厢脑机广播了时长 17 秒的合成脱轨记忆包，并在自己的表层记忆区写入了“主动认罪脚本”。'
+  },
+  {
+    idx: 4,
+    time: 'T-00.0s',
+    label: '爆炸脱钩',
+    text: '<strong>[T-00.0s 切片摘要]</strong> 为销毁无法被脑机覆写的现场痕迹，安全员陆峥引爆了 02 与 03 车厢连接处的分离式爆炸螺栓，静止的 03 车厢顺着坍塌引桥滑入深水航道。'
+  }
+];
+
+window.JC09_EXHIBITS = {
+  B01: {
+    id: 'B01',
+    code: 'EXHIBIT // B01 HYDRAULIC',
+    sub: '[EXHIBIT B-01 // BOGIE-HYD-LOG]',
+    title: '转向架液压抱死曲线',
+    tag: '物理不可篡改',
+    hash: 'SHA-256: 9F4A...7C1E // BOGIE HARD LOCK',
+    tintClass: 'tint-cyan',
+    summary: '物理记录显示列车在 T-17.0s 已彻底刹停（车速 0 km/h），未发生全速冲出断桥。',
+    desc: '打捞自江底的 03 车厢主转向架机械制动盘磨损拓片与液压黑匣记录：早在 T-17.0 秒，机械急停卡钳即已完全锁死车轮，列车在断桥缺口前 4.2 米处彻底刹停（速度归零）。所谓“T-15 秒软件解除制动并全速冲出桥面”在物理上根本没有发生。',
+    note: '取证交叉点：既然列车在 T-17.0s 就已经稳稳停在桥面上，那么顾言表层供述中“T-15 秒解除制动全速冲出桥面”就是彻头彻尾的伪证！请将【B-01】与【W05-A 顾言表层供述】装填比对。',
+    svg: '<polyline fill="none" stroke-width="2.5" points="10,20 70,22 120,85 500,85"/><circle cx="120" cy="85" r="5"/><text x="130" y="76" font-family="Barlow, monospace" font-size="11" stroke="none">T-17.0s VELOCITY = 0.0 km/h (MECHANICAL LOCK)</text>'
+  },
+  B02: {
+    id: 'B02',
+    code: 'EXHIBIT // B02 BULKHEAD',
+    sub: '[EXHIBIT B-02 // DOOR-LATCH-ROM]',
+    title: '03车厢气密门电磁反锁日志',
+    tag: '机械插销只读记录',
+    hash: 'SHA-256: 3D82...11B0 // SEALED FROM INSIDE',
+    tintClass: 'tint-green',
+    summary: 'T-12.4s 气密门被乘务员钥匙从内部手动反锁，而非撞击变形卡死。',
+    desc: '03 与 02 车厢连接处气密门的独立机械黑匣日志：在 T-12.4 秒，车门并未受到任何外部结构挤压，而是由编号 CW-02 的乘务员物理钥匙从 03 车厢内部逆时针旋转 180 度，主动落下了最高级别的防暴死锁插销。',
+    note: '取证交叉点：这与 2★ 实习乘务员周野“一直试图拉开气密门疏散乘客”的表层证词完全相反，并与 1★ 沈听澜深层骨传导录音中的落锁声严丝合缝。',
+    svg: '<rect x="60" y="18" width="160" height="70" fill="none" stroke-width="2"/><rect x="260" y="18" width="160" height="70" fill="none" stroke-width="2"/><line x1="220" y1="53" x2="260" y2="53" stroke-width="4"/><circle cx="240" cy="53" r="9" fill="none" stroke-width="2"/><text x="75" y="48" font-family="Barlow, monospace" font-size="11" stroke="none">T-12.4s MANUAL DEADBOLT: LOCKED</text>'
+  },
+  B03: {
+    id: 'B03',
+    code: 'EXHIBIT // B03 TUNING-FORK',
+    sub: '[EXHIBIT B-03 // ACOUSTIC-MEM-CHIP]',
+    title: '盲眼调音师骨传导助听器残片',
+    tag: '纯模拟硬件采样',
+    hash: 'SHA-256: 7A19...E04D // 440HZ TMS PULSE',
+    tintClass: 'tint-yellow',
+    summary: '无联网模组的骨传导闪存，记录到静止车厢内 440Hz 经颅磁脉冲充能声。',
+    desc: '从 03 车厢座椅导轨缝隙中起获的左耳骨传导助听器。因该设备仅供视障调音师辅助辨音，内部无任何无线网络或商用脑机接口协议，故逃过了全车厢无线记忆覆写。其压电陶瓷传感器记录下了 T-11.5s 车厢完全静止时的锁门声与 440Hz 医用磁脉冲充能声。',
+    note: '取证交叉点：此物证为 1★ 沈听澜的深层记忆提供了物理支撑，证明车厢在静止的 17 秒内变成了临时记忆清洗手术室。',
+    svg: '<path d="M 20 55 C 80 55 110 15 170 55 C 230 95 270 15 330 55 C 390 95 430 55 500 55" fill="none" stroke-width="2"/><line x1="250" y1="12" x2="250" y2="96" stroke-width="1.5" stroke-dasharray="3 2"/><text x="260" y="28" font-family="Barlow, monospace" font-size="11" stroke="none">440Hz TMS CAPACITOR CHARGE</text>'
+  },
+  B04: {
+    id: 'B04',
+    code: 'EXHIBIT // B04 TMS-MAC',
+    sub: '[EXHIBIT B-04 // MED-OVERRIDE-AUTH]',
+    title: '便携式经颅覆写仪 MAC 签名',
+    tag: '加密硬件握手包',
+    hash: 'SHA-256: 0x7F-YAN // JUDICIAL OVERRIDE',
+    tintClass: 'tint-violet',
+    summary: '温莎医师的医疗箱覆写仪在 T-09.2s 接收了 0x7F-YAN 最高司法督察密钥的当场物理插卡授权。',
+    desc: '圣卢克医院配发给温莎·林医师的便携式经颅磁刺激仪底层安全日志：该设备在 T-09.2 秒解除了临床安全功率限制（提升至记忆擦除级 3.2 Tesla）。解除安全锁的方式并非远程网络指令，而是通过 USB-C 物理接口直接插入了一枚签名号为【0x7F-YAN】的司法部最高督察硬件密钥。',
+    note: '取证交叉点：物理插卡意味着持有【0x7F-YAN】密钥的最高督察本人当时就在 03 车厢内！将【B-04】与破译后的【W04-B 温莎·林深层残响】装填比对，可完成第三幕逻辑击穿！',
+    svg: '<rect x="30" y="25" width="180" height="55" fill="none" stroke-width="2"/><rect x="300" y="25" width="180" height="55" fill="none" stroke-width="2"/><line x1="210" y1="52" x2="300" y2="52" stroke-width="2.5" stroke-dasharray="6 3"/><circle cx="255" cy="52" r="6"/><text x="45" y="57" font-family="Barlow, monospace" font-size="11" stroke="none">MED-TMS UNIT</text><text x="315" y="57" font-family="Barlow, monospace" font-size="11" stroke="none">KEY: 0x7F-YAN (IN CAR)</text>'
+  },
+  B05: {
+    id: 'B05',
+    code: 'EXHIBIT // B05 COUPLER-BOLT',
+    sub: '[EXHIBIT B-05 // PYRO-COUPLER-DET]',
+    title: '车钩爆炸螺栓起爆电雷管残骸',
+    tag: '军工级分离装置',
+    hash: 'SHA-256: 5C08...88FA // DETONATED T-00.0S',
+    tintClass: 'tint-gold',
+    summary: '02 与 03 车厢之间的车钩并非拉断，而是在 T-00.0s 被安全员手动引爆分离。',
+    desc: '车厢连接处打捞出的特种合金断口金相分析报告：断口呈现典型的聚能切割光滑切面，残留叠氮化铅起爆药微粒。起爆信号来自 03 车厢安全员陆峥佩戴的战术手环，激发时刻恰为 T-00.0 秒——即全车记忆清洗与假记忆刷写完成的那一瞬间。',
+    note: '取证交叉点：印证了 3★ 陆峥深层残响中的供述——坠江是为了彻底毁灭车厢内的记忆清洗现场。',
+    svg: '<line x1="40" y1="52" x2="220" y2="52" stroke-width="5"/><line x1="290" y1="52" x2="470" y2="52" stroke-width="5"/><polygon points="255,18 270,42 295,48 270,60 255,88 240,60 215,48 240,42" fill="none" stroke-width="2"/><text x="170" y="100" font-family="Barlow, monospace" font-size="11" stroke="none">T-00.0s PYROTECHNIC SEPARATION</text>'
+  },
+  B06: {
+    id: 'B06',
+    code: 'EXHIBIT // B06 JACKDAW-KEY',
+    sub: '[EXHIBIT B-06 // CONSOLE-09-ROOT-KEY]',
+    title: '寒鸦09号台最高督察硬件密钥',
+    tag: '本机底层根证书',
+    hash: 'ROOT-CERT: 0x7F-YAN // TERMINAL OWNER',
+    tintClass: 'tint-danger',
+    summary: '当前这台“寒鸦 09 号取证台”的最高硬件授权密钥正是 0x7F-YAN（严律督察本人）。',
+    desc: '调取你正在操作的这台【寒鸦审讯室：第 09 号记忆取证台】主板 TPM 安全芯片的根证书日志：本终端的最高督察硬件密钥序列号正是【0x7F-YAN】，持有人为司法部特别调查委员会最高督察严律——且该物理密钥在今早 06:15 刚刚插入本机签署了《03 车厢速裁督办令》，外壳残留有江水氯离子腐蚀痕迹。',
+    note: '终局铁证：把【B-06 寒鸦09号台最高督察硬件密钥】与破译后的【W06-B 严律 6★ 深层残响】（或【W06-A 严律表层指令】）装填入指证槽执行最后一次击穿，揭开整桩案件的终极黑幕！',
+    svg: '<rect x="140" y="20" width="240" height="65" fill="none" stroke-width="2"/><circle cx="180" cy="52" r="14" fill="none" stroke-width="2"/><line x1="210" y1="42" x2="350" y2="42" stroke-width="2"/><line x1="210" y1="62" x2="310" y2="62" stroke-width="2"/><text x="210" y="34" font-family="Barlow, monospace" font-size="11" stroke="none">ROOT KEY: 0x7F-YAN // JC-09</text>'
+  }
+};
+
+window.JC09_ACTS = {
+  1: {
+    act: 1,
+    name: '完美背锅者',
+    goal: '第一幕目标：击穿“顾言在 T-15s 软件解除制动导致全速冲出断桥”的顶罪伪证',
+    heading: '第一幕：完美背锅者与静止的列车',
+    body: '跨江大桥坍塌当晚，03 车厢坠入深水航道，车内六人全数生还，但所有植入商用脑机接口的乘员均缺失了坠桥前 T-17.0s 至 T-00.0s 的原始记忆，仅剩高度一致的“列车全速冲出断桥”表层供词。智驾系统总架构师顾言主动认罪，声称自己在 T-15 秒误发了紧急制动解除指令。然而，机械转向架的物理磨损不会说谎。',
+    guide: '当前推演指引：在【01 幸存者卡池】选中 5★ 顾言并装填 <code>W05-A 顾言表层供述</code>，在【03 黑匣与物证库】选中并装填 <code>B-01 转向架液压抱死曲线</code>，点击右侧「执行逻辑击穿」。',
+    unlockedBody: '【第一幕已击穿】物理液压曲线证明列车早在 T-17.0 秒就已在断桥前 4.2 米处完全刹停！顾言所谓的“T-15 秒软件解除制动冲出桥面”是彻头彻尾的伪证。这说明在坠桥前那消失的 17 秒里，03 车厢实际上稳稳地停在桥面上。既然车是静止的，车厢里究竟发生了什么？',
+    validPairs: [
+      ['W05-A', 'B01'],
+      ['W05-B', 'B01']
+    ],
+    hintWitness: 'W05',
+    hintEvidence: 'B01'
+  },
+  2: {
+    act: 2,
+    name: '静止的十七秒',
+    goal: '第二幕目标：破译 1★ 沈听澜深层骨传导录音，击穿 2★ 乘务员周野“开门疏散”的谎言',
+    heading: '第二幕：静止车厢里的落锁声与 440Hz 充能',
+    body: '列车明明停稳了整整 17 秒，为什么 2★ 实习乘务员周野仍一口咬定“车厢剧烈颠簸、自己一直在试图拉开气密门疏散乘客”？全车唯一没有脑机接口的 1★ 盲眼调音师沈听澜，其骨传导助听器里记录下了被高频啸叫掩盖的真实车厢底噪。',
+    guide: '当前推演指引：先前往【02 17秒神经切片台】选中 <code>1★ 沈听澜</code>，将七态开关拨至 <code>CH1[ON] · CH2[SELECTED] · CH3[OFF] · CH4[NORMAL]</code>（或点击「校准目标特征码」）并点击「执行深层剥离」；随后将破译出的 <code>W01-B 沈听澜深层记忆</code> 与 <code>W02-A 周野表层供述</code>（或 <code>B-02 气密门反锁日志</code>）装填比对！',
+    unlockedBody: '【第二幕已击穿】沈听澜的骨传导录音与气密门日志共同证实：03 车厢在刹停后立刻被周野从内部用机械钥匙死锁！在静止的 17 秒里，03 车厢被人为隔离成了一间密室，而 4★ 神经外科医师温莎·林正在启动 440Hz 经颅磁脉冲仪，企图抹除沈听澜无意中听见的某段对话！',
+    validPairs: [
+      ['W01-B', 'W02-A'],
+      ['W01-B', 'B02'],
+      ['W02-A', 'B02'],
+      ['W02-B', 'B02']
+    ],
+    hintWitness: 'W01',
+    hintEvidence: 'B02'
+  },
+  3: {
+    act: 3,
+    name: '共谋手术刀',
+    goal: '第三幕目标：破译 4★ 温莎·林医师的深层切片，锁定车厢内签署豁免码的第六名核心人物',
+    heading: '第三幕：共谋手术刀与 03-F 座的幽灵授权',
+    body: '为什么要冒着全车陪葬的风险，在 17 秒内对一名盲眼调音师进行现场记忆清洗？温莎·林医师表层声称自己只是在使用急救除颤仪，但医疗器械底层安全日志显示，有人在 T-09.2 秒将一枚最高级别的硬件密钥物理插进了她的设备，强行解除了临床功率限制。',
+    guide: '当前推演指引：前往【02 17秒神经切片台】选中 <code>4★ 温莎·林</code>，按配方拨动七态开关（或点击「校准目标特征码」）解锁其深层记忆；然后将 <code>W04-B 温莎·林深层残响</code> 与【03 物证库】中的 <code>B-04 便携式经颅覆写仪 MAC 签名</code> 装填比对！',
+    unlockedBody: '【第三幕已击穿】温莎·林的深层记忆与 B-04 硬件握手包彻底撕开了共谋网：坐在 03-F 座的正是持有司法部最高督察密钥（0x7F-YAN）的严律！他与陆峥、温莎、顾言在车厢内密谋向城市脑机固件植入非法监控后门“寒鸦棱镜”，因急停时被盲眼调音师的骨传导器录下全程，严律当场下令洗脑、刷写假记忆并炸断车钩沉江！',
+    validPairs: [
+      ['W04-B', 'B04'],
+      ['W04-A', 'B04'],
+      ['W03-B', 'B05'],
+      ['W05-B', 'B04']
+    ],
+    hintWitness: 'W04',
+    hintEvidence: 'B04'
+  },
+  4: {
+    act: 4,
+    name: '寒鸦照影',
+    goal: '第四幕目标：破译 6★ 严律督察的终极残响，与第 09 号取证台自身的根密钥完成终极指证',
+    heading: '第四幕：寒鸦照影 —— 审判者即同谋',
+    body: '6★ 炽橙光晕卡片上的严律督察，在案发后以特别调查委员会最高督察的身份向你下达了《速裁督办令》，谎称自己当晚坐镇司法部大楼。然而，你正在操作的这台「寒鸦 09 号记忆取证台」主板根证书上，赫然烙印着同一枚刚刚从江水里捞出来的硬件密钥序列号。',
+    guide: '当前推演指引：前往【02 17秒神经切片台】选中 <code>6★ 严律</code>，将七态开关拨至 <code>CH1[ON] · CH2[ON] · CH3[SELECTED] · CH4[SELECTED]</code>（或点击「校准目标特征码」）破译 6★ 终极残响；再将 <code>W06-B 严律深层残响</code>（或 <code>W06-A</code>）与【03 物证库】的 <code>B-06 寒鸦09号台最高督察硬件密钥</code> 装填执行最终击穿！',
+    unlockedBody: '【第四幕终极击穿完成】所有的逻辑锁均已瓦解！严律不仅在 03-F 座亲自指挥了那 17 秒的记忆清洗与炸钩沉江，而且特意将打捞出的黑匣指派给他麾下的第 09 号取证台——因为他笃定你不敢背叛自己的最高长官。现在，请前往【04 审讯卷宗与公诉】签署你的终局裁决！',
+    validPairs: [
+      ['W06-B', 'B06'],
+      ['W06-A', 'B06'],
+      ['W06-B', 'W06-A']
+    ],
+    hintWitness: 'W06',
+    hintEvidence: 'B06'
+  }
+};
+
+window.JC09_ENDINGS = {
+  broadcast: {
+    code: 'VERDICT-A // FULL-NET BROADCAST',
+    title: '终局裁决 [A]：破晓骨传导 · 全网强制公诉',
+    text: '你按下了确认金键（#E8C400），用第 09 号取证台的底层根权限将沈听澜助听器里的 17 秒原始反相音频与 0x7F-YAN 密钥握手包同步广播至全城司法内网与公共媒体节点。三分钟后，寒鸦审讯室的备用电源被外部强行切断，防暴靴的脚步声在走廊尽头响起——但你的屏幕在熄灭前已收到 1,420 个公诉节点的镜像回执。“寒鸦棱镜”后门法案当夜流产，盲眼调音师在听证席上举起了那枚 440Hz 的标准音叉。'
+  },
+  coverup: {
+    code: 'VERDICT-B // PROTOCOL OVERRIDE',
+    title: '终局裁决 [B]：深水铁案 · 顺应最高督察协议',
+    text: '你按下了危险红键（#EC3140），执行了严律督察预设的格式化指令。骨传导反相声轨与 0x7F-YAN 签名在高温覆写扇区中化为乱码，结案报告定格为“智驾系统总架构师顾言操作失误导致单节车厢脱钩坠江”。次日清晨，你的工牌权限升格为特别调查委员会一级审查官，而沈听澜收到了圣卢克医院寄来的“创伤性听觉幻觉”诊断书。第 09 号取证台依旧安静运转，像一只从未开口的寒鸦。'
+  },
+  silence: {
+    code: 'VERDICT-C // PHANTOM ARCHIVE',
+    title: '终局裁决 [C]：空白音叉 · 证据链永久静默',
+    text: '你按下了品牌蓝键（#0098DC），没有触发全网警报，也没有签署顾言的顶罪书，而是利用 09 号台的硬件漏洞将本案状态永久锁定为“黑匣扇区物理损毁 · 无法结案”。在销毁主机的最后一秒，你将那段未受污染的 440Hz 琴音与严律的原声切片拷入一枚离线骨传导芯片，匿名寄往了沈听澜的调音工作室。真正的审判不在受控的终端里，而在走出这间审讯室之后。'
+  }
+};
+</script>
+
+<!-- ==== 85-engine.js ==== -->
+<script>
+// ==========================================================================
+// 85-engine.js
+// Interactive State Machine · 7-State Toggle Filter Matrix · Contradiction Lock
+// Web Audio Synthesizer · Keyboard Navigation · localStorage Persistence
+// ==========================================================================
+
+(function () {
+  'use strict';
+
+  const SEVEN_STATES = ['normal', 'on', 'off', 'select', 'selected', 'unselect', 'unselected'];
+  const STORAGE_KEY = 'jc09:state:v1';
+
+  const defaultState = {
+    activeView: 'witness',
+    selectedWitness: 'W05',
+    witnessLayer: 'surface', // 'surface' | 'deep'
+    decryptedWitnesses: ['W05'], // W05 deep can also be unlocked via filter, start with W05 surface ready
+    unlockedDeep: {},            // map of witnessId -> boolean
+    synapseTarget: 'W05',
+    filterStates: ['normal', 'off', 'unselected', 'select'],
+    activeTimeNode: 0,
+    selectedExhibit: 'B01',
+    currentAct: 1,               // 1..4
+    completedActs: [],           // [1, 2, 3, 4]
+    dossierActTab: 1,
+    slotA: null,                 // { id, title, summary }
+    slotB: null,
+    verdict: null,               // 'broadcast' | 'coverup' | 'silence' | null
+    hintOn: false,
+    audioOn: false
+  };
+
+  let state = loadState();
+  let audioCtx = null;
+  let humOsc = null;
+  let humGain = null;
+
+  function loadState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return JSON.parse(JSON.stringify(defaultState));
+      const parsed = JSON.parse(raw);
+      return Object.assign({}, JSON.parse(JSON.stringify(defaultState)), parsed);
+    } catch (_) {
+      return JSON.parse(JSON.stringify(defaultState));
+    }
+  }
+
+  function saveState() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch (_) {}
+  }
+
+  // ---- Web Audio Synthesizer (Zero External Audio Files) ----
+  function ensureAudio() {
+    if (!audioCtx) {
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      if (Ctx) audioCtx = new Ctx();
+    }
+    if (audioCtx && audioCtx.state === 'suspended') {
+      audioCtx.resume().catch(function () {});
+    }
+  }
+
+  function setAmbientHum(on) {
+    if (!on) {
+      if (humGain && audioCtx) {
+        try { humGain.gain.setTargetAtTime(0.0001, audioCtx.currentTime, 0.08); } catch (_) {}
+      }
+      return;
+    }
+    ensureAudio();
+    if (!audioCtx) return;
+    if (!humOsc) {
+      try {
+        humOsc = audioCtx.createOscillator();
+        humGain = audioCtx.createGain();
+        humOsc.type = 'sine';
+        humOsc.frequency.value = 55; // 55Hz judicial console transformer hum
+        humGain.gain.value = 0.018;
+        humOsc.connect(humGain);
+        humGain.connect(audioCtx.destination);
+        humOsc.start();
+      } catch (_) {}
+    } else if (humGain) {
+      try { humGain.gain.setTargetAtTime(0.018, audioCtx.currentTime, 0.1); } catch (_) {}
+    }
+  }
+
+  function playTone(freq, durationMs, type, gainVal) {
+    if (!state.audioOn) return;
+    ensureAudio();
+    if (!audioCtx) return;
+    try {
+      const osc = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      osc.type = type || 'triangle';
+      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+      g.gain.setValueAtTime(gainVal || 0.04, audioCtx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + durationMs / 1000);
+      osc.connect(g);
+      g.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + durationMs / 1000 + 0.02);
+    } catch (_) {}
+  }
+
+  function sfxClick() { playTone(680, 45, 'square', 0.025); }
+  function sfxSwitch() { playTone(440, 70, 'triangle', 0.04); }
+  function sfxBreakthrough() {
+    playTone(523.25, 140, 'triangle', 0.05);
+    setTimeout(function () { playTone(659.25, 160, 'triangle', 0.05); }, 90);
+    setTimeout(function () { playTone(783.99, 260, 'sine', 0.06); }, 180);
+  }
+  function sfxError() {
+    playTone(160, 180, 'sawtooth', 0.045);
+  }
+
+  function logTicker(msg) {
+    const el = document.getElementById('bottom-live-log');
+    if (el) el.textContent = '[LOG] ' + msg;
+  }
+
+  // ---- View Switching (Zero Root Scroll) ----
+  function switchView(viewName) {
+    if (!['witness', 'synapse', 'blackbox', 'verdict'].includes(viewName)) return;
+    state.activeView = viewName;
+    saveState();
+
+    document.querySelectorAll('.nav-tab').forEach(function (btn) {
+      const active = btn.getAttribute('data-view') === viewName;
+      btn.classList.toggle('is-active', active);
+      btn.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+
+    document.querySelectorAll('.view-panel').forEach(function (panel) {
+      panel.classList.toggle('is-active', panel.id === 'view-' + viewName);
+    });
+
+    sfxClick();
+    logTicker('已切换至主视图 // ' + viewName.toUpperCase());
+  }
+
+  // ---- Witness Roster & Statement Rendering (View 01) ----
+  function renderWitnessView() {
+    const w = window.JC09_WITNESSES[state.selectedWitness] || window.JC09_WITNESSES.W05;
+    const isDeepUnlocked = !!state.unlockedDeep[w.id];
+    if (state.witnessLayer === 'deep' && !isDeepUnlocked) {
+      state.witnessLayer = 'surface';
+    }
+
+    const actObj = window.JC09_ACTS[state.currentAct] || window.JC09_ACTS[1];
+
+    document.querySelectorAll('.witness-card').forEach(function (card) {
+      const wid = card.getAttribute('data-witness');
+      card.classList.toggle('is-selected', wid === w.id);
+      card.classList.toggle('is-hinted', state.hintOn && wid === actObj.hintWitness);
+    });
+
+    const activeCode = document.getElementById('witness-active-code');
+    if (activeCode) activeCode.textContent = 'WITNESS // ' + w.id + ' ' + w.rarity + '★';
+
+    const seatTag = document.getElementById('w-seat-tag');
+    if (seatTag) seatTag.textContent = w.seat;
+
+    const starBadge = document.getElementById('w-star-badge');
+    if (starBadge) starBadge.textContent = w.stars;
+
+    const portraitGraphic = document.getElementById('w-portrait-graphic');
+    if (portraitGraphic) {
+      portraitGraphic.setAttribute('class', 'ui-color-graphic ' + w.tintClass);
+      portraitGraphic.innerHTML = w.portraitSvg;
+    }
+
+    const tierText = document.getElementById('w-tier-text');
+    if (tierText) tierText.textContent = w.tierText;
+
+    const bciModel = document.getElementById('w-bci-model');
+    if (bciModel) bciModel.textContent = w.bciModel;
+
+    const decryptStatus = document.getElementById('w-decrypt-status');
+    if (decryptStatus) {
+      decryptStatus.textContent = isDeepUnlocked ? '深层残响已破译' : '待七态滤波破译';
+      decryptStatus.style.color = isDeepUnlocked ? 'var(--c-accent-green)' : 'var(--c-brand-yellow)';
+    }
+
+    const nameHeading = document.getElementById('w-name-heading');
+    if (nameHeading) nameHeading.textContent = w.name;
+
+    const roleSub = document.getElementById('w-role-sub');
+    if (roleSub) roleSub.textContent = w.role;
+
+    const btnSurface = document.getElementById('btn-layer-surface');
+    const btnDeep = document.getElementById('btn-layer-deep');
+    const labelDeep = document.getElementById('label-layer-deep');
+
+    if (btnSurface) {
+      btnSurface.setAttribute('data-state', state.witnessLayer === 'surface' ? 'on' : 'normal');
+    }
+    if (btnDeep) {
+      if (!isDeepUnlocked) {
+        btnDeep.setAttribute('data-state', 'off');
+      } else {
+        btnDeep.setAttribute('data-state', state.witnessLayer === 'deep' ? 'selected' : 'normal');
+      }
+    }
+    if (labelDeep) {
+      labelDeep.textContent = isDeepUnlocked ? 'LAYER B // 深层残响 [已破译]' : 'LAYER B // 深层残响 [未破译]';
+    }
+
+    const layerData = state.witnessLayer === 'deep' && isDeepUnlocked ? w.deep : w.surface;
+    const clipIdEl = document.getElementById('w-clip-id');
+    const clipTagEl = document.getElementById('w-clip-tag');
+    const textEl = document.getElementById('w-statement-text');
+    const noteEl = document.getElementById('w-forensic-note');
+
+    if (clipIdEl) clipIdEl.textContent = layerData.clipId;
+    if (clipTagEl) {
+      clipTagEl.textContent = layerData.tag;
+      clipTagEl.style.background = state.witnessLayer === 'deep' ? 'var(--c-brand-yellow)' : 'var(--c-panel)';
+      clipTagEl.style.color = state.witnessLayer === 'deep' ? 'var(--c-canvas)' : 'var(--c-ink)';
+    }
+    if (textEl) textEl.textContent = layerData.text;
+    if (noteEl) noteEl.innerHTML = layerData.note;
+  }
+
+  // ---- 17-Second Synapse Slicer & 7-State Toggle Matrix (View 02) ----
+  function computeFilterMatch(w) {
+    let matched = 0;
+    for (let i = 0; i < 4; i++) {
+      if (state.filterStates[i] === w.recipe[i]) matched++;
+    }
+    return matched;
+  }
+
+  function renderSynapseView() {
+    const w = window.JC09_WITNESSES[state.synapseTarget] || window.JC09_WITNESSES.W05;
+    const badge = document.getElementById('synapse-target-badge');
+    if (badge) badge.textContent = 'TARGET: ' + w.id + ' ' + w.name + ' (' + w.rarity + '★)';
+
+    document.querySelectorAll('[data-syn-witness]').forEach(function (btn) {
+      btn.classList.toggle('is-active', btn.getAttribute('data-syn-witness') === w.id);
+    });
+
+    const recipeHint = document.getElementById('synapse-recipe-hint');
+    if (recipeHint) {
+      recipeHint.textContent = '目标解锁配方: ' + w.recipeLabel;
+    }
+
+    for (let i = 0; i < 4; i++) {
+      const chip = document.getElementById('filter-ch-' + i);
+      if (chip) {
+        const st = state.filterStates[i] || 'normal';
+        chip.setAttribute('data-state', st);
+        const label = chip.querySelector('.chip-state-text');
+        if (label) label.textContent = st.toUpperCase();
+      }
+    }
+
+    const matched = computeFilterMatch(w);
+    const pct = Math.round((matched / 4) * 100);
+    const isUnlocked = !!state.unlockedDeep[w.id];
+
+    const matchBadge = document.getElementById('osc-match-badge');
+    if (matchBadge) {
+      matchBadge.textContent = isUnlocked ? '已破译 100%' : '滤波匹配度 ' + pct + '%';
+      matchBadge.style.background = (matched === 4 || isUnlocked) ? 'var(--c-confirm-gold)' : 'var(--c-panel)';
+      matchBadge.style.color = (matched === 4 || isUnlocked) ? 'var(--c-canvas)' : 'var(--c-ink)';
+    }
+
+    const oscTitle = document.getElementById('osc-status-title');
+    if (oscTitle) {
+      oscTitle.textContent = (matched === 4 || isUnlocked)
+        ? 'WAVEFORM // 17.0s 神经掩码已对齐！可点击右下角「执行深层剥离并查阅证词」'
+        : 'WAVEFORM // 17.0s NEURAL ENVELOPE (点击上方七态开关或「校准目标特征码」匹配配方)';
+    }
+
+    // Update oscilloscope SVG path dynamically based on match count
+    const deepPath = document.getElementById('wave-path-deep');
+    if (deepPath) {
+      if (matched === 4 || isUnlocked) {
+        deepPath.setAttribute('d', 'M 0 44 L 90 44 L 115 14 L 135 74 L 155 44 L 360 44 L 385 10 L 405 78 L 425 44 L 760 44');
+        deepPath.setAttribute('stroke-dasharray', 'none');
+      } else {
+        deepPath.setAttribute('d', 'M 0 44 C 70 78 130 10 210 56 C 290 80 350 8 430 44 C 510 82 610 14 760 44');
+        deepPath.setAttribute('stroke-dasharray', '5 3');
+      }
+    }
+
+    // Time nodes
+    document.querySelectorAll('[data-time-node]').forEach(function (btn) {
+      const idx = Number(btn.getAttribute('data-time-node'));
+      btn.classList.toggle('is-active', idx === state.activeTimeNode);
+    });
+    const nodeObj = window.JC09_TIME_NODES[state.activeTimeNode] || window.JC09_TIME_NODES[0];
+    const readout = document.getElementById('synapse-readout-text');
+    if (readout) readout.innerHTML = nodeObj.text;
+  }
+
+  // ---- Blackbox Exhibit Rendering (View 03) ----
+  function renderBlackboxView() {
+    const ev = window.JC09_EXHIBITS[state.selectedExhibit] || window.JC09_EXHIBITS.B01;
+    const actObj = window.JC09_ACTS[state.currentAct] || window.JC09_ACTS[1];
+
+    document.querySelectorAll('.evidence-row').forEach(function (row) {
+      const id = row.getAttribute('data-evidence');
+      row.classList.toggle('is-selected', id === ev.id);
+      row.classList.toggle('is-hinted', state.hintOn && id === actObj.hintEvidence);
+    });
+
+    const codeEl = document.getElementById('blackbox-active-code');
+    if (codeEl) codeEl.textContent = ev.code;
+
+    const titleEl = document.getElementById('ev-title-heading');
+    if (titleEl) titleEl.textContent = ev.title;
+
+    const subEl = document.getElementById('ev-id-sub');
+    if (subEl) subEl.textContent = ev.sub;
+
+    const descEl = document.getElementById('ev-desc-text');
+    if (descEl) descEl.textContent = ev.desc;
+
+    const noteEl = document.getElementById('ev-forensic-note');
+    if (noteEl) noteEl.innerHTML = ev.note;
+
+    const hashEl = document.getElementById('ev-hash-code');
+    if (hashEl) hashEl.textContent = ev.hash;
+
+    const svgGroup = document.getElementById('ev-svg-graphic');
+    if (svgGroup) {
+      svgGroup.setAttribute('class', 'ui-color-graphic ' + ev.tintClass);
+      svgGroup.innerHTML = ev.svg;
+    }
+  }
+
+  // ---- Verdict & Four-Act Dossier Rendering (View 04) ----
+  function renderVerdictView() {
+    const actNum = state.dossierActTab || state.currentAct;
+    const actData = window.JC09_ACTS[actNum] || window.JC09_ACTS[1];
+    const isCompleted = state.completedActs.includes(actNum);
+    const isAccessible = actNum <= state.currentAct || isCompleted;
+
+    document.querySelectorAll('[data-dossier-act]').forEach(function (btn) {
+      const n = Number(btn.getAttribute('data-dossier-act'));
+      btn.classList.toggle('is-active', n === actNum);
+    });
+
+    const lockBadge = document.getElementById('dossier-lock-badge');
+    if (lockBadge) {
+      if (isCompleted) {
+        lockBadge.textContent = '逻辑已击穿';
+        lockBadge.style.background = 'var(--c-accent-green)';
+        lockBadge.style.color = 'var(--c-ink)';
+      } else if (isAccessible) {
+        lockBadge.textContent = '当前审理中';
+        lockBadge.style.background = 'var(--c-primary)';
+        lockBadge.style.color = 'var(--c-on-primary)';
+      } else {
+        lockBadge.textContent = '待前序幕次解锁';
+        lockBadge.style.background = 'var(--c-panel-deep)';
+        lockBadge.style.color = 'var(--c-ink-disabled)';
+      }
+    }
+
+    const headingEl = document.getElementById('dossier-act-heading');
+    const bodyEl = document.getElementById('dossier-act-body');
+    const conclusionEl = document.getElementById('dossier-act-conclusion');
+
+    if (headingEl) headingEl.textContent = actData.heading;
+    if (bodyEl) {
+      bodyEl.textContent = isCompleted ? actData.unlockedBody : actData.body;
+    }
+    if (conclusionEl) {
+      conclusionEl.innerHTML = isCompleted
+        ? actData.unlockedBody
+        : actData.guide;
+    }
+
+    // Ending state
+    const statusBadge = document.getElementById('verdict-status-badge');
+    const epilogueEl = document.getElementById('verdict-epilogue-summary');
+    const clearBtn = document.getElementById('btn-clear-verdict');
+    const sigEl = document.getElementById('verdict-sig-code');
+
+    if (state.verdict && window.JC09_ENDINGS[state.verdict]) {
+      const endObj = window.JC09_ENDINGS[state.verdict];
+      if (statusBadge) statusBadge.textContent = endObj.code;
+      if (epilogueEl) {
+        epilogueEl.innerHTML = '<strong style="color:var(--c-brand-yellow);">' + endObj.title + '</strong><br>' + endObj.text;
+      }
+      if (clearBtn) clearBtn.style.display = 'inline-flex';
+      if (sigEl) sigEl.textContent = endObj.code;
+    } else {
+      if (statusBadge) {
+        statusBadge.textContent = state.completedActs.length >= 4
+          ? 'CASE STATUS: READY FOR VERDICT'
+          : 'CASE STATUS: ACT ' + state.currentAct + ' / 4';
+      }
+      if (epilogueEl) {
+        epilogueEl.textContent = state.completedActs.length >= 4
+          ? '全部四幕矛盾已击穿！请点击右侧三项公诉裁决之一签署最终结案陈词。'
+          : '完成全部四幕逻辑击穿（或随时在右侧提前签署裁决）后，此处将归档终局结案陈词。';
+      }
+      if (clearBtn) clearBtn.style.display = 'none';
+      if (sigEl) sigEl.textContent = 'PENDING';
+    }
+  }
+
+  // ---- Top HUD, Left Telemetry & Right Contradiction Lock Inspector ----
+  function renderInspectorAndHud() {
+    // Top Act pills
+    for (let a = 1; a <= 4; a++) {
+      const pill = document.getElementById('act-pill-' + a);
+      if (pill) {
+        const unlocked = a <= state.currentAct || state.completedActs.includes(a);
+        pill.classList.toggle('is-unlocked', unlocked);
+        pill.classList.toggle('is-current', a === state.currentAct);
+      }
+    }
+
+    // Hint & Audio chips
+    const hintBtn = document.getElementById('btn-hint-toggle');
+    const hintLbl = document.getElementById('hint-state-label');
+    if (hintBtn) hintBtn.setAttribute('data-state', state.hintOn ? 'selected' : 'off');
+    if (hintLbl) hintLbl.textContent = state.hintOn ? 'ON' : 'OFF';
+
+    const audioBtn = document.getElementById('btn-audio-toggle');
+    const audioLbl = document.getElementById('audio-state-label');
+    if (audioBtn) audioBtn.setAttribute('data-state', state.audioOn ? 'on' : 'off');
+    if (audioLbl) audioLbl.textContent = state.audioOn ? 'ON' : 'OFF';
+
+    // Left telemetry counters
+    const decryptedCount = 1 + Object.keys(state.unlockedDeep).filter(function (k) { return state.unlockedDeep[k]; }).length;
+    const decEl = document.getElementById('stat-decrypted-count');
+    if (decEl) decEl.textContent = Math.min(6, decryptedCount) + ' / 6';
+
+    const actCountEl = document.getElementById('stat-act-count');
+    if (actCountEl) actCountEl.textContent = state.completedActs.length + ' / 4';
+
+    const progFill = document.getElementById('global-progress-fill');
+    if (progFill) {
+      const pct = Math.min(100, 15 + state.completedActs.length * 20 + (state.verdict ? 5 : 0));
+      progFill.style.width = pct + '%';
+    }
+
+    // Right Contradiction Lock Goal
+    const actObj = window.JC09_ACTS[state.currentAct] || window.JC09_ACTS[1];
+    const goalEl = document.getElementById('inspector-act-goal');
+    if (goalEl) {
+      goalEl.textContent = state.completedActs.length >= 4
+        ? '全部四幕伪证已击穿！请前往【04 审讯卷宗与公诉】签署终局裁决。'
+        : actObj.goal;
+    }
+
+    // Slot A & Slot B
+    renderSlotBox('a', state.slotA);
+    renderSlotBox('b', state.slotB);
+  }
+
+  function renderSlotBox(letter, slotData) {
+    const box = document.getElementById('slot-' + letter + '-box');
+    const idEl = document.getElementById('slot-' + letter + '-id');
+    const titleEl = document.getElementById('slot-' + letter + '-title');
+    const sumEl = document.getElementById('slot-' + letter + '-summary');
+    if (!box) return;
+
+    if (!slotData) {
+      box.classList.add('is-empty');
+      if (idEl) idEl.textContent = 'EMPTY';
+      if (titleEl) titleEl.textContent = '尚未装填（请在视图 01 或 03 点击装填）';
+      if (sumEl) sumEl.textContent = '等待脑机切片或物理黑匣输入…';
+    } else {
+      box.classList.remove('is-empty');
+      if (idEl) idEl.textContent = slotData.id;
+      if (titleEl) titleEl.textContent = slotData.title;
+      if (sumEl) sumEl.textContent = slotData.summary;
+    }
+  }
+
+  function loadIntoSlot(slotLetter, item) {
+    if (slotLetter === 'A') state.slotA = item;
+    else state.slotB = item;
+    saveState();
+    renderInspectorAndHud();
+    sfxClick();
+    const fb = document.getElementById('inspector-feedback');
+    if (fb) {
+      fb.style.borderLeftColor = 'var(--c-primary)';
+      fb.textContent = '已装填 [' + item.id + '] ' + item.title + ' 至指证槽 [' + slotLetter + ']。';
+    }
+    logTicker('指证槽 [' + slotLetter + '] 已装填: ' + item.id);
+  }
+
+  function executeContradictionBreak() {
+    const fb = document.getElementById('inspector-feedback');
+    if (!state.slotA || !state.slotB) {
+      sfxError();
+      if (fb) {
+        fb.style.borderLeftColor = 'var(--c-danger-red)';
+        fb.textContent = '指证失败：请先在指证槽 [A] 与 [B] 中各装填一项证词或物证！';
+      }
+      return;
+    }
+
+    const idA = state.slotA.id;
+    const idB = state.slotB.id;
+
+    // Check against currentAct first, or any uncompleted act
+    let matchedAct = null;
+    for (let a = 1; a <= 4; a++) {
+      const actCfg = window.JC09_ACTS[a];
+      const hit = actCfg.validPairs.some(function (pair) {
+        return (pair[0] === idA && pair[1] === idB) || (pair[0] === idB && pair[1] === idA);
+      });
+      if (hit) {
+        matchedAct = a;
+        break;
+      }
+    }
+
+    if (matchedAct !== null) {
+      sfxBreakthrough();
+      if (!state.completedActs.includes(matchedAct)) {
+        state.completedActs.push(matchedAct);
+      }
+      if (matchedAct === state.currentAct && state.currentAct < 4) {
+        state.currentAct = matchedAct + 1;
+      }
+      state.dossierActTab = matchedAct;
+      saveState();
+      renderAll();
+
+      const brokenAct = window.JC09_ACTS[matchedAct];
+      if (fb) {
+        fb.style.borderLeftColor = 'var(--c-confirm-gold)';
+        fb.innerHTML = '<strong style="color:var(--c-confirm-gold);">【逻辑击穿成功 · 第 ' + matchedAct + ' 幕解锁】</strong> ' + brokenAct.unlockedBody.slice(0, 78) + '…';
+      }
+      logTicker('逻辑击穿成功！已解锁第 ' + matchedAct + ' 幕真相卷宗');
+    } else {
+      sfxError();
+      const curActObj = window.JC09_ACTS[state.currentAct] || window.JC09_ACTS[1];
+      if (fb) {
+        fb.style.borderLeftColor = 'var(--c-danger-red)';
+        fb.innerHTML = '<strong style="color:var(--c-danger-red);">【逻辑冲突不成立】</strong> [' + idA + '] 与 [' + idB + '] 未构成当前幕次的核心矛盾。可开启顶部「推演辅助」查看线索高亮。';
+      }
+      logTicker('比对未命中核心矛盾: ' + idA + ' vs ' + idB + ' (' + curActObj.name + ')');
+    }
+  }
+
+  function renderAll() {
+    renderInspectorAndHud();
+    renderWitnessView();
+    renderSynapseView();
+    renderBlackboxView();
+    renderVerdictView();
+  }
+
+  // ---- Event Listeners Binding ----
+  function bindEvents() {
+    // 1. View switcher tabs
+    document.querySelectorAll('.nav-tab').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        switchView(btn.getAttribute('data-view'));
+      });
+    });
+
+    // 2. Top HUD Act pills
+    document.querySelectorAll('.act-pill').forEach(function (pill) {
+      pill.addEventListener('click', function () {
+        const actN = Number(pill.getAttribute('data-act'));
+        state.currentAct = actN;
+        state.dossierActTab = actN;
+        saveState();
+        renderAll();
+        sfxClick();
+      });
+    });
+
+    // 3. Hint Toggle, Audio Toggle, Reset Save
+    const btnHint = document.getElementById('btn-hint-toggle');
+    if (btnHint) {
+      btnHint.addEventListener('click', function () {
+        state.hintOn = !state.hintOn;
+        saveState();
+        renderAll();
+        sfxSwitch();
+        logTicker('推演辅助线索高亮已' + (state.hintOn ? '开启' : '关闭'));
+      });
+    }
+
+    const btnAudio = document.getElementById('btn-audio-toggle');
+    if (btnAudio) {
+      btnAudio.addEventListener('click', function () {
+        state.audioOn = !state.audioOn;
+        saveState();
+        setAmbientHum(state.audioOn);
+        renderAll();
+        if (state.audioOn) sfxSwitch();
+        logTicker('Web Audio 实时声效合成器已' + (state.audioOn ? '开启' : '关闭'));
+      });
+    }
+
+    const btnReset = document.getElementById('btn-reset-save');
+    if (btnReset) {
+      btnReset.addEventListener('click', function () {
+        try { localStorage.removeItem(STORAGE_KEY); } catch (_) {}
+        state = JSON.parse(JSON.stringify(defaultState));
+        setAmbientHum(false);
+        renderAll();
+        switchView('witness');
+        logTicker('本地审讯进度与裁决记录已完全重置');
+      });
+    }
+
+    // 4. Witness Roster Cards & Layer Toggle (View 01)
+    document.querySelectorAll('.witness-card').forEach(function (card) {
+      card.addEventListener('click', function () {
+        const wid = card.getAttribute('data-witness');
+        state.selectedWitness = wid;
+        state.synapseTarget = wid;
+        if (state.witnessLayer === 'deep' && !state.unlockedDeep[wid]) {
+          state.witnessLayer = 'surface';
+        }
+        saveState();
+        renderAll();
+        sfxClick();
+      });
+    });
+
+    const btnSurface = document.getElementById('btn-layer-surface');
+    if (btnSurface) {
+      btnSurface.addEventListener('click', function () {
+        state.witnessLayer = 'surface';
+        saveState();
+        renderWitnessView();
+        sfxSwitch();
+      });
+    }
+
+    const btnDeep = document.getElementById('btn-layer-deep');
+    if (btnDeep) {
+      btnDeep.addEventListener('click', function () {
+        const w = window.JC09_WITNESSES[state.selectedWitness];
+        if (!w) return;
+        if (!state.unlockedDeep[w.id]) {
+          state.synapseTarget = w.id;
+          switchView('synapse');
+          renderSynapseView();
+          logTicker(w.name + ' 的深层残响尚未破译，已跳转至 02 神经切片台');
+          return;
+        }
+        state.witnessLayer = 'deep';
+        saveState();
+        renderWitnessView();
+        sfxSwitch();
+      });
+    }
+
+    const btnGotoSynapse = document.getElementById('btn-goto-synapse');
+    if (btnGotoSynapse) {
+      btnGotoSynapse.addEventListener('click', function () {
+        state.synapseTarget = state.selectedWitness;
+        saveState();
+        renderSynapseView();
+        switchView('synapse');
+      });
+    }
+
+    function getCurrentWitnessClipItem() {
+      const w = window.JC09_WITNESSES[state.selectedWitness] || window.JC09_WITNESSES.W05;
+      const isDeep = state.witnessLayer === 'deep' && !!state.unlockedDeep[w.id];
+      const suffix = isDeep ? 'B' : 'A';
+      const layer = isDeep ? w.deep : w.surface;
+      return {
+        id: w.id + '-' + suffix,
+        title: layer.title,
+        summary: layer.summary
+      };
+    }
+
+    const btnLoadWA = document.getElementById('btn-load-witness-a');
+    if (btnLoadWA) {
+      btnLoadWA.addEventListener('click', function () {
+        loadIntoSlot('A', getCurrentWitnessClipItem());
+      });
+    }
+    const btnLoadWB = document.getElementById('btn-load-witness-b');
+    if (btnLoadWB) {
+      btnLoadWB.addEventListener('click', function () {
+        loadIntoSlot('B', getCurrentWitnessClipItem());
+      });
+    }
+
+    // 5. Synapse Slicer & 7-State Toggle Matrix (View 02)
+    document.querySelectorAll('[data-syn-witness]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        const wid = btn.getAttribute('data-syn-witness');
+        state.synapseTarget = wid;
+        state.selectedWitness = wid;
+        saveState();
+        renderAll();
+        sfxClick();
+      });
+    });
+
+    for (let i = 0; i < 4; i++) {
+      const chip = document.getElementById('filter-ch-' + i);
+      if (chip) {
+        chip.addEventListener('click', function () {
+          const cur = state.filterStates[i] || 'normal';
+          const nextIdx = (SEVEN_STATES.indexOf(cur) + 1) % SEVEN_STATES.length;
+          state.filterStates[i] = SEVEN_STATES[nextIdx];
+          saveState();
+          renderSynapseView();
+          sfxSwitch();
+        });
+      }
+    }
+
+    const btnAutoTune = document.getElementById('btn-auto-tune');
+    if (btnAutoTune) {
+      btnAutoTune.addEventListener('click', function () {
+        const w = window.JC09_WITNESSES[state.synapseTarget] || window.JC09_WITNESSES.W05;
+        state.filterStates = w.recipe.slice();
+        state.unlockedDeep[w.id] = true;
+        saveState();
+        renderAll();
+        sfxBreakthrough();
+        logTicker('已按配方校准七态开关并成功破译 ' + w.name + ' 的深层记忆残响！');
+      });
+    }
+
+    const btnUnlockDeep = document.getElementById('btn-unlock-deep');
+    if (btnUnlockDeep) {
+      btnUnlockDeep.addEventListener('click', function () {
+        const w = window.JC09_WITNESSES[state.synapseTarget] || window.JC09_WITNESSES.W05;
+        state.filterStates = w.recipe.slice();
+        state.unlockedDeep[w.id] = true;
+        state.selectedWitness = w.id;
+        state.witnessLayer = 'deep';
+        saveState();
+        renderAll();
+        sfxBreakthrough();
+        switchView('witness');
+        logTicker('已剥离 ' + w.name + ' 的表层伪装，自动切换至 LAYER B 深层残响！');
+      });
+    }
+
+    document.querySelectorAll('[data-time-node]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        state.activeTimeNode = Number(btn.getAttribute('data-time-node'));
+        saveState();
+        renderSynapseView();
+        sfxClick();
+      });
+    });
+
+    // 6. Blackbox Exhibits (View 03)
+    document.querySelectorAll('.evidence-row').forEach(function (row) {
+      row.addEventListener('click', function () {
+        state.selectedExhibit = row.getAttribute('data-evidence');
+        saveState();
+        renderBlackboxView();
+        sfxClick();
+      });
+    });
+
+    function getCurrentExhibitItem() {
+      const ev = window.JC09_EXHIBITS[state.selectedExhibit] || window.JC09_EXHIBITS.B01;
+      return {
+        id: ev.id,
+        title: ev.title,
+        summary: ev.summary
+      };
+    }
+
+    const btnLoadEvA = document.getElementById('btn-load-ev-a');
+    if (btnLoadEvA) {
+      btnLoadEvA.addEventListener('click', function () {
+        loadIntoSlot('A', getCurrentExhibitItem());
+      });
+    }
+    const btnLoadEvB = document.getElementById('btn-load-ev-b');
+    if (btnLoadEvB) {
+      btnLoadEvB.addEventListener('click', function () {
+        loadIntoSlot('B', getCurrentExhibitItem());
+      });
+    }
+
+    // 7. Contradiction Lock Controls
+    const btnClearSlots = document.getElementById('btn-clear-slots');
+    if (btnClearSlots) {
+      btnClearSlots.addEventListener('click', function () {
+        state.slotA = null;
+        state.slotB = null;
+        saveState();
+        renderInspectorAndHud();
+        sfxClick();
+      });
+    }
+
+    const btnExecBreak = document.getElementById('btn-execute-break');
+    if (btnExecBreak) {
+      btnExecBreak.addEventListener('click', executeContradictionBreak);
+    }
+
+    // 8. Verdict Dossier Sub-tabs & Three-Way Final Indictment (View 04)
+    document.querySelectorAll('[data-dossier-act]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        state.dossierActTab = Number(btn.getAttribute('data-dossier-act'));
+        saveState();
+        renderVerdictView();
+        sfxClick();
+      });
+    });
+
+    document.querySelectorAll('[data-ending]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        const endingKey = btn.getAttribute('data-ending');
+        state.verdict = endingKey;
+        saveState();
+        renderAll();
+        sfxBreakthrough();
+        logTicker('已签署终局公诉裁决 // ' + endingKey.toUpperCase());
+      });
+    });
+
+    const btnClearVerdict = document.getElementById('btn-clear-verdict');
+    if (btnClearVerdict) {
+      btnClearVerdict.addEventListener('click', function () {
+        state.verdict = null;
+        saveState();
+        renderAll();
+        sfxClick();
+        logTicker('已撤回终局裁决，可重新选择公诉方向');
+      });
+    }
+
+    // 9. Keyboard Shortcuts (1-4 View Switch, ArrowLeft/Right Witness Cycle, Space Verify)
+    window.addEventListener('keydown', function (ev) {
+      if (ev.ctrlKey || ev.altKey || ev.metaKey) return;
+      const tag = (ev.target && ev.target.tagName) ? ev.target.tagName.toLowerCase() : '';
+      if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
+
+      if (ev.key === '1') { switchView('witness'); }
+      else if (ev.key === '2') { switchView('synapse'); }
+      else if (ev.key === '3') { switchView('blackbox'); }
+      else if (ev.key === '4') { switchView('verdict'); }
+      else if (ev.key === 'ArrowRight' || ev.key === 'ArrowLeft') {
+        const ids = ['W01', 'W02', 'W03', 'W04', 'W05', 'W06'];
+        const curIdx = ids.indexOf(state.selectedWitness);
+        const delta = ev.key === 'ArrowRight' ? 1 : -1;
+        const nextId = ids[(curIdx + delta + ids.length) % ids.length];
+        state.selectedWitness = nextId;
+        state.synapseTarget = nextId;
+        saveState();
+        renderAll();
+        sfxClick();
+      }
+    });
+  }
+
+  // ---- Boot ----
+  bindEvents();
+  renderAll();
+  switchView(state.activeView || 'witness');
+})();
+</script>
+
+<!-- ==== 90-tail.html ==== -->
+</body>
+</html>

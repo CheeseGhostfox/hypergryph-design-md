@@ -53,9 +53,36 @@ against it. These analyses are unofficial and are not affiliated with or endorse
 
 > **关于《终末地》游戏本体**：暂时缺席。它可读的那 10 个 Unity 文件里装的不是出货 UI，而是**调试工具链与 SDK 账号层**——483 个 `sr_` 对象是第三方调试控制台 SRDebugger，219 张贴图里 73 张是 Unity 编辑器插件资源。出货 UI 在 `StreamingAssets\VFS`（42 GB）后面，索引是加密的。所以现在写 `endfield.md` 只会写出一份**调试控制台的设计系统**，那是错的。缺的这份等有可靠证据再补。
 
-## 演示 / Demo
+## 演示 / Demos
 
-[![demo preview](demo/arknights-eb07/verify-out/landscape-1440x900.hero.png)](https://cheeseghostfox.github.io/hypergryph-design-md/demo/arknights-eb07/)
+本仓库提供两份完全独立原创世界观、零外部素材依赖的单文件交互演示，分别严格对应 **`arknights.md`（游戏本体操作终端语言）** 与 **`arknights-website.md`（官网海报档案语言）**：
+
+---
+
+### Demo 1（基于 `arknights.md` 游戏本体规范）：《寒鸦审讯室：第 09 号记忆取证台》// JACKDAW-09
+
+[![jc09 demo preview](demo/arknights-jc09/verify-out/landscape-1440x900.hero.png)](https://cheeseghostfox.github.io/hypergryph-design-md/demo/arknights-jc09/)
+
+一份**严格照着 `arknights.md`（游戏本体 UI）做出来**的**非滚动锁屏交互式推理解谜终端**：一起离奇的跨江自动驾驶列车断桥坠江案，03 车厢六名幸存者的商用脑机接口在坠桥前 `T-17.0s` 至 `T-00.0s` 出现了高度一致的假记忆与空白；你作为第 09 号记忆取证台操作员，在锁屏战术控制台中通过四幕逻辑击穿揭开惊天共谋。
+
+- **在线预览**：<https://cheeseghostfox.github.io/hypergryph-design-md/demo/arknights-jc09/>
+- **源码**：`demo/arknights-jc09/index.html` —— 自包含单文件，约 139 KB，零外部依赖、无构建步骤，双击即玩
+- **构建分片**：`demo/arknights-jc09/parts/` —— 完整映射 `arknights.md` 的 40 色令牌、校准后光学字号 + 容器盒高呼吸比、上圆下方 `(N,N,N,0)` 九宫格圆角与错位背板
+- **验收输出**：`demo/arknights-jc09/verify-out/` —— 四视图与竖屏实测截图及 `audit.json`（`14/14` 端到端交互断言全通过，`FAIL 0`）
+
+| 核心机制（映射自 `arknights.md`） | 交互与叙事说明 |
+| --- | --- |
+| **1280×720 锁屏非滚动舞台** | 根视口严格 `overflow: hidden` 零滚动条；通过左侧 4 视图战术切页（快捷键 `1`–`4`）与抽屉切换承载约 8,400 字（15–18 分钟）高张力悬疑叙事 |
+| **六阶光晕卡池 + 恒黄星标** | 6 名幸存者卡片按「神经覆写阶位」应用 `1★ #FEFEFE` → `6★ #FE7200` 六阶底边光晕，而星标在所有阶位恒为 `#FEDC01`（`ArrowLeft`/`Right` 快速切人） |
+| **七态开关神经滤波台** | 完整实现 `normal / on / off / select / selected / unselect / unselected` 七态开关矩阵；匹配证人特征码（或一键校准）即可剥离表层伪证、解锁 `LAYER B` 深层残响與动态示波器包络 |
+| **白模遮罩 + 运行时染色** | 全部人物神经肖像、转向架液压曲线、爆炸螺栓与声学频谱均以 `#FEFEFE` 纯白 SVG 遮罩绘制，通过 CSS `.ui-color-graphic` 在运行时动态赋予语义色 |
+| **双槽矛盾指证锁与三向终局** | 右侧常驻 `SLOT [A]` / `SLOT [B]` 交叉比对器，依次击穿四幕伪证锁（含可选「推演辅助线索高亮」），最终在 `#E8C400` 确认金 / `#EC3140` 危险红 / `#0098DC` 品牌蓝三向公诉结局中做出裁决并持久化至 `localStorage` |
+
+---
+
+### Demo 2（基于 `arknights-website.md` 官网规范）：《未播出的第七段》// THE UNSENT SEVENTH
+
+[![eb07 demo preview](demo/arknights-eb07/verify-out/landscape-1440x900.hero.png)](https://cheeseghostfox.github.io/hypergryph-design-md/demo/arknights-eb07/)
 
 一份**只照着 `arknights-website.md` 做出来**的示例页面：**《未播出的第七段》// THE UNSENT SEVENTH** —— 虚构城市「白屿市」民防广播站 EB-07 的回收卷宗，七段记录，一个完整叙事弧线。
 

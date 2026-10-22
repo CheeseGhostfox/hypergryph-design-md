@@ -1,0 +1,338 @@
+/* ==========================================================================
+   06-style-components.css
+   Components mapped strictly from arknights.md (54-component vocabulary)
+   Zero box-shadow · (N,N,N,0) Nine-Slice Frames · Offset Backing Plates
+   6-Step Rarity Glow (Stars Always #FEDC01) · 7-Way Toggle Family
+   ========================================================================== */
+
+/* ---- Panels & Offset Backing Plates (Zero-Shadow Depth) ---- */
+.ak-panel {
+  position: relative;
+  background-color: var(--c-panel);
+  color: var(--c-ink);
+  border-radius: var(--r-slice-md);
+  border: 1px solid var(--c-hairline);
+  padding: var(--s-sm);
+}
+
+.ak-panel-deep {
+  position: relative;
+  background-color: var(--c-panel-deep);
+  color: var(--c-ink);
+  border-radius: var(--r-slice-md);
+  border: 1px solid var(--c-surface-4);
+  padding: var(--s-sm);
+}
+
+/* Offset Backing Plate (#313131 shifted 6px right-down behind #1B1B1B) */
+.offset-plate {
+  position: relative;
+  z-index: 1;
+}
+.offset-plate::after {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  right: -6px;
+  bottom: -6px;
+  background-color: var(--c-panel);
+  border: 1px solid var(--c-hairline);
+  border-radius: var(--r-slice-md);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Subtle Camera-Space Plane Tilt (1.5deg Y-axis perspective on tactical deck) */
+.tilt-stage {
+  perspective: 1400px;
+}
+.tilt-plane {
+  transform: rotateY(-1.2deg);
+  transform-style: preserve-3d;
+}
+
+/* ---- Buttons (50px Primary/Confirm/Danger/Secondary · 30px Compact) ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-xs);
+  font-family: var(--f-cjk);
+  font-size: var(--fs-row-title);
+  font-weight: 500;
+  height: var(--bh-headline); /* 50px */
+  padding: 0 var(--s-sm);
+  border-radius: var(--r-slice-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn[disabled] {
+  background-color: var(--c-panel-deep) !important;
+  color: var(--c-ink-soft) !important;
+  border-color: var(--c-surface-4) !important;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background-color: var(--c-primary);
+  color: var(--c-on-primary);
+  border-bottom: 3px solid var(--c-deep-blue);
+}
+.btn-primary:active {
+  background-color: var(--c-deep-blue);
+}
+
+.btn-confirm {
+  background-color: var(--c-confirm-gold);
+  color: var(--c-canvas);
+  font-weight: 700;
+  border-bottom: 3px solid var(--c-upgrade-orange);
+}
+
+.btn-danger {
+  background-color: var(--c-danger-red);
+  color: var(--c-on-primary);
+  border-bottom: 3px solid var(--c-danger-red-deep);
+}
+.btn-danger:active {
+  background-color: var(--c-danger-red-deep);
+}
+
+.btn-secondary {
+  background-color: var(--c-panel);
+  color: var(--c-ink);
+  border: 1px solid var(--c-hairline);
+  border-bottom: 3px solid var(--c-surface-6);
+}
+
+.btn-compact {
+  height: var(--s-row); /* 30px */
+  padding: 0 var(--s-xs);
+  font-size: var(--fs-body-sm);
+  border-radius: var(--r-xs);
+  background-color: var(--c-panel);
+  color: var(--c-ink);
+  border: 1px solid var(--c-hairline);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-xxs);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.btn-compact.is-active {
+  background-color: var(--c-primary);
+  color: var(--c-on-primary);
+  border-color: var(--c-currency-blue);
+}
+
+/* ---- Seven-Way Toggle State Family (Touch-First, No Hover Dependency) ---- */
+.state-chip {
+  height: var(--s-row); /* 30px */
+  padding: 0 var(--s-xs);
+  border-radius: var(--r-xs);
+  font-family: var(--f-cjk);
+  font-size: var(--fs-body-sm);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-xs);
+  cursor: pointer;
+  border: 1px solid var(--c-surface-5);
+  transition: background-color 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+}
+
+.state-chip[data-state="normal"] {
+  background-color: var(--c-panel);
+  color: var(--c-ink);
+  border-color: var(--c-hairline);
+}
+.state-chip[data-state="on"] {
+  background-color: var(--c-primary);
+  color: var(--c-on-primary);
+  border-color: var(--c-currency-blue);
+}
+.state-chip[data-state="off"] {
+  background-color: var(--c-panel-deep);
+  color: var(--c-ink-disabled);
+  border-color: var(--c-surface-4);
+}
+.state-chip[data-state="select"],
+.state-chip[data-state="selected"] {
+  background-color: var(--c-brand-yellow);
+  color: var(--c-canvas);
+  border-color: var(--c-confirm-gold);
+  font-weight: 700;
+}
+.state-chip[data-state="unselect"],
+.state-chip[data-state="unselected"] {
+  background-color: var(--c-surface-3);
+  color: var(--c-ink-muted);
+  border-color: var(--c-surface-4);
+}
+.state-chip[data-state="locked"] {
+  background-color: var(--c-panel-deep);
+  color: var(--c-ink-soft);
+  border-color: var(--c-surface-3);
+  cursor: not-allowed;
+}
+
+/* ---- Six-Step Rarity / Neural Tamper Cards (Stars Always #FEDC01) ---- */
+.witness-card {
+  position: relative;
+  background-color: var(--c-elite-surface);
+  border: 1px solid var(--c-surface-5);
+  border-radius: var(--r-slice-sm);
+  padding: var(--s-xs);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+.witness-card.is-selected {
+  border-color: var(--c-brand-yellow);
+  background-color: var(--c-surface-2);
+}
+.witness-card.is-hinted {
+  border-color: var(--c-accent-green);
+}
+
+/* Rarity Bottom Glow Bar + Top Corner Accent */
+.witness-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 5px;
+  background-color: var(--rarity-color, var(--c-rarity-1));
+}
+.witness-card[data-rarity="1"] { --rarity-color: var(--c-rarity-1); }
+.witness-card[data-rarity="2"] { --rarity-color: var(--c-rarity-2); }
+.witness-card[data-rarity="3"] { --rarity-color: var(--c-rarity-3); }
+.witness-card[data-rarity="4"] { --rarity-color: var(--c-rarity-4); }
+.witness-card[data-rarity="5"] { --rarity-color: var(--c-rarity-5); }
+.witness-card[data-rarity="6"] { --rarity-color: var(--c-rarity-6); }
+
+.rarity-pill {
+  display: inline-flex;
+  align-items: center;
+  height: var(--bh-caption); /* 16px */
+  padding: 0 var(--s-xxs);
+  border-radius: var(--r-xs);
+  font-family: var(--f-tech);
+  font-size: var(--fs-caption);
+  font-weight: 700;
+  background-color: var(--rarity-color, var(--c-rarity-1));
+  color: var(--c-canvas);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.witness-card[data-rarity="3"] .rarity-pill,
+.witness-card[data-rarity="6"] .rarity-pill {
+  color: var(--c-ink);
+}
+
+/* Star glyphs stay yellow (#FEDC01) at EVERY rarity per arknights.md */
+.star-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  color: var(--c-star);
+  font-family: var(--f-tech);
+  font-size: var(--fs-label);
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+/* ---- White Mask + Runtime UIColorGraphic Tinting ---- */
+.ui-color-graphic {
+  fill: var(--tint-color, var(--c-ink));
+  stroke: var(--tint-color, var(--c-ink));
+  transition: fill 0.2s ease, stroke 0.2s ease;
+}
+.ui-color-graphic[fill="none"],
+.ui-color-graphic [fill="none"] {
+  fill: none !important;
+}
+.ui-color-graphic [stroke="none"] {
+  stroke: none !important;
+}
+.tint-primary { --tint-color: var(--c-primary); }
+.tint-yellow  { --tint-color: var(--c-brand-yellow); }
+.tint-gold    { --tint-color: var(--c-confirm-gold); }
+.tint-danger  { --tint-color: var(--c-danger-red); }
+.tint-green   { --tint-color: var(--c-accent-green); }
+.tint-violet  { --tint-color: var(--c-accent-violet); }
+.tint-cyan    { --tint-color: var(--c-currency-blue); }
+
+/* ---- Progress Track & Highlight Bar ---- */
+.ak-progress-track {
+  width: 100%;
+  height: var(--s-xs); /* 10px */
+  background-color: var(--c-surface-4);
+  overflow: hidden;
+}
+.ak-progress-fill {
+  height: 100%;
+  background-color: var(--c-brand-yellow);
+  transition: width 0.25s ease;
+}
+
+/* ---- Hotkey Prompt & Currency/Telemetry Chip ---- */
+.hotkey-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--r-full);
+  background-color: var(--c-canvas);
+  color: var(--c-star);
+  border: 1px solid var(--c-hairline);
+  font-family: var(--f-tech);
+  font-size: var(--fs-caption);
+}
+
+.telemetry-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-xxs);
+  height: var(--s-row); /* 30px */
+  padding: 0 var(--s-xs);
+  background-color: var(--c-panel-deep);
+  color: var(--c-currency-blue);
+  font-family: var(--f-tech);
+  font-size: var(--fs-label);
+  border-left: 2px solid var(--c-primary);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ---- Zero-Slack Telemetry Cluster vs. Void Ground ---- */
+.telemetry-cluster {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-unit); /* 2px zero-slack cluster */
+}
+.telemetry-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 24px;
+  padding: 0 var(--s-xs);
+  background-color: var(--c-surface-3);
+  font-family: var(--f-tech);
+  font-size: var(--fs-caption);
+  color: var(--c-ink-light-1);
+}

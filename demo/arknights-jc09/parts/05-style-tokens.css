@@ -1,0 +1,119 @@
+/* ==========================================================================
+   05-style-tokens.css
+   Design System: arknights.md (In-Game Client UI Specification)
+   40 Colors · 13 Typography Scales (Optical + Box Height) · 10 Radii · 11 Spacings
+   ========================================================================== */
+
+:root {
+  /* ---- 1. Colors (40 exact tokens from arknights.md) ---- */
+  --c-primary: #0098DC;
+  --c-on-primary: #FEFEFE;
+  --c-canvas: #000000;
+  --c-ink: #FEFEFE;
+  --c-ink-pure: #FFFFFF;
+  --c-panel: #313131;
+  --c-panel-deep: #1B1B1B;
+  --c-surface-2: #242424;
+  --c-surface-3: #202020;
+  --c-surface-4: #434343;
+  --c-surface-5: #4B4B4B;
+  --c-surface-6: #535353;
+  --c-surface-raised: #303030;
+  --c-hairline: #555555;
+  --c-ink-disabled: #898989;
+  --c-ink-muted: #707070;
+  --c-ink-soft: #626262;
+  --c-ink-light-1: #D2D2D2;
+  --c-ink-light-2: #E5E5E5;
+  --c-ink-light-3: #F4F4F4;
+  --c-brand-yellow: #FED800;
+  --c-brand-yellow-light: #FFD704;
+  --c-confirm-gold: #E8C400;
+  --c-star: #FEDC01;
+  --c-currency-blue: #22BBFE;
+  --c-deep-blue: #0074A9;
+  --c-upgrade-orange: #FE7800;
+  --c-upgrade-orange-deep: #FE6800;
+  --c-danger-red: #EC3140;
+  --c-danger-red-deep: #C82A36;
+  --c-danger-void: #A40000;
+  --c-accent-violet: #A67DFE;
+  --c-accent-green: #7EA403;
+  --c-rarity-1: #FEFEFE;
+  --c-rarity-2: #DCE535;
+  --c-rarity-3: #00B1FE;
+  --c-rarity-4: #D4B9C1;
+  --c-rarity-5: #FED879;
+  --c-rarity-6: #FE7200;
+  --c-elite-surface: #141516;
+
+  /* ---- 2. Font Stacks (Three-Voice + CJK Display/Serif + Bitmap) ---- */
+  --f-display: 'Novecento Wide', 'Archivo', sans-serif;
+  --f-tech: 'Bender', 'Barlow', 'JetBrains Mono', monospace;
+  --f-cjk: 'Noto Sans S Chinese Medium', 'Source Han Sans CN', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --f-cjk-heavy: 'Source Han Sans CN Heavy', 'Noto Sans SC', 'PingFang SC', sans-serif;
+  --f-cjk-serif: 'FZYaSong H GBK', 'Noto Serif SC', 'Songti SC', serif;
+  --f-bitmap: 'AddWBitmap09', 'JetBrains Mono', 'Barlow', monospace;
+
+  /* ---- 3. Typography (Calibrated Optical Sizes + Container Box Heights) ---- */
+  --fs-display: 72px;       --bh-display: 100px;
+  --fs-headline: 32px;      --bh-headline: 50px;
+  --fs-card-title: 24px;    --bh-card-title: 40px;
+  --fs-title-cjk: 24px;     --bh-title-cjk: 40px;
+  --fs-row-title: 18px;     --bh-row-title: 30px;
+  --fs-body: 16px;          --bh-body: 25px;
+  --fs-body-sm: 13px;       --bh-body-sm: 20px;
+  --fs-label: 13px;         --bh-label: 20px;
+  --fs-numeric: 20px;       --bh-numeric: 30px;
+  --fs-caption: 11px;       --bh-caption: 16px;
+  --fs-cjk-display: 32px;   --bh-cjk-display: 50px;
+  --fs-cjk-serif: 22px;     --bh-cjk-serif: 36px;
+  --fs-bitmap: 14px;        --bh-bitmap: 24px;
+
+  /* ---- 4. Rounding Levels + Nine-Slice Signatures (N,N,N,0) ---- */
+  --r-none: 0px;
+  --r-xs: 3px;
+  --r-sm: 5px;
+  --r-md: 10px;
+  --r-lg: 12px;
+  --r-xl: 15px;
+  --r-xxl: 19px;
+  --r-display: 27px;
+  --r-banner: 46px;
+  --r-full: 9999px;
+  /* Signature top-rounded bottom-square nine-slice borders */
+  --r-slice-sm: 5px 5px 0px 0px;
+  --r-slice-md: 10px 10px 0px 0px;
+
+  /* ---- 5. Spacing Lattice (2px Grid / 5px Control / 10px Screen / 50px Gutter) ---- */
+  --s-unit: 2px;
+  --s-xxs: 5px;
+  --s-xs: 10px;
+  --s-sm: 20px;
+  --s-md: 30px;
+  --s-lg: 40px;
+  --s-xl: 50px;
+  --s-row: 30px;
+  --s-gutter: 50px;
+  --s-screen-w: 1280px;
+  --s-screen-h: 720px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--c-canvas);
+  color: var(--c-ink);
+  font-family: var(--f-cjk);
+  font-size: var(--fs-body);
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}

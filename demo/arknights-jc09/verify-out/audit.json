@@ -1,0 +1,79 @@
+{
+  "ok": true,
+  "timestamp": "2026-10-22T15:22:25.498Z",
+  "consoleErrors": [],
+  "pageExceptions": [],
+  "failedRequests": [],
+  "assertions": [
+    {
+      "ok": true,
+      "name": "横屏 (1440x900) 根页面零滚动条",
+      "detail": "scroll=1440x900, client=1440x900"
+    },
+    {
+      "ok": true,
+      "name": "画布背景为纯正 #000000",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "name": "全页面运行时 computed box-shadow 数量严格为 0",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "name": "1★–6★ 全部卡片星标恒为黄色 #FEDC01",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "name": "推演辅助开关正确高亮当前幕线索卡片",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "name": "Web Audio 声效合成开关正确切换至 ON 状态",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "name": "第一幕逻辑击穿成功 (W05-A × B01)，解锁第二幕",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "name": "第二幕逻辑击穿成功 (7态滤波破译 W01-B × B02)，解锁第三幕",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "name": "第三幕逻辑击穿成功 (W04-B × B04)，解锁第四幕",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "name": "第四幕终极击穿完成并成功签署公诉结局 [A]",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "name": "跨会话刷新后四幕进度与终局裁决完整保留 (localStorage)",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "name": "竖屏 (390x844) 根页面零滚动条",
+      "detail": "scroll=390x844, client=390x844"
+    },
+    {
+      "ok": true,
+      "name": "控制台 0 报错",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "name": "运行时 0 未捕获异常",
+      "detail": ""
+    }
+  ]
+}
