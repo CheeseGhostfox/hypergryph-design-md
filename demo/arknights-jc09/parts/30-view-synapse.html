@@ -75,42 +75,52 @@
                 </div>
               </div>
 
-              <!-- 17-Second Neural Waveform Oscilloscope & 5 Time Nodes -->
-              <div class="timeline-oscilloscope">
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                  <span style="font-family:var(--f-tech);font-size:var(--fs-label);color:var(--c-currency-blue);" id="osc-status-title">
-                    WAVEFORM // 17.0s NEURAL ENVELOPE (点击上方七态开关匹配配方以解开深层残响)
-                  </span>
-                  <span class="rarity-pill" id="osc-match-badge" style="background:var(--c-panel);color:var(--c-ink);">匹配度 25%</span>
-                </div>
-
-                <!-- Procedural White-Mask Oscilloscope SVG Tinted at Runtime -->
-                <svg id="synapse-wave-svg" viewBox="0 0 760 88" style="width:100%;height:84px;">
-                  <line x1="0" y1="44" x2="760" y2="44" stroke="#434343" stroke-width="1" stroke-dasharray="4 4" />
-                  <path id="wave-path-surface" class="ui-color-graphic tint-primary" fill="none" stroke-width="2"
-                    d="M 0 44 Q 40 12 80 44 T 160 44 T 240 44 T 320 44 T 400 44 T 480 44 T 560 44 T 640 44 T 760 44" />
-                  <path id="wave-path-deep" class="ui-color-graphic tint-yellow" fill="none" stroke-width="2" stroke-dasharray="5 3"
-                    d="M 0 44 C 70 78 130 10 210 56 C 290 80 350 8 430 44 C 510 82 610 14 760 44" />
-                </svg>
-
-                <!-- 5 Time Slice Nodes (T-17.0s to T-00.0s) -->
-                <div class="time-nodes-bar" id="time-nodes-bar">
-                  <button type="button" class="btn-compact is-active" data-time-node="0">T-17.0s 制动抱死</button>
-                  <button type="button" class="btn-compact" data-time-node="1">T-12.4s 车门落锁</button>
-                  <button type="button" class="btn-compact" data-time-node="2">T-08.8s 440Hz磁脉冲</button>
-                  <button type="button" class="btn-compact" data-time-node="3">T-04.2s 覆写广播</button>
-                  <button type="button" class="btn-compact" data-time-node="4">T-00.0s 爆炸脱钩</button>
-                </div>
-
-                <!-- Decrypted Deep Memory Readout + Direct Slot Load -->
-                <div style="display:flex;justify-content:space-between;align-items:center;gap:var(--s-xs);padding-top:6px;border-top:1px solid var(--c-surface-4);">
-                  <div style="font-size:var(--fs-body-sm);color:var(--c-ink-light-2);flex:1;" id="synapse-readout-text">
-                    <strong>[T-17.0s 切片摘要]</strong> 列车早在引桥段即已完成物理液压抱死，车体完全静止，与“全速冲出断桥”的表层记忆完全相悖。
+              <!-- 17-Second Neural Waveform Oscilloscope & 5 Time Nodes + Target Portrait Preview -->
+              <div class="timeline-oscilloscope" style="display:grid;grid-template-columns:122px 1fr;gap:var(--s-xs);align-items:stretch;">
+                <div style="position:relative;border:1px solid var(--c-surface-5);border-radius:var(--r-slice-sm);overflow:hidden;background:var(--c-panel-deep);display:flex;flex-direction:column;">
+                  <svg id="synapse-portrait-svg" viewBox="0 0 510 680" preserveAspectRatio="xMidYMin slice" style="width:100%;flex:1;min-height:0;display:block;" aria-label="破译对象立绘"></svg>
+                  <div style="padding:3px 6px;background:var(--c-canvas);border-top:1px solid var(--c-surface-4);font-family:var(--f-tech);font-size:10px;color:var(--c-brand-yellow);display:flex;justify-content:space-between;">
+                    <span id="synapse-portrait-code">W05 // 顾言</span>
+                    <span id="synapse-portrait-layer">SURFACE</span>
                   </div>
-                  <div style="display:flex;gap:var(--s-xxs);">
-                    <button type="button" class="btn btn-confirm" style="height:32px;font-size:var(--fs-body-sm);padding:0 12px;" id="btn-unlock-deep">
-                      <span>执行深层剥离并查阅证词</span>
-                    </button>
+                </div>
+
+                <div style="display:flex;flex-direction:column;justify-content:space-between;min-width:0;">
+                  <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;">
+                    <span style="font-family:var(--f-tech);font-size:var(--fs-label);color:var(--c-currency-blue);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" id="osc-status-title">
+                      WAVEFORM // 17.0s NEURAL ENVELOPE (点击上方七态开关匹配配方以解开深层残响)
+                    </span>
+                    <span class="rarity-pill" id="osc-match-badge" style="background:var(--c-panel);color:var(--c-ink);">匹配度 25%</span>
+                  </div>
+
+                  <!-- Procedural White-Mask Oscilloscope SVG Tinted at Runtime -->
+                  <svg id="synapse-wave-svg" viewBox="0 0 760 88" style="width:100%;height:78px;">
+                    <line x1="0" y1="44" x2="760" y2="44" stroke="#434343" stroke-width="1" stroke-dasharray="4 4" />
+                    <path id="wave-path-surface" class="ui-color-graphic tint-primary" fill="none" stroke-width="2"
+                      d="M 0 44 Q 40 12 80 44 T 160 44 T 240 44 T 320 44 T 400 44 T 480 44 T 560 44 T 640 44 T 760 44" />
+                    <path id="wave-path-deep" class="ui-color-graphic tint-yellow" fill="none" stroke-width="2" stroke-dasharray="5 3"
+                      d="M 0 44 C 70 78 130 10 210 56 C 290 80 350 8 430 44 C 510 82 610 14 760 44" />
+                  </svg>
+
+                  <!-- 5 Time Slice Nodes (T-17.0s to T-00.0s) -->
+                  <div class="time-nodes-bar" id="time-nodes-bar">
+                    <button type="button" class="btn-compact is-active" data-time-node="0">T-17.0s 制动抱死</button>
+                    <button type="button" class="btn-compact" data-time-node="1">T-12.4s 车门落锁</button>
+                    <button type="button" class="btn-compact" data-time-node="2">T-08.8s 440Hz磁脉冲</button>
+                    <button type="button" class="btn-compact" data-time-node="3">T-04.2s 覆写广播</button>
+                    <button type="button" class="btn-compact" data-time-node="4">T-00.0s 爆炸脱钩</button>
+                  </div>
+
+                  <!-- Decrypted Deep Memory Readout + Direct Slot Load -->
+                  <div style="display:flex;justify-content:space-between;align-items:center;gap:var(--s-xs);padding-top:6px;border-top:1px solid var(--c-surface-4);">
+                    <div style="font-size:var(--fs-body-sm);color:var(--c-ink-light-2);flex:1;min-width:0;" id="synapse-readout-text">
+                      <strong>[T-17.0s 切片摘要]</strong> 列车早在引桥段即已完成物理液压抱死，车体完全静止，与“全速冲出断桥”的表层记忆完全相悖。
+                    </div>
+                    <div style="display:flex;gap:var(--s-xxs);flex-shrink:0;">
+                      <button type="button" class="btn btn-confirm" style="height:32px;font-size:var(--fs-body-sm);padding:0 12px;" id="btn-unlock-deep">
+                        <span>执行深层剥离并查阅证词</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

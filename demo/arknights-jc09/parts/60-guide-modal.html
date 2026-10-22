@@ -1,0 +1,170 @@
+    <!-- ====================================================================
+         60-guide-modal.html
+         Interactive 4-Step Gameplay Guide & Tactical Briefing Modal Overlay
+         ==================================================================== -->
+    <div class="guide-modal-backdrop" id="guide-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="guide-modal-title">
+      <div class="guide-modal-dialog ak-panel offset-plate">
+        <div class="view-header" style="border-left-color:var(--c-brand-yellow);">
+          <div class="view-header-title">
+            <span class="view-header-en" id="guide-modal-title">00 // TACTICAL BRIEFING & GAMEPLAY GUIDE</span>
+            <span class="view-header-zh">寒鸦审讯室：第 09 号记忆取证台 · 四步核心操作指引</span>
+          </div>
+          <button type="button" class="btn-compact" id="btn-close-guide-top">
+            <span>关闭指引 [ESC]</span>
+          </button>
+        </div>
+
+        <!-- Brief Story Premise Banner -->
+        <div style="background-color:var(--c-panel-deep);border-left:4px solid var(--c-primary);padding:8px 12px;font-size:var(--fs-body-sm);color:var(--c-ink-light-2);line-height:1.5;">
+          <strong>【案情简报】</strong>跨江专线 03 车厢发生离奇坠桥事故，车内 <strong>6 位幸存少女（1★–6★ 神经覆写阶位）</strong>脑机中坠桥前 <code>17.0 秒</code> 的原始记忆全数缺失，只剩下口径高度一致的“列车全速冲出断桥”表层供词。你作为第 09 号记忆取证台操作员，需通过以下<strong>四步取证循环</strong>逐一击穿四幕伪证锁，揪出坐在 03-F 座的幕后真凶。
+        </div>
+
+        <!-- 4-Step Interactive Cards Grid -->
+        <div class="guide-steps-grid">
+          <div class="guide-step-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span class="rarity-pill" style="background:var(--c-primary);color:var(--c-on-primary);">STEP 01 // 查阅供词</span>
+              <span style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-currency-blue);">VIEW 01 [快捷键 1]</span>
+            </div>
+            <div style="font-size:var(--fs-row-title);font-weight:700;color:var(--c-ink);margin:4px 0;">点选六阶角色卡并装填供述</div>
+            <p style="font-size:var(--fs-body-sm);color:var(--c-ink-light-1);line-height:1.45;flex:1;">
+              在【01 幸存者卡池】点击任意角色卡查阅其二次元构成主义立绘与供词。发现可疑供述后，点击右下角 <strong>「装填入槽 [A]」</strong> 或 <strong>「[B]」</strong>。
+            </p>
+            <button type="button" class="btn-compact" data-guide-jump="witness">
+              <span>前往 01 幸存者卡池 →</span>
+            </button>
+          </div>
+
+          <div class="guide-step-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span class="rarity-pill" style="background:var(--c-brand-yellow);color:var(--c-canvas);">STEP 02 // 七态破译</span>
+              <span style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-brand-yellow);">VIEW 02 [快捷键 2]</span>
+            </div>
+            <div style="font-size:var(--fs-row-title);font-weight:700;color:var(--c-ink);margin:4px 0;">拨动七态开关剥离假记忆</div>
+            <p style="font-size:var(--fs-body-sm);color:var(--c-ink-light-1);line-height:1.45;flex:1;">
+              角色的深层真话被加密锁死。前往【02 17秒神经切片台】，按提示拨动 4 组<strong>七态滤波开关</strong>（或直接点击右上角<strong>「校准目标特征码」</strong>），再点击<strong>「执行深层剥离」</strong>即可解锁该角色的 <code>LAYER B 深层残响</code> 与觉醒立绘！
+            </p>
+            <button type="button" class="btn-compact" data-guide-jump="synapse">
+              <span>前往 02 神经切片台 →</span>
+            </button>
+          </div>
+
+          <div class="guide-step-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span class="rarity-pill" style="background:var(--c-accent-green);color:var(--c-ink);">STEP 03 // 检索物证</span>
+              <span style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-accent-green);">VIEW 03 [快捷键 3]</span>
+            </div>
+            <div style="font-size:var(--fs-row-title);font-weight:700;color:var(--c-ink);margin:4px 0;">调取不可篡改的机械黑匣</div>
+            <p style="font-size:var(--fs-body-sm);color:var(--c-ink-light-1);line-height:1.45;flex:1;">
+              人脑记忆能被无线覆写，但机械磨损与硬件签名不会说谎。在【03 黑匣与物证库】检视 6 件打捞物证（B-01 至 B-06），将其装填入另一个指证槽与证词对撞。
+            </p>
+            <button type="button" class="btn-compact" data-guide-jump="blackbox">
+              <span>前往 03 黑匣物证库 →</span>
+            </button>
+          </div>
+
+          <div class="guide-step-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span class="rarity-pill" style="background:var(--c-confirm-gold);color:var(--c-canvas);">STEP 04 // 逻辑击穿</span>
+              <span style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-confirm-gold);">RIGHT RAIL & VIEW 04</span>
+            </div>
+            <div style="font-size:var(--fs-row-title);font-weight:700;color:var(--c-ink);margin:4px 0;">双槽比对解锁四幕真相</div>
+            <p style="font-size:var(--fs-body-sm);color:var(--c-ink-light-1);line-height:1.45;flex:1;">
+              当右侧指证器的 <code>SLOT [A]</code> 与 <code>SLOT [B]</code> 装填了互相矛盾的两项证据后，点击右下角金色按钮<strong>「执行逻辑击穿 // VERIFY」</strong>即可解锁下一幕！四幕全破后在【04 公诉台】签署大结局。
+            </p>
+            <button type="button" class="btn-compact" data-guide-jump="demo-act1">
+              <span>一键自动装填第一幕示范 →</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 6-Character Visual Dossier Strip inside Gameplay Guide -->
+        <div class="guide-roster-strip" aria-label="六名幸存者立绘与破译速览">
+          <button type="button" class="guide-char-chip" data-guide-witness="W01">
+            <svg class="guide-char-avatar" viewBox="105 55 300 320" data-mini-portrait="W01" aria-hidden="true"></svg>
+            <div class="guide-char-meta">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-weight:700;color:var(--c-ink);font-size:var(--fs-body-sm);">沈听澜</span>
+                <span class="star-row" style="font-size:10px;">★</span>
+              </div>
+              <div style="font-size:10px;color:var(--c-ink-disabled);">03-A · 盲眼调音少女</div>
+              <div style="font-size:10px;color:var(--c-currency-blue);white-space:nowrap;">第二幕 · 骨传导原声</div>
+            </div>
+          </button>
+
+          <button type="button" class="guide-char-chip" data-guide-witness="W02">
+            <svg class="guide-char-avatar" viewBox="105 55 300 320" data-mini-portrait="W02" aria-hidden="true"></svg>
+            <div class="guide-char-meta">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-weight:700;color:var(--c-ink);font-size:var(--fs-body-sm);">周野</span>
+                <span class="star-row" style="font-size:10px;">★★</span>
+              </div>
+              <div style="font-size:10px;color:var(--c-ink-disabled);">03-B · 见习乘务少女</div>
+              <div style="font-size:10px;color:var(--c-rarity-2);">受迫反锁气密门</div>
+            </div>
+          </button>
+
+          <button type="button" class="guide-char-chip" data-guide-witness="W03">
+            <svg class="guide-char-avatar" viewBox="105 55 300 320" data-mini-portrait="W03" aria-hidden="true"></svg>
+            <div class="guide-char-meta">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-weight:700;color:var(--c-ink);font-size:var(--fs-body-sm);">陆峥</span>
+                <span class="star-row" style="font-size:10px;">★★★</span>
+              </div>
+              <div style="font-size:10px;color:var(--c-ink-disabled);">03-C · 列车战术安全员</div>
+              <div style="font-size:10px;color:var(--c-rarity-3);">引爆车钩分离螺栓</div>
+            </div>
+          </button>
+
+          <button type="button" class="guide-char-chip" data-guide-witness="W04">
+            <svg class="guide-char-avatar" viewBox="105 55 300 320" data-mini-portrait="W04" aria-hidden="true"></svg>
+            <div class="guide-char-meta">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-weight:700;color:var(--c-ink);font-size:var(--fs-body-sm);">温莎·林</span>
+                <span class="star-row" style="font-size:10px;">★★★★</span>
+              </div>
+              <div style="font-size:10px;color:var(--c-ink-disabled);">03-D · 神经外科女医</div>
+              <div style="font-size:10px;color:var(--c-rarity-4);white-space:nowrap;">第三幕 · 磁脉冲执刀</div>
+            </div>
+          </button>
+
+          <button type="button" class="guide-char-chip" data-guide-witness="W05">
+            <svg class="guide-char-avatar" viewBox="105 55 300 320" data-mini-portrait="W05" aria-hidden="true"></svg>
+            <div class="guide-char-meta">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-weight:700;color:var(--c-ink);font-size:var(--fs-body-sm);">顾言</span>
+                <span class="star-row" style="font-size:10px;">★★★★★</span>
+              </div>
+              <div style="font-size:10px;color:var(--c-ink-disabled);">03-E · 智驾总架构师</div>
+              <div style="font-size:10px;color:var(--c-rarity-5);white-space:nowrap;">第一幕 · 被迫顶罪</div>
+            </div>
+          </button>
+
+          <button type="button" class="guide-char-chip" data-guide-witness="W06">
+            <svg class="guide-char-avatar" viewBox="105 55 300 320" data-mini-portrait="W06" aria-hidden="true"></svg>
+            <div class="guide-char-meta">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-weight:700;color:var(--c-ink);font-size:var(--fs-body-sm);">严律</span>
+                <span class="star-row" style="font-size:10px;">★★★★★★</span>
+              </div>
+              <div style="font-size:10px;color:var(--c-ink-disabled);">03-F · 最高司法督察</div>
+              <div style="font-size:10px;color:var(--c-rarity-6);white-space:nowrap;">第四幕 · 09号台密钥</div>
+            </div>
+          </button>
+        </div>
+
+        <!-- Four-Act Quick Walkthrough Cheat Sheet -->
+        <div style="background-color:var(--c-surface-3);border:1px solid var(--c-surface-5);padding:8px 12px;display:flex;justify-content:space-between;align-items:center;gap:var(--s-sm);flex-wrap:wrap;">
+          <div style="font-size:var(--fs-caption);color:var(--c-ink-light-1);line-height:1.5;">
+            <strong style="color:var(--c-brand-yellow);">【四幕破局速查】</strong>
+            <strong>第一幕：</strong><code>W05-A 顾言表层</code> × <code>B-01 液压抱死曲线</code> ｜
+            <strong>第二幕：</strong>先在 02 台破译 <code>1★ 沈听澜</code> → <code>W01-B 沈听澜深层</code> × <code>B-02 气密门反锁</code> ｜
+            <strong>第三幕：</strong>在 02 台破译 <code>4★ 温莎·林</code> → <code>W04-B 温莎深层</code> × <code>B-04 覆写仪MAC签名</code> ｜
+            <strong>第四幕：</strong>在 02 台破译 <code>6★ 严律</code> → <code>W06-B 严律深层</code> × <code>B-06 09号台根密钥</code>
+          </div>
+          <button type="button" class="btn btn-confirm" style="height:38px;font-size:var(--fs-body-sm);padding:0 18px;" id="btn-close-guide-main">
+            <span>开始审讯取证 // ENTER CONSOLE</span>
+          </button>
+        </div>
+      </div>
+    </div>

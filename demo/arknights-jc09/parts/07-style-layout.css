@@ -96,15 +96,19 @@
   color: var(--c-ink-light-1);
   border-left: 2px solid var(--c-brand-yellow);
   padding-left: var(--s-xs);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .top-hud-acts {
   display: flex;
   align-items: center;
   gap: var(--s-xxs);
+  flex-shrink: 0;
 }
 .act-pill {
   height: var(--s-row); /* 30px */
-  padding: 0 var(--s-xs);
+  padding: 0 7px;
   border-radius: var(--r-xs);
   background-color: var(--c-surface-3);
   color: var(--c-ink-muted);
@@ -115,6 +119,7 @@
   gap: var(--s-xxs);
   border: 1px solid var(--c-surface-4);
   cursor: pointer;
+  white-space: nowrap;
 }
 .act-pill.is-unlocked {
   background-color: var(--c-panel);
@@ -131,6 +136,11 @@
   display: flex;
   align-items: center;
   gap: var(--s-xs);
+  flex-shrink: 0;
+}
+.top-hud-controls .state-chip,
+.top-hud-controls .btn-compact {
+  white-space: nowrap;
 }
 
 /* ---- Core 3-Column Deck (Left Nav Rail · Center Active View · Right Contradiction Lock) ---- */
@@ -271,7 +281,7 @@
 /* ---- View 01: Witness Deck (6-Card Roster + Active Dossier Inspector) ---- */
 .witness-layout {
   display: grid;
-  grid-template-rows: 130px 1fr;
+  grid-template-rows: 132px 1fr;
   gap: var(--s-xs);
   height: 100%;
   min-height: 0;
@@ -280,11 +290,37 @@
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: var(--s-xs);
-  height: 130px;
+  height: 132px;
+}
+.card-mini-avatar {
+  position: absolute;
+  right: 2px;
+  bottom: 6px;
+  width: 48px;
+  height: 70px;
+  pointer-events: none;
+  opacity: 0.96;
+  border-radius: var(--r-slice-sm);
+  clip-path: polygon(14% 0, 100% 0, 100% 100%, 0 100%);
+  z-index: 1;
+}
+.witness-card {
+  padding: 6px 7px !important;
+}
+.witness-card > div:nth-of-type(2),
+.witness-card > div:nth-of-type(3) {
+  max-width: calc(100% - 46px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.witness-card > div:nth-of-type(2) > div:first-child {
+  font-size: var(--fs-body) !important;
+  line-height: 1.25;
 }
 .witness-detail-box {
   display: grid;
-  grid-template-columns: 200px 1fr;
+  grid-template-columns: 242px 1fr;
   gap: var(--s-sm);
   height: 100%;
   min-height: 0;
@@ -295,11 +331,27 @@
   background-color: var(--c-canvas);
   border: 1px solid var(--c-surface-5);
   border-radius: var(--r-slice-sm);
-  padding: var(--s-xs);
+  padding: 6px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
+}
+.portrait-stage-frame {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  min-height: 175px;
+  border: 1px solid var(--c-hairline);
+  border-radius: var(--r-slice-sm);
+  overflow: hidden;
+  background-color: var(--c-ink-light-3);
+  margin: 4px 0;
+}
+#w-portrait-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 .witness-statement-well {
   display: flex;
@@ -359,7 +411,12 @@
 .time-nodes-bar {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: var(--s-xs);
+  gap: 4px;
+}
+.time-nodes-bar .btn-compact {
+  padding: 0 4px;
+  font-size: var(--fs-caption);
+  justify-content: center;
 }
 
 /* ---- View 03: Train Blackbox & Physical Evidence Vault ---- */
@@ -448,6 +505,85 @@
   gap: var(--s-sm);
 }
 
+/* ---- Gameplay Guide Modal Overlay (00 // TACTICAL BRIEFING) ---- */
+.guide-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.82);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: var(--s-sm);
+}
+.guide-modal-backdrop.is-open {
+  display: flex;
+}
+.guide-modal-dialog {
+  width: min(1060px, 95vw);
+  max-height: 92vh;
+  background-color: var(--c-panel);
+  border: 1px solid var(--c-brand-yellow);
+  border-radius: var(--r-slice-md);
+  padding: var(--s-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-xs);
+  overflow: hidden;
+}
+.guide-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--s-xs);
+}
+.guide-step-card {
+  background-color: var(--c-panel-deep);
+  border: 1px solid var(--c-surface-5);
+  border-top: 3px solid var(--c-primary);
+  border-radius: var(--r-slice-sm);
+  padding: var(--s-xs);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 6px;
+}
+.guide-roster-strip {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+}
+.guide-char-chip {
+  background-color: var(--c-panel-deep);
+  border: 1px solid var(--c-surface-5);
+  border-radius: var(--r-slice-sm);
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+.guide-char-chip:active {
+  border-color: var(--c-brand-yellow);
+  background-color: var(--c-surface-3);
+}
+.guide-char-avatar {
+  width: 44px;
+  height: 52px;
+  border-radius: var(--r-xs);
+  border: 1px solid var(--c-surface-5);
+  flex-shrink: 0;
+  display: block;
+}
+.guide-char-meta {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
 /* ---- Portrait Orientation & Compact Viewport Adaptation (Zero Root Scroll) ---- */
 @media (orientation: portrait), (max-width: 1024px) {
   .jc09-stage {
@@ -459,20 +595,25 @@
   }
   .top-hud {
     height: 36px;
-    padding: 0 8px;
+    padding: 0 6px;
+    gap: 4px;
   }
   .top-hud-code {
-    font-size: var(--fs-row-title);
+    font-size: var(--fs-body);
+    white-space: nowrap;
   }
   .top-hud-title,
   .top-hud-acts {
     display: none;
   }
+  .top-hud-controls {
+    gap: 3px;
+  }
   .top-hud-controls .state-chip,
   .top-hud-controls .btn-compact {
-    height: 24px;
-    padding: 0 6px;
-    font-size: var(--fs-caption);
+    height: 22px;
+    padding: 0 4px;
+    font-size: 10px;
   }
   .deck-grid {
     display: contents;
@@ -502,7 +643,7 @@
     display: none;
   }
   .nav-tab-zh {
-    font-size: var(--fs-caption);
+    font-size: 10px;
     white-space: nowrap;
   }
   .nav-rail-telemetry {
@@ -534,16 +675,60 @@
     gap: 4px;
   }
   .witness-card {
-    padding: 4px 6px;
+    padding: 3px 5px !important;
   }
-  .witness-card > div:last-child {
+  .witness-card > div:nth-of-type(2) > div:last-child,
+  .witness-card > div:nth-of-type(3) {
     display: none;
+  }
+  .witness-card > div:nth-of-type(2) {
+    margin: 0 !important;
+    max-width: calc(100% - 36px);
+  }
+  .witness-card > div:nth-of-type(2) > div:first-child {
+    font-size: var(--fs-body-sm) !important;
+    line-height: 1.2;
+  }
+  .card-mini-avatar {
+    width: 34px;
+    height: 36px;
+    right: 2px;
+    bottom: 5px;
+    opacity: 0.96;
+  }
+  .guide-steps-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .guide-roster-strip {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+  }
+  .guide-char-avatar {
+    width: 32px;
+    height: 38px;
+  }
+  .timeline-oscilloscope {
+    grid-template-columns: 1fr !important;
+  }
+  .timeline-oscilloscope > div:first-child {
+    display: none !important;
   }
   .witness-detail-box {
-    grid-template-columns: 1fr;
+    grid-template-columns: 118px 1fr;
+    gap: 6px;
   }
   .witness-portrait-well {
+    padding: 4px;
+    justify-content: space-between;
+    gap: 4px;
+  }
+  .witness-portrait-well .telemetry-row:first-child {
     display: none;
+  }
+  .portrait-stage-frame {
+    flex: 1;
+    min-height: 140px;
+    margin: 0;
   }
   .statement-body-card {
     padding: 8px;
@@ -621,12 +806,12 @@
     display: none;
   }
   #btn-execute-break {
-    width: 108px !important;
+    width: 96px !important;
     height: 100%;
-    padding: 0 8px;
-    font-size: var(--fs-body-sm);
+    padding: 0 6px;
+    font-size: var(--fs-caption);
     white-space: normal;
-    line-height: 1.2;
+    line-height: 1.25;
   }
   .bottom-bar {
     display: none;

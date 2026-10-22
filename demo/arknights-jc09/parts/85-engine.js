@@ -167,10 +167,27 @@
     const starBadge = document.getElementById('w-star-badge');
     if (starBadge) starBadge.textContent = w.stars;
 
-    const portraitGraphic = document.getElementById('w-portrait-graphic');
-    if (portraitGraphic) {
-      portraitGraphic.setAttribute('class', 'ui-color-graphic ' + w.tintClass);
-      portraitGraphic.innerHTML = w.portraitSvg;
+    const isDeepVisual = state.witnessLayer === 'deep' && isDeepUnlocked;
+    const portraitSvgEl = document.getElementById('w-portrait-svg');
+    if (portraitSvgEl && window.JC09_PORTRAITS) {
+      const mainKey = w.id + ':' + (isDeepVisual ? '1' : '0');
+      if (portraitSvgEl.getAttribute('data-cache') !== mainKey) {
+        portraitSvgEl.setAttribute('data-cache', mainKey);
+        portraitSvgEl.innerHTML = window.JC09_PORTRAITS.getPortraitSvg(w.id, isDeepVisual);
+      }
+    }
+
+    // Populate 6 top roster mini bust avatars
+    if (window.JC09_PORTRAITS) {
+      document.querySelectorAll('[data-mini-portrait]').forEach(function (svgEl) {
+        const wid = svgEl.getAttribute('data-mini-portrait');
+        const unlocked = !!state.unlockedDeep[wid];
+        const miniKey = wid + ':' + (unlocked ? '1' : '0');
+        if (svgEl.getAttribute('data-cache') !== miniKey) {
+          svgEl.setAttribute('data-cache', miniKey);
+          svgEl.innerHTML = window.JC09_PORTRAITS.getPortraitSvg(wid, unlocked);
+        }
+      });
     }
 
     const tierText = document.getElementById('w-tier-text');
@@ -261,6 +278,22 @@
     const matched = computeFilterMatch(w);
     const pct = Math.round((matched / 4) * 100);
     const isUnlocked = !!state.unlockedDeep[w.id];
+
+    const synPortraitEl = document.getElementById('synapse-portrait-svg');
+    if (synPortraitEl && window.JC09_PORTRAITS) {
+      const synKey = w.id + ':' + ((matched === 4 || isUnlocked) ? '1' : '0');
+      if (synPortraitEl.getAttribute('data-cache') !== synKey) {
+        synPortraitEl.setAttribute('data-cache', synKey);
+        synPortraitEl.innerHTML = window.JC09_PORTRAITS.getPortraitSvg(w.id, matched === 4 || isUnlocked);
+      }
+    }
+    const synCodeEl = document.getElementById('synapse-portrait-code');
+    if (synCodeEl) synCodeEl.textContent = w.id + ' // ' + w.name;
+    const synLayerEl = document.getElementById('synapse-portrait-layer');
+    if (synLayerEl) {
+      synLayerEl.textContent = (matched === 4 || isUnlocked) ? 'DEEP SYNC' : 'LOCKED';
+      synLayerEl.style.color = (matched === 4 || isUnlocked) ? 'var(--c-accent-green)' : 'var(--c-brand-yellow)';
+    }
 
     const matchBadge = document.getElementById('osc-match-badge');
     if (matchBadge) {
@@ -444,13 +477,40 @@
       progFill.style.width = pct + '%';
     }
 
-    // Right Contradiction Lock Goal
+    // Right Contradiction Lock Goal & Live Next-Action Tracker
     const actObj = window.JC09_ACTS[state.currentAct] || window.JC09_ACTS[1];
     const goalEl = document.getElementById('inspector-act-goal');
     if (goalEl) {
       goalEl.textContent = state.completedActs.length >= 4
         ? '全部四幕伪证已击穿！请前往【04 审讯卷宗与公诉】签署终局裁决。'
         : actObj.goal;
+    }
+
+    const nextStepEl = document.getElementById('live-next-step');
+    if (nextStepEl) {
+      let stepHint = '';
+      if (state.completedActs.length >= 4) {
+        stepHint = state.verdict
+          ? '<strong>已结案：</strong>终局裁决已生效，可随时切换视图查阅全卷宗。'
+          : '<strong>下一步指引：</strong>点击左栏【04 审讯卷宗与公诉】，在右侧选择三项终局裁决之一。';
+      } else if (state.slotA && state.slotB) {
+        stepHint = '<strong>下一步指引：</strong>双槽已就绪！请点击下方金色按钮「执行逻辑击穿 // VERIFY」。';
+      } else if (state.currentAct === 1) {
+        stepHint = '<strong>下一步指引：</strong>在【01 卡池】将 <code>5★ 顾言表层</code> 装入槽 [A]，再去【03 物证库】将 <code>B-01 液压曲线</code> 装入槽 [B]。';
+      } else if (state.currentAct === 2) {
+        stepHint = state.unlockedDeep.W01
+          ? '<strong>下一步指引：</strong>将【01 卡池】<code>1★ 沈听澜深层(W01-B)</code> 装入槽 [A]，与【03 物证库】<code>B-02 气密门日志</code> 对撞！'
+          : '<strong>下一步指引：</strong>先去【02 切片台】点选 <code>1★ 沈听澜</code>，点击「校准目标特征码」与「执行深层剥离」。';
+      } else if (state.currentAct === 3) {
+        stepHint = state.unlockedDeep.W04
+          ? '<strong>下一步指引：</strong>将【01 卡池】<code>4★ 温莎·林深层(W04-B)</code> 装入槽 [A]，与【03 物证库】<code>B-04 覆写仪签名</code> 对撞！'
+          : '<strong>下一步指引：</strong>先去【02 切片台】点选 <code>4★ 温莎·林</code>，点击「校准目标特征码」与「执行深层剥离」。';
+      } else {
+        stepHint = state.unlockedDeep.W06
+          ? '<strong>下一步指引：</strong>将【01 卡池】<code>6★ 严律深层(W06-B)</code> 装入槽 [A]，与【03 物证库】<code>B-06 09号台根密钥</code> 对撞！'
+          : '<strong>下一步指引：</strong>先去【02 切片台】点选 <code>6★ 严律</code>，点击「校准目标特征码」与「执行深层剥离」。';
+      }
+      nextStepEl.innerHTML = stepHint;
     }
 
     // Slot A & Slot B
@@ -606,6 +666,8 @@
       btnReset.addEventListener('click', function () {
         try { localStorage.removeItem(STORAGE_KEY); } catch (_) {}
         state = JSON.parse(JSON.stringify(defaultState));
+        const gm = document.getElementById('guide-modal-overlay');
+        if (gm) gm.classList.remove('is-open');
         setAmbientHum(false);
         renderAll();
         switchView('witness');
@@ -837,16 +899,77 @@
       });
     }
 
-    // 9. Keyboard Shortcuts (1-4 View Switch, ArrowLeft/Right Witness Cycle, Space Verify)
+    // 9. Gameplay Guide Modal Controls
+    const guideModal = document.getElementById('guide-modal-overlay');
+    function openGuideModal() {
+      if (guideModal) guideModal.classList.add('is-open');
+      sfxClick();
+      logTicker('已打开四步游玩指引与通关速查表');
+    }
+    function closeGuideModal() {
+      if (guideModal) guideModal.classList.remove('is-open');
+      try { localStorage.setItem('jc09:guide:seen', '1'); } catch (_) {}
+      sfxClick();
+    }
+
+    const btnOpenGuide = document.getElementById('btn-open-guide');
+    if (btnOpenGuide) btnOpenGuide.addEventListener('click', openGuideModal);
+
+    const btnCloseTop = document.getElementById('btn-close-guide-top');
+    if (btnCloseTop) btnCloseTop.addEventListener('click', closeGuideModal);
+
+    const btnCloseMain = document.getElementById('btn-close-guide-main');
+    if (btnCloseMain) btnCloseMain.addEventListener('click', closeGuideModal);
+
+    if (guideModal) {
+      guideModal.addEventListener('click', function (ev) {
+        if (ev.target === guideModal) closeGuideModal();
+      });
+    }
+
+    document.querySelectorAll('[data-guide-jump]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        const target = btn.getAttribute('data-guide-jump');
+        closeGuideModal();
+        if (target === 'demo-act1') {
+          const w5 = window.JC09_WITNESSES.W05;
+          const b1 = window.JC09_EXHIBITS.B01;
+          loadIntoSlot('A', { id: 'W05-A', title: w5.surface.title, summary: w5.surface.summary });
+          loadIntoSlot('B', { id: 'B01', title: b1.title, summary: b1.summary });
+          switchView('witness');
+          logTicker('已为你自动装填第一幕矛盾组合 [W05-A × B01]，请点击右下角「执行逻辑击穿」！');
+        } else {
+          switchView(target);
+        }
+      });
+    });
+
+    document.querySelectorAll('[data-guide-witness]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        const wid = btn.getAttribute('data-guide-witness');
+        if (!wid) return;
+        state.selectedWitness = wid;
+        state.synapseTarget = wid;
+        saveState();
+        closeGuideModal();
+        switchView('witness');
+        renderAll();
+        logTicker('已从指引速览切换至幸存者 // ' + wid);
+      });
+    });
+
+    // 10. Keyboard Shortcuts (1-4 View Switch, ArrowLeft/Right Witness Cycle, ? Guide, Escape Close)
     window.addEventListener('keydown', function (ev) {
       if (ev.ctrlKey || ev.altKey || ev.metaKey) return;
       const tag = (ev.target && ev.target.tagName) ? ev.target.tagName.toLowerCase() : '';
       if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
 
-      if (ev.key === '1') { switchView('witness'); }
-      else if (ev.key === '2') { switchView('synapse'); }
-      else if (ev.key === '3') { switchView('blackbox'); }
-      else if (ev.key === '4') { switchView('verdict'); }
+      if (ev.key === 'Escape') { closeGuideModal(); }
+      else if (ev.key === '?' || ev.key === 'h' || ev.key === 'H') { openGuideModal(); }
+      else if (ev.key === '1') { closeGuideModal(); switchView('witness'); }
+      else if (ev.key === '2') { closeGuideModal(); switchView('synapse'); }
+      else if (ev.key === '3') { closeGuideModal(); switchView('blackbox'); }
+      else if (ev.key === '4') { closeGuideModal(); switchView('verdict'); }
       else if (ev.key === 'ArrowRight' || ev.key === 'ArrowLeft') {
         const ids = ['W01', 'W02', 'W03', 'W04', 'W05', 'W06'];
         const curIdx = ids.indexOf(state.selectedWitness);
@@ -865,4 +988,10 @@
   bindEvents();
   renderAll();
   switchView(state.activeView || 'witness');
+  try {
+    if (!localStorage.getItem('jc09:guide:seen') && state.completedActs.length === 0) {
+      const gm = document.getElementById('guide-modal-overlay');
+      if (gm) gm.classList.add('is-open');
+    }
+  } catch (_) {}
 })();

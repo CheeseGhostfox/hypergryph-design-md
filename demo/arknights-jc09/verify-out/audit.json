@@ -1,6 +1,6 @@
 {
   "ok": true,
-  "timestamp": "2026-10-22T15:22:25.498Z",
+  "timestamp": "2026-10-22T18:27:25.435Z",
   "consoleErrors": [],
   "pageExceptions": [],
   "failedRequests": [],
@@ -23,6 +23,16 @@
     {
       "ok": true,
       "name": "1★–6★ 全部卡片星标恒为黄色 #FEDC01",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "name": "6 位幸存少女立绘 (卡池缩略头像 × 6 + 左侧大幅半身立绘) 全部正常渲染",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "name": "四步游玩指引弹窗 (#guide-modal-overlay) 可正常呼出与关闭",
       "detail": ""
     },
     {
