@@ -48,79 +48,79 @@ colors:
 typography:
   display:
     fontFamily: Novecento Wide
-    fontSize: 100px
+    fontSize: 72px
     fontWeight: 700
     lineHeight: 1.00
     letterSpacing: -2px
   headline:
     fontFamily: Novecento Wide
-    fontSize: 50px
+    fontSize: 32px
     fontWeight: 600
     lineHeight: 1.00
     letterSpacing: 0
   card-title:
     fontFamily: Novecento Wide
-    fontSize: 40px
+    fontSize: 24px
     fontWeight: 400
     lineHeight: 1.00
     letterSpacing: 0
   title-cjk:
     fontFamily: Noto Sans S Chinese Medium
-    fontSize: 40px
+    fontSize: 24px
     fontWeight: 500
     lineHeight: 1.20
     letterSpacing: 0
   row-title:
     fontFamily: Noto Sans S Chinese Medium
-    fontSize: 30px
+    fontSize: 18px
     fontWeight: 500
     lineHeight: 1.20
     letterSpacing: 0
   body:
     fontFamily: Noto Sans S Chinese Medium
-    fontSize: 30px
+    fontSize: 16px
     fontWeight: 500
     lineHeight: 1.40
     letterSpacing: 0
   body-sm:
     fontFamily: Noto Sans S Chinese Medium
-    fontSize: 20px
+    fontSize: 13px
     fontWeight: 500
     lineHeight: 1.40
     letterSpacing: 0
   label:
     fontFamily: Bender
-    fontSize: 20px
+    fontSize: 13px
     fontWeight: 400
     lineHeight: 1.20
     letterSpacing: 0.5px
   numeric:
     fontFamily: Bender
-    fontSize: 30px
+    fontSize: 20px
     fontWeight: 400
     lineHeight: 1.00
     letterSpacing: 0.5px
   caption:
     fontFamily: Bender Light
-    fontSize: 16px
+    fontSize: 11px
     fontWeight: 300
     lineHeight: 1.20
     letterSpacing: 0.5px
   cjk-display:
     fontFamily: Source Han Sans CN Heavy
-    fontSize: 50px
+    fontSize: 32px
     fontWeight: 900
     lineHeight: 1.10
     letterSpacing: 0
   cjk-serif:
     fontFamily: FZYaSong H GBK
-    fontSize: 40px
+    fontSize: 22px
     fontWeight: 400
     lineHeight: 1.30
     letterSpacing: 0
   bitmap:
     fontFamily: AddWBitmap09
-    fontSize: 24px
+    fontSize: 14px
     fontWeight: 400
     lineHeight: 1.00
     letterSpacing: 0
@@ -145,6 +145,7 @@ spacing:
   md: 30px
   lg: 40px
   xl: 50px
+  row: 30px
   gutter: 50px
   screen: 1280px
   screen-h: 720px
@@ -347,15 +348,11 @@ components:
     height: 30px
   progress-track:
     backgroundColor: "{colors.surface-4}"
-    textColor: "{colors.ink}"
-    typography: "{typography.caption}"
     rounded: "{rounded.none}"
     padding: 0
     height: 10px
   progress-fill:
     backgroundColor: "{colors.brand-yellow}"
-    textColor: "{colors.canvas}"
-    typography: "{typography.caption}"
     rounded: "{rounded.none}"
     padding: 0
     height: 10px
@@ -376,8 +373,6 @@ components:
     height: 30px
   mask-white:
     backgroundColor: "{colors.ink-pure}"
-    textColor: "{colors.canvas}"
-    typography: "{typography.caption}"
     rounded: "{rounded.none}"
     padding: 0
   panel-ladder-2:
@@ -412,8 +407,6 @@ components:
     padding: 20px
   divider:
     backgroundColor: "{colors.hairline}"
-    textColor: "{colors.ink}"
-    typography: "{typography.caption}"
     rounded: "{rounded.none}"
     padding: 0
     height: 1px
@@ -443,8 +436,6 @@ components:
     padding: 0
   highlight-bar:
     backgroundColor: "{colors.brand-yellow-light}"
-    textColor: "{colors.canvas}"
-    typography: "{typography.caption}"
     rounded: "{rounded.none}"
     padding: 0
     height: 10px
@@ -609,27 +600,28 @@ The three working voices are **Novecento Wide + Bender + Noto Sans S Chinese**. 
 
 ### Hierarchy
 
-> **Sizes below are observed container heights**, measured from `text_*` and `label_*` GameObjects — not glyph point sizes. `Text.fontSize` is a serialized component payload and was not read. The scale is therefore an **interaction scale**, which is what a layout needs anyway; see Known Gaps.
+> **Container Box Height vs. Optical Glyph Size.** In Unity's serialized hierarchy, `text_*` and `label_*` GameObjects expose their **container `RectTransform` height** (30px in 649 instances, 40px, 50px, 100px), whereas `Text.fontSize` lives in an un-type-treed payload. A defining aesthetic signature of Arknights' operational UI is its **~0.55–0.65× glyph-to-box breathing ratio**: a 30px row container never sets 30px edge-to-edge glyphs — it sets **16px–18px** type with 6px–7px of top and bottom air. The YAML `typography` tokens specify the calibrated **optical glyph `fontSize`** so CSS consumers render the intended micro-tactical precision, while the table below pairs each optical size with its measured Unity container box height.
 
-| Token | Box height | Voice | Use |
-|---|---|---|---|
-| `{typography.display}` | 100px | Novecento Wide Bold | Screen-opening display |
-| `{typography.headline}` | 50px | Novecento Wide DemiBold | Section headline |
-| `{typography.headline}` @ CJK | 50px | Source Han Sans CN Heavy | CJK headline emphasis |
-| `{typography.title-cjk}` | 40px | Noto Sans S Chinese Medium | Panel title |
-| `{typography.card-title}` | 40px | Novecento Wide | Latin card title |
-| `{typography.body}` | 30px | Noto Sans S Chinese Medium | **Default text — 30px is the system's most common height (649×)** |
-| `{typography.numeric}` | 30px | Bender | Counters, currency, numbers |
-| `{typography.body-sm}` | 20px | Noto Sans S Chinese Medium | Dense lists, tags, secondary lines |
-| `{typography.label}` | 20px | Bender | Latin labels and hotkey prompts |
-| `{typography.caption}` | 16px | Bender Light | Footers, timestamps |
-| `{typography.bitmap}` | 24px | AddWBitmap09 | Pixel-exact micro text |
-| `{typography.cjk-serif}` | 40px | FZYaSong H GBK | Narrative, archive, story text |
+| Token | Optical Size (`fontSize`) | Container Box Height (`RectTransform`) | Voice | Use |
+|---|---|---|---|---|
+| `{typography.display}` | 72px | 100px | Novecento Wide Bold | Screen-opening display |
+| `{typography.headline}` | 32px | 50px | Novecento Wide DemiBold | Section headline |
+| `{typography.cjk-display}` | 32px | 50px | Source Han Sans CN Heavy | CJK headline emphasis |
+| `{typography.title-cjk}` | 24px | 40px | Noto Sans S Chinese Medium | Panel title |
+| `{typography.card-title}` | 24px | 40px | Novecento Wide | Latin card title |
+| `{typography.cjk-serif}` | 22px | 40px | FZYaSong H GBK | Narrative, archive, story text |
+| `{typography.numeric}` | 20px | 30px | Bender | Counters, currency, numbers |
+| `{typography.row-title}` | 18px | 30px / 50px | Noto Sans S Chinese Medium | Button labels, list row titles |
+| `{typography.body}` | 16px | 30px | Noto Sans S Chinese Medium | **Default text inside the 30px spine (649×)** |
+| `{typography.bitmap}` | 14px | 24px | AddWBitmap09 | Pixel-exact micro text |
+| `{typography.body-sm}` | 13px | 20px / 30px | Noto Sans S Chinese Medium | Dense lists, tags, secondary lines |
+| `{typography.label}` | 13px | 20px / 30px | Bender | Latin labels and hotkey prompts |
+| `{typography.caption}` | 11px | 16px | Bender Light | Footers, timestamps |
 
 ### Principles
 
 - **The stack is by script, not by emphasis.** Latin display goes to Novecento Wide; Latin numerals and technical strings go to Bender; every CJK glyph goes to Noto Sans S Chinese. A single line mixing 中文 and English is set in two families — that is the norm.
-- **30px is the spine.** It is the most common height in the whole client (15.5% of all dimensions) and it is the default text and row height. Design against 30 first, not against a body size.
+- **30px is the container spine; 16px is the optical body.** 30px is the most common height in the whole client (15.5% of all dimensions) and serves as the default row and text-box height. Never set `font-size` equal to the container's `height`: preserve the ~0.55–0.65× ratio (`16px` glyph inside a `30px` box, `13px` inside a `20px`–`30px` chip) so tactical labels retain crisp negative space around every line.
 - **Two serifs exist for CJK narrative** (FZYaSong, Ro Hon MinSink) — the system has a reading voice as well as a UI voice.
 - **A bitmap face is a first-class citizen.** AddWBitmap09 exists for pixel-exact small text; the system does not treat crispness as optional.
 - **Vendor name-table quirk:** Novecento Wide's Medium, Bold and `AEwide` all declare family `"Novecento wide UltraLight"` while OS/2 reports 600/700. Trust the PostScript names (`Novecentowide-Medium`, `-Bold`) and the weight class, not the family string.
@@ -646,7 +638,7 @@ Novecento Wide, Bender and FZYaSong are not freely distributable. The closest fr
 - **Control step**: 5px — 45.6% land on it.
 - **Screen step**: 10px — 27.0%.
 - **Page gutter**: 50px — the canvas is 1280×720 and the page inset is 1180×620.
-- **Tokens (front matter)**: `{spacing.unit}` 2px · `{spacing.xxs}` 5px · `{spacing.xs}` 10px · `{spacing.sm}` 20px · `{spacing.md}` 30px · `{spacing.lg}` 40px · `{spacing.xl}` 50px · `{spacing.gutter}` 50px.
+- **Tokens (front matter)**: `{spacing.unit}` 2px · `{spacing.xxs}` 5px · `{spacing.xs}` 10px · `{spacing.sm}` 20px · `{spacing.md}` 30px · `{spacing.lg}` 40px · `{spacing.xl}` 50px · `{spacing.row}` 30px · `{spacing.gutter}` 50px.
 
 ### The Size Ladder
 
@@ -681,6 +673,11 @@ By component family (`text_*` n=1,290; `btn_*`/`button_*` n=297; `icon_*`/`img_*
 - **Pivot `(0.5,0.5)`** — 5,049 objects (78.7%). Centre pivots are near-universal.
 - Hierarchy depth peaks at **2 (989)** and **5 (975)**, maximum 13. The recurring chain is `Canvas → Page → State → Panel → Container → Element`.
 
+### Whitespace & Density Philosophy
+
+- **High-density micro-clusters on an open field.** The operational aesthetic never distributes controls evenly across the 1280×720 canvas. At least **45%–55% of the screen** stays open as uninterrupted `{colors.canvas}` ground or full-bleed character/scene key art, while buttons, `160×30` status rows, currency chips and rarity indicators pack tightly into interlocking clusters separated by 2px–5px steps.
+- **Asymmetric mechanical framing.** Panels and button groups rarely sit as isolated symmetric cards; a primary `#313131` module is typically paired with a narrower utility bar (`height: 30px`) or an offset `#1B1B1B` backing plate, giving the cluster a directional, engineered silhouette.
+
 ### Canvas Stack
 
 107 Canvases. `m_RenderMode` is **ScreenSpaceCamera for 76**, WorldSpace 30, ScreenSpaceOverlay 1. Sorting orders cluster at 0 (51), −100 (18) and 10 (14), with named high layers: `CoverCanvas` at 352, `VideoCanvas` at 353, `CgItemCanvas` and `panel_character_cutin` at 180, `panel_cgoverlay` 131, `panel_debug_logger` 100.
@@ -695,7 +692,7 @@ The client does not use shadow as an elevation system.
 |---|---|---|
 | 0 | `{colors.canvas}` flat | Page ground |
 | 1 | `{colors.panel}` #313131 flat panel | **The default raised surface** — dialogs, panels, list backgrounds |
-| 2 | `{colors.panel-deep}` #1B1B1B | Chrome beneath panels |
+| 2 | `{colors.panel-deep}` #1B1B1B | Chrome beneath panels and offset backing plates |
 | 3 | `{colors.surface-raised}` #303030 → `{colors.surface-6}` #535353 | Fine surface steps for nested modules |
 | 4 | `{colors.hairline}` #555555 1px rule | Dividers, separators, progress track |
 | 5 | Canvas sorting order | Screen-level layering: the page canvas, then overlay canvases, then `CoverCanvas` (352) and `VideoCanvas` (353) |
@@ -704,6 +701,8 @@ Depth is expressed as **a flat panel step plus a hairline**, and above that as *
 
 ### Decorative Depth
 
+- **Offset backing plates (mechanical thickness without shadows).** Because drop shadows are forbidden, major `#313131` (`{colors.panel}`) panels and `50px` action buttons achieve physical thickness by sitting 4px–6px offset over a `#1B1B1B` (`{colors.panel-deep}`) backing plate or carrying a 2px–4px solid accent lip (`{colors.primary}` or `{colors.brand-yellow}`) along one edge.
+- **Camera-space plane tilt.** Because 76 Canvases run in `ScreenSpaceCamera` and 30 in `WorldSpace`, terminal clusters can sit on subtly tilted 3D planes (2°–5° Y-axis perspective rotation on home/terminal modules) while keeping crisp 2px-lattice internal geometry.
 - **Runtime tinting.** 152 `UIColorGraphic` components tint white masks. A single mask can render as blue, gold or grey, which is how the client keeps its texture count low.
 - **Soft masking.** 86 `SoftMaskable` components allow masked content to fade rather than clip hard.
 - **Alpha shape masks.** 128 pure-flat `#FEFEFE` and 61 pure-flat `#FFFFFF` textures are the vocabulary of tintable shapes.
@@ -820,18 +819,20 @@ Floating content runs on a shared layer rather than per-screen: `UIPopupWindow`,
 ### Do
 
 - Design on the **2px lattice**. Every dimension should be a multiple of 2; prefer 5px for control steps, 10px for screen steps, 50px for gutters.
-- Start from **30px**. It is the default row and text height and the most common dimension in the client.
+- Start from **30px** for the container spine, and set **16px** (`{typography.body}`) inside it — keeping the ~0.55–0.65× glyph-to-box breathing ratio.
 - Use **`{colors.panel}` #313131 as the panel body**, not black. Black is the page ground.
+- Layer primary `#313131` panels over **`{colors.panel-deep}` #1B1B1B offset backing plates** (shifted 4px–6px) to express mechanical thickness without drop shadows.
 - Treat **`{colors.ink}` #FEFEFE as the UI white**; #FFFFFF is the neutral mask white.
 - Author chrome as a **flat white or alpha mask and tint it** — that is how the system keeps its texture count low.
 - Encode rarity with the **six-step glow ramp**, and keep the star glyph `{colors.star}` at every rarity.
 - Reach for the **toggle family** (`_normal` / `_on` / `_off` / `_select` / `_selected`) for state, and for `_locked` / `_empty` for availability.
 - Use **`(N,N,N,0)` — rounded top, square bottom** — for panels that dock to content below.
-- Anchor at the **centre** with pivot `(0.5,0.5)`.
+- Anchor at the **centre** with pivot `(0.5,0.5)`, and leave at least 45%–55% of the canvas open while clustering controls tightly.
 - Separate with a **flat panel step plus a hairline**; layer screens with **canvas sorting order**.
 
 ### Don't
 
+- Don't set CSS `font-size` equal to the Unity `RectTransform` box height (e.g. don't set 30px glyphs inside a 30px row).
 - Don't invent hover or pressed states. The system has none; adding them changes its character.
 - Don't use a drop shadow for elevation. None is used.
 - Don't paint rarity into the star glyph. The star is yellow at every level.
@@ -866,8 +867,8 @@ RectTransform sizes are driven by **250 horizontal and 130 vertical layout group
 ## Iteration Guide
 
 1. Fix the lattice first: 2px unit, 5px control step, 10px screen step, 50px gutter.
-2. Pick the row height from the ladder. 30px is the default; 50px for buttons and tabs; 100px for icon targets and list rows.
-3. Decide the surface: `{colors.canvas}` for ground, `{colors.panel}` #313131 for the body, `{colors.panel-deep}` for chrome beneath.
+2. Pick the container height from the ladder (`30px` default row, `50px` buttons/tabs, `100px` icon targets and list rows) and pair it with its optical `typography` token (`16px` body inside `30px`, `18px` row-title inside `50px`).
+3. Decide the surface: `{colors.canvas}` for ground, `{colors.panel}` #313131 for the body, `{colors.panel-deep}` #1B1B1B for offset backing plates and chrome beneath.
 4. Choose the shape from the nine-slice set. Use `(N,N,N,0)` when the panel docks downward; use `{rounded.none}` for rows and tabs.
 5. Colour: `{colors.primary}` for navigation and selection, `{colors.brand-yellow}` for rarity and progress, `{colors.confirm-gold}` for commit, plus the semantic set for status.
 6. Encode information with the rarity ramp and the semantic hues before adding any ornament.
@@ -877,7 +878,7 @@ RectTransform sizes are driven by **250 horizontal and 130 vertical layout group
 
 ## Known Gaps
 
-- **Type sizes are box heights, not point sizes.** `Text.fontSize` is a serialized component payload and was not read; 9,413 MonoBehaviour payloads in these files are largely un-type-treed. Every `Font.m_FontSize` in the client is Unity's default 16.0 and carries no design information. The scale in this document is measured from `text_*` GameObject dimensions — usable for layout, not a glyph specification.
+- **Raw `Text.fontSize` payloads vs. calibrated optical tokens.** `Text.fontSize` is a serialized component payload and was not read; 9,413 MonoBehaviour payloads in these files are largely un-type-treed, and every `Font.m_FontSize` in the client is Unity's default 16.0. The raw measurements from `text_*` GameObjects are **container box heights** (`30px`, `40px`, `50px`, `100px`); the YAML `typography` tokens provide the calibrated optical glyph sizes (`16px`, `24px`, `32px`, `72px`) at the ~0.55–0.65× box-to-glyph ratio, while both values are reported in the Hierarchy table.
 - **The reference resolution is inferred.** 1280×720 comes from 39 RectTransforms at exactly that size and the 1180×620 inset, not from a `CanvasScaler` field. 79 `CanvasScaler` components exist but their reference-resolution and screen-match fields were out of scope.
 - **Rarity 4, 5 and 6 are approximate.** Their source textures are glow art with 132–1,396 quantised colours; the reported values are means. Rarities 1, 2 and 3 are exact (one or two unique colours each).
 - **Runtime tint values are unknown.** The colours here are those **baked into textures**. `UIColorGraphic` applies further tints at runtime from values held in component payloads, so a mask's rendered colour may differ from any texture. The tint *set* is real; the exact per-state tint matrix is not recovered.

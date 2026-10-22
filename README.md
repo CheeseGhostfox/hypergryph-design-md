@@ -21,8 +21,8 @@ against it. These analyses are unofficial and are not affiliated with or endorse
 ## 这是什么
 
 - **一个风格一份 `.md`**。仓库是平的：没有家族索引、没有注册表、没有检索机制，也没有按风格分的子目录。
-- 每一份文件都是**自包含**的设计系统文档，遵循 Google Stitch 的 `DESIGN.md` 格式 —— YAML frontmatter 声明颜色、字体、间距、圆角等 token，正文说明这套界面为什么长这样、什么时候该用哪一条。
-- 两份文件**互不引用**。你可以单独拿走任意一份，不需要另一份在场，也不会有任何链接失效。
+- 每一份文件都是**自包含**的设计系统文档，遵循 Google Stitch 的 `DESIGN.md` 格式 —— YAML frontmatter 声明颜色、字体、间距、圆角与组件 token，正文说明这套界面为什么长这样、什么时候该用哪一条，以及如何在脱离原版引擎/脚本时保持真实的**视觉尺度（Optical Scale）与留白疏密张力**。
+- 三份文件**互不引用**。你可以单独拿走任意一份，不需要其他文件在场，也不会有任何链接失效。
 
 ## 怎么用
 
@@ -36,16 +36,16 @@ against it. These analyses are unofficial and are not affiliated with or endorse
 
    > 按项目根目录的 DESIGN.md 做界面
 
-3. 想换风格就换文件，**不要同时放两份** —— 一次只让一份 `DESIGN.md` 生效，否则 agent 会收到互相冲突的指令。
+3. 想换风格就换文件，**不要同时放多份** —— 一次只让一份 `DESIGN.md` 生效，否则 agent 会收到互相冲突的指令。
 4. 也可以直接把文件内容整段贴进对话或系统提示。它就是纯文本，没有依赖、没有构建步骤、没有外部资源。
 
 ## 收录内容
 
 | 文件名 | 风格 | 一句话描述 | 证据来源 |
 | --- | --- | --- | --- |
-| `arknights.md` | 《明日方舟》**游戏本体** | 1280×720 画布，2px 硬网格 / 5px 控件步进 / 10px 屏幕步进 / 50px 留白；面板体是 `#313131` 而不是黑；**UI chrome 是白色遮罩 + 运行时染色**（128 张纯平 `#FEFEFE` + 152 个 `UIColorGraphic`）；六阶稀有度光晕 `#FEFEFE`→`#FE7200`，而**星形在所有星级都是黄色**；交互态是七态开关家族且**没有 hover/pressed**；圆角走上圆下方的九宫格签名；三声部字体 Novecento Wide / Bender / Noto Sans S Chinese | 依据客户端**出厂内嵌 UI**（未加密的 Unity 序列化资源）：6,807 GameObject / 6,417 RectTransform / 107 Canvas / 1,231 Texture2D / 20 Font，贴图内存内解码量化（588 张），九宫格边框实测 169 个 Sprite |
-| `arknights-website.md` | 《明日方舟》**官网** | 硬工业近黑界面，纯 `#000000` 画布 + 单一电光青 `#18d1ff`，直角、发丝线分隔、`#242424` 巨大幽灵字；四声部字体（Novecento Sans Wide / Oswald / Bender / 思源黑体） | 依据 `ak.hypergryph.com` 官方样式表（152,714 字节 CSS）与官方页面截图 |
-| `endfield-website.md` | 《明日方舟：终末地》**官网** | 信号黄工业科技界面，近黑 `#191919` 与近白双地色 + 单一高压黄 `#fffa00`，圆形/胶囊控件与 4px 卡片、环境阴影、斜纹警示渐层；元素有专属色相、职业只用单色字形 | 依据 `endfield.hypergryph.com` 官方样式表（370,417 字节 / 9 个 CSS）与官方页面截图，元素色取自官方 CDN 的 `ele-*.jpg` 图标量化取样 |
+| `arknights.md` | 《明日方舟》**游戏本体** | 1280×720 画布，2px 硬网格 / 5px 控件步进 / 10px 屏幕步进 / 50px 留白；**视觉字号与 Unity 容器盒高解耦**（0.55–0.65× 呼吸比）；面板体 `#313131` 配 `#1B1B1B` 错位背板与 1°–3° 微倾透视；**UI chrome 是白色遮罩 + 运行时染色**（128 张纯平 `#FEFEFE` + 152 个 `UIColorGraphic`）；六阶稀有度光晕 `#FEFEFE`→`#FE7200`（星形恒黄）；七态开关家族无 hover/pressed；上圆下方九宫格签名；三声部字体 Novecento Wide / Bender / Noto Sans S Chinese | 依据客户端**出厂内嵌 UI**（未加密的 Unity 序列化资源）：6,807 GameObject / 6,417 RectTransform / 107 Canvas / 1,231 Texture2D / 20 Font，贴图内存内解码量化（588 张），九宫格边框实测 169 个 Sprite |
+| `arknights-website.md` | 《明日方舟》**官网** | 硬工业近黑界面，纯 `#000000` 画布 + 单一电光青 `#18d1ff`，直角、1px 渐变发丝线与 8px 青左规、`#242424` 巨大幽灵字；**60% 暗场留白与微距元数据簇**、三区主题色明度与暗角约束；四声部字体（Novecento Sans Wide / Oswald / Bender / 思源黑体） | 依据 `ak.hypergryph.com` 官方样式表（152,714 字节 CSS）、官方页面截图，并与 PC 客户端共享字体/调色板做独立交叉核验 |
+| `endfield-website.md` | 《明日方舟：终末地》**官网** | 信号黄工业科技界面，近黑 `#191919` 与近白 `#ffffff` 双地色 + 单一高压黄 `#fffa00`，圆形/胶囊控件与 4px 卡片、10px 环境阴影、斜纹警示渐层；**附 1920p 画布至标准桌面视口的 `×0.65` 光学尺度归一化表**；`1px` `+` 十字测绘靶标与 `//` 分类前缀赋予白底工程蓝图张力；元素有专属色相、职业只用单色字形 | 依据 `endfield.hypergryph.com` 官方样式表（370,417 字节 / 9 个 CSS）与官方页面截图，元素色取自官方 CDN 的 `ele-*.jpg` 图标量化取样 |
 
 > **命名约定**：`<游戏>.md` = 分析**游戏本体**；`<游戏>-website.md` = 分析**官方网页**。
 >
@@ -80,6 +80,27 @@ against it. These analyses are unofficial and are not affiliated with or endorse
 > **字体说明**：示例页用的是公开替身字体（Archivo / Barlow / Oswald / Noto Sans SC，从 Google Fonts 加载），因为 `arknights-website.md` 里记录的原版字体 Novecento Sans Wide 与 Bender 并不公开分发 —— 这正是该文件「Note on Font Substitutes」一节建议的做法。
 
 **Demo (English).** A sample page built strictly from `arknights-website.md` — *THE UNSENT SEVENTH*, a seven-chapter fictional archive of a civil-defence broadcast station. Self-contained single HTML file (~106 KB), no build step, no dependencies beyond web fonts. **It is not a static page**: it ships 14 native `<details>` dossiers, a two-way ending choice persisted to `localStorage`, arrow-key chapter navigation with cross-session reading progress, and a tape-scan animation that honours `prefers-reduced-motion`. Even the ambient hum is synthesised live with Web Audio rather than loaded from a file. It demonstrates the specification; it is not part of it.
+
+## 更新说明 / Release Notes
+
+完整的历史变更记录见 [CHANGELOG.md](CHANGELOG.md)。
+
+### 2026-10-22 · 审美与视觉工程校准（Aesthetic & Optical Scale Calibration）
+
+针对三份 `DESIGN.md` 规范进行了系统性的**视觉尺度解耦、空间疏密语法补全与 Token 自洽性校准**（全部通过 `@google/design.md` 校验，`0 errors`、`0 orphaned-tokens`）：
+
+1. **视觉尺度与物理容器尺度解耦（Optical vs. Physical Scale Decoupling）**
+   - **`arknights.md`（游戏本体）**：将 YAML `typography` 从 Unity `RectTransform` 的物理外框高度校准为真实**视觉字号（Optical Glyph Size）**（如 `display: 72px` / 盒高 `100px`、`headline: 32px` / 盒高 `50px`、`card-title: 24px` / 盒高 `40px`、`row-title: 18px` / 盒高 `30px`、`body: 16px` / 盒高 `25px`、`label: 13px` / 盒高 `20px`、`caption: 11px` / 盒高 `16px`），并在 `Typography -> Hierarchy` 中提供双列对照表，明确鹰角客户端**字号约为容器高度 `0.55–0.65×`、上下预留 `35%–45%` 呼吸暗空间**的排版核心。
+   - **`endfield-website.md`（终末地官网）**：新增 **视口光学尺度归一化表（`×0.65` Standard Desktop Factor）**。因原站通过脚本将 `1080×1920` 画布动态缩放至当前视口（常规桌面端根字号约 `10.4px–12px`），若在标准 `1rem = 16px` 静态网页中按 1:1 像素硬套会导致控件肥大失真；现明确给出标准桌面端光学尺寸（`button-primary`: `100px → 64px`、`button-secondary`: `67px → 48px`、`subpage-tab`: `168px → 108px`、`subpage-header`: `506px → 320px`，并区分 `100px` 全屏转场加载带与 `8px–12px` 行内进度条）。
+
+2. **空间构成与微图形语法补全（Compositional & Micro-Graphic Grammar）**
+   - **留白虚空 vs. 零松弛遥测簇（Void-to-Cluster Contrast）**：在三份规范中量化了鹰角 UI 的疏密反差法则——全局保持 `45%–60%+` 的开放底色/立绘呼吸场（使 `#242424` / `#d9d9d9` 幽灵巨字与结构色条成为真正的建筑骨骼），而局部信息单元采用 `0px–4px` 的高密度集群排布，杜绝平均主义的“等距卡片网格”。
+   - **错位背板与微倾透视（`arknights.md`）**：补全了无阴影体系下的厚度语言——主面板（`#1B1B1B`）右下方错位 `4px–8px` 叠放浅灰背板（`#313131`）或 `1px` 线框，以及主界面面板群在相机空间的 `1°–3°` 微倾透视。
+   - **工业测绘靶标与蓝图微图形（`endfield-website.md`）**：在 `Shapes -> Decorative Geometry` 中将网格交点处的 `1px` `+` 十字准星（Fiducial Crosshairs）、`//` 双斜杠分类前缀（`// OPERATORS`）以及非混合模式的平面点阵/波形底板（`points-bg`、`tape-wave-bg`）确立为必选几何特征，防止纯白底色退化为普通电商网格。
+
+3. **YAML 与正文审美自洽性修复（Self-Consistency & Luminance Discipline）**
+   - **`arknights-website.md`（明日方舟官网）**：修复 `news-card` 的 `typography` 为 `{typography.card-title}`（32px 展示级标题），消除“YAML 写正文小字、正文严禁青底放小字”的自相矛盾；将 `filter-tab-active/default` 校准为 `height: 24px` 与 `{typography.body-sm}`（12px）；为高明度暖灰褐底色 `region-surface-taupe`（`#898175`）补充暗角渐晕（`rgba(0,0,0,0.45–0.65)`）约束；同步客户端四声部字体的实测结论。
+   - **纯净几何组件清洗**：剥离了三份规范中纯几何分割线、进度条轨道与色带组件上冗余的 `typography` 与 `textColor` 伪属性。
 
 ## TODO / 下一步
 

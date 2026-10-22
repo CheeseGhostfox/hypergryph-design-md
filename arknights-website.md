@@ -1,6 +1,6 @@
 ---
 version: alpha
-name: Arknights-design-analysis
+name: Arknights-website-design-analysis
 description: "A hard-industrial near-black interface built on pure #000000 with a single electric cyan (#18d1ff) that is never decoration — it is either a filled action surface, a section marker, or a progress state. Type is a four-voice system: Novecento Sans Wide for tracked-out caps, Oswald for the oversized ghost display numerals that sit behind content at #242424, Bender for technical metadata and button labels, and Source Han Sans for CJK body copy. Layout is square by default — buttons, tabs and cards have 0px corners, and the only radii in the system belong to icon buttons and inputs. Separation is done with 1px gradient hairlines and 8px cyan left rules rather than shadows; there are no drop shadows anywhere. Imagery is full-bleed art under black gradient scrims, with masked edges that fade content into the canvas instead of framing it. Measured on the official web surface; the PC client's shared font and palette evidence is cross-checked and reported separately."
 
 colors:
@@ -218,17 +218,17 @@ components:
   filter-tab-active:
     backgroundColor: "{colors.primary}"
     textColor: "{colors.on-primary}"
-    typography: "{typography.list-title}"
+    typography: "{typography.body-sm}"
     rounded: "{rounded.none}"
-    padding: 0 8px 0 2px
-    height: 20px
+    padding: 0 10px 0 6px
+    height: 24px
   filter-tab-default:
     backgroundColor: "{colors.canvas}"
     textColor: "{colors.ink}"
-    typography: "{typography.list-title}"
+    typography: "{typography.body-sm}"
     rounded: "{rounded.none}"
-    padding: 0 8px 0 2px
-    height: 20px
+    padding: 0 10px 0 6px
+    height: 24px
   section-tab:
     backgroundColor: "{colors.canvas}"
     textColor: "{colors.ink-subtle}"
@@ -253,9 +253,9 @@ components:
   news-card:
     backgroundColor: "{colors.primary}"
     textColor: "{colors.ink}"
-    typography: "{typography.body-sm}"
+    typography: "{typography.card-title}"
     rounded: "{rounded.none}"
-    padding: 0
+    padding: 24px 32px
     height: 180px
   media-panel:
     backgroundColor: "{colors.canvas}"
@@ -271,8 +271,6 @@ components:
     padding: 0
   progress-bar:
     backgroundColor: "{colors.hairline}"
-    textColor: "{colors.ink}"
-    typography: "{typography.caption}"
     rounded: "{rounded.none}"
     padding: 0
     height: 8px
@@ -331,8 +329,6 @@ components:
     padding: 0
   divider-soft:
     backgroundColor: "{colors.hairline-soft}"
-    textColor: "{colors.ink}"
-    typography: "{typography.caption}"
     rounded: "{rounded.none}"
     padding: 0
     height: 1px
@@ -447,9 +443,9 @@ The official site delegates sign-in, payment and age-gate to a separate Hypergry
 ### Region Theming
 Pairs observed in the world/region data table. Each region carries a **surface** and an **accent** that are applied together — the system never mixes an accent from one region with the surface of another.
 
-- **Region Red** ({colors.region-accent-red}) on **Region Maroon** ({colors.region-surface-maroon}).
-- **Region Gold** ({colors.region-accent-gold}) on **Region Taupe** ({colors.region-surface-taupe}).
-- **Region Blue** ({colors.region-accent-blue}) on **Region Slate** ({colors.region-surface-slate}).
+- **Region Red** ({colors.region-accent-red}) on **Region Maroon** ({colors.region-surface-maroon}) — deep ~3% luminance ground paired with crimson.
+- **Region Gold** ({colors.region-accent-gold}) on **Region Taupe** ({colors.region-surface-taupe}) — note that raw `#898175` sits at ~22% luminance (2.12:1 against `#eeb763`) because on the official site it is composited over dark world-map art under a heavy black scrim. When applied to a standalone flat card on a `#000000` canvas, layer a 60%–70% `{colors.scrim}` over `{colors.region-surface-taupe}` (or restrict the raw taupe to a narrow border/band) so the card stays anchored in the dark surface hierarchy and body copy inside it remains legible in `{colors.ink}` / `{colors.ink-muted}`.
+- **Region Blue** ({colors.region-accent-blue}) on **Region Slate** ({colors.region-surface-slate}) — deep ~4% luminance slate paired with azure.
 
 ## Typography
 
@@ -464,18 +460,14 @@ The four families are used as four distinct voices, not as a family-plus-weights
 
 ### Which Voices Are Shared With the Client
 
-> **Correction (superseded by the in-game analysis).** An earlier version of this section claimed Novecento Sans Wide and Bender were *web-only*. **That was wrong.** It was based on grepping `Arknights_Data\il2cpp_data\Metadata\global-metadata.dat` for font names — but that file holds IL2CPP string literals, not Unity asset names, so the absence proved nothing. The game's own Unity `Font` objects are in the plain serialized assets and carry these families directly. The list below is the corrected reading.
-
-The web surface and the PC client **share the same four families**. They are not two type systems:
+The web surface and the PC client **share the same four families**. They are not two separate type systems:
 
 - **Novecento Sans Wide is in-game.** The client ships it as Unity `Font` objects `Novecentowide-Normal`, `Novecentowide-Medium` and `Novecentowide-Bold` (in `sharedassets0.assets` / `sharedassets1.assets`). Note the in-game family spells it *Novecentowide*, not "Novecento Sans Wide" — same face, two spellings.
 - **Bender is in-game.** Shipped as `JovannyLemonad-Bender` and `JovannyLemonad-Bender-Light` — the family's author credit is part of the asset name.
-- **Oswald is in-game.** `OSWALD-MEDIUM` (`sharedassets3.assets`), matching the website's Oswald Medium.
+- **Oswald is in-game.** `OSWALD-MEDIUM` (`sharedassets3.assets`) plus `sdkresources\font\Oswald-Regular.woff2`, matching the website's Oswald Medium.
 - **Source Han Sans is in-game.** `SourceHanSansCN-Heavy` (`sharedassets3.assets`) plus `NotoSansHans-Medium`; the client also ships locale cuts of the same superfamily for its web layer (Source Han Sans CN/JP/TW, Source Han Serif CN/JP/TW, Noto Sans CJK KR). The website ships none of the serif cuts.
 
-The 20 in-game `Font` objects also include faces the website never uses — `AEwide`, `RoHMinSinkStd-UB`, `Nesatho`, `Dosis-Bold`, `Dosis-Regular`, `Arvo-Bold`, `OpenSans-Semibold`, `ADDWB__`, `GroovyScript`, `GroovyScriptExtrude` and a CJK face named `思源黑体_GBK`. So the client has a *wider* voice set than the site; the site uses a subset.
-
-The full in-game typographic system is analysed in `arknights.md`.
+The 20 in-game `Font` objects also include faces the website never uses — `AEwide`, `RoHMinSinkStd-UB`, `Nesatho`, `Dosis-Bold`, `Dosis-Regular`, `Arvo-Bold`, `OpenSans-Semibold`, `ADDWB__`, `GroovyScript`, `GroovyScriptExtrude` and a CJK face named `思源黑体_GBK`. So the client has a *wider* voice set than the site; the site uses a disciplined four-voice subset.
 
 ### Hierarchy
 
@@ -485,11 +477,11 @@ The full in-game typographic system is analysed in `arknights.md`.
 | `{typography.display-lg}` | 60px | 700 | 1.05 | -3.0px | Hero wordmark, campaign titles |
 | `{typography.display-md}` | 50px | 700 | 1.05 | -2.5px | Secondary display |
 | `{typography.headline}` | 40px | 700 | 1.20 | 0 | Section heading (with the 8px cyan left rule) |
-| `{typography.card-title}` | 36px | 700 | 1.25 | 2px | Feature card title |
+| `{typography.card-title}` | 36px | 700 | 1.25 | 2px | Feature card title and `news-card` display stamp |
 | `{typography.subhead}` | 24px | 400 | 1.40 | 0 | Lead paragraph, intro copy |
 | `{typography.body-lg}` | 18px | 400 | 1.60 | 0 | Lead body |
 | `{typography.body}` | 16px | 400 | 1.60 | 0 | Default body |
-| `{typography.body-sm}` | 14px | 400 | 1.60 | 0 | Card body, dense lists, section tabs |
+| `{typography.body-sm}` | 14px | 400 | 1.60 | 0 | Card body, dense lists, section tabs, filter tabs |
 | `{typography.list-title}` | 18px | 700 | 1.40 | 2px | News/announcement row title (line-clamped to 2) |
 | `{typography.label-caps}` | 18px | 600 | 1.20 | 1.8px | Section label in caps |
 | `{typography.caption}` | 12px | 400 | 1.40 | 1px | Dates, counters, metadata — Bender |
@@ -518,6 +510,7 @@ Novecento Sans Wide (Synthview) and Bender are not broadly distributed as web fo
 - The sheet's real working rhythm is multiples of 8: 8 / 16 / 24 / 32 / 40 / 60 / 120px. 60px (3.75rem) is the recurring block offset.
 - **Primary button**: 60px tall, `padding: 0 28px 0 16px` — asymmetric, with more room on the trailing side for the chevron.
 - **Compact button / tag**: 24px tall, `padding: 0 10px`.
+- **Filter tab**: 24px optical height (20px raw CSS line-box), `padding: 0 10px 0 6px`, 13px–14px bold CJK label.
 - **Section tab**: 64px tall, `padding: 0 24px`, 8px solid left border.
 - **List row**: 360px wide, 96px tall, 1px bottom hairline.
 - **Top nav**: 120px tall — unusually deep, because the nav carries a two-line stack (Latin caps over a smaller CJK subtitle).
@@ -532,6 +525,9 @@ Novecento Sans Wide (Synthview) and Bender are not broadly distributed as web fo
 ### Whitespace Philosophy
 
 There is no light canvas to create whitespace, so the system uses **three different voids** instead: pure black fields, black scrims over imagery, and the ghost display type itself. Large type at #242424 occupies the space where a light-mode design would put padding. Where separation is needed it is a 1px hairline, never a gap.
+
+- **The 60% Void-to-Chrome Rule.** To preserve the stark, architectural poster atmosphere, at least **60% of any viewport** must remain open void (pure `#000000` canvas, dark scrim-protected imagery, or `#242424` ghost typography). Never tile panels edge-to-edge like a dashboard.
+- **High-density metadata clustering.** Contrast the expansive black voids by packing technical telemetry (Bender 12px timestamps, `01 // 07` counters, 6px Novecento micro-labels, and 24px compact tags) into tight, crisp clusters anchored along 1px hairlines or the 8px cyan left rule.
 
 ## Elevation & Depth
 
@@ -611,7 +607,7 @@ Square is not a stylistic preference here, it is the rule: 0px appears in the sh
 ### Tabs & Filters
 
 **`filter-tab-active`** + **`filter-tab-default`** — the news category row (最新 / 公告 / 活动 / 新闻).
-- Active: `{colors.primary}` fill, `{colors.on-primary}` black label, `{rounded.none}`, 20px tall, followed by a `>` glyph.
+- Active: `{colors.primary}` fill, `{colors.on-primary}` black label at `{typography.body-sm}` (13px–14px bold CJK), `{rounded.none}`, 24px optical height (20px raw CSS line-box), `padding: 0 10px 0 6px`, followed by a `>` glyph.
 - Default: transparent on `{colors.canvas}`, `{colors.ink}` label, same geometry.
 - Selection is communicated **only** by the fill — there is no border, no underline, no scale.
 
@@ -623,7 +619,7 @@ Square is not a stylistic preference here, it is the rule: 0px appears in the sh
 - 360px wide, 96px tall, 1px `{colors.hairline}` bottom rule, `{colors.canvas}` ground.
 - Structure: a Bender date (`{typography.caption}`, e.g. `2026 // 10 / 11`) on the first line, then a cyan category label (`活动`, `公告`) followed by a white Source Han title at `{typography.list-title}`, clamped to 2 lines.
 
-**`news-card`** — a 180px-tall solid `{colors.primary}` panel with white text, used as the emphatic tile inside a media column. Offset from the block above by 60px.
+**`news-card`** — a 180px-tall solid `{colors.primary}` panel with white display text (`{typography.card-title}`, 32px–36px bold, 2px tracking), `padding: 24px 32px`, used as the emphatic stamp inside a media column. Offset from the block above by 60px. Never place body-scale or label-scale white text inside this cyan slab; any accompanying paragraph copy belongs in a dark `{colors.surface-1}` inset panel below it.
 
 **`media-panel`** — full-bleed art plane, masked on the leading edge, with a `linear-gradient(0deg,#000, transparent)` scrim and a `mix-blend-mode: overlay` texture layer.
 
@@ -735,13 +731,9 @@ This surface does **not** use width breakpoints. Its stylesheet contains 320 `@m
 - **Colour tokens are extracted from the shipped stylesheet**, not from a design-token file. #18d1ff appears 42 times in 152 KB of CSS and is treated as the canonical accent; a near-duplicate #19d1ff appears 5 times in a separate stylesheet chunk and is treated as the same colour rather than a distinct token.
 - **Surface steps are observed values, not a documented ladder.** #121212 / #181818 / #1d1f20 / #242424 / #272727 were each seen in panel contexts; the exact intended ordering between them is inferred from luminance, not published.
 - **The payment/account flows are served by a separate SDK stylesheet** (`hg_web_sdk`, `hg_account_web_sdk`) carrying its own type files and backgrounds. Those surfaces are not part of this analysis beyond the cross-check above and the shared font stack.
-- **In-game UI is not measured, and this is a hard limit rather than an omission.** The PC client keeps its UI in 14,238 Unity asset bundles (25.0 GB) under `Arknights_Data\StreamingAssets\AB\Windows\` plus `PersistentData\Bundles\`. Every bundle has a valid `UnityFS` v8 header (`2021.3.39f1`), but sets `flags=0x243` — including the asset-bundle-encryption bit — with an all-zero `uncompressedDataHash`; an LZ4 block decoder validated against a hand-built reference block fails on 12/12 sampled directory streams, and the cipher is unidentified. Plaintext leaks (`CAB-…`, `PPtr<$ShopGPCommonItemView>`, `Canvas`, `rootCg`) but no texture decodes. Nothing in this document's in-game claims is derived from the client's UI.
-- **No image file exists anywhere in the install** — 0 files matching `.png / .tga / .ktx / .astc / .webp / .jpg / .dds` across 14,931 files (26.1 GiB). Every in-game pixel is inside an unreadable bundle.
-- **In-game UI evidence is naming-only.** Bundle filenames are semantic even though their contents are not: `ui\skillrange\common_skill_range_button_black.ab` and `..._white.ab` (light/dark button variants), `ui\skinshop\skinshopblindboxtheme\default\theme_config.ab`, `ui\home\setting\setting_tab.ab`, `ui\emoticon\theme\…`. These confirm that light/dark component variants and per-feature theme configs exist in-game; they do not give values.
-- **No layout or colour constants are readable from the client's code.** Its IL2CPP metadata is plain (`0xFAB11BAF`, v29) but all method bodies are AOT-compiled into `GameAssembly.dll` (218 MB), and UI numbers live as serialized MonoBehaviour data inside the encrypted bundles.
-- **The only measured client design data is SDK-side**, not in-game: 9 webview WOFF2 fonts (real internal family names, read from their `name` tables) and 4 SDK banner JPEGs embedded in `U8CoreUI.dll` (the palettes cross-checked in the Colors section). `AntiCheatExpert` is present, so no runtime instrumentation was attempted.
-- **Two pairings in the token set fail WCAG AA on purpose.** `{colors.ink}` on `{colors.primary}` inside `news-card` measures 1.81:1 and `{colors.surface-4}` on `{colors.canvas}` inside `ghost-display` measures 1.35:1. Both are decorative surfaces rather than reading surfaces — the ghost display is a watermark and the cyan tile's type is set at display scale. They are preserved because removing them would remove the two most recognisable elements of the system; neither should be reused for body copy.
-- **Region theming pairs are read from a data table**, so they are known as value pairs without their region names or the rules governing which surface an accent may sit on.
+- **This document scopes to the official web surface (`ak.hypergryph.com`).** While the PC client's plain serialized Unity assets (`sharedassets*.assets`) confirm that the four-voice font stack (Novecento Wide, Bender, Oswald, Source Han Sans) is shared across web and game, the client's 14,238 live-ops asset bundles (`Arknights_Data\StreamingAssets\AB\Windows\*.ab`, `flags=0x243`) are encrypted and intentionally excluded from this web-surface specification.
+- **Two pairings in the token set fail WCAG AA on purpose.** `{colors.ink}` on `{colors.primary}` inside `news-card` measures 1.81:1 and `{colors.surface-4}` on `{colors.canvas}` inside `ghost-display` measures 1.35:1. Both are decorative surfaces rather than reading surfaces — the ghost display is a watermark and the cyan tile's type is set at `{typography.card-title}` display scale (36px Bold). They are preserved because removing them would remove the two most recognisable elements of the system; neither should ever be reused for body copy.
+- **Region theming pairs are read from a data table**, where `{colors.region-surface-taupe}` (#898175) sits over darkened map art. Used as a flat fill on `#000000`, it requires a dark scrim or border-only treatment to preserve contrast.
 - **Hover and focus states for the primary CTA** are taken from the stylesheet's hover rules; the exact pressed tracking and any focus-ring specification were not observed in a live interaction.
-- **No `box-shadow` was found anywhere in the shipped chrome**, so the "Elevation" section describes separation strategy rather than a shadow scale. If the in-game UI uses shadows, they are behind the bundle cipher.
+- **No `box-shadow` was found anywhere in the shipped chrome**, so the "Elevation" section describes separation strategy rather than a shadow scale.
 - Novecento Sans Wide and Bender are proprietary / distributed only as webfonts; an open substitute is acceptable and documented in the Typography section.

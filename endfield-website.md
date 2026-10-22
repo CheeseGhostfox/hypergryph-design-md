@@ -1,6 +1,6 @@
 ---
 version: alpha
-name: Endfield-design-analysis
+name: Endfield-website-design-analysis
 description: "A signal-yellow industrial-tech interface built on a near-black #191919 ground with a single high-voltage yellow (#fffa00) that behaves like painted safety marking: it fills the primary action, marks every section edge, and prints the oversized ghost wordmarks that sit behind content. The system is light/dark split rather than dark-only — sub-page headers run a hard white-to-yellow gradient split, container pages are near-white, and #191919 panels float on top of both. Geometry is the opposite of its sibling Arknights: circles and 42px pills for controls, 4–6px corners for cards and buttons, and diagonal-stripe gradients layered inside pill containers. Typography mixes a proprietary Sans family (Regular/Medium/Bold/Black) for UI and CJK with Gilroy for Latin labels, Novecento Sans Wide for tracked display caps, and a stencil face for accents. Only one icon system is colour-coded — the five elements; the six professions stay monochrome glyphs."
 
 colors:
@@ -263,8 +263,6 @@ components:
     width: 44px
   card-accent-strip:
     backgroundColor: "{colors.primary}"
-    textColor: "{colors.on-primary}"
-    typography: "{typography.caption}"
     rounded: "{rounded.none}"
     padding: 0
     height: 8px
@@ -328,15 +326,11 @@ components:
     padding: 0
   progress-bar:
     backgroundColor: "{colors.neutral-4}"
-    textColor: "{colors.on-primary}"
-    typography: "{typography.label}"
     rounded: "{rounded.none}"
     padding: 0
     height: 100px
   progress-bar-fill:
     backgroundColor: "{colors.primary}"
-    textColor: "{colors.on-primary}"
-    typography: "{typography.label}"
     rounded: "{rounded.none}"
     padding: 0
     height: 100px
@@ -403,15 +397,11 @@ components:
     padding: 0
   divider-light:
     backgroundColor: "{colors.hairline}"
-    textColor: "{colors.ink-inverse}"
-    typography: "{typography.caption}"
     rounded: "{rounded.none}"
     padding: 0
     height: 1px
   rule-soft:
     backgroundColor: "{colors.primary-soft}"
-    textColor: "{colors.on-primary}"
-    typography: "{typography.caption}"
     rounded: "{rounded.none}"
     padding: 0
     height: 9px
@@ -588,25 +578,41 @@ The Sans family, Gilroy, Novecento Sans Wide and Protest Strike are all propriet
 
 ### Spacing System
 
-- **Base unit**: 4px, expressed in the shipped CSS as `rem` against a 16px root.
+- **Base unit**: 4px, expressed in the shipped CSS as `rem` against a 16px root on a 1080×1920 reference canvas.
 - **Tokens (front matter)**: `{spacing.xxs}` 4px · `{spacing.xs}` 8px · `{spacing.sm}` 12px · `{spacing.md}` 16px · `{spacing.lg}` 24px · `{spacing.xl}` 32px · `{spacing.xxl}` 48px · `{spacing.section}` 100px.
 - The working rhythm is multiples of 8, with a large jump at the component scale: 8 / 16 / 24 / 32 / 48 / 60 / 100px.
-- **Primary button**: 100px tall, `padding: 0 24px 0 140px` — a deep left indent that reserves space for the yellow's internal divider and mark.
-- **Secondary button**: 67px tall, `padding: 0 32px 0 69px`.
-- **Sub-page tab**: 168px tall, `padding: 0 48px`.
-- **Operator card**: portrait area on top, a 72px `{colors.canvas}` name bar beneath, then a 8px accent strip.
-- **Sub-page header**: 506px tall with a 16px `{colors.hairline}` bottom rule.
+- **Primary button**: 100px tall (64px optical on standard 1440p desktop), `padding: 0 24px 0 140px` — a deep left indent that reserves space for the yellow's internal divider and mark.
+- **Secondary button**: 67px tall (48px optical), `padding: 0 32px 0 69px`.
+- **Sub-page tab**: 168px tall (108px optical), `padding: 0 48px`.
+- **Operator card**: portrait area on top, a 72px `{colors.canvas}` name bar beneath, then an 8px accent strip.
+- **Sub-page header**: 506px tall (320px optical) with a 16px `{colors.hairline}` bottom rule.
+
+### Optical Viewport Scale Normalization (`×0.65` Desktop Factor)
+
+Because the live site dynamically shrinks `documentElement.style.fontSize` against a **1080×1920 reference canvas** (~10.4px–12px root font size on typical 1366×768 to 1440×900 desktop viewports), raw `1rem = 16px` measurements in the front matter will appear ~1.5× oversized if rendered verbatim on a standard static `16px`-root web page. When building without the 1080×1920 `rem` resizer script, apply a **`×0.65` optical normalization factor** to structural heights and type sizes:
+
+| Component / Token | Raw 1920p Canvas (`1rem = 16px`) | Standard Desktop Optical (`×0.65`) | Architectural Note |
+|---|---|---|---|
+| `button-primary` | 100px height (`padding-left: 140px`) | **64px** height (`padding-left: 88px`) | Preserves the 12px strong-yellow left edge and internal divider |
+| `button-secondary` | 67px height (`padding-left: 69px`) | **48px** height (`padding-left: 44px`) | Aligns with standard tactile control scale |
+| `subpage-tab` | 168px height | **108px** height | Keeps the dramatic tall-tab proportion without swallowing the fold |
+| `subpage-header` | 506px height (249px white split) | **320px** height (160px white split) | Retains the hard white-to-yellow horizontal bisection |
+| `section-marker` | 132px width | **88px** width | Vertical yellow structural spine |
+| `progress-bar` | 100px height (full-bleed loader band) | **64px** loader band / **8px–12px** inline | 100px is the full-viewport transition band, not an inline meter |
+| `{typography.body}` | 20px | **15px–16px** | Standard editorial reading scale on 1440p |
 
 ### Grid & Container
 
 - The operator grid is **6-up at desktop** with a ~35px gutter, cards sized by the column rather than fixed.
 - Sub-page headers set their content against a `calc(50% - 80rem + …)` offset — the layout is computed against a **variable-width centre**, so the header title tracks the viewport rather than a fixed container.
-- A **132px yellow vertical bar** marks the start of each content section; it carries the section's icon and its Novecento title in `{colors.on-primary}`.
+- A **132px yellow vertical bar** (88px at standard desktop optical scale) marks the start of each content section; it carries the section's icon and its Novecento title in `{colors.on-primary}`.
 - The home page is a fixed composition: a 46px-wide icon rail pinned left, the key visual full-bleed, and a dark control cluster in the lower middle.
 
 ### Whitespace Philosophy
 
 Endfield's whitespace is **architectural, not atmospheric**. On light pages, whitespace is literal white; on dark pages, it is `{colors.canvas}`. Separation is done with a 16px heavy `{colors.hairline}` rule (sub-page headers) or a 1px light rule (pagination blocks) — never with a shadow — while floating controls are separated by a 10px ambient shadow instead. The two grounds are stacked, so a page can hold large white fields and dark panels at once; the yellow bar is what tells the eye which section it is in.
+
+- **Architectural Void vs. Telemetry Density**: Maintain **45%–55%+ open ground** (`{colors.canvas-inverse}` white or `{colors.canvas}` near-black) across each section so the giant `{colors.neutral-4}` ghost wordmarks and 132px yellow section bars read as load-bearing architecture. Counterbalance that open field by packing operator metadata, `//` tags, and dual 44px attribute tiles into tight, zero-slack clusters (`0px–8px` internal gaps).
 
 ## Elevation & Depth
 
@@ -627,7 +633,7 @@ Depth is carried by **three devices that never mix**: hairline rules on light, a
 - **Deco colour bars.** Vertical yellow strips carry inverted text: a Novecento caps title, the Endfield wordmark, and a Gilroy `AK` label, all in `{colors.on-primary}`.
 - **Split header gradient.** `linear-gradient(180deg, white 249px, #fffa00 0)` gives the sub-page header a hard white-to-yellow edge rather than a soft fade.
 - **Ghost display.** `{typography.display-xl}` in `{colors.neutral-4}` behind the operator grid — the light-ground counterpart of the sibling system's #242424 watermark.
-- **Texture plates.** Assets named `points-bg`, `tape-wave-bg`, `mask`, `triangles` and `color-bar` are laid as flat plates, never blended.
+- **Flat CAD & telemetry texture plates.** Assets named `points-bg` (halftone dot matrices), `tape-wave-bg` (topographic/waveform bands), `mask`, `triangles` and `color-bar` are laid as flat, opaque or alpha-masked plates — never CSS-blended.
 
 ## Shapes
 
@@ -652,6 +658,7 @@ The distribution is **bimodal**: 26 declarations at `50%` and 27 at 2–4px, wit
 - **Diagonal caution band.** See Elevation — the stripe gradient is the system's only pattern.
 - **Icon tiles.** Operator cards close with two 44px tiles side by side: a monochrome profession glyph on `{colors.surface-2}` and a colour-filled element tile. The pairing is fixed; neither tile appears alone.
 - **Bottom accent strip.** Every operator card terminates in an 8px full-width colour strip, which is the card's only colour at rest.
+- **Cartographic & fiducial micro-graphics.** Structural intersections and container corners are anchored by `1px` `+` fiducial crosshairs (`6px–10px` arms in `{colors.hairline}` or `{colors.neutral-6}`), `//` double-slash taxonomy prefixes (`// OPERATORS`, `// SYSTEM`), and tiny stencil index numerals in `{typography.tech}`. These industrial CAD registration marks give the white ground its "survey blueprint" tension; omit them and the light ground collapses into a generic e-commerce grid.
 
 ## Components
 
@@ -737,11 +744,14 @@ The distribution is **bimodal**: 26 declarations at `50%` and 27 at 2–4px, wit
 - Colour **elements** and leave **professions** monochrome. The five element values are the entire coded palette.
 - Pair the profession tile and the element tile on every operator card; close the card with the 8px accent strip.
 - Track body and UI text slightly negative (−0.02em to −0.03em); reserve positive tracking for uppercase Gilroy.
+- Anchor light container grids with `1px` `+` fiducial crosshairs and `//` slash-prefixed taxonomy tags so the white ground reads as an industrial survey blueprint rather than a generic web page.
+- Apply the `×0.65` optical normalization factor (`button-primary` 64px, `subpage-tab` 108px, `subpage-header` 320px) when building for a static `1rem = 16px` desktop viewport without the 1080×1920 `rem` resizer script.
 - Gate hover styling behind `@media (any-hover:hover)`.
 
 ### Don't
 
 - Don't use pure black (#000000) as the canvas — the ground is #191919, and pure black is reserved for scrims.
+- Don't render raw 1920p-canvas `px` heights (`100px` buttons, `168px` tabs, `506px` headers) at 1:1 on a standard 1440×900 desktop viewport without `rem` scaling or the `×0.65` optical normalization factor.
 - Don't use two saturated accents in one view. Yellow is the system; green and magenta are signals, not decoration.
 - Don't put white type on `{colors.primary}`, or `{colors.ink-inverse}` on `{colors.canvas}`.
 - Don't mix the shape clusters — a 14px radius on a button is neither round nor square and reads as neither.
@@ -813,7 +823,8 @@ A document for either system is **self-contained** — the DESIGN.md format has 
 6. Reach for `{colors.primary}` for its five sanctioned roles only.
 7. Verify the two-grey discipline: light separations use `{colors.hairline}`, floating separations use the 10px shadow.
 8. Keep transitions at 0.2s; this system is faster than its sibling (0.3s) by design.
-9. Test in portrait before declaring done — the rem-scale recompute is where layouts break.
+9. Normalize component heights by `×0.65` if your target surface uses a static `16px` root instead of the 1080×1920 `rem` boot script, and punctuate grid intersections with `1px` `+` fiducial crosshairs.
+10. Test in portrait before declaring done — the rem-scale recompute is where layouts break.
 
 ## Known Gaps
 
@@ -821,7 +832,7 @@ A document for either system is **self-contained** — the DESIGN.md format has 
 - **Neutral steps are observed values, not a documented ladder.** The ten-step ramp is ordered by luminance from usage context; the intended ordering between #f2f2f2, #f0f0f0 and #fafafa is inferred rather than published.
 - **Element colours are sampled, not specified.** They are 5-bit-quantised dominant colours from the official `ele-*.jpg` icons (120×120, served by the official CDN), so each value is within roughly ±8 per channel of the source art. They are trustworthy as a *system* (five hues, one per element, with physical deliberately neutral) but should be re-sampled from lossless art before being used as production tokens.
 - **Profession colours do not exist.** All six `prof-*.jpg` icons quantise to a `#202020` glyph on a `#e0e0e0` field; profession is expressed by glyph shape, not hue. That is reported as the rule, not as missing data.
-- **rem values are canvas-relative.** Every dimension in this document is stated at the 16px root for the 1080×1920 reference canvas. The runtime root font size is computed from the viewport by a boot script, so a "100px" button is 100px only at that reference scale.
+- **rem values are canvas-relative (`×0.65` desktop optical factor).** Every dimension in the YAML front matter is stated at the `1rem = 16px` root for the **1080×1920 reference canvas**. Because the runtime root font size is dynamically scaled to the viewport by a boot script (~10.4px–12px on standard desktop screens), consumers building static `16px`-root web pages should use the `×0.65` optical normalization table under Layout.
 - **The local client yielded no in-game design data.** `E:\Hypergryph Launcher\games\Endfield Game` (45.05 GB) has a Unity IL2CPP layout, but `Endfield_Data\il2cpp_data\Metadata\global-metadata.dat` is a **0 KB placeholder** on this install, and `StreamingAssets` holds only 411 index/manifest files. No font, palette or layout evidence was obtainable from the client, and no bundle was decrypted. Everything in this document is from the official web surface.
 - **The home page's key visual is campaign art, not system colour.** The cold blue/violet hero (`雪松幽梦 / DREAMSCAPE OF WIND AND SNOW`) carries no tokens — the yellow, the black chrome and the white icon rail are the system; the art is content.
 - **One pairing in the token set fails WCAG AA by design**, and a linter will flag it: `{colors.neutral-4}` on `{colors.canvas-inverse}` inside `ghost-display` measures 1.41:1. It is a watermark read as texture, not as text, and is preserved because it is the light-ground counterpart of the sibling system's ghost type. The element tiles deliberately carry `{colors.on-primary}` dark type rather than white, so they stay legible without a second exception.
