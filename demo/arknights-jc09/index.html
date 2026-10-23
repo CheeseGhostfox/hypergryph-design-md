@@ -1364,7 +1364,7 @@ html, body {
           <button type="button" class="state-chip" data-state="off" id="btn-hint-toggle" title="高亮当前幕次的关键矛盾证词与物证">
             <span>推演辅助</span><strong id="hint-state-label">OFF</strong>
           </button>
-          <button type="button" class="state-chip" data-state="off" id="btn-audio-toggle" title="切换 Web Audio 实时合成审讯室声效">
+          <button type="button" class="state-chip" data-state="off" id="btn-audio-toggle" title="切换审讯室环境与交互声效">
             <span>声效合成</span><strong id="audio-state-label">OFF</strong>
           </button>
           <button type="button" class="btn-compact" id="btn-reset-save" title="清除本地审讯进度并重新开始">
@@ -1380,7 +1380,7 @@ html, body {
           <div class="nav-rail-tabs" role="tablist">
             <button type="button" class="nav-tab is-active" role="tab" aria-selected="true" data-view="witness" id="tab-witness">
               <span class="nav-tab-en">01 // WITNESS <kbd class="hotkey-badge">1</kbd></span>
-              <span class="nav-tab-zh">幸存者卡池 (6)</span>
+              <span class="nav-tab-zh">幸存者档案 (6)</span>
             </button>
             <button type="button" class="nav-tab" role="tab" aria-selected="false" data-view="synapse" id="tab-synapse">
               <span class="nav-tab-en">02 // SYNAPSE <kbd class="hotkey-badge">2</kbd></span>
@@ -1427,7 +1427,7 @@ html, body {
             <div class="view-header">
               <div class="view-header-title">
                 <span class="view-header-en">01 // SURVIVOR ROSTER</span>
-                <span class="view-header-zh">03 车厢六名幸存者 · 六阶神经覆写光晕分级（星标恒黄 #FEDC01）</span>
+                <span class="view-header-zh">03 车厢涉案乘员档案</span>
               </div>
               <span class="telemetry-chip" id="witness-active-code">WITNESS // W05 5★</span>
             </div>
@@ -1576,7 +1576,7 @@ html, body {
                         “全是我的错……列车驶入跨江大桥引桥时，车载毫米波雷达报了误警。我在 T-15 秒通过工程师维护终端强行发送了【紧急制动解除指令】，试图让列车保持巡航速度冲过传感器盲区，结果列车直接带着全速冲出了坍塌的桥面……”
                       </p>
                       <div style="padding:8px 10px;background-color:var(--c-panel-deep);border-left:3px solid var(--c-brand-yellow);font-size:var(--fs-body-sm);color:var(--c-ink-light-1);" id="w-forensic-note">
-                        <strong>取证台批注：</strong>顾言在事故后第一时间签署了认罪书，但他的脑波在叙述“T-15 秒解除制动”时呈现出高度规律的节拍器波形——像是背诵被写入的脚本，且需前往【02 // 17秒神经切片台】按配方拨动 7 态滤波开关方可剥离伪装。
+                        <strong>取证批注：</strong>顾言在事故后第一时间签署了认罪书，但她的脑波在叙述“T-15 秒解除制动”时呈现出高度规律的节拍器波形，且与转向架机械制动日志直接冲突。
                       </div>
                     </div>
 
@@ -1608,7 +1608,7 @@ html, body {
             <div class="view-header">
               <div class="view-header-title">
                 <span class="view-header-en">02 // 17-SEC NEURAL SYNAPSE SLICER</span>
-                <span class="view-header-zh">七态开关滤波矩阵（normal / on / off / select / selected / unselect / unselected）</span>
+                <span class="view-header-zh">T-17.0s 脑机信号去噪与残响分离</span>
               </div>
               <div style="display:flex;align-items:center;gap:var(--s-xs);">
                 <span class="telemetry-chip" id="synapse-target-badge">TARGET: W05 顾言</span>
@@ -1631,7 +1631,7 @@ html, body {
                   <button type="button" class="btn-compact" data-syn-witness="W06">6★ 严律</button>
                 </div>
                 <div style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-brand-yellow);" id="synapse-recipe-hint">
-                  目标解锁配方: CH1[ON] · CH2[SELECTED] · CH3[OFF] · CH4[ON]
+                  特征码: CH1[ON] · CH2[SELECTED] · CH3[OFF] · CH4[ON]
                 </div>
               </div>
 
@@ -1691,7 +1691,7 @@ html, body {
                 <div style="display:flex;flex-direction:column;justify-content:space-between;min-width:0;">
                   <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;">
                     <span style="font-family:var(--f-tech);font-size:var(--fs-label);color:var(--c-currency-blue);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" id="osc-status-title">
-                      WAVEFORM // 17.0s NEURAL ENVELOPE (点击上方七态开关匹配配方以解开深层残响)
+                      WAVEFORM // 17.0s NEURAL ENVELOPE
                     </span>
                     <span class="rarity-pill" id="osc-match-badge" style="background:var(--c-panel);color:var(--c-ink);">匹配度 25%</span>
                   </div>
@@ -1737,8 +1737,8 @@ html, body {
           <div class="view-panel ak-panel offset-plate" id="view-blackbox" role="tabpanel" aria-labelledby="tab-blackbox">
             <div class="view-header">
               <div class="view-header-title">
-                <span class="view-header-en">03 // PHYSICAL BLACKBOX & EXHIBITS</span>
-                <span class="view-header-zh">车载机械黑匣与现场打捞物证库 · 白色遮罩运行时染色（UIColorGraphic）</span>
+                <span class="view-header-en">03 // BLACKBOX & EXHIBITS</span>
+                <span class="view-header-zh">车载机械黑匣与河道打捞物证</span>
               </div>
               <span class="telemetry-chip" id="blackbox-active-code">EXHIBIT // B01 HYDRAULIC</span>
             </div>
@@ -1855,8 +1855,8 @@ html, body {
           <div class="view-panel ak-panel offset-plate" id="view-verdict" role="tabpanel" aria-labelledby="tab-verdict">
             <div class="view-header">
               <div class="view-header-title">
-                <span class="view-header-en">04 // CASE RECONSTRUCTION & VERDICT</span>
-                <span class="view-header-zh">四幕逻辑重构卷宗与第 09 号取证台终局裁决书</span>
+                <span class="view-header-en">04 // DOSSIER & VERDICT</span>
+                <span class="view-header-zh">四幕案情重构与终局公诉</span>
               </div>
               <span class="telemetry-chip" id="verdict-status-badge">CASE STATUS: IN PROGRESS</span>
             </div>
@@ -1879,10 +1879,10 @@ html, body {
                     第一幕：完美背锅者与静止的列车
                   </h2>
                   <p style="font-size:var(--fs-body);color:var(--c-ink-light-3);line-height:1.6;margin-bottom:10px;" id="dossier-act-body">
-                    跨江大桥坍塌当晚，03 车厢坠入深水航道，车内六人全数生还，但所有植入商用脑机接口的乘员均缺失了坠桥前 T-17.0s 至 T-00.0s 的原始记忆，仅剩高度一致的“列车全速冲出断桥”表层供词。智驾系统总架构师顾言主动认罪，声称自己在 T-15 秒误发了紧急制动解除指令。请将顾言的表层证词与物理黑匣制动曲线装填入右侧指证槽，击穿这层拙劣的顶罪谎言。
+                    跨江大桥坍塌当晚，03 车厢坠入深水航道，车内六人全数生还，但所有植入商用脑机接口的乘员均缺失了坠桥前 T-17.0s 至 T-00.0s 的原始记忆，仅剩高度一致的“列车全速冲出断桥”表层供词。智驾系统总架构师顾言主动认罪，声称自己在 T-15 秒误发了紧急制动解除指令。然而，机械转向架的物理磨损不会说谎。
                   </p>
                   <div style="padding:8px 10px;background-color:var(--c-panel-deep);border-left:3px solid var(--c-confirm-gold);font-size:var(--fs-body-sm);color:var(--c-ink-light-1);" id="dossier-act-conclusion">
-                    <strong>当前推演指引：</strong>在【01 幸存者卡池】装填 <code>W05-A 顾言表层供述</code>，在【03 黑匣与物证库】装填 <code>B-01 转向架液压抱死曲线</code>，点击右侧「执行逻辑击穿」。
+                    <strong>核心争点：</strong>顾言的表层认罪供述与 03 车厢主转向架机械制动盘的物理抱死时间轴是否存在根本矛盾。
                   </div>
                 </div>
 
@@ -1916,7 +1916,7 @@ html, body {
                     <span>[B] 签署 AI 故障免责协议（顺应最高督察）</span>
                   </button>
                   <button type="button" class="btn btn-primary" style="width:100%;height:46px;font-size:var(--fs-body-sm);" data-ending="silence" id="btn-ending-silence">
-                    <span>[C] 抹除密钥并私下归还琴音切片（静默封存）</span>
+                    <span>[C] 抹除密钥并私下归还琴音（静默封存）</span>
                   </button>
                 </div>
 
@@ -1937,11 +1937,9 @@ html, body {
               <button type="button" class="btn-compact" id="btn-clear-slots" style="height:22px;font-size:var(--fs-caption);">清空槽位</button>
             </div>
             <div style="font-size:var(--fs-body-sm);color:var(--c-brand-yellow);margin-bottom:4px;" id="inspector-act-goal">
-              第一幕目标：击穿“T-15秒软件解除制动冲出断桥”的顶罪伪证
+              ACT I // 核验“T-15s 软件解除制动冲出断桥”供词真伪
             </div>
-            <div style="padding:4px 8px;background-color:var(--c-surface-3);border-left:3px solid var(--c-currency-blue);font-size:var(--fs-caption);color:var(--c-ink-light-2);" id="live-next-step">
-              <strong>下一步指引：</strong>点击左下方「装填入槽 [A]」装填顾言供词，再去【03 物证库】装填 B-01。
-            </div>
+            <div style="padding:4px 8px;background-color:var(--c-surface-3);border-left:3px solid var(--c-currency-blue);font-size:var(--fs-caption);color:var(--c-ink-light-2);display:none;" id="live-next-step"></div>
           </div>
 
           <div class="inspector-slots-wrap" style="display:flex;flex-direction:column;gap:var(--s-xs);flex:1;justify-content:center;">
@@ -1952,10 +1950,10 @@ html, body {
                 <span id="slot-a-id">EMPTY</span>
               </div>
               <div style="font-size:var(--fs-body-sm);font-weight:500;color:var(--c-ink-light-2);margin:4px 0;" id="slot-a-title">
-                尚未装填（请在视图 01 或 03 点击装填）
+                未装填 // AWAITING INPUT
               </div>
               <div style="font-size:var(--fs-caption);color:var(--c-ink-disabled);" id="slot-a-summary">
-                等待脑机切片或物理黑匣输入…
+                等待证词切片或物证编号…
               </div>
             </div>
 
@@ -1966,17 +1964,17 @@ html, body {
                 <span id="slot-b-id">EMPTY</span>
               </div>
               <div style="font-size:var(--fs-body-sm);font-weight:500;color:var(--c-ink-light-2);margin:4px 0;" id="slot-b-title">
-                尚未装填（请在视图 01 或 03 点击装填）
+                未装填 // AWAITING INPUT
               </div>
               <div style="font-size:var(--fs-caption);color:var(--c-ink-disabled);" id="slot-b-summary">
-                等待第二项矛盾证据输入…
+                等待第二项比对证据…
               </div>
             </div>
           </div>
 
           <!-- Feedback Toast / Status Banner inside Inspector -->
           <div class="inspector-brief" style="padding:8px 10px;background-color:var(--c-canvas);border-left:3px solid var(--c-hairline);font-size:var(--fs-caption);color:var(--c-ink-light-1);min-height:44px;" id="inspector-feedback">
-            系统就绪：装填两项存在物理或时间戳冲突的证据后，按下方确认金按钮执行逻辑击穿。
+            待装填比对项。
           </div>
 
           <!-- Execute Contradiction Breakthrough Button -->
@@ -1989,12 +1987,12 @@ html, body {
       <!-- Bottom Tactical Status Bar (40px height) -->
       <footer class="bottom-bar">
         <div style="display:flex;align-items:center;gap:var(--s-sm);font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-ink-disabled);">
-          <span>DESIGN SPEC: <strong style="color:var(--c-ink);">ARKNIGHTS.MD (IN-GAME CLIENT UI)</strong></span>
-          <span>LATTICE: <strong style="color:var(--c-currency-blue);">1280×720 // 2PX GRID // ZERO ROOT SCROLL</strong></span>
-          <span>CHROME: <strong style="color:var(--c-brand-yellow);">#FEFEFE MASK + UICOLORGRAPHIC</strong></span>
+          <span>TERMINAL: <strong style="color:var(--c-ink);">JC-09 // JUDICIAL FORENSICS</strong></span>
+          <span>SECTOR: <strong style="color:var(--c-currency-blue);">BRIDGE-K9 // CARRIAGE 03</strong></span>
+          <span>AUTH: <strong style="color:var(--c-brand-yellow);">ROOT-0x7F // ENCRYPTED</strong></span>
         </div>
         <div style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-ink-light-1);" id="bottom-live-log">
-          [LOG] 寒鸦审讯室第 09 号记忆取证台已挂载 · 快捷键 1-4 切换视图 / Space 执行比对
+          [LOG] 寒鸦审讯室第 09 号记忆取证台已就绪
         </div>
       </footer>
     </main>
@@ -2029,12 +2027,12 @@ html, body {
               <span class="rarity-pill" style="background:var(--c-primary);color:var(--c-on-primary);">STEP 01 // 查阅供词</span>
               <span style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-currency-blue);">VIEW 01 [快捷键 1]</span>
             </div>
-            <div style="font-size:var(--fs-row-title);font-weight:700;color:var(--c-ink);margin:4px 0;">点选六阶角色卡并装填供述</div>
+            <div style="font-size:var(--fs-row-title);font-weight:700;color:var(--c-ink);margin:4px 0;">点选乘员档案并装填供述</div>
             <p style="font-size:var(--fs-body-sm);color:var(--c-ink-light-1);line-height:1.45;flex:1;">
-              在【01 幸存者卡池】点击任意角色卡查阅其二次元构成主义立绘与供词。发现可疑供述后，点击右下角 <strong>「装填入槽 [A]」</strong> 或 <strong>「[B]」</strong>。
+              在【01 幸存者档案】点选涉案乘员查阅其脑机采样与供词。发现可疑供述后，点击右下角 <strong>「装填入槽 [A]」</strong> 或 <strong>「[B]」</strong>。
             </p>
             <button type="button" class="btn-compact" data-guide-jump="witness">
-              <span>前往 01 幸存者卡池 →</span>
+              <span>前往 01 幸存者档案 →</span>
             </button>
           </div>
 
@@ -2043,9 +2041,9 @@ html, body {
               <span class="rarity-pill" style="background:var(--c-brand-yellow);color:var(--c-canvas);">STEP 02 // 七态破译</span>
               <span style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-brand-yellow);">VIEW 02 [快捷键 2]</span>
             </div>
-            <div style="font-size:var(--fs-row-title);font-weight:700;color:var(--c-ink);margin:4px 0;">拨动七态开关剥离假记忆</div>
+            <div style="font-size:var(--fs-row-title);font-weight:700;color:var(--c-ink);margin:4px 0;">校准滤波通道剥离假记忆</div>
             <p style="font-size:var(--fs-body-sm);color:var(--c-ink-light-1);line-height:1.45;flex:1;">
-              角色的深层真话被加密锁死。前往【02 17秒神经切片台】，按提示拨动 4 组<strong>七态滤波开关</strong>（或直接点击右上角<strong>「校准目标特征码」</strong>），再点击<strong>「执行深层剥离」</strong>即可解锁该角色的 <code>LAYER B 深层残响</code> 与觉醒立绘！
+              乘员的深层记忆已被加密掩码锁死。前往【02 17秒神经切片台】，按特征码拨动 4 组<strong>滤波通道</strong>（或点击右上角<strong>「校准目标特征码」</strong>），再点击<strong>「执行深层剥离」</strong>即可还原 <code>LAYER B 深层残响</code>。
             </p>
             <button type="button" class="btn-compact" data-guide-jump="synapse">
               <span>前往 02 神经切片台 →</span>
@@ -2239,7 +2237,7 @@ window.JC09_WITNESSES = {
       title: '沈听澜表层笔录：失控的警报与耳鸣',
       summary: '记忆被强声波震碎，仅记得刺耳的防空蜂鸣与身体失重感。',
       text: '“我没有植入脑机接口，靠左耳的骨传导助听器辨别方向。列车进桥前我原本在闭目调校一枚标准音叉。突然间，助听器里炸开了一阵极其尖锐的高频啸叫，震得我颅骨剧痛、当场跌倒在过道上。等我再恢复听觉时，江水已经漫过了我的脚踝……我以为那就是脱轨撞击的声音。”',
-      note: '取证台批注：沈听澜是全车唯一没有商用脑机接口的乘员，因此覆盖全车厢的无线神经篡改协议无法改写她的大脑。但她的骨传导助听器闪存里留下了一段被强声波掩盖的底噪，需在【02 切片台】开启「声学反相 = ON」与「痛觉剥离 = SELECTED」将其分离。'
+      note: '取证批注：沈听澜是全车唯一未植入商用脑机接口的乘员，无线神经覆写协议对她无效；其左耳骨传导助听器闪存内仍留有一段被强声波掩盖的原始底噪。'
     },
     deep: {
       clipId: 'CLIP [W01-B] // T-11.5s 骨传导反相还原录音',
@@ -2247,7 +2245,7 @@ window.JC09_WITNESSES = {
       title: '沈听澜深层记忆：静止车厢里的落锁声与 440Hz 充能脉冲',
       summary: '车体在 T-17s 已完全静止，听见乘务员反锁气密门与医用磁脉冲仪充能。',
       text: '“【声学反相滤波完成后，刺耳的伪造警报被抵消，露出绝对安静的车厢底噪】……不对，列车根本没有在晃！地板一点震动都没有，车早就停稳了！我听见实习乘务员周野喘着粗气把前后的气密门机械插销推死了，接着高跟鞋停在我头顶——是温莎医生的声音，她对着电话那头低声说：‘盲人的骨传导器录下了您刚才的话，脑机覆写对她无效，我得用经颅磁脉冲直接烧掉她的海马体短时记忆区……’”',
-      note: '核心突破：沈听澜的骨传导录音铁证如山地证明——在坠桥前那消失的 17 秒里，03 车厢不仅完全静止，而且被人为锁死成了一间密室！可用此深层切片击穿 2★ 周野的疏散谎言。'
+      note: '取证批注：骨传导反相声轨证实，在坠桥前消失的 17 秒内，03 车厢处于完全静止状态，且前后气密门已被从内部手动反锁。'
     }
   },
   W02: {
@@ -2269,7 +2267,7 @@ window.JC09_WITNESSES = {
       title: '周野表层供述：在剧烈颠簸中开门疏散乘客',
       summary: '声称车厢在 T-14s 剧烈摇晃，自己一直试图拉开气密门疏散众人。',
       text: '“当时车身摇晃得连站都站不稳！警报灯全红了，我按照乘务手册冲到 03 车厢前端，拼命去扳气密门的紧急解锁把手，想把大家往 02 车厢疏散。可是车门被变形的船体框架卡死了，直到整节车厢掉进江里，我都没能把门打开……”',
-      note: '取证台批注：周野的表层供述声称她在“剧烈摇晃中试图开门疏散”，这与 1★ 沈听澜骨传导还原出的“静止车厢内亲手推死门锁”以及 03 车厢气密门日志直接冲突。'
+      note: '取证批注：周野声称自己在“剧烈摇晃中试图开门疏散”，与 03 车厢气密门机械锁舌的物理日志存在直接出入。'
     },
     deep: {
       clipId: 'CLIP [W02-B] // T-12.4s 边缘系统去钳制残响',
@@ -2277,7 +2275,7 @@ window.JC09_WITNESSES = {
       title: '周野深层残响：受安全员陆峥枪口胁迫反锁车门',
       summary: '承认在列车刹停后被陆峥用防暴电击枪指着头，亲手反锁了前后气密门。',
       text: '“【边缘系统植入的脱轨恐慌被剥离】……别开枪！我锁，我现在就锁！列车猛地刹停在断桥边上的时候，安全员陆峥一把揪住我的衣领，把防暴脉冲枪顶在我后颈的脑机接口上，命令我用乘务员机械钥匙把 03 与 02 车厢之间的气密门彻底反锁，不准任何一名前排乘客跑过来。我看见车厢尽头那个戴金丝眼镜的六号首长正冷冷地看着我……”',
-      note: '取证台批注：周野只是链条最底端的从犯。真正控制物理隔断并拔掉副黑匣保险丝的是 3★ 列车安全员陆峥。'
+      note: '取证批注：周野系受安全员陆峥胁迫执行物理封门；其残响提及 03-F 座存在一名统筹全局的高阶官员。'
     }
   },
   W03: {
@@ -2299,7 +2297,7 @@ window.JC09_WITNESSES = {
       title: '陆峥表层供述：指控顾言违规接入驾驶台',
       summary: '声称自己全程在座位上固定安全带，目睹顾言用终端破坏制动。',
       text: '“作为跟车安全员，我在冲击发生前一直系着四点式安全带坐在 C 座。我亲眼看见 5 座的架构师顾言打开了工程调试平板，嘴里喊着什么‘雷达误报’，然后列车就失去了制动力。我连解开安全带去制止她的时间都没有，车厢就已经坠江了。”',
-      note: '取证台批注：陆峥的军规脑机设置了战术掩码，将自己摘得一干二净。但车钩爆炸螺栓的雷管激发电流与她的安全员战术手环存在毫秒级同步。'
+      note: '取证批注：陆峥的军规脑机扇区带有战术掩码，但其安全员手环在 T-00.0s 存在一次高电流脉冲发射记录。'
     },
     deep: {
       clipId: 'CLIP [W03-B] // T-03.8s 战术掩码击穿切片',
@@ -2307,7 +2305,7 @@ window.JC09_WITNESSES = {
       title: '陆峥深层残响：安装车钩分离雷管并听令于六号首长',
       summary: '承认在 T-03.8s 按下车钩爆炸螺栓起爆器，人为制造单节车厢坠江。',
       text: '“【石英时钟同步还原】……列车早在断桥前停稳了。但六号座那位首长发现盲眼调音师没有脑机接口、温莎医生的磁脉冲也没能彻底抹掉她的听觉记忆后，首长看了一眼手表，对我说：‘既然洗不干净，就把 03 车厢变成一起彻底的断桥坠江事故。我们六个穿救生衣的死不了，但所有的现场痕迹都会沉进三十米深的江底。’我在 T-00.0 秒按下了 02 与 03 车厢连接处的爆炸螺栓起爆器。”',
-      note: '关键证据：03 车厢根本不是因为桥面坍塌而顺势滑落，而是停稳 17 秒后被陆峥人为引爆车钩分离螺栓推下断桥的！'
+      note: '取证批注：03 车厢并非因引桥坍塌自然滑落，而是在刹停 17 秒后被人为引爆车钩分离螺栓推入江中。'
     }
   },
   W04: {
@@ -2329,7 +2327,7 @@ window.JC09_WITNESSES = {
       title: '温莎·林表层供述：使用便携除颤仪抢救休克的调音师',
       summary: '声称自己打开随身医疗箱是为了对休克的沈听澜进行心肺复苏。',
       text: '“沈小姐在急刹车时撞伤了头部倒在过道里。出于医生的本能，我立刻打开随身携带的神经急救箱，在 T-09 秒左右启动了便携式神经电刺激仪，试图稳定她的迷走神经反射。车厢里的 440Hz 蜂鸣声只是医疗仪器的正常自检音，绝不是什么记忆清洗设备！”',
-      note: '取证台批注：温莎·林试图把便携式经颅覆写仪解释为普通急救设备。请先在【02 切片台】破译她的 4★ 深层切片，再与【03 物证库】中的 B-04 覆写仪授权签名比对。'
+      note: '取证批注：温莎·林声称所携设备为普通神经急救仪，但其海马体记忆区带有明显的临床级波形伪装。'
     },
     deep: {
       clipId: 'CLIP [W04-B] // T-08.8s 临床伪装剥离切片',
@@ -2337,7 +2335,7 @@ window.JC09_WITNESSES = {
       title: '温莎·林深层残响：向 03-F 座最高督察请求司法豁免权签名',
       summary: '承认使用违禁经颅覆写仪，并要求 03-F 座的严律督察输入最高司法授权码。',
       text: '“【痛觉与情绪双通道剥离】……我的手在发抖，便携式经颅覆写仪的电容正在以 440Hz 满负荷充能。我转过头对着坐在 03-F 阴影里的严律督察喊道：‘严督察，私自对无脑机公民使用高能磁脉冲会触发医疗器械黑匣锁死！您必须现在把您的司法部最高督察密钥插进我的设备里签署豁免，否则我绝不按下发射键！’一秒钟后，她的硬件密钥插进了我的终端，屏幕亮起了 0x7F-YAN 的绿灯……”',
-      note: '核心突破：温莎·林的深层切片直接锁定了坐在 03-F 座的幕后主使——持有司法部最高督察密钥（0x7F-YAN）的第六名乘客！可与【物证 B-04】进行第三幕逻辑击穿。'
+      note: '取证批注：温莎·林的深层残响证实，03-F 座乘员当场使用硬件密钥（0x7F-YAN）解除了经颅磁刺激仪的功率锁。'
     }
   },
   W05: {
@@ -2359,7 +2357,7 @@ window.JC09_WITNESSES = {
       title: '顾言表层供述：T-15秒通过终端人为解除紧急制动',
       summary: '主动背锅，声称自己在 T-15s 解除了紧急制动导致列车全速冲出断桥。',
       text: '“全是我的错……列车驶入跨江大桥引桥时，车载毫米波雷达报了误警。我在 T-15 秒通过工程师维护终端强行发送了【紧急制动解除指令】，试图让列车保持巡航速度冲过传感器盲区，结果列车直接带着全速冲出了坍塌的桥面……”',
-      note: '取证台批注：顾言在事故后第一时间签署了认罪书，但她的供述与【03 物证库】中不可篡改的 B-01 转向架液压抱死物理曲线正面冲突！这是第一幕逻辑击穿的突破口。'
+      note: '取证批注：顾言在事故后第一时间签署了认罪书，但她的脑波在叙述“T-15 秒解除制动”时呈现出高度规律的节拍器波形，且与转向架机械制动日志直接冲突。'
     },
     deep: {
       clipId: 'CLIP [W05-B] // T-04.2s 源码级覆写协议逆向',
@@ -2367,7 +2365,7 @@ window.JC09_WITNESSES = {
       title: '顾言深层残响：用 17 秒虚假脱轨记忆覆盖全车厢脑机',
       summary: '承认自己并未解除刹车，而是在静止的 17 秒内向全车乘员植入“高速冲出断桥”的假记忆。',
       text: '“【源码级双轨覆写破译成功】……刹车根本不是我关的，自动驾驶系统早在断桥前 4.2 米就完美刹停了！可就在停稳的那一秒，坐在我对面的严律督察亮出了我三年前挪用智驾算力私跑黑市模型的把柄。她命令我利用车载局域网，在 17 秒内把一段事先合成好的‘雷达误判、全速坠桥’假记忆无线刷进车厢所有人的脑机里，再由我出面顶下一桩交通肇事罪——因为过失致人重伤最多判三年，而她们真正在车厢里干的事一旦曝光，所有人都会把牢底坐穿！”',
-      note: '真相大白：所谓“17 秒空白与失控冲出断桥”，其实是顾言在静止的车厢里向全员脑机广播的合成剧本！'
+      note: '取证批注：全员一致的“全速冲出断桥”表层供词，实为顾言在静止车厢内通过车载局域网广播植入的合成记忆包。'
     }
   },
   W06: {
@@ -2389,7 +2387,7 @@ window.JC09_WITNESSES = {
       title: '严律表层指令：以督察身份督办断桥技术事故案',
       summary: '声称自己当晚在司法部大楼值班，要求 09 号取证台尽快按顾言认罪结案。',
       text: '“【寒鸦审讯室督办令】致第 09 号记忆取证台操作员：跨江专线 03 车厢坠桥一案事实清楚，智驾架构师顾言已对人为关闭制动系统的渎职行为供认不讳。本督察当晚坐镇司法部指挥中心，现授权你台在 20 分钟内完成形式核验并归档结案，切勿在无关证人的听觉幻觉上浪费司法算力。”',
-      note: '取证台批注：严律声称自己当晚远在司法部大楼指挥中心，但随着前三幕被逐一击穿，所有的加密签名都指向了 03 车厢最后一个空座位 03-F。请在第三幕击穿后前往【02 切片台】破译严律的 6★ 终极残响！'
+      note: '取证批注：严律声称案发当晚坐镇司法部大楼指挥中心，不在涉事列车上。'
     },
     deep: {
       clipId: 'CLIP [W06-B] // T-01.8s 6★ 终极黑洞残响',
@@ -2397,7 +2395,7 @@ window.JC09_WITNESSES = {
       title: '严律深层残响：车厢密谈泄露与“把黑匣交给09号台自审”',
       summary: '承认自己就在 03-F 座密谈非法神经监控法案，并在炸断车钩前指定由 09 号台结案。',
       text: '“【6★ 司法核心锁死被强行击穿】……T-18 秒，我正坐在 03-F 座与陆峥、温莎和顾言进行跨江密会，商定在下周上线的城市脑机固件里植入司法部后门‘寒鸦棱镜’。列车因前方引桥塌方急停的瞬间，前排那个瞎眼调音师的助听器跌落在地——我们四个人同时意识到，她那台没有联网的纯硬件骨传导器把刚才整整十分钟的违宪密谈录得一清二楚！我当场签发了 0x7F-YAN 豁免码命温莎洗掉她的记忆、命顾言刷写全车假记忆、命陆峥炸断车钩沉江。至于打捞上来的黑匣子？呵，直接派发给我麾下的第 09 号取证台——也就是你，我最信任的部下，亲手把它做成铁案。”',
-      note: '终局真相：正在审理此案的第 09 号取证台本身就在严律的管辖之下！将此 6★ 深层残响与【03 物证库】的 B-06 硬件密钥装填比对，即可完成第四幕终极击穿！'
+      note: '取证批注：严律督察本人即 03-F 座乘员，且直接持有着本台（第 09 号取证台）的底层硬件根密钥。'
     }
   }
 };
@@ -2454,7 +2452,7 @@ window.JC09_EXHIBITS = {
     tintClass: 'tint-cyan',
     summary: '物理记录显示列车在 T-17.0s 已彻底刹停（车速 0 km/h），未发生全速冲出断桥。',
     desc: '打捞自江底的 03 车厢主转向架机械制动盘磨损拓片与液压黑匣记录：早在 T-17.0 秒，机械急停卡钳即已完全锁死车轮，列车在断桥缺口前 4.2 米处彻底刹停（速度归零）。所谓“T-15 秒软件解除制动并全速冲出桥面”在物理上根本没有发生。',
-    note: '取证交叉点：既然列车在 T-17.0s 就已经稳稳停在桥面上，那么顾言表层供述中“T-15 秒解除制动全速冲出桥面”就是彻头彻尾的伪证！请将【B-01】与【W05-A 顾言表层供述】装填比对。',
+    note: '取证交叉点：列车在 T-17.0s 已彻底停稳，至 T-00.0s 车厢坠江的 17 秒内处于绝对静止状态。',
     svg: '<polyline fill="none" stroke-width="2.5" points="10,20 70,22 120,85 500,85"/><circle cx="120" cy="85" r="5"/><text x="130" y="76" font-family="Barlow, monospace" font-size="11" stroke="none">T-17.0s VELOCITY = 0.0 km/h (MECHANICAL LOCK)</text>'
   },
   B02: {
@@ -2467,7 +2465,7 @@ window.JC09_EXHIBITS = {
     tintClass: 'tint-green',
     summary: 'T-12.4s 气密门被乘务员钥匙从内部手动反锁，而非撞击变形卡死。',
     desc: '03 与 02 车厢连接处气密门的独立机械黑匣日志：在 T-12.4 秒，车门并未受到任何外部结构挤压，而是由编号 CW-02 的乘务员物理钥匙从 03 车厢内部逆时针旋转 180 度，主动落下了最高级别的防暴死锁插销。',
-    note: '取证交叉点：这与 2★ 实习乘务员周野“一直试图拉开气密门疏散乘客”的表层证词完全相反，并与 1★ 沈听澜深层骨传导录音中的落锁声严丝合缝。',
+    note: '取证交叉点：气密门系从 03 车厢内部由乘务员钥匙手动锁死，排除外部撞击变形卡死的可能。',
     svg: '<rect x="60" y="18" width="160" height="70" fill="none" stroke-width="2"/><rect x="260" y="18" width="160" height="70" fill="none" stroke-width="2"/><line x1="220" y1="53" x2="260" y2="53" stroke-width="4"/><circle cx="240" cy="53" r="9" fill="none" stroke-width="2"/><text x="75" y="48" font-family="Barlow, monospace" font-size="11" stroke="none">T-12.4s MANUAL DEADBOLT: LOCKED</text>'
   },
   B03: {
@@ -2480,7 +2478,7 @@ window.JC09_EXHIBITS = {
     tintClass: 'tint-yellow',
     summary: '无联网模组的骨传导闪存，记录到静止车厢内 440Hz 经颅磁脉冲充能声。',
     desc: '从 03 车厢座椅导轨缝隙中起获的左耳骨传导助听器。因该设备仅供视障调音师辅助辨音，内部无任何无线网络或商用脑机接口协议，故逃过了全车厢无线记忆覆写。其压电陶瓷传感器记录下了 T-11.5s 车厢完全静止时的锁门声与 440Hz 医用磁脉冲充能声。',
-    note: '取证交叉点：此物证为 1★ 沈听澜的深层记忆提供了物理支撑，证明车厢在静止的 17 秒内变成了临时记忆清洗手术室。',
+    note: '取证交叉点：纯硬件压电采样证实，车厢在静止的 17 秒内曾启动高能医用磁脉冲设备。',
     svg: '<path d="M 20 55 C 80 55 110 15 170 55 C 230 95 270 15 330 55 C 390 95 430 55 500 55" fill="none" stroke-width="2"/><line x1="250" y1="12" x2="250" y2="96" stroke-width="1.5" stroke-dasharray="3 2"/><text x="260" y="28" font-family="Barlow, monospace" font-size="11" stroke="none">440Hz TMS CAPACITOR CHARGE</text>'
   },
   B04: {
@@ -2493,7 +2491,7 @@ window.JC09_EXHIBITS = {
     tintClass: 'tint-violet',
     summary: '温莎医师的医疗箱覆写仪在 T-09.2s 接收了 0x7F-YAN 最高司法督察密钥的当场物理插卡授权。',
     desc: '圣卢克医院配发给温莎·林医师的便携式经颅磁刺激仪底层安全日志：该设备在 T-09.2 秒解除了临床安全功率限制（提升至记忆擦除级 3.2 Tesla）。解除安全锁的方式并非远程网络指令，而是通过 USB-C 物理接口直接插入了一枚签名号为【0x7F-YAN】的司法部最高督察硬件密钥。',
-    note: '取证交叉点：物理插卡意味着持有【0x7F-YAN】密钥的最高督察本人当时就在 03 车厢内！将【B-04】与破译后的【W04-B 温莎·林深层残响】装填比对，可完成第三幕逻辑击穿！',
+    note: '取证交叉点：USB-C 物理插卡日志证明，持有【0x7F-YAN】硬件密钥的最高督察案发时身处 03 车厢内。',
     svg: '<rect x="30" y="25" width="180" height="55" fill="none" stroke-width="2"/><rect x="300" y="25" width="180" height="55" fill="none" stroke-width="2"/><line x1="210" y1="52" x2="300" y2="52" stroke-width="2.5" stroke-dasharray="6 3"/><circle cx="255" cy="52" r="6"/><text x="45" y="57" font-family="Barlow, monospace" font-size="11" stroke="none">MED-TMS UNIT</text><text x="315" y="57" font-family="Barlow, monospace" font-size="11" stroke="none">KEY: 0x7F-YAN (IN CAR)</text>'
   },
   B05: {
@@ -2506,7 +2504,7 @@ window.JC09_EXHIBITS = {
     tintClass: 'tint-gold',
     summary: '02 与 03 车厢之间的车钩并非拉断，而是在 T-00.0s 被安全员手动引爆分离。',
     desc: '车厢连接处打捞出的特种合金断口金相分析报告：断口呈现典型的聚能切割光滑切面，残留叠氮化铅起爆药微粒。起爆信号来自 03 车厢安全员陆峥佩戴的战术手环，激发时刻恰为 T-00.0 秒——即全车记忆清洗与假记忆刷写完成的那一瞬间。',
-    note: '取证交叉点：印证了 3★ 陆峥深层残响中的供述——坠江是为了彻底毁灭车厢内的记忆清洗现场。',
+    note: '取证交叉点：车钩系在记忆覆写完成瞬间由安全员手环激发聚能雷管主动切断。',
     svg: '<line x1="40" y1="52" x2="220" y2="52" stroke-width="5"/><line x1="290" y1="52" x2="470" y2="52" stroke-width="5"/><polygon points="255,18 270,42 295,48 270,60 255,88 240,60 215,48 240,42" fill="none" stroke-width="2"/><text x="170" y="100" font-family="Barlow, monospace" font-size="11" stroke="none">T-00.0s PYROTECHNIC SEPARATION</text>'
   },
   B06: {
@@ -2519,7 +2517,7 @@ window.JC09_EXHIBITS = {
     tintClass: 'tint-danger',
     summary: '当前这台“寒鸦 09 号取证台”的最高硬件授权密钥正是 0x7F-YAN（严律督察本人）。',
     desc: '调取你正在操作的这台【寒鸦审讯室：第 09 号记忆取证台】主板 TPM 安全芯片的根证书日志：本终端的最高督察硬件密钥序列号正是【0x7F-YAN】，持有人为司法部特别调查委员会最高督察严律——且该物理密钥在今早 06:15 刚刚插入本机签署了《03 车厢速裁督办令》，外壳残留有江水氯离子腐蚀痕迹。',
-    note: '终局铁证：把【B-06 寒鸦09号台最高督察硬件密钥】与破译后的【W06-B 严律 6★ 深层残响】（或【W06-A 严律表层指令】）装填入指证槽执行最后一次击穿，揭开整桩案件的终极黑幕！',
+    note: '取证交叉点：在 03 车厢内解锁经颅覆写仪的硬件密钥【0x7F-YAN】，与本机最高督察根证书完全同源。',
     svg: '<rect x="140" y="20" width="240" height="65" fill="none" stroke-width="2"/><circle cx="180" cy="52" r="14" fill="none" stroke-width="2"/><line x1="210" y1="42" x2="350" y2="42" stroke-width="2"/><line x1="210" y1="62" x2="310" y2="62" stroke-width="2"/><text x="210" y="34" font-family="Barlow, monospace" font-size="11" stroke="none">ROOT KEY: 0x7F-YAN // JC-09</text>'
   }
 };
@@ -2528,10 +2526,11 @@ window.JC09_ACTS = {
   1: {
     act: 1,
     name: '完美背锅者',
-    goal: '第一幕目标：击穿“顾言在 T-15s 软件解除制动导致全速冲出断桥”的顶罪伪证',
+    goal: 'ACT I // 核验“T-15s 软件解除制动冲出断桥”供词真伪',
     heading: '第一幕：完美背锅者与静止的列车',
     body: '跨江大桥坍塌当晚，03 车厢坠入深水航道，车内六人全数生还，但所有植入商用脑机接口的乘员均缺失了坠桥前 T-17.0s 至 T-00.0s 的原始记忆，仅剩高度一致的“列车全速冲出断桥”表层供词。智驾系统总架构师顾言主动认罪，声称自己在 T-15 秒误发了紧急制动解除指令。然而，机械转向架的物理磨损不会说谎。',
-    guide: '当前推演指引：在【01 幸存者卡池】选中 5★ 顾言并装填 <code>W05-A 顾言表层供述</code>，在【03 黑匣与物证库】选中并装填 <code>B-01 转向架液压抱死曲线</code>，点击右侧「执行逻辑击穿」。',
+    guide: '<strong>核心争点：</strong>顾言的表层认罪供述与 03 车厢主转向架机械制动盘的物理抱死时间轴是否存在根本矛盾。',
+    conclusion: '<strong>归档结论：</strong>03 车厢在 T-17.0s 已彻底刹停于桥面，所谓“全速冲出断桥”系植入的合成伪证。',
     unlockedBody: '【第一幕已击穿】物理液压曲线证明列车早在 T-17.0 秒就已在断桥前 4.2 米处完全刹停！顾言所谓的“T-15 秒软件解除制动冲出桥面”是彻头彻尾的伪证。这说明在坠桥前那消失的 17 秒里，03 车厢实际上稳稳地停在桥面上。既然车是静止的，车厢里究竟发生了什么？',
     validPairs: [
       ['W05-A', 'B01'],
@@ -2543,10 +2542,11 @@ window.JC09_ACTS = {
   2: {
     act: 2,
     name: '静止的十七秒',
-    goal: '第二幕目标：破译 1★ 沈听澜深层骨传导录音，击穿 2★ 乘务员周野“开门疏散”的谎言',
+    goal: 'ACT II // 核验静止的 17 秒内 03 车厢气密门封锁真相',
     heading: '第二幕：静止车厢里的落锁声与 440Hz 充能',
     body: '列车明明停稳了整整 17 秒，为什么 2★ 实习乘务员周野仍一口咬定“车厢剧烈颠簸、自己一直在试图拉开气密门疏散乘客”？全车唯一没有脑机接口的 1★ 盲眼调音师沈听澜，其骨传导助听器里记录下了被高频啸叫掩盖的真实车厢底噪。',
-    guide: '当前推演指引：先前往【02 17秒神经切片台】选中 <code>1★ 沈听澜</code>，将七态开关拨至 <code>CH1[ON] · CH2[SELECTED] · CH3[OFF] · CH4[NORMAL]</code>（或点击「校准目标特征码」）并点击「执行深层剥离」；随后将破译出的 <code>W01-B 沈听澜深层记忆</code> 与 <code>W02-A 周野表层供述</code>（或 <code>B-02 气密门反锁日志</code>）装填比对！',
+    guide: '<strong>核心争点：</strong>03 车厢前后气密门究竟是因撞击变形卡死，还是在静止状态下被人为从内部反锁。',
+    conclusion: '<strong>归档结论：</strong>03 车厢在刹停后被从内部手动锁死隔离，车内曾启动 440Hz 经颅磁脉冲设备。',
     unlockedBody: '【第二幕已击穿】沈听澜的骨传导录音与气密门日志共同证实：03 车厢在刹停后立刻被周野从内部用机械钥匙死锁！在静止的 17 秒里，03 车厢被人为隔离成了一间密室，而 4★ 神经外科医师温莎·林正在启动 440Hz 经颅磁脉冲仪，企图抹除沈听澜无意中听见的某段对话！',
     validPairs: [
       ['W01-B', 'W02-A'],
@@ -2560,10 +2560,11 @@ window.JC09_ACTS = {
   3: {
     act: 3,
     name: '共谋手术刀',
-    goal: '第三幕目标：破译 4★ 温莎·林医师的深层切片，锁定车厢内签署豁免码的第六名核心人物',
+    goal: 'ACT III // 追查解除经颅磁脉冲功率锁的现场最高授权人',
     heading: '第三幕：共谋手术刀与 03-F 座的幽灵授权',
     body: '为什么要冒着全车陪葬的风险，在 17 秒内对一名盲眼调音师进行现场记忆清洗？温莎·林医师表层声称自己只是在使用急救除颤仪，但医疗器械底层安全日志显示，有人在 T-09.2 秒将一枚最高级别的硬件密钥物理插进了她的设备，强行解除了临床功率限制。',
-    guide: '当前推演指引：前往【02 17秒神经切片台】选中 <code>4★ 温莎·林</code>，按配方拨动七态开关（或点击「校准目标特征码」）解锁其深层记忆；然后将 <code>W04-B 温莎·林深层残响</code> 与【03 物证库】中的 <code>B-04 便携式经颅覆写仪 MAC 签名</code> 装填比对！',
+    guide: '<strong>核心争点：</strong>温莎·林的医疗器械安全锁系由何人在 03 车厢现场通过物理插卡解除。',
+    conclusion: '<strong>归档结论：</strong>持有【0x7F-YAN】硬件密钥的司法部最高督察严律当晚就在 03-F 座现场指挥清洗。',
     unlockedBody: '【第三幕已击穿】温莎·林的深层记忆与 B-04 硬件握手包彻底撕开了共谋网：坐在 03-F 座的正是持有司法部最高督察密钥（0x7F-YAN）的严律！她与陆峥、温莎、顾言在车厢内密谋向城市脑机固件植入非法监控后门“寒鸦棱镜”，因急停时被盲眼调音师的骨传导器录下全程，严律当场下令洗脑、刷写假记忆并炸断车钩沉江！',
     validPairs: [
       ['W04-B', 'B04'],
@@ -2577,11 +2578,12 @@ window.JC09_ACTS = {
   4: {
     act: 4,
     name: '寒鸦照影',
-    goal: '第四幕目标：破译 6★ 严律督察的终极残响，与第 09 号取证台自身的根密钥完成终极指证',
+    goal: 'ACT IV // 比对 03-F 座督察密钥与第 09 号取证台本机根证书',
     heading: '第四幕：寒鸦照影 —— 审判者即同谋',
-    body: '6★ 炽橙光晕卡片上的严律督察，在案发后以特别调查委员会最高督察的身份向你下达了《速裁督办令》，谎称自己当晚坐镇司法部大楼。然而，你正在操作的这台「寒鸦 09 号记忆取证台」主板根证书上，赫然烙印着同一枚刚刚从江水里捞出来的硬件密钥序列号。',
-    guide: '当前推演指引：前往【02 17秒神经切片台】选中 <code>6★ 严律</code>，将七态开关拨至 <code>CH1[ON] · CH2[ON] · CH3[SELECTED] · CH4[SELECTED]</code>（或点击「校准目标特征码」）破译 6★ 终极残响；再将 <code>W06-B 严律深层残响</code>（或 <code>W06-A</code>）与【03 物证库】的 <code>B-06 寒鸦09号台最高督察硬件密钥</code> 装填执行最终击穿！',
-    unlockedBody: '【第四幕终极击穿完成】所有的逻辑锁均已瓦解！严律不仅在 03-F 座亲自指挥了那 17 秒的记忆清洗与炸钩沉江，而且特意将打捞出的黑匣指派给她麾下的第 09 号取证台——因为她笃定你不敢背叛自己的最高长官。现在，请前往【04 审讯卷宗与公诉】签署你的终局裁决！',
+    body: '严律督察在案发后以特别调查委员会最高督察的身份向你下达了《速裁督办令》，谎称自己当晚坐镇司法部大楼。然而，你正在操作的这台「寒鸦 09 号记忆取证台」主板根证书上，赫然烙印着同一枚刚刚从江水里捞出来的硬件密钥序列号。',
+    guide: '<strong>核心争点：</strong>签发《速裁督办令》的最高督察严律，与 03-F 座现场下令炸钩灭口的密钥持有人是否为同一人。',
+    conclusion: '<strong>归档结论：</strong>全部四幕伪证链已瓦解，主审官严律即 03-F 座主谋。',
+    unlockedBody: '【第四幕终极击穿完成】所有的逻辑锁均已瓦解！严律不仅在 03-F 座亲自指挥了那 17 秒的记忆清洗与炸钩沉江，而且特意将打捞出的黑匣指派给她麾下的第 09 号取证台——因为她笃定你不敢背叛自己的最高长官。现在，终端的最后一次公诉签名权握在你的手中。',
     validPairs: [
       ['W06-B', 'B06'],
       ['W06-A', 'B06'],
@@ -2596,17 +2598,17 @@ window.JC09_ENDINGS = {
   broadcast: {
     code: 'VERDICT-A // FULL-NET BROADCAST',
     title: '终局裁决 [A]：破晓骨传导 · 全网强制公诉',
-    text: '你按下了确认金键（#E8C400），用第 09 号取证台的底层根权限将沈听澜助听器里的 17 秒原始反相音频与 0x7F-YAN 密钥握手包同步广播至全城司法内网与公共媒体节点。三分钟后，寒鸦审讯室的备用电源被外部强行切断，防暴靴的脚步声在走廊尽头响起——但你的屏幕在熄灭前已收到 1,420 个公诉节点的镜像回执。“寒鸦棱镜”后门法案当夜流产，盲眼调音师在听证席上举起了那枚 440Hz 的标准音叉。'
+    text: '你用第 09 号取证台的底层根权限将沈听澜助听器里的 17 秒原始反相音频与 0x7F-YAN 密钥握手包同步广播至全城司法内网与公共媒体节点。三分钟后，寒鸦审讯室的备用电源被外部强行切断，防暴靴的脚步声在走廊尽头响起——但你的屏幕在熄灭前已收到 1,420 个公诉节点的镜像回执。“寒鸦棱镜”后门法案当夜流产，盲眼调音师在听证席上举起了那枚 440Hz 的标准音叉。'
   },
   coverup: {
     code: 'VERDICT-B // PROTOCOL OVERRIDE',
     title: '终局裁决 [B]：深水铁案 · 顺应最高督察协议',
-    text: '你按下了危险红键（#EC3140），执行了严律督察预设的格式化指令。骨传导反相声轨与 0x7F-YAN 签名在高温覆写扇区中化为乱码，结案报告定格为“智驾系统总架构师顾言操作失误导致单节车厢脱钩坠江”。次日清晨，你的工牌权限升格为特别调查委员会一级审查官，而沈听澜收到了圣卢克医院寄来的“创伤性听觉幻觉”诊断书。第 09 号取证台依旧安静运转，像一只从未开口的寒鸦。'
+    text: '你执行了严律督察预设的格式化指令。骨传导反相声轨与 0x7F-YAN 签名在高温覆写扇区中化为乱码，结案报告定格为“智驾系统总架构师顾言操作失误导致单节车厢脱钩坠江”。次日清晨，你的工牌权限升格为特别调查委员会一级审查官，而沈听澜收到了圣卢克医院寄来的“创伤性听觉幻觉”诊断书。第 09 号取证台依旧安静运转，像一只从未开口的寒鸦。'
   },
   silence: {
     code: 'VERDICT-C // PHANTOM ARCHIVE',
     title: '终局裁决 [C]：空白音叉 · 证据链永久静默',
-    text: '你按下了品牌蓝键（#0098DC），没有触发全网警报，也没有签署顾言的顶罪书，而是利用 09 号台的硬件漏洞将本案状态永久锁定为“黑匣扇区物理损毁 · 无法结案”。在销毁主机的最后一秒，你将那段未受污染的 440Hz 琴音与严律的原声切片拷入一枚离线骨传导芯片，匿名寄往了沈听澜的调音工作室。真正的审判不在受控的终端里，而在走出这间审讯室之后。'
+    text: '你没有触发全网警报，也没有签署顾言的顶罪书，而是利用 09 号台的硬件漏洞将本案状态永久锁定为“黑匣扇区物理损毁 · 无法结案”。在销毁主机的最后一秒，你将那段未受污染的 440Hz 琴音与严律的原声切片拷入一枚离线骨传导芯片，匿名寄往了沈听澜的调音工作室。真正的审判不在受控的终端里，而在走出这间审讯室之后。'
   }
 };
 </script>
@@ -2813,7 +2815,7 @@ window.JC09_ENDINGS = {
 
     const decryptStatus = document.getElementById('w-decrypt-status');
     if (decryptStatus) {
-      decryptStatus.textContent = isDeepUnlocked ? '深层残响已破译' : '待七态滤波破译';
+      decryptStatus.textContent = isDeepUnlocked ? '深层残响已破译' : '待滤波破译';
       decryptStatus.style.color = isDeepUnlocked ? 'var(--c-accent-green)' : 'var(--c-brand-yellow)';
     }
 
@@ -2877,7 +2879,7 @@ window.JC09_ENDINGS = {
 
     const recipeHint = document.getElementById('synapse-recipe-hint');
     if (recipeHint) {
-      recipeHint.textContent = '目标解锁配方: ' + w.recipeLabel;
+      recipeHint.textContent = '特征码: ' + w.recipeLabel;
     }
 
     for (let i = 0; i < 4; i++) {
@@ -2920,8 +2922,8 @@ window.JC09_ENDINGS = {
     const oscTitle = document.getElementById('osc-status-title');
     if (oscTitle) {
       oscTitle.textContent = (matched === 4 || isUnlocked)
-        ? 'WAVEFORM // 17.0s 神经掩码已对齐！可点击右下角「执行深层剥离并查阅证词」'
-        : 'WAVEFORM // 17.0s NEURAL ENVELOPE (点击上方七态开关或「校准目标特征码」匹配配方)';
+        ? 'WAVEFORM // 17.0s NEURAL ENVELOPE — SIGNAL LOCKED'
+        : 'WAVEFORM // 17.0s NEURAL ENVELOPE';
     }
 
     // Update oscilloscope SVG path dynamically based on match count
@@ -3021,7 +3023,7 @@ window.JC09_ENDINGS = {
     }
     if (conclusionEl) {
       conclusionEl.innerHTML = isCompleted
-        ? actData.unlockedBody
+        ? (actData.conclusion || actData.unlockedBody)
         : actData.guide;
     }
 
@@ -3103,27 +3105,28 @@ window.JC09_ENDINGS = {
 
     const nextStepEl = document.getElementById('live-next-step');
     if (nextStepEl) {
+      nextStepEl.style.display = state.hintOn ? 'block' : 'none';
       let stepHint = '';
       if (state.completedActs.length >= 4) {
         stepHint = state.verdict
-          ? '<strong>已结案：</strong>终局裁决已生效，可随时切换视图查阅全卷宗。'
-          : '<strong>下一步指引：</strong>点击左栏【04 审讯卷宗与公诉】，在右侧选择三项终局裁决之一。';
+          ? '<strong>辅助提示：</strong>终局裁决已生效。'
+          : '<strong>辅助提示：</strong>在【04 审讯卷宗与公诉】右侧选择终局裁决。';
       } else if (state.slotA && state.slotB) {
-        stepHint = '<strong>下一步指引：</strong>双槽已就绪！请点击下方金色按钮「执行逻辑击穿 // VERIFY」。';
+        stepHint = '<strong>辅助提示：</strong>双槽已就绪，可执行逻辑击穿。';
       } else if (state.currentAct === 1) {
-        stepHint = '<strong>下一步指引：</strong>在【01 卡池】将 <code>5★ 顾言表层</code> 装入槽 [A]，再去【03 物证库】将 <code>B-01 液压曲线</code> 装入槽 [B]。';
+        stepHint = '<strong>辅助提示：</strong>比对 <code>W05-A 顾言表层</code> 与 <code>B-01 液压抱死曲线</code>。';
       } else if (state.currentAct === 2) {
         stepHint = state.unlockedDeep.W01
-          ? '<strong>下一步指引：</strong>将【01 卡池】<code>1★ 沈听澜深层(W01-B)</code> 装入槽 [A]，与【03 物证库】<code>B-02 气密门日志</code> 对撞！'
-          : '<strong>下一步指引：</strong>先去【02 切片台】点选 <code>1★ 沈听澜</code>，点击「校准目标特征码」与「执行深层剥离」。';
+          ? '<strong>辅助提示：</strong>比对 <code>W01-B 沈听澜深层</code> 与 <code>B-02 气密门日志</code>。'
+          : '<strong>辅助提示：</strong>先在【02 切片台】破译 <code>1★ 沈听澜</code>。';
       } else if (state.currentAct === 3) {
         stepHint = state.unlockedDeep.W04
-          ? '<strong>下一步指引：</strong>将【01 卡池】<code>4★ 温莎·林深层(W04-B)</code> 装入槽 [A]，与【03 物证库】<code>B-04 覆写仪签名</code> 对撞！'
-          : '<strong>下一步指引：</strong>先去【02 切片台】点选 <code>4★ 温莎·林</code>，点击「校准目标特征码」与「执行深层剥离」。';
+          ? '<strong>辅助提示：</strong>比对 <code>W04-B 温莎·林深层</code> 与 <code>B-04 覆写仪签名</code>。'
+          : '<strong>辅助提示：</strong>先在【02 切片台】破译 <code>4★ 温莎·林</code>。';
       } else {
         stepHint = state.unlockedDeep.W06
-          ? '<strong>下一步指引：</strong>将【01 卡池】<code>6★ 严律深层(W06-B)</code> 装入槽 [A]，与【03 物证库】<code>B-06 09号台根密钥</code> 对撞！'
-          : '<strong>下一步指引：</strong>先去【02 切片台】点选 <code>6★ 严律</code>，点击「校准目标特征码」与「执行深层剥离」。';
+          ? '<strong>辅助提示：</strong>比对 <code>W06-B 严律深层</code> 与 <code>B-06 09号台根密钥</code>。'
+          : '<strong>辅助提示：</strong>先在【02 切片台】破译 <code>6★ 严律</code>。';
       }
       nextStepEl.innerHTML = stepHint;
     }
@@ -3143,8 +3146,8 @@ window.JC09_ENDINGS = {
     if (!slotData) {
       box.classList.add('is-empty');
       if (idEl) idEl.textContent = 'EMPTY';
-      if (titleEl) titleEl.textContent = '尚未装填（请在视图 01 或 03 点击装填）';
-      if (sumEl) sumEl.textContent = '等待脑机切片或物理黑匣输入…';
+      if (titleEl) titleEl.textContent = '未装填 // AWAITING INPUT';
+      if (sumEl) sumEl.textContent = '等待证词切片或物证编号…';
     } else {
       box.classList.remove('is-empty');
       if (idEl) idEl.textContent = slotData.id;
@@ -3217,7 +3220,7 @@ window.JC09_ENDINGS = {
       const curActObj = window.JC09_ACTS[state.currentAct] || window.JC09_ACTS[1];
       if (fb) {
         fb.style.borderLeftColor = 'var(--c-danger-red)';
-        fb.innerHTML = '<strong style="color:var(--c-danger-red);">【逻辑冲突不成立】</strong> [' + idA + '] 与 [' + idB + '] 未构成当前幕次的核心矛盾。可开启顶部「推演辅助」查看线索高亮。';
+        fb.innerHTML = '<strong style="color:var(--c-danger-red);">【逻辑冲突不成立】</strong> [' + idA + '] 与 [' + idB + '] 未构成当前幕次的核心矛盾。';
       }
       logTicker('比对未命中核心矛盾: ' + idA + ' vs ' + idB + ' (' + curActObj.name + ')');
     }
@@ -3272,7 +3275,7 @@ window.JC09_ENDINGS = {
         setAmbientHum(state.audioOn);
         renderAll();
         if (state.audioOn) sfxSwitch();
-        logTicker('Web Audio 实时声效合成器已' + (state.audioOn ? '开启' : '关闭'));
+        logTicker('声效合成模块已' + (state.audioOn ? '开启' : '关闭'));
       });
     }
 
@@ -3284,6 +3287,11 @@ window.JC09_ENDINGS = {
         const gm = document.getElementById('guide-modal-overlay');
         if (gm) gm.classList.remove('is-open');
         setAmbientHum(false);
+        const fb = document.getElementById('inspector-feedback');
+        if (fb) {
+          fb.style.borderLeftColor = 'var(--c-hairline)';
+          fb.textContent = '待装填比对项。';
+        }
         renderAll();
         switchView('witness');
         logTicker('本地审讯进度与裁决记录已完全重置');

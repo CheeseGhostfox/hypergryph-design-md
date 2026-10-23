@@ -198,7 +198,7 @@
 
     const decryptStatus = document.getElementById('w-decrypt-status');
     if (decryptStatus) {
-      decryptStatus.textContent = isDeepUnlocked ? '深层残响已破译' : '待七态滤波破译';
+      decryptStatus.textContent = isDeepUnlocked ? '深层残响已破译' : '待滤波破译';
       decryptStatus.style.color = isDeepUnlocked ? 'var(--c-accent-green)' : 'var(--c-brand-yellow)';
     }
 
@@ -262,7 +262,7 @@
 
     const recipeHint = document.getElementById('synapse-recipe-hint');
     if (recipeHint) {
-      recipeHint.textContent = '目标解锁配方: ' + w.recipeLabel;
+      recipeHint.textContent = '特征码: ' + w.recipeLabel;
     }
 
     for (let i = 0; i < 4; i++) {
@@ -305,8 +305,8 @@
     const oscTitle = document.getElementById('osc-status-title');
     if (oscTitle) {
       oscTitle.textContent = (matched === 4 || isUnlocked)
-        ? 'WAVEFORM // 17.0s 神经掩码已对齐！可点击右下角「执行深层剥离并查阅证词」'
-        : 'WAVEFORM // 17.0s NEURAL ENVELOPE (点击上方七态开关或「校准目标特征码」匹配配方)';
+        ? 'WAVEFORM // 17.0s NEURAL ENVELOPE — SIGNAL LOCKED'
+        : 'WAVEFORM // 17.0s NEURAL ENVELOPE';
     }
 
     // Update oscilloscope SVG path dynamically based on match count
@@ -406,7 +406,7 @@
     }
     if (conclusionEl) {
       conclusionEl.innerHTML = isCompleted
-        ? actData.unlockedBody
+        ? (actData.conclusion || actData.unlockedBody)
         : actData.guide;
     }
 
@@ -488,27 +488,28 @@
 
     const nextStepEl = document.getElementById('live-next-step');
     if (nextStepEl) {
+      nextStepEl.style.display = state.hintOn ? 'block' : 'none';
       let stepHint = '';
       if (state.completedActs.length >= 4) {
         stepHint = state.verdict
-          ? '<strong>已结案：</strong>终局裁决已生效，可随时切换视图查阅全卷宗。'
-          : '<strong>下一步指引：</strong>点击左栏【04 审讯卷宗与公诉】，在右侧选择三项终局裁决之一。';
+          ? '<strong>辅助提示：</strong>终局裁决已生效。'
+          : '<strong>辅助提示：</strong>在【04 审讯卷宗与公诉】右侧选择终局裁决。';
       } else if (state.slotA && state.slotB) {
-        stepHint = '<strong>下一步指引：</strong>双槽已就绪！请点击下方金色按钮「执行逻辑击穿 // VERIFY」。';
+        stepHint = '<strong>辅助提示：</strong>双槽已就绪，可执行逻辑击穿。';
       } else if (state.currentAct === 1) {
-        stepHint = '<strong>下一步指引：</strong>在【01 卡池】将 <code>5★ 顾言表层</code> 装入槽 [A]，再去【03 物证库】将 <code>B-01 液压曲线</code> 装入槽 [B]。';
+        stepHint = '<strong>辅助提示：</strong>比对 <code>W05-A 顾言表层</code> 与 <code>B-01 液压抱死曲线</code>。';
       } else if (state.currentAct === 2) {
         stepHint = state.unlockedDeep.W01
-          ? '<strong>下一步指引：</strong>将【01 卡池】<code>1★ 沈听澜深层(W01-B)</code> 装入槽 [A]，与【03 物证库】<code>B-02 气密门日志</code> 对撞！'
-          : '<strong>下一步指引：</strong>先去【02 切片台】点选 <code>1★ 沈听澜</code>，点击「校准目标特征码」与「执行深层剥离」。';
+          ? '<strong>辅助提示：</strong>比对 <code>W01-B 沈听澜深层</code> 与 <code>B-02 气密门日志</code>。'
+          : '<strong>辅助提示：</strong>先在【02 切片台】破译 <code>1★ 沈听澜</code>。';
       } else if (state.currentAct === 3) {
         stepHint = state.unlockedDeep.W04
-          ? '<strong>下一步指引：</strong>将【01 卡池】<code>4★ 温莎·林深层(W04-B)</code> 装入槽 [A]，与【03 物证库】<code>B-04 覆写仪签名</code> 对撞！'
-          : '<strong>下一步指引：</strong>先去【02 切片台】点选 <code>4★ 温莎·林</code>，点击「校准目标特征码」与「执行深层剥离」。';
+          ? '<strong>辅助提示：</strong>比对 <code>W04-B 温莎·林深层</code> 与 <code>B-04 覆写仪签名</code>。'
+          : '<strong>辅助提示：</strong>先在【02 切片台】破译 <code>4★ 温莎·林</code>。';
       } else {
         stepHint = state.unlockedDeep.W06
-          ? '<strong>下一步指引：</strong>将【01 卡池】<code>6★ 严律深层(W06-B)</code> 装入槽 [A]，与【03 物证库】<code>B-06 09号台根密钥</code> 对撞！'
-          : '<strong>下一步指引：</strong>先去【02 切片台】点选 <code>6★ 严律</code>，点击「校准目标特征码」与「执行深层剥离」。';
+          ? '<strong>辅助提示：</strong>比对 <code>W06-B 严律深层</code> 与 <code>B-06 09号台根密钥</code>。'
+          : '<strong>辅助提示：</strong>先在【02 切片台】破译 <code>6★ 严律</code>。';
       }
       nextStepEl.innerHTML = stepHint;
     }
@@ -528,8 +529,8 @@
     if (!slotData) {
       box.classList.add('is-empty');
       if (idEl) idEl.textContent = 'EMPTY';
-      if (titleEl) titleEl.textContent = '尚未装填（请在视图 01 或 03 点击装填）';
-      if (sumEl) sumEl.textContent = '等待脑机切片或物理黑匣输入…';
+      if (titleEl) titleEl.textContent = '未装填 // AWAITING INPUT';
+      if (sumEl) sumEl.textContent = '等待证词切片或物证编号…';
     } else {
       box.classList.remove('is-empty');
       if (idEl) idEl.textContent = slotData.id;
@@ -602,7 +603,7 @@
       const curActObj = window.JC09_ACTS[state.currentAct] || window.JC09_ACTS[1];
       if (fb) {
         fb.style.borderLeftColor = 'var(--c-danger-red)';
-        fb.innerHTML = '<strong style="color:var(--c-danger-red);">【逻辑冲突不成立】</strong> [' + idA + '] 与 [' + idB + '] 未构成当前幕次的核心矛盾。可开启顶部「推演辅助」查看线索高亮。';
+        fb.innerHTML = '<strong style="color:var(--c-danger-red);">【逻辑冲突不成立】</strong> [' + idA + '] 与 [' + idB + '] 未构成当前幕次的核心矛盾。';
       }
       logTicker('比对未命中核心矛盾: ' + idA + ' vs ' + idB + ' (' + curActObj.name + ')');
     }
@@ -657,7 +658,7 @@
         setAmbientHum(state.audioOn);
         renderAll();
         if (state.audioOn) sfxSwitch();
-        logTicker('Web Audio 实时声效合成器已' + (state.audioOn ? '开启' : '关闭'));
+        logTicker('声效合成模块已' + (state.audioOn ? '开启' : '关闭'));
       });
     }
 
@@ -669,6 +670,11 @@
         const gm = document.getElementById('guide-modal-overlay');
         if (gm) gm.classList.remove('is-open');
         setAmbientHum(false);
+        const fb = document.getElementById('inspector-feedback');
+        if (fb) {
+          fb.style.borderLeftColor = 'var(--c-hairline)';
+          fb.textContent = '待装填比对项。';
+        }
         renderAll();
         switchView('witness');
         logTicker('本地审讯进度与裁决记录已完全重置');
