@@ -1128,35 +1128,121 @@ html, body {
   overflow: hidden;
 }
 
-/* ---- View 02: 17-Second Neural Synapse Slicer + 7-State Filter Matrix ---- */
+/* ---- View 02: 17-Second Neural Synapse Slicer + 4-Switch & 2-Knob Lockpick Matrix ---- */
 .synapse-layout {
   display: grid;
-  grid-template-rows: auto 135px 1fr;
+  grid-template-rows: auto 136px 1fr;
   gap: var(--s-xs);
   height: 100%;
   min-height: 0;
 }
 .filter-matrix-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--s-xs);
+  grid-template-columns: repeat(4, minmax(0, 1.04fr)) repeat(2, minmax(0, 0.96fr));
+  gap: 7px;
+  height: 136px;
 }
-.filter-channel-card {
+.filter-channel-card,
+.rotary-knob-card {
   background-color: var(--c-panel-deep);
   border: 1px solid var(--c-surface-5);
   border-bottom: 3px solid var(--c-surface-6);
   border-radius: var(--r-slice-sm);
-  padding: var(--s-xs);
+  padding: 6px 8px;
   display: flex;
   flex-direction: column;
-  gap: var(--s-xxs);
+  justify-content: space-between;
+  gap: 3px;
   cursor: pointer;
   user-select: none;
+  min-width: 0;
+  overflow: hidden;
   transition: border-color 0.16s ease, background-color 0.16s ease, transform 0.15s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.filter-channel-card .state-chip {
+  height: 30px;
+  padding: 0 6px;
+  font-size: 11px;
 }
 .filter-channel-card:active,
 .filter-channel-card.is-pressing {
   transform: translateY(1px) scale(0.988) !important;
+}
+.rotary-knob-card {
+  cursor: grab;
+  background-color: var(--c-canvas);
+  border-color: var(--c-surface-5);
+}
+.rotary-knob-card:active {
+  cursor: grabbing;
+}
+.rotary-knob-card.is-sweet {
+  border-color: var(--c-accent-green);
+  border-bottom-color: var(--c-accent-green);
+}
+.rotary-knob-card.is-near {
+  border-color: var(--c-brand-yellow);
+  border-bottom-color: var(--c-brand-yellow);
+}
+.rotary-knob-card.is-overloading {
+  border-color: var(--c-danger-red) !important;
+  border-bottom-color: var(--c-danger-red) !important;
+  animation: jc09OverloadShake 0.09s infinite alternate;
+}
+@keyframes jc09OverloadShake {
+  0% { transform: translateX(-2px); }
+  100% { transform: translateX(2px); }
+}
+.knob-svg-stage {
+  width: 100%;
+  height: 68px;
+  display: block;
+  touch-action: none;
+}
+.knob-micro-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+}
+.knob-step-btn {
+  height: 20px;
+  min-width: 26px;
+  padding: 0 5px;
+  background-color: var(--c-panel);
+  color: var(--c-ink-light-2);
+  border: 1px solid var(--c-surface-5);
+  border-radius: var(--r-xs);
+  font-family: var(--f-tech);
+  font-size: 10px;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.knob-step-btn:hover {
+  border-color: var(--c-currency-blue);
+  color: var(--c-ink);
+  background-color: var(--c-surface-3);
+}
+.knob-push-btn {
+  flex: 1;
+  height: 20px;
+  padding: 0 4px;
+  background-color: var(--c-elite-surface);
+  color: var(--c-currency-blue);
+  border: 1px solid var(--c-primary);
+  border-radius: var(--r-xs);
+  font-family: var(--f-cjk);
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.knob-push-btn:hover {
+  background-color: var(--c-primary);
+  color: var(--c-on-primary);
 }
 .timeline-oscilloscope {
   position: relative;
@@ -1608,14 +1694,18 @@ html, body {
     display: none;
   }
   .filter-matrix-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 4px;
   }
-  .filter-channel-card {
-    padding: 4px 6px;
+  .filter-channel-card,
+  .rotary-knob-card {
+    padding: 3px 5px;
   }
   .filter-channel-card > div:last-child {
     display: none;
+  }
+  .knob-svg-stage {
+    height: 28px;
   }
   .blackbox-layout,
   .verdict-layout {
@@ -1987,21 +2077,21 @@ html, body {
             <div class="view-header">
               <div class="view-header-title">
                 <span class="view-header-en">02 // SYNAPSE SLICER</span>
-                <span class="view-header-zh">T-17.0s 脑机信号滤波破译台</span>
+                <span class="view-header-zh">T-17s 脑机滤波破译台</span>
               </div>
-              <div style="display:flex;align-items:center;gap:var(--s-xs);">
+              <div style="display:flex;align-items:center;gap:var(--s-xs);flex-shrink:0;">
                 <span class="telemetry-chip" id="synapse-target-badge" title="点击返回 01 幸存者档案查阅供词">TARGET: W05 // 顾言</span>
-                <button type="button" class="btn-compact" id="btn-auto-tune" title="按当前目标的推荐特征码一键校准滤波通道">
-                  <span>校准目标特征码</span>
+                <button type="button" class="btn-compact" id="btn-auto-tune" style="border-color:var(--c-brand-yellow);color:var(--c-brand-yellow);font-weight:700;" title="一键自动拨入正确滤波通道并旋转双旋钮完成 100% 锁相破译">
+                  <span>AUTO // 自动破译</span>
                 </button>
               </div>
             </div>
 
             <div class="synapse-layout">
-              <!-- Target Witness Selector Strip + Required Filter Signature -->
-              <div style="display:flex;justify-content:space-between;align-items:center;gap:var(--s-xs);background:var(--c-panel-deep);padding:6px 10px;border:1px solid var(--c-surface-4);">
+              <!-- Target Witness Selector Strip + Live Probe Telemetry -->
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:var(--s-xs);background:var(--c-panel-deep);padding:5px 10px;border:1px solid var(--c-surface-4);">
                 <div style="display:flex;align-items:center;gap:var(--s-xxs);flex-wrap:wrap;" id="synapse-witness-strip">
-                  <span style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-ink-disabled);margin-right:4px;">破译对象:</span>
+                  <span style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-ink-disabled);margin-right:2px;">破译对象:</span>
                   <button type="button" class="btn-compact" data-syn-witness="W01">W01 沈听澜</button>
                   <button type="button" class="btn-compact" data-syn-witness="W02">W02 周野</button>
                   <button type="button" class="btn-compact" data-syn-witness="W03">W03 陆峥</button>
@@ -2009,51 +2099,104 @@ html, body {
                   <button type="button" class="btn-compact is-active" data-syn-witness="W05">W05 顾言</button>
                   <button type="button" class="btn-compact" data-syn-witness="W06">W06 严律</button>
                 </div>
-                <div style="font-family:var(--f-cjk);font-size:var(--fs-caption);color:var(--c-brand-yellow);font-weight:500;" id="synapse-recipe-hint">
-                  特征码: CH1[反相门 ON] · CH2[窄带陷波] · CH3[阻断 OFF] · CH4[反相门 ON]
+                <div style="font-family:var(--f-cjk);font-size:var(--fs-caption);color:var(--c-brand-yellow);font-weight:500;text-align:right;" id="synapse-recipe-hint">
+                  探针导引: 先将 4 通道调至 ● LOCK，再用 KNOB-A 寻位甜区、KNOB-B 推进至 100%
                 </div>
               </div>
 
-              <!-- 4-Channel Seven-State Toggle Switch Matrix -->
-              <div class="filter-matrix-grid" role="group" aria-label="七态神经滤波开关组">
-                <div class="filter-channel-card" id="filter-card-0" title="点击切换 CH-01 声学反相门档位">
+              <!-- 4+2 Hybrid Lockpick Matrix: 4 Digital Filter Channels + 2 Precision Rotary Knobs -->
+              <div class="filter-matrix-grid" role="group" aria-label="四通道滤波与双旋钮锁相调谐台">
+                <div class="filter-channel-card" id="filter-card-0" title="点击切换 CH-01 声学反相门档位（观察右上角红/黄/绿探针灯）">
                   <div style="display:flex;justify-content:space-between;align-items:center;font-family:var(--f-tech);font-size:10px;white-space:nowrap;color:var(--c-ink-disabled);">
-                    <span>CH-01 ACOUSTIC</span><span id="ch-metric-0" style="color:var(--c-brand-yellow);">Δf DETUNED</span>
+                    <span>CH-01 声学</span><span id="ch-metric-0" style="color:var(--c-brand-yellow);font-weight:700;">◐ NEAR</span>
                   </div>
                   <button type="button" class="state-chip" data-channel="0" data-state="normal" id="filter-ch-0">
-                    <span>声学反相门</span><strong class="chip-state-text">0dB 直通</strong>
+                    <span>声学门</span><strong class="chip-state-text">0dB 直通</strong>
                   </button>
-                  <div style="font-size:var(--fs-caption);color:var(--c-ink-muted);white-space:nowrap;">谐波频率比与眼图周期折叠</div>
+                  <div style="font-size:11px;color:var(--c-ink-muted);white-space:nowrap;">谐波频率比与周期</div>
                 </div>
 
-                <div class="filter-channel-card" id="filter-card-1" title="点击切换 CH-02 痛觉剥离档位">
+                <div class="filter-channel-card" id="filter-card-1" title="点击切换 CH-02 痛觉剥离档位（观察右上角红/黄/绿探针灯）">
                   <div style="display:flex;justify-content:space-between;align-items:center;font-family:var(--f-tech);font-size:10px;white-space:nowrap;color:var(--c-ink-disabled);">
-                    <span>CH-02 NOCICEPT</span><span id="ch-metric-1" style="color:var(--c-brand-yellow);">NOISE HIGH</span>
+                    <span>CH-02 痛觉</span><span id="ch-metric-1" style="color:var(--c-danger-red);font-weight:700;">○ ERR</span>
                   </div>
                   <button type="button" class="state-chip" data-channel="1" data-state="off" id="filter-ch-1">
-                    <span>痛觉剥离</span><strong class="chip-state-text">阻断 OFF</strong>
+                    <span>痛觉门</span><strong class="chip-state-text">阻断 OFF</strong>
                   </button>
-                  <div style="font-size:var(--fs-caption);color:var(--c-ink-muted);white-space:nowrap;">高频毛刺滤除与垂直眼高张开</div>
+                  <div style="font-size:11px;color:var(--c-ink-muted);white-space:nowrap;">毛刺滤除与垂直眼高</div>
                 </div>
 
-                <div class="filter-channel-card" id="filter-card-2" title="点击切换 CH-03 情绪钳制档位">
+                <div class="filter-channel-card" id="filter-card-2" title="点击切换 CH-03 情绪钳制档位（观察右上角红/黄/绿探针灯）">
                   <div style="display:flex;justify-content:space-between;align-items:center;font-family:var(--f-tech);font-size:10px;white-space:nowrap;color:var(--c-ink-disabled);">
-                    <span>CH-03 LIMBIC</span><span id="ch-metric-2" style="color:var(--c-brand-yellow);">PHASE SKEW</span>
+                    <span>CH-03 情绪</span><span id="ch-metric-2" style="color:var(--c-danger-red);font-weight:700;">○ ERR</span>
                   </div>
                   <button type="button" class="state-chip" data-channel="2" data-state="unselected" id="filter-ch-2">
-                    <span>情绪钳制</span><strong class="chip-state-text">高通剥离</strong>
+                    <span>情绪门</span><strong class="chip-state-text">高通剥离</strong>
                   </button>
-                  <div style="font-size:var(--fs-caption);color:var(--c-ink-muted);white-space:nowrap;">正交相位张角与上下包络对称</div>
+                  <div style="font-size:11px;color:var(--c-ink-muted);white-space:nowrap;">正交相位与上下对称</div>
                 </div>
 
-                <div class="filter-channel-card" id="filter-card-3" title="点击切换 CH-04 时钟重同步档位">
+                <div class="filter-channel-card" id="filter-card-3" title="点击切换 CH-04 时钟重同步档位（观察右上角红/黄/绿探针灯）">
                   <div style="display:flex;justify-content:space-between;align-items:center;font-family:var(--f-tech);font-size:10px;white-space:nowrap;color:var(--c-ink-disabled);">
-                    <span>CH-04 CHRONO</span><span id="ch-metric-3" style="color:var(--c-brand-yellow);">PLL DRIFT</span>
+                    <span>CH-04 时钟</span><span id="ch-metric-3" style="color:var(--c-brand-yellow);font-weight:700;">◐ NEAR</span>
                   </div>
                   <button type="button" class="state-chip" data-channel="3" data-state="select" id="filter-ch-3">
-                    <span>时钟重同步</span><strong class="chip-state-text">锁频 PLL</strong>
+                    <span>时钟门</span><strong class="chip-state-text">锁频 PLL</strong>
                   </button>
-                  <div style="font-size:var(--fs-caption);color:var(--c-ink-muted);white-space:nowrap;">水平触发锁相与过零眼宽收束</div>
+                  <div style="font-size:11px;color:var(--c-ink-muted);white-space:nowrap;">触发锁相与过零眼宽</div>
+                </div>
+
+                <!-- KNOB A: Harmonic Resonance Sweet-Spot Seeker (0° - 300°) -->
+                <div class="rotary-knob-card" id="knob-card-a" title="上下拖拽或滚轮旋转 KNOB-A 寻找谐振甜区（越接近甜区声呐弧越亮、共鸣音越纯净）">
+                  <div style="display:flex;justify-content:space-between;align-items:center;font-family:var(--f-tech);font-size:10px;white-space:nowrap;color:var(--c-ink-disabled);">
+                    <span>KNOB-A 寻位</span><span id="knob-a-status" style="color:var(--c-brand-yellow);font-weight:700;">○ SEEK</span>
+                  </div>
+                  <svg class="knob-svg-stage" id="knob-a-svg" viewBox="0 0 120 68" aria-label="谐振寻位旋钮 A">
+                    <!-- 270-degree outer scale track -->
+                    <path d="M 33.1 61.9 A 38 38 0 1 1 86.9 61.9" fill="none" stroke="#313131" stroke-width="4" stroke-linecap="round" />
+                    <!-- Dynamic Sonar Sweet-Spot Proximity Arc -->
+                    <path id="knob-a-sonar-arc" d="M 33.1 61.9 A 38 38 0 1 1 86.9 61.9" fill="none" stroke="#0098DC" stroke-width="4" stroke-dasharray="18 180" stroke-linecap="round" />
+                    <!-- Resonance Pulse Halo -->
+                    <circle id="knob-a-halo" cx="60" cy="35" r="27" fill="none" stroke="#313131" stroke-width="1" stroke-dasharray="2 2" />
+                    <!-- Metallic Rotary Dial Body & Pointer -->
+                    <g id="knob-a-rotor" transform="rotate(-94, 60, 35)">
+                      <circle cx="60" cy="35" r="22" fill="#1B1B1B" stroke="#555555" stroke-width="1.8" />
+                      <circle cx="60" cy="35" r="17" fill="#141516" stroke="#313131" stroke-width="1" />
+                      <line id="knob-a-pointer" x1="60" y1="14" x2="60" y2="25" stroke="#FED800" stroke-width="3" stroke-linecap="round" />
+                    </g>
+                    <text id="knob-a-readout" x="60" y="39" text-anchor="middle" fill="#FFFFFF" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700">045°</text>
+                  </svg>
+                  <div class="knob-micro-bar">
+                    <button type="button" class="knob-step-btn" id="btn-knob-a-dec" title="逆时针旋转 -15°">-15°</button>
+                    <span style="font-size:10px;color:var(--c-ink-muted);white-space:nowrap;">谐振寻位</span>
+                    <button type="button" class="knob-step-btn" id="btn-knob-a-inc" title="顺时针旋转 +15°">+15°</button>
+                  </div>
+                </div>
+
+                <!-- KNOB B: PLL Lock-In Depth Drive (0% - 100% with Phase-Slip Overload) -->
+                <div class="rotary-knob-card" id="knob-card-b" title="推进 KNOB-B 测试锁相深度（若 4 通道或 KNOB-A 未对准甜区，推至中途将触发 PLL 失步过载回弹）">
+                  <div style="display:flex;justify-content:space-between;align-items:center;font-family:var(--f-tech);font-size:10px;white-space:nowrap;color:var(--c-ink-disabled);">
+                    <span>KNOB-B 推进</span><span id="knob-b-status" style="color:var(--c-currency-blue);font-weight:700;">0%</span>
+                  </div>
+                  <svg class="knob-svg-stage" id="knob-b-svg" viewBox="0 0 120 68" aria-label="锁相推进旋钮 B">
+                    <!-- 270-degree outer torsion track -->
+                    <path d="M 33.1 61.9 A 38 38 0 1 1 86.9 61.9" fill="none" stroke="#313131" stroke-width="4" stroke-linecap="round" />
+                    <!-- Live PLL Drive Progress Arc -->
+                    <path id="knob-b-drive-arc" d="M 33.1 61.9 A 38 38 0 1 1 86.9 61.9" fill="none" stroke="#0098DC" stroke-width="4" stroke-dasharray="0 200" stroke-linecap="round" />
+                    <!-- Overload Warning Ring -->
+                    <circle id="knob-b-overload-ring" cx="60" cy="35" r="27" fill="none" stroke="#313131" stroke-width="1" stroke-dasharray="3 2" />
+                    <!-- Metallic Torsion Rotor -->
+                    <g id="knob-b-rotor" transform="rotate(-135, 60, 35)">
+                      <circle cx="60" cy="35" r="22" fill="#1B1B1B" stroke="#555555" stroke-width="1.8" />
+                      <circle cx="60" cy="35" r="17" fill="#141516" stroke="#313131" stroke-width="1" />
+                      <line id="knob-b-pointer" x1="60" y1="14" x2="60" y2="25" stroke="#22BBFE" stroke-width="3" stroke-linecap="round" />
+                    </g>
+                    <text id="knob-b-readout" x="60" y="39" text-anchor="middle" fill="#FFFFFF" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700">0%</text>
+                  </svg>
+                  <div class="knob-micro-bar">
+                    <button type="button" class="knob-step-btn" id="btn-knob-b-dec" title="释放推进深度">-25%</button>
+                    <button type="button" class="knob-push-btn" id="btn-knob-b-push" title="点击或按住推进锁相深度至 100%">推进锁相 ↻</button>
+                  </div>
                 </div>
               </div>
 
@@ -3092,6 +3235,8 @@ window.JC09_ENDINGS = {
     unlockedDeep: {},            // map of witnessId -> boolean
     synapseTarget: 'W05',
     filterStates: ['normal', 'off', 'unselected', 'select'],
+    knobAngle: 45,               // 0..300 deg (Knob A harmonic sweet-spot seeker)
+    knobDrive: 0,                // 0..100 %   (Knob B PLL lock-in depth drive)
     activeTimeNode: 0,
     selectedExhibit: 'B01',
     currentAct: 1,               // 1..4
@@ -3242,6 +3387,71 @@ window.JC09_ENDINGS = {
     setTimeout(function () { playTone(146, 170, 'sawtooth', 0.04, 118); }, 35);
   }
 
+  // Electronic Radio/Oscilloscope Tuning & PLL Phase-Slip Synthesizers
+  function playFilteredStatic(durationMs, centerFreq, qVal, gainVal) {
+    if (!state.audioOn) return;
+    ensureAudio();
+    if (!audioCtx) return;
+    try {
+      const now = audioCtx.currentTime;
+      const dur = durationMs / 1000;
+      const bufLen = Math.max(256, Math.floor(audioCtx.sampleRate * dur));
+      const buf = audioCtx.createBuffer(1, bufLen, audioCtx.sampleRate);
+      const data = buf.getChannelData(0);
+      for (let i = 0; i < bufLen; i++) {
+        data[i] = (Math.random() * 2 - 1);
+      }
+      const src = audioCtx.createBufferSource();
+      src.buffer = buf;
+      const flt = audioCtx.createBiquadFilter();
+      flt.type = 'bandpass';
+      flt.frequency.setValueAtTime(centerFreq || 1200, now);
+      flt.Q.setValueAtTime(qVal || 3.5, now);
+      const g = audioCtx.createGain();
+      g.gain.setValueAtTime(gainVal || 0.025, now);
+      g.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+      src.connect(flt);
+      flt.connect(g);
+      g.connect(audioCtx.destination);
+      src.start(now);
+      src.stop(now + dur + 0.01);
+    } catch (_) {}
+  }
+
+  function sfxKnobTune(angleDiff) {
+    if (!state.audioOn) return;
+    // Radio white-noise breath that fades as we approach the 440Hz sweet spot
+    const normErr = Math.min(1, angleDiff / 150);
+    const noiseGain = 0.004 + normErr * 0.028;
+    const carrierFreq = 440 + (angleDiff * 1.6);
+    playFilteredStatic(52, 900 + normErr * 1600, 2.5 + (1 - normErr) * 6, noiseGain);
+    playTone(carrierFreq, 60, 'sine', 0.018 + (1 - normErr) * 0.028, 440 + angleDiff * 1.1);
+    if (angleDiff <= 15) {
+      // Pure 440Hz + 880Hz tuning-fork harmonic resonance ping when inside Sweet Spot
+      setTimeout(function () {
+        playTone(440, 110, 'sine', 0.036);
+        playTone(880, 95, 'sine', 0.022);
+      }, 18);
+    }
+  }
+
+  function sfxDriveStep(drivePct) {
+    if (!state.audioOn) return;
+    const f = 310 + drivePct * 5.4;
+    playTone(f, 50, 'sine', 0.028, f + 38);
+  }
+
+  function sfxPllOverload() {
+    if (!state.audioOn) return;
+    // Electronic oscilloscope PLL phase-slip static crackle + frequency drop (zero metal clank)
+    playFilteredStatic(165, 2400, 1.8, 0.042);
+    playTone(940, 150, 'sawtooth', 0.036, 195);
+    setTimeout(function () {
+      playFilteredStatic(110, 1500, 2.2, 0.032);
+      playTone(620, 120, 'triangle', 0.03, 145);
+    }, 55);
+  }
+
   function logTicker(msg) {
     const el = document.getElementById('bottom-live-log');
     if (el) el.textContent = '[LOG] ' + msg;
@@ -3371,14 +3581,14 @@ window.JC09_ENDINGS = {
     if (noteEl) noteEl.innerHTML = layerData.note;
   }
 
-  // ---- 17-Second Synapse Slicer: Real-Time Dual-Scope (XY Lissajous + 2-UI Eye Diagram) ----
+  // ---- 17-Second Synapse Slicer: Real-Time Dual-Scope + Dual-Knob Lockpick System ----
   const WITNESS_OSC_SIG = {
-    W01: { fx: 1, fy: 2, phase0: 1.5708, ratioText: '1:2', tintMain: 'tint-cyan',    tintSub: 'tint-primary' },
-    W02: { fx: 2, fy: 3, phase0: 0.7854, ratioText: '2:3', tintMain: 'tint-green',   tintSub: 'tint-cyan' },
-    W03: { fx: 3, fy: 2, phase0: 1.5708, ratioText: '3:2', tintMain: 'tint-primary', tintSub: 'tint-cyan' },
-    W04: { fx: 3, fy: 4, phase0: 0.7854, ratioText: '3:4', tintMain: 'tint-violet',  tintSub: 'tint-primary' },
-    W05: { fx: 4, fy: 3, phase0: 1.5708, ratioText: '4:3', tintMain: 'tint-yellow',  tintSub: 'tint-primary' },
-    W06: { fx: 5, fy: 4, phase0: 0.7854, ratioText: '5:4', tintMain: 'tint-danger',  tintSub: 'tint-yellow' }
+    W01: { fx: 1, fy: 2, phase0: 1.5708, ratioText: '1:2', sweetSpot: 105, tintMain: 'tint-cyan',    tintSub: 'tint-primary' },
+    W02: { fx: 2, fy: 3, phase0: 0.7854, ratioText: '2:3', sweetSpot: 210, tintMain: 'tint-green',   tintSub: 'tint-cyan' },
+    W03: { fx: 3, fy: 2, phase0: 1.5708, ratioText: '3:2', sweetSpot: 60,  tintMain: 'tint-primary', tintSub: 'tint-cyan' },
+    W04: { fx: 3, fy: 4, phase0: 0.7854, ratioText: '3:4', sweetSpot: 255, tintMain: 'tint-violet',  tintSub: 'tint-primary' },
+    W05: { fx: 4, fy: 3, phase0: 1.5708, ratioText: '4:3', sweetSpot: 150, tintMain: 'tint-yellow',  tintSub: 'tint-primary' },
+    W06: { fx: 5, fy: 4, phase0: 0.7854, ratioText: '5:4', sweetSpot: 270, tintMain: 'tint-danger',  tintSub: 'tint-yellow' }
   };
 
   const TIME_GATE_X = [238, 355, 473, 591, 708];
@@ -3389,6 +3599,10 @@ window.JC09_ENDINGS = {
     phaseErr: -1.5,
     driftVel: 1.5,
     driftAccum: 0,
+    knobErrSmooth: 1.0,
+    driveSmooth: 0,
+    overloadUntil: 0,
+    springbackTimer: null,
     gateX: 238,
     timeNodeMod: 0,
     lastTs: 0,
@@ -3412,6 +3626,118 @@ window.JC09_ENDINGS = {
       if (state.filterStates[i] === w.recipe[i]) matched++;
     }
     return matched;
+  }
+
+  function getKnobAngleDiff(w) {
+    const sig = WITNESS_OSC_SIG[w.id] || WITNESS_OSC_SIG.W05;
+    const cur = typeof state.knobAngle === 'number' ? state.knobAngle : 45;
+    return Math.abs(cur - sig.sweetSpot);
+  }
+
+  function isSweetSpot(w) {
+    return getKnobAngleDiff(w) <= 15;
+  }
+
+  function getMaxDriveAllowed(w) {
+    const matched = computeFilterMatch(w);
+    const angleDiff = getKnobAngleDiff(w);
+    if (matched === 4 && angleDiff <= 15) {
+      return 100;
+    }
+    if (matched < 4) {
+      // Switches not fully aligned: PLL drive jams early (20%..68%)
+      return Math.min(68, 16 + matched * 14 + Math.max(0, Math.round((1 - angleDiff / 180) * 12)));
+    }
+    // All 4 switches aligned, Knob A off by angleDiff > 15:
+    // The closer Knob A is to the sweet spot, the deeper Knob B can push before jamming (35%..90%)
+    return Math.max(35, Math.min(90, Math.round(94 - (angleDiff - 15) * 0.42)));
+  }
+
+  function computeTotalSynapsePct(w) {
+    let score = 0;
+    for (let i = 0; i < 4; i++) {
+      const d = Math.abs(getChannelDelta(i, w));
+      if (d === 0) score += 15;
+      else if (d === 1) score += 7;
+    }
+    const angleDiff = getKnobAngleDiff(w);
+    if (angleDiff <= 15) {
+      score += 20;
+    } else if (angleDiff < 120) {
+      score += Math.round((1 - (angleDiff - 15) / 105) * 16);
+    }
+    const drive = typeof state.knobDrive === 'number' ? state.knobDrive : 0;
+    score += Math.round((drive / 100) * 20);
+    return Math.max(0, Math.min(100, score));
+  }
+
+  function isSynapseFullyLocked(w) {
+    return computeFilterMatch(w) === 4 && isSweetSpot(w) && (state.knobDrive || 0) >= 100;
+  }
+
+  function setKnobAngle(newAngle) {
+    const w = window.JC09_WITNESSES[state.synapseTarget] || window.JC09_WITNESSES.W05;
+    const clamped = Math.max(0, Math.min(300, Math.round(newAngle / 5) * 5));
+    if (state.knobAngle === clamped) return;
+    if (oscAnim.springbackTimer) {
+      clearTimeout(oscAnim.springbackTimer);
+      oscAnim.springbackTimer = null;
+    }
+    oscAnim.overloadUntil = 0;
+    state.knobAngle = clamped;
+    if (!isSynapseFullyLocked(w) && state.knobDrive > 0) {
+      state.knobDrive = 0;
+    }
+    const diff = getKnobAngleDiff(w);
+    sfxKnobTune(diff);
+    saveState();
+    renderSynapseView();
+  }
+
+  function advanceKnobDrive(targetDrive) {
+    const w = window.JC09_WITNESSES[state.synapseTarget] || window.JC09_WITNESSES.W05;
+    const maxAllowed = getMaxDriveAllowed(w);
+    const clampedTarget = Math.max(0, Math.min(100, Math.round(targetDrive)));
+
+    if (oscAnim.springbackTimer) {
+      clearTimeout(oscAnim.springbackTimer);
+      oscAnim.springbackTimer = null;
+    }
+
+    if (clampedTarget >= maxAllowed) {
+      if (maxAllowed === 100) {
+        state.knobDrive = 100;
+        if (!state.unlockedDeep[w.id]) {
+          state.unlockedDeep[w.id] = true;
+        }
+        saveState();
+        renderAll();
+        sfxBreakthrough();
+        logTicker('谐振甜区锁相 100% 达成！已成功破译 ' + w.name + ' 的深层记忆残响！');
+      } else {
+        // Hit PLL Phase-Slip Overload Barrier!
+        state.knobDrive = maxAllowed;
+        oscAnim.overloadUntil = performance.now() + 520;
+        sfxPllOverload();
+        const matched = computeFilterMatch(w);
+        if (matched < 4) {
+          logTicker('PLL 失步回弹 (' + maxAllowed + '%)：请先将左侧 4 组滤波通道全部调至 ● LOCK');
+        } else {
+          logTicker('PLL 失步回弹 (卡滞于 ' + maxAllowed + '%)：请继续微调 KNOB-A 逼近谐振甜区');
+        }
+        renderSynapseView();
+        oscAnim.springbackTimer = setTimeout(function () {
+          state.knobDrive = 0;
+          saveState();
+          renderSynapseView();
+        }, 420);
+      }
+    } else {
+      state.knobDrive = clampedTarget;
+      if (clampedTarget > 0) sfxDriveStep(clampedTarget);
+      saveState();
+      renderSynapseView();
+    }
   }
 
   function buildTargetGhostPaths(sig) {
@@ -3465,25 +3791,33 @@ window.JC09_ENDINGS = {
   function stepOscilloscopeFrame(ts) {
     const w = window.JC09_WITNESSES[state.synapseTarget] || window.JC09_WITNESSES.W05;
     const sig = WITNESS_OSC_SIG[w.id] || WITNESS_OSC_SIG.W05;
-    const nowSec = (ts || performance.now()) / 1000;
-    const dt = oscAnim.lastTs ? Math.min(0.05, (ts - oscAnim.lastTs) / 1000) : 0.016;
-    oscAnim.lastTs = ts || performance.now();
+    const nowMs = ts || performance.now();
+    const nowSec = nowMs / 1000;
+    const dt = oscAnim.lastTs ? Math.min(0.05, (nowMs - oscAnim.lastTs) / 1000) : 0.016;
+    oscAnim.lastTs = nowMs;
 
     const d0 = getChannelDelta(0, w); // CH-01: Harmonic Frequency Ratio
     const d1 = Math.abs(getChannelDelta(1, w)); // CH-02: High-Freq Noise & Eye Height
     const d2 = getChannelDelta(2, w); // CH-03: Phase Angle & DC Skew
     const d3 = getChannelDelta(3, w); // CH-04: Clock Drift & Horizontal Jitter
 
+    // Knob A & Knob B continuous lockpick coupling
+    const signedAngleErr = ((typeof state.knobAngle === 'number' ? state.knobAngle : 45) - sig.sweetSpot);
+    const knobPhaseOffset = Math.abs(signedAngleErr) <= 15 ? 0 : (signedAngleErr / 55);
+    const driveRatio = Math.max(0, Math.min(1, (state.knobDrive || 0) / 100));
+    const unpushedFactor = 1 - driveRatio * 0.85;
+    const isOverloading = nowMs < oscAnim.overloadUntil;
+
     const lerpRate = Math.min(1, dt * 8.5);
     oscAnim.freqErr += (d0 - oscAnim.freqErr) * lerpRate;
-    oscAnim.noiseLv += (d1 - oscAnim.noiseLv) * lerpRate;
-    oscAnim.phaseErr += (d2 - oscAnim.phaseErr) * lerpRate;
-    oscAnim.driftVel += (d3 - oscAnim.driftVel) * lerpRate;
+    oscAnim.noiseLv += ((d1 + (1 - driveRatio) * 0.65 + (isOverloading ? 2.4 : 0)) - oscAnim.noiseLv) * lerpRate;
+    oscAnim.phaseErr += ((d2 + knobPhaseOffset * 0.85) - oscAnim.phaseErr) * lerpRate;
+    oscAnim.driftVel += ((d3 + knobPhaseOffset * 0.35 * unpushedFactor) - oscAnim.driftVel) * lerpRate;
 
     const targetGateX = TIME_GATE_X[state.activeTimeNode] || 238;
     oscAnim.gateX += (targetGateX - oscAnim.gateX) * Math.min(1, dt * 12);
 
-    if (Math.abs(d3) > 0) {
+    if (Math.abs(d3) > 0 || Math.abs(knobPhaseOffset) > 0.1 || driveRatio < 1) {
       oscAnim.driftAccum += oscAnim.driftVel * dt * 2.1;
     } else {
       oscAnim.driftAccum *= Math.pow(0.04, dt);
@@ -3498,7 +3832,7 @@ window.JC09_ENDINGS = {
     // 1. Render Left Scope: XY Phase Lissajous Vector Traces (3 persistence layers)
     const fxLive = sig.fx + oscAnim.freqErr * 0.52;
     const fyLive = sig.fy - oscAnim.freqErr * 0.38;
-    const isLocked = (d0 === 0 && d1 === 0 && d2 === 0 && d3 === 0);
+    const isLocked = isSynapseFullyLocked(w);
 
     for (let layer = 0; layer < 3; layer++) {
       const lagSec = nowSec - layer * 0.055;
@@ -3529,7 +3863,7 @@ window.JC09_ENDINGS = {
     const eyeHeight = 34 * Math.max(0.22, 1 - oscAnim.noiseLv * 0.21);
     const dcSkew = oscAnim.phaseErr * 6.2;
     const asymSkew = oscAnim.phaseErr * 5.4;
-    const jitterUI = Math.abs(oscAnim.driftVel) * 0.11 + (isLocked ? 0.008 : 0.025);
+    const jitterUI = Math.abs(oscAnim.driftVel) * 0.11 + (isLocked ? 0.008 : (0.045 * unpushedFactor));
     const driftShift = oscAnim.driftAccum / Math.PI;
 
     const traceConfigs = [
@@ -3605,45 +3939,138 @@ window.JC09_ENDINGS = {
       btn.classList.toggle('is-active', btn.getAttribute('data-syn-witness') === w.id);
     });
 
-    const recipeHint = document.getElementById('synapse-recipe-hint');
-    if (recipeHint) {
-      recipeHint.textContent = '特征码: ' + w.recipeLabel;
-    }
-
     const matched = computeFilterMatch(w);
-    if (matched === 4 && !state.unlockedDeep[w.id]) {
+    const angleDiff = getKnobAngleDiff(w);
+    const sweet = angleDiff <= 15;
+    const nearSweet = angleDiff <= 45;
+    const isOverloading = performance.now() < oscAnim.overloadUntil;
+    const isNowLocked = isSynapseFullyLocked(w);
+
+    if (isNowLocked && !state.unlockedDeep[w.id]) {
       state.unlockedDeep[w.id] = true;
       saveState();
     }
-    const pct = Math.round((matched / 4) * 100);
+    const pct = computeTotalSynapsePct(w);
     const isUnlocked = !!state.unlockedDeep[w.id];
-    const isNowLocked = (matched === 4);
 
-    // Update 4 Channel Cards & Per-Channel Physical Metrics
-    const chMetricsText = [
-      function (d) { return d === 0 ? 'RATIO LOCK'  : ('Δf ' + (d > 0 ? '+' : '') + (d * 1.4).toFixed(1) + 'Hz'); },
-      function (d) { return d === 0 ? 'SNR +32dB'   : ('SPIKE -' + Math.round(Math.abs(d) * 6.5) + 'dB'); },
-      function (d) { return d === 0 ? 'Δφ 0.0° SYM' : ('SKEW ' + (d > 0 ? '+' : '') + (d * 28) + '°'); },
-      function (d) { return d === 0 ? 'PLL LOCKED'  : ('DRIFT ' + (d > 0 ? '+' : '') + (d * 0.6).toFixed(1) + 'UI'); }
-    ];
-
+    // Update 4 Channel Cards with 3-Stage Cold/Warm/Lock Probe Indicators
+    const chProbeTags = [];
     for (let i = 0; i < 4; i++) {
       const chip = document.getElementById('filter-ch-' + i);
       const st = state.filterStates[i] || 'normal';
-      const delta = getChannelDelta(i, w);
+      const delta = Math.abs(getChannelDelta(i, w));
       if (chip) {
         chip.setAttribute('data-state', st);
         const label = chip.querySelector('.chip-state-text');
         if (label) label.textContent = FILTER_STATE_LABELS[st] || st.toUpperCase();
       }
       const metricEl = document.getElementById('ch-metric-' + i);
-      if (metricEl) {
-        metricEl.textContent = chMetricsText[i](delta);
-        metricEl.style.color = delta === 0 ? 'var(--c-accent-green)' : 'var(--c-brand-yellow)';
-      }
       const cardEl = document.getElementById('filter-card-' + i);
-      if (cardEl) {
-        cardEl.style.borderColor = delta === 0 ? 'var(--c-accent-green)' : 'var(--c-surface-5)';
+      if (delta === 0) {
+        if (metricEl) {
+          metricEl.textContent = '● LOCK';
+          metricEl.style.color = 'var(--c-accent-green)';
+        }
+        if (cardEl) cardEl.style.borderColor = 'var(--c-accent-green)';
+        chProbeTags.push('CH' + (i + 1) + '[●LOCK]');
+      } else if (delta === 1) {
+        if (metricEl) {
+          metricEl.textContent = '◐ NEAR';
+          metricEl.style.color = 'var(--c-brand-yellow)';
+        }
+        if (cardEl) cardEl.style.borderColor = 'var(--c-brand-yellow)';
+        chProbeTags.push('CH' + (i + 1) + '[◐逼近]');
+      } else {
+        if (metricEl) {
+          metricEl.textContent = '○ ERR';
+          metricEl.style.color = 'var(--c-danger-red)';
+        }
+        if (cardEl) cardEl.style.borderColor = 'var(--c-surface-5)';
+        chProbeTags.push('CH' + (i + 1) + '[○失配]');
+      }
+    }
+
+    // Update Top Probe / Recipe Telemetry Bar
+    const recipeHint = document.getElementById('synapse-recipe-hint');
+    if (recipeHint) {
+      if (state.hintOn || isNowLocked) {
+        recipeHint.textContent = '特征码: ' + w.recipeLabel + ' · 甜区[' + sig.sweetSpot + '°]';
+      } else {
+        const knobTag = sweet ? '●甜区命中' : (nearSweet ? '◐谐振逼近' : '○待寻位');
+        recipeHint.textContent = '探针: ' + chProbeTags.join(' ') + ' // 旋钮A[' + knobTag + '] · 推进[' + (state.knobDrive || 0) + '%]';
+      }
+    }
+
+    // Update KNOB A (Harmonic Sweet-Spot Seeker 0°..300°)
+    const curAngle = typeof state.knobAngle === 'number' ? state.knobAngle : 45;
+    const rotDegA = -135 + (curAngle / 300) * 270;
+    const rotorA = document.getElementById('knob-a-rotor');
+    if (rotorA) rotorA.setAttribute('transform', 'rotate(' + rotDegA.toFixed(1) + ', 60, 35)');
+    const readoutA = document.getElementById('knob-a-readout');
+    if (readoutA) readoutA.textContent = String(curAngle).padStart(3, '0') + '°';
+    const statusA = document.getElementById('knob-a-status');
+    const cardA = document.getElementById('knob-card-a');
+    const sonarArcA = document.getElementById('knob-a-sonar-arc');
+    const pointerA = document.getElementById('knob-a-pointer');
+    const haloA = document.getElementById('knob-a-halo');
+    const proximityRatio = Math.max(0.08, 1 - Math.min(1, angleDiff / 160));
+    if (sonarArcA) {
+      const arcLen = Math.round(16 + proximityRatio * 164);
+      sonarArcA.setAttribute('stroke-dasharray', arcLen + ' 220');
+      sonarArcA.setAttribute('stroke', sweet ? '#7EA403' : (nearSweet ? '#FED800' : '#0098DC'));
+    }
+    if (pointerA) {
+      pointerA.setAttribute('stroke', sweet ? '#7EA403' : (nearSweet ? '#FED800' : '#22BBFE'));
+    }
+    if (haloA) {
+      haloA.setAttribute('stroke', sweet ? '#7EA403' : (nearSweet ? '#FED800' : '#313131'));
+    }
+    if (cardA) {
+      cardA.classList.toggle('is-sweet', sweet);
+      cardA.classList.toggle('is-near', !sweet && nearSweet);
+    }
+    if (statusA) {
+      if (sweet) {
+        statusA.textContent = '● SWEET';
+        statusA.style.color = 'var(--c-accent-green)';
+      } else if (nearSweet) {
+        statusA.textContent = '◐ NEAR';
+        statusA.style.color = 'var(--c-brand-yellow)';
+      } else {
+        statusA.textContent = '○ SEEK';
+        statusA.style.color = 'var(--c-ink-disabled)';
+      }
+    }
+
+    // Update KNOB B (PLL Lock-In Depth Drive 0%..100%)
+    const curDrive = typeof state.knobDrive === 'number' ? state.knobDrive : 0;
+    const rotDegB = -135 + (curDrive / 100) * 270;
+    const rotorB = document.getElementById('knob-b-rotor');
+    if (rotorB) rotorB.setAttribute('transform', 'rotate(' + rotDegB.toFixed(1) + ', 60, 35)');
+    const readoutB = document.getElementById('knob-b-readout');
+    if (readoutB) readoutB.textContent = curDrive + '%';
+    const driveArcB = document.getElementById('knob-b-drive-arc');
+    if (driveArcB) {
+      const dLen = Math.round((curDrive / 100) * 180);
+      driveArcB.setAttribute('stroke-dasharray', dLen + ' 220');
+      driveArcB.setAttribute('stroke', isOverloading ? '#EC3140' : (isNowLocked ? '#7EA403' : '#0098DC'));
+    }
+    const cardB = document.getElementById('knob-card-b');
+    if (cardB) {
+      cardB.classList.toggle('is-overloading', isOverloading);
+      cardB.classList.toggle('is-sweet', isNowLocked);
+    }
+    const statusB = document.getElementById('knob-b-status');
+    if (statusB) {
+      if (isOverloading) {
+        statusB.textContent = '⚡ SLIP';
+        statusB.style.color = 'var(--c-danger-red)';
+      } else if (isNowLocked) {
+        statusB.textContent = '● LOCK';
+        statusB.style.color = 'var(--c-accent-green)';
+      } else {
+        statusB.textContent = curDrive + '%';
+        statusB.style.color = 'var(--c-currency-blue)';
       }
     }
 
@@ -3665,13 +4092,13 @@ window.JC09_ENDINGS = {
 
     const matchBadge = document.getElementById('osc-match-badge');
     if (matchBadge) {
-      matchBadge.textContent = isNowLocked ? '锁相匹配 100%' : ('滤波匹配度 ' + pct + '%');
-      matchBadge.style.background = isNowLocked ? 'var(--c-confirm-gold)' : 'var(--c-panel)';
+      matchBadge.textContent = isNowLocked ? '锁相匹配 100%' : (isOverloading ? 'PLL 失步回弹!' : ('滤波匹配度 ' + pct + '%'));
+      matchBadge.style.background = isNowLocked ? 'var(--c-confirm-gold)' : (isOverloading ? 'var(--c-danger-red)' : 'var(--c-panel)');
       matchBadge.style.color = isNowLocked ? 'var(--c-canvas)' : 'var(--c-ink)';
     }
 
-    const eyeOpenPct = Math.max(12, Math.round(100 - Math.abs(getChannelDelta(1, w)) * 22 - Math.abs(getChannelDelta(2, w)) * 12));
-    const jitterVal = (Math.abs(getChannelDelta(3, w)) * 0.14 + Math.abs(getChannelDelta(0, w)) * 0.08).toFixed(2);
+    const eyeOpenPct = isNowLocked ? 100 : Math.max(12, Math.round(pct * 0.92));
+    const jitterVal = isNowLocked ? '0.00' : ((100 - pct) * 0.0055).toFixed(2);
     const eyeMetricsEl = document.getElementById('osc-eye-metrics');
     if (eyeMetricsEl) {
       eyeMetricsEl.textContent = isNowLocked
@@ -3684,7 +4111,7 @@ window.JC09_ENDINGS = {
     if (oscTitle) {
       oscTitle.textContent = isNowLocked
         ? 'XY 李萨如 & 2-UI 眼图 // 锁相完成'
-        : 'XY 李萨如 & 2-UI 眼图 // 实时波形监视';
+        : (isOverloading ? 'XY 李萨如 & 2-UI 眼图 // PLL 失步过载警告' : 'XY 李萨如 & 2-UI 眼图 // 实时波形监视');
     }
 
     // Update Dual-Scope Tints, Target Ghost Template & Diamond Eye Masks
@@ -3694,14 +4121,14 @@ window.JC09_ENDINGS = {
     if (ratioLabel) {
       const d0 = getChannelDelta(0, w);
       ratioLabel.textContent = d0 === 0
-        ? ('RATIO ' + sig.ratioText + ' LOCK')
+        ? ('RATIO ' + sig.ratioText + (sweet ? ' SWEET' : ' TUNE'))
         : ('RATIO ' + (sig.fx + d0) + ':' + sig.fy + ' ERR');
-      ratioLabel.setAttribute('fill', d0 === 0 ? '#7EA403' : '#FED800');
+      ratioLabel.setAttribute('fill', (d0 === 0 && sweet) ? '#7EA403' : '#FED800');
     }
 
     const reticle = document.getElementById('lis-lock-reticle');
     if (reticle) {
-      reticle.setAttribute('stroke', isNowLocked ? '#E8C400' : '#555555');
+      reticle.setAttribute('stroke', isNowLocked ? '#E8C400' : (sweet ? '#7EA403' : '#555555'));
       reticle.setAttribute('fill', isNowLocked ? 'rgba(232, 196, 0, 0.22)' : 'none');
     }
 
@@ -3722,7 +4149,7 @@ window.JC09_ENDINGS = {
       d.setAttribute('fill', isNowLocked ? '#7EA403' : '#EC3140');
     });
     if (maskStatus) {
-      maskStatus.textContent = isNowLocked ? 'EYE OPEN // 100% LOCK' : 'MASK VIOLATION';
+      maskStatus.textContent = isNowLocked ? 'EYE OPEN // 100% LOCK' : (isOverloading ? 'PLL PHASE SLIP!' : 'MASK VIOLATION');
       maskStatus.setAttribute('fill', isNowLocked ? '#7EA403' : '#EC3140');
     }
 
@@ -3731,7 +4158,7 @@ window.JC09_ENDINGS = {
     const subTraces = ['lis-trace-1', 'lis-trace-2', 'wave-path-surface', 'eye-trace-0', 'eye-trace-1', 'eye-trace-2', 'eye-trace-3'];
     mainTraces.forEach(function (id) {
       const el = document.getElementById(id);
-      if (el) el.setAttribute('class', 'ui-color-graphic ' + (isNowLocked ? 'tint-gold' : sig.tintMain));
+      if (el) el.setAttribute('class', 'ui-color-graphic ' + (isOverloading ? 'tint-danger' : (isNowLocked ? 'tint-gold' : sig.tintMain)));
     });
     subTraces.forEach(function (id) {
       const el = document.getElementById(id);
@@ -4267,12 +4694,20 @@ window.JC09_ENDINGS = {
       });
     }
 
-    // 5. Synapse Slicer & 7-State Toggle Matrix (View 02)
+    // 5. Synapse Slicer, 7-State Toggle Matrix & Dual-Knob Lockpick (View 02)
     document.querySelectorAll('[data-syn-witness]').forEach(function (btn) {
       btn.addEventListener('click', function () {
         const wid = btn.getAttribute('data-syn-witness');
         state.synapseTarget = wid;
         state.selectedWitness = wid;
+        const sig = WITNESS_OSC_SIG[wid] || WITNESS_OSC_SIG.W05;
+        if (state.unlockedDeep[wid]) {
+          state.knobAngle = sig.sweetSpot;
+          state.knobDrive = 100;
+        } else {
+          state.knobAngle = 45;
+          state.knobDrive = 0;
+        }
         saveState();
         renderAll();
         sfxCardSelect();
@@ -4284,6 +4719,10 @@ window.JC09_ENDINGS = {
       const nextIdx = (SEVEN_STATES.indexOf(cur) + 1) % SEVEN_STATES.length;
       const nextState = SEVEN_STATES[nextIdx];
       state.filterStates[i] = nextState;
+      const w = window.JC09_WITNESSES[state.synapseTarget] || window.JC09_WITNESSES.W05;
+      if (!isSynapseFullyLocked(w) && state.knobDrive > 0) {
+        state.knobDrive = 0;
+      }
       saveState();
       renderSynapseView();
       sfxFilterRelay(nextState);
@@ -4303,6 +4742,104 @@ window.JC09_ENDINGS = {
           cycleFilterChannel(i);
         });
       }
+    }
+
+    // KNOB A Controls: Drag, Wheel, and ±15° Step Buttons
+    const btnKnobADec = document.getElementById('btn-knob-a-dec');
+    if (btnKnobADec) {
+      btnKnobADec.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        setKnobAngle((state.knobAngle || 0) - 15);
+      });
+    }
+    const btnKnobAInc = document.getElementById('btn-knob-a-inc');
+    if (btnKnobAInc) {
+      btnKnobAInc.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        setKnobAngle((state.knobAngle || 0) + 15);
+      });
+    }
+
+    const knobCardA = document.getElementById('knob-card-a');
+    const knobSvgA = document.getElementById('knob-a-svg');
+    if (knobCardA) {
+      knobCardA.addEventListener('wheel', function (ev) {
+        ev.preventDefault();
+        const delta = ev.deltaY < 0 ? 15 : -15;
+        setKnobAngle((state.knobAngle || 0) + delta);
+      }, { passive: false });
+    }
+    if (knobSvgA) {
+      let draggingA = false;
+      let startYA = 0;
+      let startXA = 0;
+      let startAngA = 45;
+      knobSvgA.addEventListener('pointerdown', function (ev) {
+        draggingA = true;
+        startYA = ev.clientY;
+        startXA = ev.clientX;
+        startAngA = typeof state.knobAngle === 'number' ? state.knobAngle : 45;
+        try { knobSvgA.setPointerCapture(ev.pointerId); } catch (_) {}
+      });
+      knobSvgA.addEventListener('pointermove', function (ev) {
+        if (!draggingA) return;
+        const dy = startYA - ev.clientY;
+        const dx = ev.clientX - startXA;
+        const degDelta = Math.round((dy * 1.8 + dx * 1.4) / 5) * 5;
+        setKnobAngle(startAngA + degDelta);
+      });
+      const stopDragA = function () { draggingA = false; };
+      knobSvgA.addEventListener('pointerup', stopDragA);
+      knobSvgA.addEventListener('pointercancel', stopDragA);
+    }
+
+    // KNOB B Controls: Drag, Wheel, -25% Release & Push-to-Lock Button
+    const btnKnobBDec = document.getElementById('btn-knob-b-dec');
+    if (btnKnobBDec) {
+      btnKnobBDec.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        advanceKnobDrive(Math.max(0, (state.knobDrive || 0) - 25));
+      });
+    }
+    const btnKnobBPush = document.getElementById('btn-knob-b-push');
+    if (btnKnobBPush) {
+      btnKnobBPush.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        advanceKnobDrive((state.knobDrive || 0) + 35);
+      });
+    }
+
+    const knobCardB = document.getElementById('knob-card-b');
+    const knobSvgB = document.getElementById('knob-b-svg');
+    if (knobCardB) {
+      knobCardB.addEventListener('wheel', function (ev) {
+        ev.preventDefault();
+        const delta = ev.deltaY < 0 ? 25 : -25;
+        advanceKnobDrive((state.knobDrive || 0) + delta);
+      }, { passive: false });
+    }
+    if (knobSvgB) {
+      let draggingB = false;
+      let startYB = 0;
+      let startXB = 0;
+      let startDriveB = 0;
+      knobSvgB.addEventListener('pointerdown', function (ev) {
+        draggingB = true;
+        startYB = ev.clientY;
+        startXB = ev.clientX;
+        startDriveB = typeof state.knobDrive === 'number' ? state.knobDrive : 0;
+        try { knobSvgB.setPointerCapture(ev.pointerId); } catch (_) {}
+      });
+      knobSvgB.addEventListener('pointermove', function (ev) {
+        if (!draggingB) return;
+        const dy = startYB - ev.clientY;
+        const dx = ev.clientX - startXB;
+        const pctDelta = Math.round((dy * 1.2 + dx * 1.0));
+        advanceKnobDrive(startDriveB + pctDelta);
+      });
+      const stopDragB = function () { draggingB = false; };
+      knobSvgB.addEventListener('pointerup', stopDragB);
+      knobSvgB.addEventListener('pointercancel', stopDragB);
     }
 
     const synTargetBadge = document.getElementById('synapse-target-badge');
@@ -4328,22 +4865,38 @@ window.JC09_ENDINGS = {
     const btnAutoTune = document.getElementById('btn-auto-tune');
     if (btnAutoTune) {
       btnAutoTune.addEventListener('click', function () {
+        if (oscAnim.springbackTimer) {
+          clearTimeout(oscAnim.springbackTimer);
+          oscAnim.springbackTimer = null;
+        }
+        oscAnim.overloadUntil = 0;
         const w = window.JC09_WITNESSES[state.synapseTarget] || window.JC09_WITNESSES.W05;
+        const sig = WITNESS_OSC_SIG[w.id] || WITNESS_OSC_SIG.W05;
         state.filterStates = w.recipe.slice();
+        state.knobAngle = sig.sweetSpot;
+        state.knobDrive = 100;
         state.unlockedDeep[w.id] = true;
         saveState();
         renderAll();
         ensureOscilloscopeLoop();
         sfxBreakthrough();
-        logTicker('已按配方校准七态开关并成功破译 ' + w.name + ' 的深层记忆残响！');
+        logTicker('[AUTO] 已一键校准四通道与双旋钮甜区，成功破译 ' + w.name + ' 的深层记忆残响！');
       });
     }
 
     const btnUnlockDeep = document.getElementById('btn-unlock-deep');
     if (btnUnlockDeep) {
       btnUnlockDeep.addEventListener('click', function () {
+        if (oscAnim.springbackTimer) {
+          clearTimeout(oscAnim.springbackTimer);
+          oscAnim.springbackTimer = null;
+        }
+        oscAnim.overloadUntil = 0;
         const w = window.JC09_WITNESSES[state.synapseTarget] || window.JC09_WITNESSES.W05;
+        const sig = WITNESS_OSC_SIG[w.id] || WITNESS_OSC_SIG.W05;
         state.filterStates = w.recipe.slice();
+        state.knobAngle = sig.sweetSpot;
+        state.knobDrive = 100;
         state.unlockedDeep[w.id] = true;
         state.selectedWitness = w.id;
         state.witnessLayer = 'deep';
