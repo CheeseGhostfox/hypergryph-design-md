@@ -373,15 +373,16 @@ html, body {
   position: relative;
   overflow: hidden;
   height: var(--s-row); /* 30px */
-  padding: 0 var(--s-xs);
+  padding: 0 7px;
   border-radius: var(--r-xs);
   font-family: var(--f-cjk);
   font-size: var(--fs-body-sm);
   font-weight: 500;
+  white-space: nowrap;
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--s-xs);
+  gap: 4px;
   cursor: pointer;
   border: 1px solid var(--c-surface-5);
   border-bottom: 2px solid var(--c-surface-6);
@@ -391,6 +392,11 @@ html, body {
     color 0.14s ease,
     border-color 0.14s ease,
     transform 0.15s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.state-chip .chip-state-text {
+  font-family: var(--f-tech);
+  font-size: 11px;
+  letter-spacing: 0.02em;
 }
 .state-chip:active,
 .state-chip.is-pressing {
@@ -2041,48 +2047,48 @@ html, body {
 
               <!-- 4-Channel Seven-State Toggle Switch Matrix -->
               <div class="filter-matrix-grid" role="group" aria-label="七态神经滤波开关组">
-                <div class="filter-channel-card">
-                  <div style="display:flex;justify-content:space-between;font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-ink-disabled);">
-                    <span>CH-01 // ACOUSTIC</span><span>声学反相门</span>
+                <div class="filter-channel-card" id="filter-card-0">
+                  <div style="display:flex;justify-content:space-between;align-items:center;font-family:var(--f-tech);font-size:10px;white-space:nowrap;color:var(--c-ink-disabled);">
+                    <span>CH-01 ACOUSTIC</span><span id="ch-metric-0" style="color:var(--c-brand-yellow);">Δf DETUNED</span>
                   </div>
                   <button type="button" class="state-chip" data-channel="0" data-state="normal" id="filter-ch-0">
-                    <span>当前态</span><strong class="chip-state-text">NORMAL</strong>
+                    <span>声学反相门</span><strong class="chip-state-text">NORMAL</strong>
                   </button>
-                  <div style="font-size:var(--fs-caption);color:var(--c-ink-muted);">剥离伪造的轨道轰鸣声与警报背景</div>
+                  <div style="font-size:var(--fs-caption);color:var(--c-ink-muted);white-space:nowrap;">谐波频率比与眼图周期折叠</div>
                 </div>
 
-                <div class="filter-channel-card">
-                  <div style="display:flex;justify-content:space-between;font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-ink-disabled);">
-                    <span>CH-02 // NOCICEPTOR</span><span>痛觉与眩晕剥离</span>
+                <div class="filter-channel-card" id="filter-card-1">
+                  <div style="display:flex;justify-content:space-between;align-items:center;font-family:var(--f-tech);font-size:10px;white-space:nowrap;color:var(--c-ink-disabled);">
+                    <span>CH-02 NOCICEPT</span><span id="ch-metric-1" style="color:var(--c-brand-yellow);">NOISE HIGH</span>
                   </div>
                   <button type="button" class="state-chip" data-channel="1" data-state="off" id="filter-ch-1">
-                    <span>当前态</span><strong class="chip-state-text">OFF</strong>
+                    <span>痛觉剥离</span><strong class="chip-state-text">OFF</strong>
                   </button>
-                  <div style="font-size:var(--fs-caption);color:var(--c-ink-muted);">过滤经颅磁脉冲诱发的皮层闪白</div>
+                  <div style="font-size:var(--fs-caption);color:var(--c-ink-muted);white-space:nowrap;">高频毛刺滤除与垂直眼高张开</div>
                 </div>
 
-                <div class="filter-channel-card">
-                  <div style="display:flex;justify-content:space-between;font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-ink-disabled);">
-                    <span>CH-03 // LIMBIC</span><span>边缘系统情绪钳制</span>
+                <div class="filter-channel-card" id="filter-card-2">
+                  <div style="display:flex;justify-content:space-between;align-items:center;font-family:var(--f-tech);font-size:10px;white-space:nowrap;color:var(--c-ink-disabled);">
+                    <span>CH-03 LIMBIC</span><span id="ch-metric-2" style="color:var(--c-brand-yellow);">PHASE SKEW</span>
                   </div>
                   <button type="button" class="state-chip" data-channel="2" data-state="unselected" id="filter-ch-2">
-                    <span>当前态</span><strong class="chip-state-text">UNSELECTED</strong>
+                    <span>情绪钳制</span><strong class="chip-state-text">UNSELECTED</strong>
                   </button>
-                  <div style="font-size:var(--fs-caption);color:var(--c-ink-muted);">抑制植入式恐慌与虚假负罪感</div>
+                  <div style="font-size:var(--fs-caption);color:var(--c-ink-muted);white-space:nowrap;">正交相位张角与上下包络对称</div>
                 </div>
 
-                <div class="filter-channel-card">
-                  <div style="display:flex;justify-content:space-between;font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-ink-disabled);">
-                    <span>CH-04 // CHRONO</span><span>石英时钟重同步</span>
+                <div class="filter-channel-card" id="filter-card-3">
+                  <div style="display:flex;justify-content:space-between;align-items:center;font-family:var(--f-tech);font-size:10px;white-space:nowrap;color:var(--c-ink-disabled);">
+                    <span>CH-04 CHRONO</span><span id="ch-metric-3" style="color:var(--c-brand-yellow);">PLL DRIFT</span>
                   </div>
                   <button type="button" class="state-chip" data-channel="3" data-state="select" id="filter-ch-3">
-                    <span>当前态</span><strong class="chip-state-text">SELECT</strong>
+                    <span>时钟重同步</span><strong class="chip-state-text">SELECT</strong>
                   </button>
-                  <div style="font-size:var(--fs-caption);color:var(--c-ink-muted);">对齐坠桥前 17.0s 真实物理时间戳</div>
+                  <div style="font-size:var(--fs-caption);color:var(--c-ink-muted);white-space:nowrap;">水平触发锁相与过零眼宽收束</div>
                 </div>
               </div>
 
-              <!-- 17-Second Neural Waveform Oscilloscope & 5 Time Nodes + Target Portrait Preview -->
+              <!-- 17-Second Neural Waveform Oscilloscope (Dual-Scope: XY Lissajous + 2-UI Eye Diagram) -->
               <div class="timeline-oscilloscope" style="display:grid;grid-template-columns:122px 1fr;gap:var(--s-xs);align-items:stretch;">
                 <div style="position:relative;border:1px solid var(--c-surface-5);border-radius:var(--r-slice-sm);overflow:hidden;background:var(--c-panel-deep);display:flex;flex-direction:column;">
                   <svg id="synapse-portrait-svg" viewBox="0 0 510 680" preserveAspectRatio="xMidYMin slice" style="width:100%;flex:1;min-height:0;display:block;" aria-label="破译对象立绘"></svg>
@@ -2095,18 +2101,76 @@ html, body {
                 <div style="display:flex;flex-direction:column;justify-content:space-between;min-width:0;">
                   <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;">
                     <span style="font-family:var(--f-tech);font-size:var(--fs-label);color:var(--c-currency-blue);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" id="osc-status-title">
-                      WAVEFORM // 17.0s NEURAL ENVELOPE
+                      DUAL-SCOPE // XY LISSAJOUS &amp; 2-UI EYE DIAGRAM
                     </span>
-                    <span class="rarity-pill" id="osc-match-badge" style="background:var(--c-panel);color:var(--c-ink);">匹配度 25%</span>
+                    <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
+                      <span style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-ink-disabled);" id="osc-eye-metrics">EYE-H: 28% · JITTER: 0.42UI</span>
+                      <span class="rarity-pill" id="osc-match-badge" style="background:var(--c-panel);color:var(--c-ink);">滤波匹配度 25%</span>
+                    </div>
                   </div>
 
-                  <!-- Procedural White-Mask Oscilloscope SVG Tinted at Runtime -->
-                  <svg id="synapse-wave-svg" viewBox="0 0 760 88" style="width:100%;height:78px;">
-                    <line x1="0" y1="44" x2="760" y2="44" stroke="#434343" stroke-width="1" stroke-dasharray="4 4" />
-                    <path id="wave-path-surface" class="ui-color-graphic tint-primary" fill="none" stroke-width="2"
-                      d="M 0 44 Q 40 12 80 44 T 160 44 T 240 44 T 320 44 T 400 44 T 480 44 T 560 44 T 640 44 T 760 44" />
-                    <path id="wave-path-deep" class="ui-color-graphic tint-yellow" fill="none" stroke-width="2" stroke-dasharray="5 3"
-                      d="M 0 44 C 70 78 130 10 210 56 C 290 80 350 8 430 44 C 510 82 610 14 760 44" />
+                  <!-- Dual-Scope Procedural SVG: Left XY Lissajous (0..180) + Right 2-UI Eye Diagram (190..760) -->
+                  <svg id="synapse-wave-svg" viewBox="0 0 760 104" style="width:100%;height:112px;display:block;background:var(--c-canvas);">
+                    <!-- Left Scope: XY Phase Lissajous Vector Monitor -->
+                    <g id="scope-lissajous">
+                      <rect x="2" y="2" width="176" height="100" fill="#141516" stroke="#434343" stroke-width="1" />
+                      <line x1="90" y1="2" x2="90" y2="102" stroke="#313131" stroke-width="0.8" stroke-dasharray="2 2" />
+                      <line x1="2" y1="52" x2="178" y2="52" stroke="#313131" stroke-width="0.8" stroke-dasharray="2 2" />
+                      <circle cx="90" cy="52" r="22" fill="none" stroke="#242424" stroke-width="0.8" />
+                      <circle cx="90" cy="52" r="39" fill="none" stroke="#313131" stroke-width="0.8" stroke-dasharray="3 3" />
+                      <!-- Target Reference Ghost Lissajous Ring -->
+                      <path id="lis-ghost-path" fill="none" stroke="#555555" stroke-width="1.4" stroke-dasharray="3 3" d="" />
+                      <!-- Live Persistence Afterglow Trails -->
+                      <path id="lis-trace-2" class="ui-color-graphic tint-primary" fill="none" stroke-width="1" opacity="0.26" d="" />
+                      <path id="lis-trace-1" class="ui-color-graphic tint-primary" fill="none" stroke-width="1.4" opacity="0.52" d="" />
+                      <path id="lis-trace-0" class="ui-color-graphic tint-yellow" fill="none" stroke-width="2" d="" />
+                      <!-- Phase Lock Center Reticle -->
+                      <polygon id="lis-lock-reticle" points="90,45 97,52 90,59 83,52" fill="none" stroke="#555555" stroke-width="1.2" />
+                      <text x="7" y="13" fill="#898989" font-family="JetBrains Mono, monospace" font-size="9">XY // PHASE</text>
+                      <text id="lis-ratio-label" x="7" y="97" fill="#22BBFE" font-family="JetBrains Mono, monospace" font-size="9">RATIO 4:3</text>
+                    </g>
+
+                    <!-- Right Scope: Multi-Trace Persistence Neural Eye Diagram (2 Unit Intervals) -->
+                    <g id="scope-eye-diagram">
+                      <rect x="188" y="2" width="570" height="100" fill="#141516" stroke="#434343" stroke-width="1" />
+                      <!-- Grid Lines: 0V Centerline, ±V Rails, UI Crossing Boundaries -->
+                      <line x1="188" y1="20" x2="758" y2="20" stroke="#242424" stroke-width="0.8" />
+                      <line x1="188" y1="52" x2="758" y2="52" stroke="#313131" stroke-width="1" stroke-dasharray="4 3" />
+                      <line x1="188" y1="84" x2="758" y2="84" stroke="#242424" stroke-width="0.8" />
+                      <line x1="330" y1="2" x2="330" y2="102" stroke="#242424" stroke-width="0.8" stroke-dasharray="2 3" />
+                      <line x1="473" y1="2" x2="473" y2="102" stroke="#313131" stroke-width="0.9" stroke-dasharray="3 3" />
+                      <line x1="616" y1="2" x2="616" y2="102" stroke="#242424" stroke-width="0.8" stroke-dasharray="2 3" />
+
+                      <!-- Target Reference Ideal Eye Envelope (Dashed Template) -->
+                      <path id="eye-ghost-upper" fill="none" stroke="#555555" stroke-width="1.2" stroke-dasharray="3 3" d="" />
+                      <path id="eye-ghost-lower" fill="none" stroke="#555555" stroke-width="1.2" stroke-dasharray="3 3" d="" />
+
+                      <!-- Dual Diamond Eye Masks (Forbidden Decision Zones at UI Centers x=330 & x=616) -->
+                      <polygon id="eye-mask-1" points="274,52 330,27 386,52 330,77" fill="rgba(236, 49, 64, 0.12)" stroke="#EC3140" stroke-width="1.2" stroke-dasharray="3 2" />
+                      <polygon id="eye-mask-2" points="560,52 616,27 672,52 616,77" fill="rgba(236, 49, 64, 0.12)" stroke="#EC3140" stroke-width="1.2" stroke-dasharray="3 2" />
+                      <circle id="eye-sample-dot-1" cx="330" cy="52" r="2.5" fill="#EC3140" />
+                      <circle id="eye-sample-dot-2" cx="616" cy="52" r="2.5" fill="#EC3140" />
+
+                      <!-- 8-Track Persistence Folded Symbol Traces -->
+                      <path id="eye-trace-0" class="ui-color-graphic tint-primary" fill="none" stroke-width="1.1" opacity="0.32" d="" />
+                      <path id="eye-trace-1" class="ui-color-graphic tint-primary" fill="none" stroke-width="1.1" opacity="0.38" d="" />
+                      <path id="eye-trace-2" class="ui-color-graphic tint-primary" fill="none" stroke-width="1.2" opacity="0.45" d="" />
+                      <path id="eye-trace-3" class="ui-color-graphic tint-primary" fill="none" stroke-width="1.3" opacity="0.55" d="" />
+                      <path id="eye-trace-4" class="ui-color-graphic tint-cyan" fill="none" stroke-width="1.4" opacity="0.68" d="" />
+                      <path id="eye-trace-5" class="ui-color-graphic tint-cyan" fill="none" stroke-width="1.5" opacity="0.78" d="" />
+                      <path id="wave-path-surface" class="ui-color-graphic tint-primary" fill="none" stroke-width="1.8" opacity="0.88" d="" />
+                      <path id="wave-path-deep" class="ui-color-graphic tint-yellow" fill="none" stroke-width="2.1" d="" />
+
+                      <!-- Time-Slice Sampling Gate Cursor -->
+                      <g id="eye-time-gate" transform="translate(238, 0)">
+                        <line x1="0" y1="2" x2="0" y2="102" stroke="#FED800" stroke-width="1.2" stroke-dasharray="2 2" />
+                        <polygon points="-4,2 4,2 0,8" fill="#FED800" />
+                        <polygon points="-4,102 4,102 0,96" fill="#FED800" />
+                      </g>
+
+                      <text x="195" y="13" fill="#898989" font-family="JetBrains Mono, monospace" font-size="9">EYE DIAGRAM // 2.0 UI PERSISTENCE</text>
+                      <text id="eye-mask-status" x="618" y="13" fill="#EC3140" font-family="JetBrains Mono, monospace" font-size="9">MASK VIOLATION</text>
+                    </g>
                   </svg>
 
                   <!-- 5 Time Slice Nodes (T-17.0s to T-00.0s) -->
@@ -3210,6 +3274,10 @@ window.JC09_ENDINGS = {
       panel.classList.toggle('is-active', panel.id === 'view-' + viewName);
     });
 
+    if (viewName === 'synapse') {
+      ensureOscilloscopeLoop();
+    }
+
     sfxTabSwitch();
     logTicker('已切换至主视图 // ' + viewName.toUpperCase());
   }
@@ -3314,7 +3382,41 @@ window.JC09_ENDINGS = {
     if (noteEl) noteEl.innerHTML = layerData.note;
   }
 
-  // ---- 17-Second Synapse Slicer & 7-State Toggle Matrix (View 02) ----
+  // ---- 17-Second Synapse Slicer: Real-Time Dual-Scope (XY Lissajous + 2-UI Eye Diagram) ----
+  const WITNESS_OSC_SIG = {
+    W01: { fx: 1, fy: 2, phase0: 1.5708, ratioText: '1:2', tintMain: 'tint-cyan',    tintSub: 'tint-primary' },
+    W02: { fx: 2, fy: 3, phase0: 0.7854, ratioText: '2:3', tintMain: 'tint-green',   tintSub: 'tint-cyan' },
+    W03: { fx: 3, fy: 2, phase0: 1.5708, ratioText: '3:2', tintMain: 'tint-primary', tintSub: 'tint-cyan' },
+    W04: { fx: 3, fy: 4, phase0: 0.7854, ratioText: '3:4', tintMain: 'tint-violet',  tintSub: 'tint-primary' },
+    W05: { fx: 4, fy: 3, phase0: 1.5708, ratioText: '4:3', tintMain: 'tint-yellow',  tintSub: 'tint-primary' },
+    W06: { fx: 5, fy: 4, phase0: 0.7854, ratioText: '5:4', tintMain: 'tint-danger',  tintSub: 'tint-yellow' }
+  };
+
+  const TIME_GATE_X = [238, 355, 473, 591, 708];
+
+  const oscAnim = {
+    freqErr: 1.5,
+    noiseLv: 2.0,
+    phaseErr: -1.5,
+    driftVel: 1.5,
+    driftAccum: 0,
+    gateX: 238,
+    timeNodeMod: 0,
+    lastTs: 0,
+    rafId: null,
+    autoTuneTimers: []
+  };
+
+  function getChannelDelta(chIdx, w) {
+    const curIdx = SEVEN_STATES.indexOf(state.filterStates[chIdx] || 'normal');
+    const recIdx = SEVEN_STATES.indexOf(w.recipe[chIdx] || 'normal');
+    if (curIdx === recIdx) return 0;
+    let diff = curIdx - recIdx;
+    if (diff > 3) diff -= 7;
+    if (diff < -3) diff += 7;
+    return diff;
+  }
+
   function computeFilterMatch(w) {
     let matched = 0;
     for (let i = 0; i < 4; i++) {
@@ -3323,8 +3425,190 @@ window.JC09_ENDINGS = {
     return matched;
   }
 
+  function buildTargetGhostPaths(sig) {
+    const lisPts = [];
+    const N = 84;
+    for (let i = 0; i <= N; i++) {
+      const t = (i / N) * Math.PI * 2;
+      const x = 90 + 58 * Math.sin(sig.fx * t + sig.phase0);
+      const y = 52 + 35 * Math.sin(sig.fy * t);
+      lisPts.push((i === 0 ? 'M ' : 'L ') + x.toFixed(1) + ' ' + y.toFixed(1));
+    }
+    const ghostLis = document.getElementById('lis-ghost-path');
+    if (ghostLis) ghostLis.setAttribute('d', lisPts.join(' '));
+
+    const upPts = [];
+    const dnPts = [];
+    const M = 64;
+    for (let j = 0; j <= M; j++) {
+      const u = (j / M) * 2;
+      const x = 188 + u * 285;
+      const arch = Math.pow(Math.abs(Math.sin(Math.PI * u)), 0.78);
+      const yUp = 52 - 34 * arch;
+      const yDn = 52 + 34 * arch;
+      upPts.push((j === 0 ? 'M ' : 'L ') + x.toFixed(1) + ' ' + yUp.toFixed(1));
+      dnPts.push((j === 0 ? 'M ' : 'L ') + x.toFixed(1) + ' ' + yDn.toFixed(1));
+    }
+    const gUp = document.getElementById('eye-ghost-upper');
+    const gDn = document.getElementById('eye-ghost-lower');
+    if (gUp) gUp.setAttribute('d', upPts.join(' '));
+    if (gDn) gDn.setAttribute('d', dnPts.join(' '));
+  }
+
+  function shapeEyePlateau(s, nodeIdx, u, nowSec) {
+    if (nodeIdx === 0) {
+      // T-17.0s Mechanical Brake Lock: flat-top hydraulic clamping envelope
+      return Math.tanh(s * 2.1) / Math.tanh(2.1);
+    } else if (nodeIdx === 1) {
+      // T-12.4s Door Solenoid Lock: double-latch mechanical shoulder
+      return s * (0.88 + 0.12 * Math.cos(Math.PI * 4 * u));
+    } else if (nodeIdx === 2) {
+      // T-08.8s 440Hz TMS Pulse: high-Q 440Hz carrier micro-ripple on rails
+      return s + 0.08 * Math.sin(Math.PI * 10 * u + nowSec * 12) * Math.abs(s);
+    } else if (nodeIdx === 3) {
+      // T-04.2s Broadcast Override: dual-subcarrier packet step
+      return s * (0.9 + 0.1 * Math.sin(Math.PI * 6 * u));
+    }
+    // T-00.0s Explosive Decoupling: high-crest impulse peak
+    return Math.sign(s) * Math.pow(Math.abs(s), 0.72);
+  }
+
+  function stepOscilloscopeFrame(ts) {
+    const w = window.JC09_WITNESSES[state.synapseTarget] || window.JC09_WITNESSES.W05;
+    const sig = WITNESS_OSC_SIG[w.id] || WITNESS_OSC_SIG.W05;
+    const nowSec = (ts || performance.now()) / 1000;
+    const dt = oscAnim.lastTs ? Math.min(0.05, (ts - oscAnim.lastTs) / 1000) : 0.016;
+    oscAnim.lastTs = ts || performance.now();
+
+    const d0 = getChannelDelta(0, w); // CH-01: Harmonic Frequency Ratio
+    const d1 = Math.abs(getChannelDelta(1, w)); // CH-02: High-Freq Noise & Eye Height
+    const d2 = getChannelDelta(2, w); // CH-03: Phase Angle & DC Skew
+    const d3 = getChannelDelta(3, w); // CH-04: Clock Drift & Horizontal Jitter
+
+    const lerpRate = Math.min(1, dt * 8.5);
+    oscAnim.freqErr += (d0 - oscAnim.freqErr) * lerpRate;
+    oscAnim.noiseLv += (d1 - oscAnim.noiseLv) * lerpRate;
+    oscAnim.phaseErr += (d2 - oscAnim.phaseErr) * lerpRate;
+    oscAnim.driftVel += (d3 - oscAnim.driftVel) * lerpRate;
+
+    const targetGateX = TIME_GATE_X[state.activeTimeNode] || 238;
+    oscAnim.gateX += (targetGateX - oscAnim.gateX) * Math.min(1, dt * 12);
+
+    if (Math.abs(d3) > 0) {
+      oscAnim.driftAccum += oscAnim.driftVel * dt * 2.1;
+    } else {
+      oscAnim.driftAccum *= Math.pow(0.04, dt);
+      if (Math.abs(oscAnim.driftAccum) < 0.002) oscAnim.driftAccum = 0;
+    }
+
+    const gateEl = document.getElementById('eye-time-gate');
+    if (gateEl) {
+      gateEl.setAttribute('transform', 'translate(' + oscAnim.gateX.toFixed(1) + ', 0)');
+    }
+
+    // 1. Render Left Scope: XY Phase Lissajous Vector Traces (3 persistence layers)
+    const fxLive = sig.fx + oscAnim.freqErr * 0.52;
+    const fyLive = sig.fy - oscAnim.freqErr * 0.38;
+    const isLocked = (d0 === 0 && d1 === 0 && d2 === 0 && d3 === 0);
+
+    for (let layer = 0; layer < 3; layer++) {
+      const lagSec = nowSec - layer * 0.055;
+      const pts = [];
+      const steps = 90;
+      const wobblePhase = (Math.abs(oscAnim.freqErr) > 0.03 ? lagSec * 1.9 : 0) + oscAnim.driftAccum * 1.3 - layer * 0.16 * (isLocked ? 0.08 : 1);
+      const phi = sig.phase0 + oscAnim.phaseErr * 0.65 + wobblePhase;
+      const rx = 58 * (1 - Math.min(0.35, Math.abs(oscAnim.phaseErr) * 0.08));
+      const ry = 35 * (1 - Math.min(0.45, oscAnim.noiseLv * 0.11));
+      const dcY = oscAnim.phaseErr * 3.2;
+
+      for (let i = 0; i <= steps; i++) {
+        const t = (i / steps) * Math.PI * 2;
+        const glitch = oscAnim.noiseLv * 3.8 * Math.sin(17 * t + lagSec * 24 + layer) * Math.cos(29 * t - lagSec * 16);
+        const nodeRipple = isLocked
+          ? (0.9 * Math.sin((state.activeTimeNode + 2) * 3 * t + lagSec * 4))
+          : 0;
+        const x = 90 + (rx + glitch * 0.7 + nodeRipple) * Math.sin(fxLive * t + phi);
+        const y = Math.max(6, Math.min(98, 52 + dcY + (ry + glitch + nodeRipple) * Math.sin(fyLive * t)));
+        pts.push((i === 0 ? 'M ' : 'L ') + x.toFixed(1) + ' ' + y.toFixed(1));
+      }
+      const trEl = document.getElementById('lis-trace-' + layer);
+      if (trEl) trEl.setAttribute('d', pts.join(' '));
+    }
+
+    // 2. Render Right Scope: 8-Track Persistence 2.0-UI Eye Diagram
+    const foldFreq = 1 + oscAnim.freqErr * 0.42;
+    const eyeHeight = 34 * Math.max(0.22, 1 - oscAnim.noiseLv * 0.21);
+    const dcSkew = oscAnim.phaseErr * 6.2;
+    const asymSkew = oscAnim.phaseErr * 5.4;
+    const jitterUI = Math.abs(oscAnim.driftVel) * 0.11 + (isLocked ? 0.008 : 0.025);
+    const driftShift = oscAnim.driftAccum / Math.PI;
+
+    const traceConfigs = [
+      { sign:  1, mode: 'arch',   jit: -1.0, id: 'eye-trace-0' },
+      { sign: -1, mode: 'arch',   jit:  1.0, id: 'eye-trace-1' },
+      { sign:  1, mode: 'cross',  jit: -0.6, id: 'eye-trace-2' },
+      { sign: -1, mode: 'cross',  jit:  0.6, id: 'eye-trace-3' },
+      { sign:  1, mode: 'hold1',  jit: -0.3, id: 'eye-trace-4' },
+      { sign: -1, mode: 'hold2',  jit:  0.3, id: 'eye-trace-5' },
+      { sign:  1, mode: 'master', jit:  0.0, id: 'wave-path-surface' },
+      { sign: -1, mode: 'master', jit:  0.0, id: 'wave-path-deep' }
+    ];
+
+    const M = 68;
+    for (let k = 0; k < traceConfigs.length; k++) {
+      const cfg = traceConfigs[k];
+      const pathEl = document.getElementById(cfg.id);
+      if (!pathEl) continue;
+
+      const pts = [];
+      for (let j = 0; j <= M; j++) {
+        const u = (j / M) * 2; // 0.0 to 2.0 UI
+        const x = 188 + u * 285;
+        const uShifted = u * foldFreq + driftShift + cfg.jit * jitterUI;
+
+        let rawWave = Math.sin(Math.PI * uShifted);
+        if (cfg.mode === 'arch') {
+          rawWave = cfg.sign * Math.pow(Math.abs(rawWave), 0.78);
+        } else if (cfg.mode === 'cross') {
+          rawWave = cfg.sign * Math.sin(Math.PI * uShifted);
+        } else if (cfg.mode === 'hold1') {
+          rawWave = cfg.sign * (u < 1.0 ? Math.pow(Math.abs(rawWave), 0.75) : Math.sin(Math.PI * uShifted));
+        } else if (cfg.mode === 'hold2') {
+          rawWave = cfg.sign * (u >= 1.0 ? Math.pow(Math.abs(rawWave), 0.75) : -Math.sin(Math.PI * uShifted));
+        } else {
+          rawWave = cfg.sign * Math.pow(Math.abs(rawWave), 0.76);
+        }
+
+        const shaped = shapeEyePlateau(rawWave, state.activeTimeNode, u, nowSec);
+        const spike = oscAnim.noiseLv * 5.2 * Math.sin(23 * Math.PI * u + nowSec * (19 + k * 3) + k * 1.7) * Math.cos(13 * Math.PI * u - nowSec * 14);
+        const phaseWarp = dcSkew + asymSkew * Math.cos(Math.PI * u * (cfg.sign > 0 ? 1 : 2));
+        const liveShimmer = isLocked ? (0.8 * Math.sin(Math.PI * 2 * u + nowSec * 5 + k)) : 0;
+
+        const y = Math.max(5, Math.min(99, 52 - shaped * eyeHeight + phaseWarp + spike + liveShimmer));
+        pts.push((j === 0 ? 'M ' : 'L ') + x.toFixed(1) + ' ' + y.toFixed(1));
+      }
+      pathEl.setAttribute('d', pts.join(' '));
+      pathEl.setAttribute('stroke-dasharray', 'none');
+    }
+
+    if (state.activeView === 'synapse') {
+      oscAnim.rafId = requestAnimationFrame(stepOscilloscopeFrame);
+    } else {
+      oscAnim.rafId = null;
+    }
+  }
+
+  function ensureOscilloscopeLoop() {
+    if (!oscAnim.rafId) {
+      oscAnim.lastTs = performance.now();
+      oscAnim.rafId = requestAnimationFrame(stepOscilloscopeFrame);
+    }
+  }
+
   function renderSynapseView() {
     const w = window.JC09_WITNESSES[state.synapseTarget] || window.JC09_WITNESSES.W05;
+    const sig = WITNESS_OSC_SIG[w.id] || WITNESS_OSC_SIG.W05;
+
     const badge = document.getElementById('synapse-target-badge');
     if (badge) badge.textContent = 'TARGET: ' + w.id + ' ' + w.name + ' (' + w.rarity + '★)';
 
@@ -3337,61 +3621,133 @@ window.JC09_ENDINGS = {
       recipeHint.textContent = '特征码: ' + w.recipeLabel;
     }
 
+    const matched = computeFilterMatch(w);
+    if (matched === 4 && !state.unlockedDeep[w.id]) {
+      state.unlockedDeep[w.id] = true;
+      saveState();
+    }
+    const pct = Math.round((matched / 4) * 100);
+    const isUnlocked = !!state.unlockedDeep[w.id];
+    const isNowLocked = (matched === 4);
+
+    // Update 4 Channel Cards & Per-Channel Physical Metrics
+    const chMetricsText = [
+      function (d) { return d === 0 ? 'RATIO LOCK'  : ('Δf ' + (d > 0 ? '+' : '') + (d * 1.4).toFixed(1) + 'Hz'); },
+      function (d) { return d === 0 ? 'SNR +32dB'   : ('SPIKE -' + Math.round(Math.abs(d) * 6.5) + 'dB'); },
+      function (d) { return d === 0 ? 'Δφ 0.0° SYM' : ('SKEW ' + (d > 0 ? '+' : '') + (d * 28) + '°'); },
+      function (d) { return d === 0 ? 'PLL LOCKED'  : ('DRIFT ' + (d > 0 ? '+' : '') + (d * 0.6).toFixed(1) + 'UI'); }
+    ];
+
     for (let i = 0; i < 4; i++) {
       const chip = document.getElementById('filter-ch-' + i);
+      const st = state.filterStates[i] || 'normal';
+      const delta = getChannelDelta(i, w);
       if (chip) {
-        const st = state.filterStates[i] || 'normal';
         chip.setAttribute('data-state', st);
         const label = chip.querySelector('.chip-state-text');
         if (label) label.textContent = st.toUpperCase();
       }
+      const metricEl = document.getElementById('ch-metric-' + i);
+      if (metricEl) {
+        metricEl.textContent = chMetricsText[i](delta);
+        metricEl.style.color = delta === 0 ? 'var(--c-accent-green)' : 'var(--c-brand-yellow)';
+      }
+      const cardEl = document.getElementById('filter-card-' + i);
+      if (cardEl) {
+        cardEl.style.borderColor = delta === 0 ? 'var(--c-accent-green)' : 'var(--c-surface-5)';
+      }
     }
-
-    const matched = computeFilterMatch(w);
-    const pct = Math.round((matched / 4) * 100);
-    const isUnlocked = !!state.unlockedDeep[w.id];
 
     const synPortraitEl = document.getElementById('synapse-portrait-svg');
     if (synPortraitEl && window.JC09_PORTRAITS) {
-      const synKey = w.id + ':' + ((matched === 4 || isUnlocked) ? '1' : '0');
+      const synKey = w.id + ':' + ((isNowLocked || isUnlocked) ? '1' : '0');
       if (synPortraitEl.getAttribute('data-cache') !== synKey) {
         synPortraitEl.setAttribute('data-cache', synKey);
-        synPortraitEl.innerHTML = window.JC09_PORTRAITS.getPortraitSvg(w.id, matched === 4 || isUnlocked);
+        synPortraitEl.innerHTML = window.JC09_PORTRAITS.getPortraitSvg(w.id, isNowLocked || isUnlocked);
       }
     }
     const synCodeEl = document.getElementById('synapse-portrait-code');
     if (synCodeEl) synCodeEl.textContent = w.id + ' // ' + w.name;
     const synLayerEl = document.getElementById('synapse-portrait-layer');
     if (synLayerEl) {
-      synLayerEl.textContent = (matched === 4 || isUnlocked) ? 'DEEP SYNC' : 'LOCKED';
-      synLayerEl.style.color = (matched === 4 || isUnlocked) ? 'var(--c-accent-green)' : 'var(--c-brand-yellow)';
+      synLayerEl.textContent = isNowLocked ? 'DEEP SYNC' : (isUnlocked ? 'DECRYPTED' : 'LOCKED');
+      synLayerEl.style.color = (isNowLocked || isUnlocked) ? 'var(--c-accent-green)' : 'var(--c-brand-yellow)';
     }
 
     const matchBadge = document.getElementById('osc-match-badge');
     if (matchBadge) {
-      matchBadge.textContent = isUnlocked ? '已破译 100%' : '滤波匹配度 ' + pct + '%';
-      matchBadge.style.background = (matched === 4 || isUnlocked) ? 'var(--c-confirm-gold)' : 'var(--c-panel)';
-      matchBadge.style.color = (matched === 4 || isUnlocked) ? 'var(--c-canvas)' : 'var(--c-ink)';
+      matchBadge.textContent = isNowLocked ? '锁相匹配 100%' : ('滤波匹配度 ' + pct + '%');
+      matchBadge.style.background = isNowLocked ? 'var(--c-confirm-gold)' : 'var(--c-panel)';
+      matchBadge.style.color = isNowLocked ? 'var(--c-canvas)' : 'var(--c-ink)';
+    }
+
+    const eyeOpenPct = Math.max(12, Math.round(100 - Math.abs(getChannelDelta(1, w)) * 22 - Math.abs(getChannelDelta(2, w)) * 12));
+    const jitterVal = (Math.abs(getChannelDelta(3, w)) * 0.14 + Math.abs(getChannelDelta(0, w)) * 0.08).toFixed(2);
+    const eyeMetricsEl = document.getElementById('osc-eye-metrics');
+    if (eyeMetricsEl) {
+      eyeMetricsEl.textContent = isNowLocked
+        ? 'EYE-H: 100% · JITTER: 0.00UI'
+        : ('EYE-H: ' + eyeOpenPct + '% · JITTER: ' + jitterVal + 'UI');
+      eyeMetricsEl.style.color = isNowLocked ? 'var(--c-accent-green)' : 'var(--c-ink-disabled)';
     }
 
     const oscTitle = document.getElementById('osc-status-title');
     if (oscTitle) {
-      oscTitle.textContent = (matched === 4 || isUnlocked)
-        ? 'WAVEFORM // 17.0s NEURAL ENVELOPE — SIGNAL LOCKED'
-        : 'WAVEFORM // 17.0s NEURAL ENVELOPE';
+      oscTitle.textContent = isNowLocked
+        ? 'DUAL-SCOPE // XY LISSAJOUS & 2-UI EYE — PHASE LOCKED'
+        : 'DUAL-SCOPE // XY LISSAJOUS & 2-UI EYE DIAGRAM';
     }
 
-    // Update oscilloscope SVG path dynamically based on match count
-    const deepPath = document.getElementById('wave-path-deep');
-    if (deepPath) {
-      if (matched === 4 || isUnlocked) {
-        deepPath.setAttribute('d', 'M 0 44 L 90 44 L 115 14 L 135 74 L 155 44 L 360 44 L 385 10 L 405 78 L 425 44 L 760 44');
-        deepPath.setAttribute('stroke-dasharray', 'none');
-      } else {
-        deepPath.setAttribute('d', 'M 0 44 C 70 78 130 10 210 56 C 290 80 350 8 430 44 C 510 82 610 14 760 44');
-        deepPath.setAttribute('stroke-dasharray', '5 3');
-      }
+    // Update Dual-Scope Tints, Target Ghost Template & Diamond Eye Masks
+    buildTargetGhostPaths(sig);
+
+    const ratioLabel = document.getElementById('lis-ratio-label');
+    if (ratioLabel) {
+      const d0 = getChannelDelta(0, w);
+      ratioLabel.textContent = d0 === 0
+        ? ('RATIO ' + sig.ratioText + ' LOCK')
+        : ('RATIO ' + (sig.fx + d0) + ':' + sig.fy + ' ERR');
+      ratioLabel.setAttribute('fill', d0 === 0 ? '#7EA403' : '#FED800');
     }
+
+    const reticle = document.getElementById('lis-lock-reticle');
+    if (reticle) {
+      reticle.setAttribute('stroke', isNowLocked ? '#E8C400' : '#555555');
+      reticle.setAttribute('fill', isNowLocked ? 'rgba(232, 196, 0, 0.22)' : 'none');
+    }
+
+    const mask1 = document.getElementById('eye-mask-1');
+    const mask2 = document.getElementById('eye-mask-2');
+    const dot1 = document.getElementById('eye-sample-dot-1');
+    const dot2 = document.getElementById('eye-sample-dot-2');
+    const maskStatus = document.getElementById('eye-mask-status');
+
+    [mask1, mask2].forEach(function (m) {
+      if (!m) return;
+      m.setAttribute('stroke', isNowLocked ? '#E8C400' : '#EC3140');
+      m.setAttribute('fill', isNowLocked ? 'rgba(126, 164, 3, 0.16)' : 'rgba(236, 49, 64, 0.12)');
+      m.setAttribute('stroke-dasharray', isNowLocked ? 'none' : '3 2');
+    });
+    [dot1, dot2].forEach(function (d) {
+      if (!d) return;
+      d.setAttribute('fill', isNowLocked ? '#7EA403' : '#EC3140');
+    });
+    if (maskStatus) {
+      maskStatus.textContent = isNowLocked ? 'EYE OPEN // 100% LOCK' : 'MASK VIOLATION';
+      maskStatus.setAttribute('fill', isNowLocked ? '#7EA403' : '#EC3140');
+    }
+
+    // Apply witness signature tint classes to live traces
+    const mainTraces = ['lis-trace-0', 'wave-path-deep'];
+    const subTraces = ['lis-trace-1', 'lis-trace-2', 'wave-path-surface', 'eye-trace-0', 'eye-trace-1', 'eye-trace-2', 'eye-trace-3'];
+    mainTraces.forEach(function (id) {
+      const el = document.getElementById(id);
+      if (el) el.setAttribute('class', 'ui-color-graphic ' + (isNowLocked ? 'tint-gold' : sig.tintMain));
+    });
+    subTraces.forEach(function (id) {
+      const el = document.getElementById(id);
+      if (el) el.setAttribute('class', 'ui-color-graphic ' + sig.tintSub);
+    });
 
     // Time nodes
     document.querySelectorAll('[data-time-node]').forEach(function (btn) {
@@ -3401,6 +3757,12 @@ window.JC09_ENDINGS = {
     const nodeObj = window.JC09_TIME_NODES[state.activeTimeNode] || window.JC09_TIME_NODES[0];
     const readout = document.getElementById('synapse-readout-text');
     if (readout) readout.innerHTML = nodeObj.text;
+
+    // Run one immediate synchronous frame (for headless screenshots) and start 60fps loop if visible
+    stepOscilloscopeFrame(performance.now());
+    if (state.activeView === 'synapse') {
+      ensureOscilloscopeLoop();
+    }
   }
 
   // ---- Blackbox Exhibit Rendering (View 03) ----
@@ -3931,6 +4293,7 @@ window.JC09_ENDINGS = {
         state.unlockedDeep[w.id] = true;
         saveState();
         renderAll();
+        ensureOscilloscopeLoop();
         sfxBreakthrough();
         logTicker('已按配方校准七态开关并成功破译 ' + w.name + ' 的深层记忆残响！');
       });
@@ -3954,10 +4317,12 @@ window.JC09_ENDINGS = {
 
     document.querySelectorAll('[data-time-node]').forEach(function (btn) {
       btn.addEventListener('click', function () {
-        state.activeTimeNode = Number(btn.getAttribute('data-time-node'));
+        const idx = Number(btn.getAttribute('data-time-node'));
+        state.activeTimeNode = idx;
         saveState();
         renderSynapseView();
-        sfxCardSelect();
+        ensureOscilloscopeLoop();
+        playTone(420 + idx * 85, 75, 'sine', 0.032, 540 + idx * 95);
       });
     });
 
