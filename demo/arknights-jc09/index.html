@@ -2088,7 +2088,7 @@ html, body {
             </div>
 
             <div class="synapse-layout">
-              <!-- Target Witness Selector Strip + Live Probe Telemetry -->
+              <!-- Target Witness Selector Strip + Encryption Tier & Lockpick Rule -->
               <div style="display:flex;justify-content:space-between;align-items:center;gap:var(--s-xs);background:var(--c-panel-deep);padding:5px 10px;border:1px solid var(--c-surface-4);">
                 <div style="display:flex;align-items:center;gap:var(--s-xxs);flex-wrap:wrap;" id="synapse-witness-strip">
                   <span style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-ink-disabled);margin-right:2px;">破译对象:</span>
@@ -2100,25 +2100,25 @@ html, body {
                   <button type="button" class="btn-compact" data-syn-witness="W06">W06 严律</button>
                 </div>
                 <div style="font-family:var(--f-cjk);font-size:var(--fs-caption);color:var(--c-brand-yellow);font-weight:500;text-align:right;" id="synapse-recipe-hint">
-                  探针导引: 先将 4 通道调至 ● LOCK，再用 KNOB-A 寻位甜区、KNOB-B 推进至 100%
+                  加密机制: 观察下方波形贴合虚线模板调准 4 开关与 KNOB-A，再推进 KNOB-B（失步将清零进度！）
                 </div>
               </div>
 
-              <!-- 4+2 Hybrid Lockpick Matrix: 4 Digital Filter Channels + 2 Precision Rotary Knobs -->
+              <!-- 4+2 Pure Waveform Lockpick Matrix: Zero Probe Spoilers on Controls -->
               <div class="filter-matrix-grid" role="group" aria-label="四通道滤波与双旋钮锁相调谐台">
-                <div class="filter-channel-card" id="filter-card-0" title="点击切换 CH-01 声学反相门档位（观察右上角红/黄/绿探针灯）">
+                <div class="filter-channel-card" id="filter-card-0" title="点击切换 CH-01 声学门档位（观察左图李萨如瓣数与右图周期折叠是否对齐虚线）">
                   <div style="display:flex;justify-content:space-between;align-items:center;font-family:var(--f-tech);font-size:10px;white-space:nowrap;color:var(--c-ink-disabled);">
-                    <span>CH-01 声学</span><span id="ch-metric-0" style="color:var(--c-brand-yellow);font-weight:700;">◐ NEAR</span>
+                    <span>CH-01 声学</span><span id="ch-metric-0" style="color:var(--c-ink-muted);">FX : FY</span>
                   </div>
                   <button type="button" class="state-chip" data-channel="0" data-state="normal" id="filter-ch-0">
                     <span>声学门</span><strong class="chip-state-text">0dB 直通</strong>
                   </button>
-                  <div style="font-size:11px;color:var(--c-ink-muted);white-space:nowrap;">谐波频率比与周期</div>
+                  <div style="font-size:11px;color:var(--c-ink-muted);white-space:nowrap;">谐波瓣数与周期折叠</div>
                 </div>
 
-                <div class="filter-channel-card" id="filter-card-1" title="点击切换 CH-02 痛觉剥离档位（观察右上角红/黄/绿探针灯）">
+                <div class="filter-channel-card" id="filter-card-1" title="点击切换 CH-02 痛觉门档位（观察波形高频锯齿毛刺是否消失、眼高是否撑满虚线）">
                   <div style="display:flex;justify-content:space-between;align-items:center;font-family:var(--f-tech);font-size:10px;white-space:nowrap;color:var(--c-ink-disabled);">
-                    <span>CH-02 痛觉</span><span id="ch-metric-1" style="color:var(--c-danger-red);font-weight:700;">○ ERR</span>
+                    <span>CH-02 痛觉</span><span id="ch-metric-1" style="color:var(--c-ink-muted);">SNR / EYE-H</span>
                   </div>
                   <button type="button" class="state-chip" data-channel="1" data-state="off" id="filter-ch-1">
                     <span>痛觉门</span><strong class="chip-state-text">阻断 OFF</strong>
@@ -2126,9 +2126,9 @@ html, body {
                   <div style="font-size:11px;color:var(--c-ink-muted);white-space:nowrap;">毛刺滤除与垂直眼高</div>
                 </div>
 
-                <div class="filter-channel-card" id="filter-card-2" title="点击切换 CH-03 情绪钳制档位（观察右上角红/黄/绿探针灯）">
+                <div class="filter-channel-card" id="filter-card-2" title="点击切换 CH-03 情绪门档位（观察李萨如倾角与眼图上下包络是否居中对称）">
                   <div style="display:flex;justify-content:space-between;align-items:center;font-family:var(--f-tech);font-size:10px;white-space:nowrap;color:var(--c-ink-disabled);">
-                    <span>CH-03 情绪</span><span id="ch-metric-2" style="color:var(--c-danger-red);font-weight:700;">○ ERR</span>
+                    <span>CH-03 情绪</span><span id="ch-metric-2" style="color:var(--c-ink-muted);">SYM / SKEW</span>
                   </div>
                   <button type="button" class="state-chip" data-channel="2" data-state="unselected" id="filter-ch-2">
                     <span>情绪门</span><strong class="chip-state-text">高通剥离</strong>
@@ -2136,66 +2136,60 @@ html, body {
                   <div style="font-size:11px;color:var(--c-ink-muted);white-space:nowrap;">正交相位与上下对称</div>
                 </div>
 
-                <div class="filter-channel-card" id="filter-card-3" title="点击切换 CH-04 时钟重同步档位（观察右上角红/黄/绿探针灯）">
+                <div class="filter-channel-card" id="filter-card-3" title="点击切换 CH-04 时钟门档位（观察波形是否停止左右滚动漂移并钉在采样中心）">
                   <div style="display:flex;justify-content:space-between;align-items:center;font-family:var(--f-tech);font-size:10px;white-space:nowrap;color:var(--c-ink-disabled);">
-                    <span>CH-04 时钟</span><span id="ch-metric-3" style="color:var(--c-brand-yellow);font-weight:700;">◐ NEAR</span>
+                    <span>CH-04 时钟</span><span id="ch-metric-3" style="color:var(--c-ink-muted);">PLL / DRIFT</span>
                   </div>
                   <button type="button" class="state-chip" data-channel="3" data-state="select" id="filter-ch-3">
                     <span>时钟门</span><strong class="chip-state-text">锁频 PLL</strong>
                   </button>
-                  <div style="font-size:11px;color:var(--c-ink-muted);white-space:nowrap;">触发锁相与过零眼宽</div>
+                  <div style="font-size:11px;color:var(--c-ink-muted);white-space:nowrap;">水平止漂与过零收束</div>
                 </div>
 
-                <!-- KNOB A: Harmonic Resonance Sweet-Spot Seeker (0° - 300°) -->
-                <div class="rotary-knob-card" id="knob-card-a" title="上下拖拽或滚轮旋转 KNOB-A 寻找谐振甜区（越接近甜区声呐弧越亮、共鸣音越纯净）">
+                <!-- KNOB A: Blind Mechanical Phase Seeker (0° - 300°, No Sweet-Spot LED Spoilers) -->
+                <div class="rotary-knob-card" id="knob-card-a" title="拖拽或滚轮旋转 KNOB-A 微调精细相位（仅观察下方波形与虚线模板的重合度，盲推失步将清零进度！）">
                   <div style="display:flex;justify-content:space-between;align-items:center;font-family:var(--f-tech);font-size:10px;white-space:nowrap;color:var(--c-ink-disabled);">
-                    <span>KNOB-A 寻位</span><span id="knob-a-status" style="color:var(--c-brand-yellow);font-weight:700;">○ SEEK</span>
+                    <span>KNOB-A 寻位</span><span id="knob-a-status" style="color:var(--c-ink-muted);">PHASE</span>
                   </div>
-                  <svg class="knob-svg-stage" id="knob-a-svg" viewBox="0 0 120 68" aria-label="谐振寻位旋钮 A">
-                    <!-- 270-degree outer scale track -->
+                  <svg class="knob-svg-stage" id="knob-a-svg" viewBox="0 0 120 68" aria-label="相位微调旋钮 A">
+                    <!-- Uniform mechanical scale track (no sonar sweet-spot spoiler) -->
                     <path d="M 33.1 61.9 A 38 38 0 1 1 86.9 61.9" fill="none" stroke="#313131" stroke-width="4" stroke-linecap="round" />
-                    <!-- Dynamic Sonar Sweet-Spot Proximity Arc -->
-                    <path id="knob-a-sonar-arc" d="M 33.1 61.9 A 38 38 0 1 1 86.9 61.9" fill="none" stroke="#0098DC" stroke-width="4" stroke-dasharray="18 180" stroke-linecap="round" />
-                    <!-- Resonance Pulse Halo -->
+                    <path id="knob-a-sonar-arc" d="M 33.1 61.9 A 38 38 0 1 1 86.9 61.9" fill="none" stroke="#434343" stroke-width="2" stroke-dasharray="4 8" />
                     <circle id="knob-a-halo" cx="60" cy="35" r="27" fill="none" stroke="#313131" stroke-width="1" stroke-dasharray="2 2" />
                     <!-- Metallic Rotary Dial Body & Pointer -->
                     <g id="knob-a-rotor" transform="rotate(-94, 60, 35)">
                       <circle cx="60" cy="35" r="22" fill="#1B1B1B" stroke="#555555" stroke-width="1.8" />
                       <circle cx="60" cy="35" r="17" fill="#141516" stroke="#313131" stroke-width="1" />
-                      <line id="knob-a-pointer" x1="60" y1="14" x2="60" y2="25" stroke="#FED800" stroke-width="3" stroke-linecap="round" />
+                      <line id="knob-a-pointer" x1="60" y1="13" x2="60" y2="19" stroke="#22BBFE" stroke-width="2.5" stroke-linecap="round" />
                     </g>
-                    <text id="knob-a-readout" x="60" y="39" text-anchor="middle" fill="#FFFFFF" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700">045°</text>
+                    <text id="knob-a-readout" x="60" y="39" text-anchor="middle" fill="#FFFFFF" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700">035°</text>
                   </svg>
                   <div class="knob-micro-bar">
-                    <button type="button" class="knob-step-btn" id="btn-knob-a-dec" title="逆时针旋转 -15°">-15°</button>
-                    <span style="font-size:10px;color:var(--c-ink-muted);white-space:nowrap;">谐振寻位</span>
-                    <button type="button" class="knob-step-btn" id="btn-knob-a-inc" title="顺时针旋转 +15°">+15°</button>
+                    <button type="button" class="knob-step-btn" id="btn-knob-a-dec" title="逆时针微调">-5°</button>
+                    <span style="font-size:9px;color:var(--c-ink-muted);white-space:nowrap;">滚轮</span>
+                    <button type="button" class="knob-step-btn" id="btn-knob-a-inc" title="顺时针微调">+5°</button>
                   </div>
                 </div>
 
-                <!-- KNOB B: PLL Lock-In Depth Drive (0% - 100% with Phase-Slip Overload) -->
-                <div class="rotary-knob-card" id="knob-card-b" title="推进 KNOB-B 测试锁相深度（若 4 通道或 KNOB-A 未对准甜区，推至中途将触发 PLL 失步过载回弹）">
+                <!-- KNOB B: Multi-Stage PLL Torsion Drive (0% - 100%, Wipe-All Penalty on Slip) -->
+                <div class="rotary-knob-card" id="knob-card-b" title="推进 KNOB-B 锁相深度（警告：若波形未对齐虚线模板或越过当前阶段卡位，将触发熔断并清零全部破译进度！）">
                   <div style="display:flex;justify-content:space-between;align-items:center;font-family:var(--f-tech);font-size:10px;white-space:nowrap;color:var(--c-ink-disabled);">
-                    <span>KNOB-B 推进</span><span id="knob-b-status" style="color:var(--c-currency-blue);font-weight:700;">0%</span>
+                    <span>KNOB-B 推进</span><span id="knob-b-status" style="color:var(--c-currency-blue);font-weight:700;">STAGE 1</span>
                   </div>
                   <svg class="knob-svg-stage" id="knob-b-svg" viewBox="0 0 120 68" aria-label="锁相推进旋钮 B">
-                    <!-- 270-degree outer torsion track -->
                     <path d="M 33.1 61.9 A 38 38 0 1 1 86.9 61.9" fill="none" stroke="#313131" stroke-width="4" stroke-linecap="round" />
-                    <!-- Live PLL Drive Progress Arc -->
                     <path id="knob-b-drive-arc" d="M 33.1 61.9 A 38 38 0 1 1 86.9 61.9" fill="none" stroke="#0098DC" stroke-width="4" stroke-dasharray="0 200" stroke-linecap="round" />
-                    <!-- Overload Warning Ring -->
                     <circle id="knob-b-overload-ring" cx="60" cy="35" r="27" fill="none" stroke="#313131" stroke-width="1" stroke-dasharray="3 2" />
-                    <!-- Metallic Torsion Rotor -->
                     <g id="knob-b-rotor" transform="rotate(-135, 60, 35)">
                       <circle cx="60" cy="35" r="22" fill="#1B1B1B" stroke="#555555" stroke-width="1.8" />
                       <circle cx="60" cy="35" r="17" fill="#141516" stroke="#313131" stroke-width="1" />
-                      <line id="knob-b-pointer" x1="60" y1="14" x2="60" y2="25" stroke="#22BBFE" stroke-width="3" stroke-linecap="round" />
+                      <line id="knob-b-pointer" x1="60" y1="13" x2="60" y2="19" stroke="#FED800" stroke-width="2.5" stroke-linecap="round" />
                     </g>
-                    <text id="knob-b-readout" x="60" y="39" text-anchor="middle" fill="#FFFFFF" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700">0%</text>
+                    <text id="knob-b-readout" x="60" y="39" text-anchor="middle" fill="#FFFFFF" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700">0%</text>
                   </svg>
                   <div class="knob-micro-bar">
-                    <button type="button" class="knob-step-btn" id="btn-knob-b-dec" title="释放推进深度">-25%</button>
-                    <button type="button" class="knob-push-btn" id="btn-knob-b-push" title="点击或按住推进锁相深度至 100%">推进锁相 ↻</button>
+                    <button type="button" class="knob-step-btn" id="btn-knob-b-dec" title="回退推进深度">-10%</button>
+                    <button type="button" class="knob-push-btn" id="btn-knob-b-push" title="步进推进锁相（失步将触发熔断清零！）">推进 +15%</button>
                   </div>
                 </div>
               </div>
@@ -2211,13 +2205,13 @@ html, body {
                 </div>
 
                 <div style="display:flex;flex-direction:column;justify-content:space-between;min-width:0;">
-                  <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;">
-                    <span style="font-family:var(--f-cjk);font-size:var(--fs-label);font-weight:700;color:var(--c-currency-blue);white-space:nowrap;" id="osc-status-title">
+                  <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;min-width:0;">
+                    <span style="font-family:var(--f-cjk);font-size:12px;font-weight:700;color:var(--c-currency-blue);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;" id="osc-status-title">
                       XY 李萨如 &amp; 2-UI 眼图 // 实时波形监视
                     </span>
                     <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
-                      <span style="font-family:var(--f-tech);font-size:var(--fs-caption);color:var(--c-ink-disabled);" id="osc-eye-metrics">EYE-H: 28% · JITTER: 0.42UI</span>
-                      <span class="rarity-pill" id="osc-match-badge" style="background:var(--c-panel);color:var(--c-ink);">滤波匹配度 25%</span>
+                      <span style="font-family:var(--f-tech);font-size:10px;color:var(--c-ink-disabled);white-space:nowrap;" id="osc-eye-metrics">EYE-H: 28% · JITTER: 0.42UI</span>
+                      <span class="rarity-pill" id="osc-match-badge" style="background:var(--c-panel);color:var(--c-ink);white-space:nowrap;">滤波匹配度 25%</span>
                     </div>
                   </div>
 
@@ -2231,7 +2225,7 @@ html, body {
                       <circle cx="90" cy="52" r="22" fill="none" stroke="#242424" stroke-width="0.8" />
                       <circle cx="90" cy="52" r="39" fill="none" stroke="#313131" stroke-width="0.8" stroke-dasharray="3 3" />
                       <!-- Target Reference Ghost Lissajous Ring -->
-                      <path id="lis-ghost-path" fill="none" stroke="#555555" stroke-width="1.4" stroke-dasharray="3 3" d="" />
+                      <path id="lis-ghost-path" fill="none" stroke="#898989" stroke-width="1.5" stroke-dasharray="3 3" d="" />
                       <!-- Live Persistence Afterglow Trails -->
                       <path id="lis-trace-2" class="ui-color-graphic tint-primary" fill="none" stroke-width="1" opacity="0.26" d="" />
                       <path id="lis-trace-1" class="ui-color-graphic tint-primary" fill="none" stroke-width="1.4" opacity="0.52" d="" />
@@ -2254,8 +2248,8 @@ html, body {
                       <line x1="616" y1="2" x2="616" y2="102" stroke="#242424" stroke-width="0.8" stroke-dasharray="2 3" />
 
                       <!-- Target Reference Ideal Eye Envelope (Dashed Template) -->
-                      <path id="eye-ghost-upper" fill="none" stroke="#555555" stroke-width="1.2" stroke-dasharray="3 3" d="" />
-                      <path id="eye-ghost-lower" fill="none" stroke="#555555" stroke-width="1.2" stroke-dasharray="3 3" d="" />
+                      <path id="eye-ghost-upper" fill="none" stroke="#898989" stroke-width="1.4" stroke-dasharray="3 3" d="" />
+                      <path id="eye-ghost-lower" fill="none" stroke="#898989" stroke-width="1.4" stroke-dasharray="3 3" d="" />
 
                       <!-- Dual Diamond Eye Masks (Forbidden Decision Zones at UI Centers x=330 & x=616) -->
                       <polygon id="eye-mask-1" points="274,52 330,27 386,52 330,77" fill="rgba(236, 49, 64, 0.12)" stroke="#EC3140" stroke-width="1.2" stroke-dasharray="3 2" />
@@ -2281,7 +2275,8 @@ html, body {
                       </g>
 
                       <text x="195" y="13" fill="#898989" font-family="JetBrains Mono, monospace" font-size="9">EYE DIAGRAM // 2.0 UI PERSISTENCE</text>
-                      <text id="eye-mask-status" x="618" y="13" fill="#EC3140" font-family="JetBrains Mono, monospace" font-size="9">MASK VIOLATION</text>
+                      <text id="osc-stage-gate-label" x="473" y="13" text-anchor="middle" fill="#FED800" font-family="JetBrains Mono, monospace" font-size="9">GATE // STAGE 1</text>
+                      <text id="eye-mask-status" x="752" y="13" text-anchor="end" fill="#EC3140" font-family="JetBrains Mono, monospace" font-size="9">MASK VIOLATION</text>
                     </g>
                   </svg>
 
@@ -3235,8 +3230,10 @@ window.JC09_ENDINGS = {
     unlockedDeep: {},            // map of witnessId -> boolean
     synapseTarget: 'W05',
     filterStates: ['normal', 'off', 'unselected', 'select'],
-    knobAngle: 45,               // 0..300 deg (Knob A harmonic sweet-spot seeker)
-    knobDrive: 0,                // 0..100 %   (Knob B PLL lock-in depth drive)
+    knobAngle: 35,               // 0..300 deg (Knob A blind phase seeker)
+    knobDrive: 0,                // 0..100 %   (Knob B PLL depth drive)
+    lockStage: 0,                // current multi-stage pin index (0..2)
+    knobLocked: false,           // true when all stages of current witness are locked in
     activeTimeNode: 0,
     selectedExhibit: 'B01',
     currentAct: 1,               // 1..4
@@ -3581,14 +3578,56 @@ window.JC09_ENDINGS = {
     if (noteEl) noteEl.innerHTML = layerData.note;
   }
 
-  // ---- 17-Second Synapse Slicer: Real-Time Dual-Scope + Dual-Knob Lockpick System ----
+  // ---- 17-Second Synapse Slicer: Real-Time Dual-Scope + Escalating 6-Tier Blind Waveform Lockpick ----
   const WITNESS_OSC_SIG = {
-    W01: { fx: 1, fy: 2, phase0: 1.5708, ratioText: '1:2', sweetSpot: 105, tintMain: 'tint-cyan',    tintSub: 'tint-primary' },
-    W02: { fx: 2, fy: 3, phase0: 0.7854, ratioText: '2:3', sweetSpot: 210, tintMain: 'tint-green',   tintSub: 'tint-cyan' },
-    W03: { fx: 3, fy: 2, phase0: 1.5708, ratioText: '3:2', sweetSpot: 60,  tintMain: 'tint-primary', tintSub: 'tint-cyan' },
-    W04: { fx: 3, fy: 4, phase0: 0.7854, ratioText: '3:4', sweetSpot: 255, tintMain: 'tint-violet',  tintSub: 'tint-primary' },
-    W05: { fx: 4, fy: 3, phase0: 1.5708, ratioText: '4:3', sweetSpot: 150, tintMain: 'tint-yellow',  tintSub: 'tint-primary' },
-    W06: { fx: 5, fy: 4, phase0: 0.7854, ratioText: '5:4', sweetSpot: 270, tintMain: 'tint-danger',  tintSub: 'tint-yellow' }
+    W01: {
+      fx: 1, fy: 2, phase0: 1.5708, ratioText: '1:2',
+      stages: [{ angle: 105, targetDrive: 100 }],
+      tol: 20, coupled: 0, overshoot: 105,
+      tierLabel: 'TIER 1 单段锁 [±20° · 100%]',
+      tierRule: '规则[W01·Tier1]：纯看示波器波形与虚线模板重合（容差±20°），推进 KNOB-B 至 100% 锁定。推进失误将直接熔断清零全部开关与进度！',
+      tintMain: 'tint-cyan', tintSub: 'tint-primary'
+    },
+    W02: {
+      fx: 2, fy: 3, phase0: 0.7854, ratioText: '2:3',
+      stages: [{ angle: 210, targetDrive: 75 }],
+      tol: 15, coupled: 0, overshoot: 84,
+      tierLabel: 'TIER 2 定深锁 [±15° · 75%禁推底]',
+      tierRule: '规则[W02·Tier2]：波形重合后，KNOB-B 必须精准停在 75% 定深靶窗（72%–80%）完成咬合！若盲目推超 84% 将触发过冲熔断并清零全部破译进度！',
+      tintMain: 'tint-green', tintSub: 'tint-cyan'
+    },
+    W03: {
+      fx: 3, fy: 2, phase0: 1.5708, ratioText: '3:2',
+      stages: [{ angle: 60, targetDrive: 45 }, { angle: 195, targetDrive: 100 }],
+      tol: 15, coupled: 0, overshoot: 105,
+      tierLabel: 'TIER 3 双段换相锁 [45%→100%]',
+      tierRule: '规则[W03·Tier3]：双段弹子锁！第1段波形对齐后推至 45% 触发换相咬合（切勿推超53%），随后波形再次失相，须重调 KNOB-A 对齐第2段再推至 100%！',
+      tintMain: 'tint-primary', tintSub: 'tint-cyan'
+    },
+    W04: {
+      fx: 3, fy: 4, phase0: 0.7854, ratioText: '3:4',
+      stages: [{ angle: 135, targetDrive: 45 }, { angle: 245, targetDrive: 80 }],
+      tol: 10, coupled: 0.35, overshoot: 88,
+      tierLabel: 'TIER 4 耦合定深锁 [45%→80%]',
+      tierRule: '规则[W04·Tier4]：带耦合牵引的双段定深锁！推进 KNOB-B 会实时拉偏相位，须分 45% → 80% 两段盲调对齐，且最终严禁推超 88%！',
+      tintMain: 'tint-violet', tintSub: 'tint-primary'
+    },
+    W05: {
+      fx: 4, fy: 3, phase0: 1.5708, ratioText: '4:3',
+      stages: [{ angle: 150, targetDrive: 30 }, { angle: 240, targetDrive: 60 }, { angle: 90, targetDrive: 90 }],
+      tol: 10, coupled: 0.45, overshoot: 96,
+      tierLabel: 'TIER 5 三段级联锁 [30→60→90%]',
+      tierRule: '规则[W05·Tier5]：三段级联定深锁（容差±10°）！须依次在 30% / 60% / 90% 三个深度门停顿并重调 KNOB-A 追回李萨如与眼图包络，超 96% 立即熔断清零！',
+      tintMain: 'tint-yellow', tintSub: 'tint-primary'
+    },
+    W06: {
+      fx: 5, fy: 4, phase0: 0.7854, ratioText: '5:4',
+      stages: [{ angle: 270, targetDrive: 30 }, { angle: 120, targetDrive: 55 }, { angle: 215, targetDrive: 75 }],
+      tol: 5, coupled: 0.6, overshoot: 82,
+      tierLabel: 'TIER 6 终局三段锁 [±5° · 30→55→75%]',
+      tierRule: '规则[W06·Tier6终局]：极窄容差 ±5° + 强耦合漂移 + 30%/55%/75% 三段定深窗！任何一段失配强推或超过 82% 过冲线，直接清零全部四路开关与破译进度！',
+      tintMain: 'tint-danger', tintSub: 'tint-yellow'
+    }
   };
 
   const TIME_GATE_X = [238, 355, 473, 591, 708];
@@ -3628,51 +3667,101 @@ window.JC09_ENDINGS = {
     return matched;
   }
 
-  function getKnobAngleDiff(w) {
+  function getCurrentStageInfo(w) {
     const sig = WITNESS_OSC_SIG[w.id] || WITNESS_OSC_SIG.W05;
-    const cur = typeof state.knobAngle === 'number' ? state.knobAngle : 45;
-    return Math.abs(cur - sig.sweetSpot);
+    const stages = sig.stages;
+    const idx = Math.max(0, Math.min(stages.length - 1, state.lockStage || 0));
+    const stg = stages[idx];
+    const prevDrive = idx > 0 ? stages[idx - 1].targetDrive : 0;
+    const curDrive = typeof state.knobDrive === 'number' ? state.knobDrive : 0;
+    // Coupled phase pull as Knob B advances beyond previous stage gate
+    const stageSpan = Math.max(10, stg.targetDrive - prevDrive);
+    const stageProgress = Math.max(0, Math.min(1, (curDrive - prevDrive) / stageSpan));
+    const coupledPull = Math.round(sig.coupled * stageProgress * 20 / 5) * 5;
+    const effectiveTargetAngle = stg.angle + ( state.knobLocked ? 0 : coupledPull );
+    return {
+      sig: sig,
+      stageIndex: idx,
+      totalStages: stages.length,
+      stage: stg,
+      prevDrive: prevDrive,
+      effectiveAngle: effectiveTargetAngle,
+      tol: sig.tol
+    };
+  }
+
+  function getKnobAngleDiff(w) {
+    const info = getCurrentStageInfo(w);
+    const cur = typeof state.knobAngle === 'number' ? state.knobAngle : 35;
+    return Math.abs(cur - info.effectiveAngle);
   }
 
   function isSweetSpot(w) {
-    return getKnobAngleDiff(w) <= 15;
-  }
-
-  function getMaxDriveAllowed(w) {
-    const matched = computeFilterMatch(w);
-    const angleDiff = getKnobAngleDiff(w);
-    if (matched === 4 && angleDiff <= 15) {
-      return 100;
-    }
-    if (matched < 4) {
-      // Switches not fully aligned: PLL drive jams early (20%..68%)
-      return Math.min(68, 16 + matched * 14 + Math.max(0, Math.round((1 - angleDiff / 180) * 12)));
-    }
-    // All 4 switches aligned, Knob A off by angleDiff > 15:
-    // The closer Knob A is to the sweet spot, the deeper Knob B can push before jamming (35%..90%)
-    return Math.max(35, Math.min(90, Math.round(94 - (angleDiff - 15) * 0.42)));
-  }
-
-  function computeTotalSynapsePct(w) {
-    let score = 0;
-    for (let i = 0; i < 4; i++) {
-      const d = Math.abs(getChannelDelta(i, w));
-      if (d === 0) score += 15;
-      else if (d === 1) score += 7;
-    }
-    const angleDiff = getKnobAngleDiff(w);
-    if (angleDiff <= 15) {
-      score += 20;
-    } else if (angleDiff < 120) {
-      score += Math.round((1 - (angleDiff - 15) / 105) * 16);
-    }
-    const drive = typeof state.knobDrive === 'number' ? state.knobDrive : 0;
-    score += Math.round((drive / 100) * 20);
-    return Math.max(0, Math.min(100, score));
+    const info = getCurrentStageInfo(w);
+    return getKnobAngleDiff(w) <= info.tol;
   }
 
   function isSynapseFullyLocked(w) {
-    return computeFilterMatch(w) === 4 && isSweetSpot(w) && (state.knobDrive || 0) >= 100;
+    const sig = WITNESS_OSC_SIG[w.id] || WITNESS_OSC_SIG.W05;
+    const finalStage = sig.stages[sig.stages.length - 1];
+    if (state.knobLocked && computeFilterMatch(w) === 4 && Math.abs((state.knobDrive || 0) - finalStage.targetDrive) <= 5) {
+      return true;
+    }
+    return false;
+  }
+
+  function computeTotalSynapsePct(w) {
+    if (isSynapseFullyLocked(w)) return 100;
+    let score = 0;
+    for (let i = 0; i < 4; i++) {
+      const d = Math.abs(getChannelDelta(i, w));
+      if (d === 0) score += 14;
+      else if (d === 1) score += 6;
+    }
+    const info = getCurrentStageInfo(w);
+    const angleDiff = getKnobAngleDiff(w);
+    if (angleDiff <= info.tol) {
+      score += 18;
+    } else if (angleDiff < 110) {
+      score += Math.round((1 - (angleDiff - info.tol) / 95) * 14);
+    }
+    const finalTarget = info.sig.stages[info.totalStages - 1].targetDrive;
+    const drive = typeof state.knobDrive === 'number' ? state.knobDrive : 0;
+    const driveRatio = Math.max(0, Math.min(1, drive / Math.max(1, finalTarget)));
+    score += Math.round(driveRatio * 24);
+    return Math.max(0, Math.min(99, score));
+  }
+
+  function scrambleFiltersOnWipe(w) {
+    // Scramble all 4 filter switches to detuned positions so full progress is wiped
+    state.filterStates = w.recipe.map(function (st, idx) {
+      const rIdx = SEVEN_STATES.indexOf(st);
+      const offset = (idx % 2 === 0) ? 2 : 5;
+      return SEVEN_STATES[(rIdx + offset) % SEVEN_STATES.length];
+    });
+  }
+
+  function triggerFullWipeOverload(w, failDrive, reasonMsg) {
+    if (oscAnim.springbackTimer) {
+      clearTimeout(oscAnim.springbackTimer);
+      oscAnim.springbackTimer = null;
+    }
+    state.knobDrive = failDrive;
+    state.knobLocked = false;
+    state.lockStage = 0;
+    state.unlockedDeep[w.id] = false;
+    scrambleFiltersOnWipe(w);
+    oscAnim.overloadUntil = performance.now() + 620;
+    sfxPllOverload();
+    logTicker(reasonMsg);
+    saveState();
+    renderAll();
+    oscAnim.springbackTimer = setTimeout(function () {
+      state.knobDrive = 0;
+      state.knobAngle = 35;
+      saveState();
+      renderSynapseView();
+    }, 420);
   }
 
   function setKnobAngle(newAngle) {
@@ -3685,8 +3774,8 @@ window.JC09_ENDINGS = {
     }
     oscAnim.overloadUntil = 0;
     state.knobAngle = clamped;
-    if (!isSynapseFullyLocked(w) && state.knobDrive > 0) {
-      state.knobDrive = 0;
+    if (state.knobLocked) {
+      state.knobLocked = false;
     }
     const diff = getKnobAngleDiff(w);
     sfxKnobTune(diff);
@@ -3696,48 +3785,97 @@ window.JC09_ENDINGS = {
 
   function advanceKnobDrive(targetDrive) {
     const w = window.JC09_WITNESSES[state.synapseTarget] || window.JC09_WITNESSES.W05;
-    const maxAllowed = getMaxDriveAllowed(w);
-    const clampedTarget = Math.max(0, Math.min(100, Math.round(targetDrive)));
+    const info = getCurrentStageInfo(w);
+    const sig = info.sig;
+    const stg = info.stage;
+    const clampedTarget = Math.max(0, Math.min(100, Math.round(targetDrive / 5) * 5));
 
     if (oscAnim.springbackTimer) {
       clearTimeout(oscAnim.springbackTimer);
       oscAnim.springbackTimer = null;
     }
 
-    if (clampedTarget >= maxAllowed) {
-      if (maxAllowed === 100) {
-        state.knobDrive = 100;
-        if (!state.unlockedDeep[w.id]) {
-          state.unlockedDeep[w.id] = true;
-        }
+    // Allowing backing off safely if below current drive
+    if (clampedTarget < (state.knobDrive || 0)) {
+      state.knobDrive = clampedTarget;
+      state.knobLocked = false;
+      // If backed below previous stage gate, drop stage index accordingly
+      while ((state.lockStage || 0) > 0 && clampedTarget < sig.stages[(state.lockStage || 0) - 1].targetDrive) {
+        state.lockStage--;
+      }
+      saveState();
+      renderSynapseView();
+      return;
+    }
+
+    const matched = computeFilterMatch(w);
+    const angleDiff = getKnobAngleDiff(w);
+
+    // 1. Check if 4 filter switches are misaligned when attempting to push
+    if (matched < 4 && clampedTarget >= 15) {
+      triggerFullWipeOverload(
+        w,
+        clampedTarget,
+        '⚡ PLL 熔断清零：四路滤波档位尚未对齐即强行推进！所有破译进度与开关已重置清零！'
+      );
+      return;
+    }
+
+    // 2. Check if Knob A waveform phase is outside current stage tolerance when pushing past gate
+    if (angleDiff > info.tol && clampedTarget > info.prevDrive + 10) {
+      triggerFullWipeOverload(
+        w,
+        clampedTarget,
+        '⚡ PLL 熔断清零：第 ' + (info.stageIndex + 1) + '/' + info.totalStages + ' 段波形相位未重合（偏离 >±' + info.tol + '°）！所有破译进度已清零！'
+      );
+      return;
+    }
+
+    // 3. Check if player overshot the current stage target window or final overshoot ceiling!
+    const stageOvershootLimit = (info.stageIndex < info.totalStages - 1)
+      ? (stg.targetDrive + 10)
+      : sig.overshoot;
+    if (clampedTarget > stageOvershootLimit) {
+      triggerFullWipeOverload(
+        w,
+        clampedTarget,
+        '⚡ 过冲熔断清零：推进深度 (' + clampedTarget + '%) 超出靶窗上限 (' + stg.targetDrive + '%)！锁芯崩脱，所有破译进度已清零！'
+      );
+      return;
+    }
+
+    // 4. Check if player hit the current stage target window ([targetDrive - 5, targetDrive + 5])
+    if (Math.abs(clampedTarget - stg.targetDrive) <= 5 && matched === 4 && angleDiff <= info.tol) {
+      state.knobDrive = stg.targetDrive;
+      if (info.stageIndex < info.totalStages - 1) {
+        // Advance to next stage pin!
+        state.lockStage = info.stageIndex + 1;
+        state.knobLocked = false;
+        saveState();
+        sfxDriveStep(stg.targetDrive);
+        const nextStg = sig.stages[state.lockStage];
+        logTicker(
+          '🔒 第 ' + (info.stageIndex + 1) + '/' + info.totalStages + ' 段弹子咬合 (' + stg.targetDrive + '%)！波形已换相，请重调 KNOB-A 对齐虚线模板后再推向 ' + nextStg.targetDrive + '%！'
+        );
+        renderSynapseView();
+        return;
+      } else {
+        // Final stage locked!
+        state.knobLocked = true;
+        state.unlockedDeep[w.id] = true;
         saveState();
         renderAll();
         sfxBreakthrough();
-        logTicker('谐振甜区锁相 100% 达成！已成功破译 ' + w.name + ' 的深层记忆残响！');
-      } else {
-        // Hit PLL Phase-Slip Overload Barrier!
-        state.knobDrive = maxAllowed;
-        oscAnim.overloadUntil = performance.now() + 520;
-        sfxPllOverload();
-        const matched = computeFilterMatch(w);
-        if (matched < 4) {
-          logTicker('PLL 失步回弹 (' + maxAllowed + '%)：请先将左侧 4 组滤波通道全部调至 ● LOCK');
-        } else {
-          logTicker('PLL 失步回弹 (卡滞于 ' + maxAllowed + '%)：请继续微调 KNOB-A 逼近谐振甜区');
-        }
-        renderSynapseView();
-        oscAnim.springbackTimer = setTimeout(function () {
-          state.knobDrive = 0;
-          saveState();
-          renderSynapseView();
-        }, 420);
+        logTicker('🎯 终段定深锁相 (' + stg.targetDrive + '%) 达成！已成功破译 ' + w.name + ' 的深层记忆残响！');
+        return;
       }
-    } else {
-      state.knobDrive = clampedTarget;
-      if (clampedTarget > 0) sfxDriveStep(clampedTarget);
-      saveState();
-      renderSynapseView();
     }
+
+    // Otherwise normal intermediate step toward the current stage gate
+    state.knobDrive = clampedTarget;
+    if (clampedTarget > 0) sfxDriveStep(clampedTarget);
+    saveState();
+    renderSynapseView();
   }
 
   function buildTargetGhostPaths(sig) {
@@ -3790,34 +3928,37 @@ window.JC09_ENDINGS = {
 
   function stepOscilloscopeFrame(ts) {
     const w = window.JC09_WITNESSES[state.synapseTarget] || window.JC09_WITNESSES.W05;
-    const sig = WITNESS_OSC_SIG[w.id] || WITNESS_OSC_SIG.W05;
+    const info = getCurrentStageInfo(w);
+    const sig = info.sig;
     const nowMs = ts || performance.now();
     const nowSec = nowMs / 1000;
     const dt = oscAnim.lastTs ? Math.min(0.05, (nowMs - oscAnim.lastTs) / 1000) : 0.016;
     oscAnim.lastTs = nowMs;
 
-    const d0 = getChannelDelta(0, w); // CH-01: Harmonic Frequency Ratio
+    const d0 = getChannelDelta(0, w); // CH-01: Harmonic Frequency Ratio (FX:FY)
     const d1 = Math.abs(getChannelDelta(1, w)); // CH-02: High-Freq Noise & Eye Height
-    const d2 = getChannelDelta(2, w); // CH-03: Phase Angle & DC Skew
-    const d3 = getChannelDelta(3, w); // CH-04: Clock Drift & Horizontal Jitter
+    const d2 = getChannelDelta(2, w); // CH-03: Phase Angle & DC Vertical Skew
+    const d3 = getChannelDelta(3, w); // CH-04: Clock Drift & Horizontal Rolling
 
-    // Knob A & Knob B continuous lockpick coupling
-    const signedAngleErr = ((typeof state.knobAngle === 'number' ? state.knobAngle : 45) - sig.sweetSpot);
-    const knobPhaseOffset = Math.abs(signedAngleErr) <= 15 ? 0 : (signedAngleErr / 55);
-    const driveRatio = Math.max(0, Math.min(1, (state.knobDrive || 0) / 100));
+    // Knob A & Knob B continuous blind waveform coupling
+    const curAngle = typeof state.knobAngle === 'number' ? state.knobAngle : 35;
+    const signedAngleErr = curAngle - info.effectiveAngle;
+    const knobPhaseOffset = Math.abs(signedAngleErr) <= info.tol ? 0 : (signedAngleErr / 48);
+    const finalTargetDrive = sig.stages[sig.stages.length - 1].targetDrive;
+    const driveRatio = Math.max(0, Math.min(1, (state.knobDrive || 0) / Math.max(1, finalTargetDrive)));
     const unpushedFactor = 1 - driveRatio * 0.85;
     const isOverloading = nowMs < oscAnim.overloadUntil;
 
     const lerpRate = Math.min(1, dt * 8.5);
     oscAnim.freqErr += (d0 - oscAnim.freqErr) * lerpRate;
-    oscAnim.noiseLv += ((d1 + (1 - driveRatio) * 0.65 + (isOverloading ? 2.4 : 0)) - oscAnim.noiseLv) * lerpRate;
-    oscAnim.phaseErr += ((d2 + knobPhaseOffset * 0.85) - oscAnim.phaseErr) * lerpRate;
+    oscAnim.noiseLv += ((d1 + Math.abs(knobPhaseOffset) * 0.32 + (1 - driveRatio) * 0.35 + (isOverloading ? 2.6 : 0)) - oscAnim.noiseLv) * lerpRate;
+    oscAnim.phaseErr += ((d2 + knobPhaseOffset * 0.95) - oscAnim.phaseErr) * lerpRate;
     oscAnim.driftVel += ((d3 + knobPhaseOffset * 0.35 * unpushedFactor) - oscAnim.driftVel) * lerpRate;
 
     const targetGateX = TIME_GATE_X[state.activeTimeNode] || 238;
     oscAnim.gateX += (targetGateX - oscAnim.gateX) * Math.min(1, dt * 12);
 
-    if (Math.abs(d3) > 0 || Math.abs(knobPhaseOffset) > 0.1 || driveRatio < 1) {
+    if (Math.abs(d3) > 0 || Math.abs(knobPhaseOffset) > 0.05) {
       oscAnim.driftAccum += oscAnim.driftVel * dt * 2.1;
     } else {
       oscAnim.driftAccum *= Math.pow(0.04, dt);
@@ -3930,7 +4071,9 @@ window.JC09_ENDINGS = {
 
   function renderSynapseView() {
     const w = window.JC09_WITNESSES[state.synapseTarget] || window.JC09_WITNESSES.W05;
-    const sig = WITNESS_OSC_SIG[w.id] || WITNESS_OSC_SIG.W05;
+    const info = getCurrentStageInfo(w);
+    const sig = info.sig;
+    const stg = info.stage;
 
     const badge = document.getElementById('synapse-target-badge');
     if (badge) badge.textContent = 'TARGET: ' + w.id + ' // ' + w.name;
@@ -3941,8 +4084,7 @@ window.JC09_ENDINGS = {
 
     const matched = computeFilterMatch(w);
     const angleDiff = getKnobAngleDiff(w);
-    const sweet = angleDiff <= 15;
-    const nearSweet = angleDiff <= 45;
+    const sweet = angleDiff <= info.tol;
     const isOverloading = performance.now() < oscAnim.overloadUntil;
     const isNowLocked = isSynapseFullyLocked(w);
 
@@ -3953,102 +4095,57 @@ window.JC09_ENDINGS = {
     const pct = computeTotalSynapsePct(w);
     const isUnlocked = !!state.unlockedDeep[w.id];
 
-    // Update 4 Channel Cards with 3-Stage Cold/Warm/Lock Probe Indicators
-    const chProbeTags = [];
+    // Update 4 Channel Cards WITHOUT any probe LEDs or border spoilers
+    const NEUTRAL_METRIC_TAGS = ['FX : FY', 'SNR / EYE-H', 'SYM / SKEW', 'PLL / DRIFT'];
     for (let i = 0; i < 4; i++) {
       const chip = document.getElementById('filter-ch-' + i);
       const st = state.filterStates[i] || 'normal';
-      const delta = Math.abs(getChannelDelta(i, w));
       if (chip) {
         chip.setAttribute('data-state', st);
         const label = chip.querySelector('.chip-state-text');
         if (label) label.textContent = FILTER_STATE_LABELS[st] || st.toUpperCase();
       }
       const metricEl = document.getElementById('ch-metric-' + i);
+      if (metricEl) {
+        metricEl.textContent = NEUTRAL_METRIC_TAGS[i];
+        metricEl.style.color = 'var(--c-ink-disabled)';
+      }
       const cardEl = document.getElementById('filter-card-' + i);
-      if (delta === 0) {
-        if (metricEl) {
-          metricEl.textContent = '● LOCK';
-          metricEl.style.color = 'var(--c-accent-green)';
-        }
-        if (cardEl) cardEl.style.borderColor = 'var(--c-accent-green)';
-        chProbeTags.push('CH' + (i + 1) + '[●LOCK]');
-      } else if (delta === 1) {
-        if (metricEl) {
-          metricEl.textContent = '◐ NEAR';
-          metricEl.style.color = 'var(--c-brand-yellow)';
-        }
-        if (cardEl) cardEl.style.borderColor = 'var(--c-brand-yellow)';
-        chProbeTags.push('CH' + (i + 1) + '[◐逼近]');
-      } else {
-        if (metricEl) {
-          metricEl.textContent = '○ ERR';
-          metricEl.style.color = 'var(--c-danger-red)';
-        }
-        if (cardEl) cardEl.style.borderColor = 'var(--c-surface-5)';
-        chProbeTags.push('CH' + (i + 1) + '[○失配]');
+      if (cardEl) {
+        cardEl.style.borderColor = (state.hintOn && st !== w.recipe[i]) ? 'var(--c-brand-yellow)' : 'var(--c-surface-5)';
       }
     }
 
-    // Update Top Probe / Recipe Telemetry Bar
+    // Update Top Rule / Telemetry Bar (Zero Spoilers unless HINT is manually toggled on)
     const recipeHint = document.getElementById('synapse-recipe-hint');
     if (recipeHint) {
-      if (state.hintOn || isNowLocked) {
-        recipeHint.textContent = '特征码: ' + w.recipeLabel + ' · 甜区[' + sig.sweetSpot + '°]';
+      if (state.hintOn) {
+        recipeHint.textContent = '提示码: ' + w.recipeLabel + ' // 当前第' + (info.stageIndex + 1) + '/' + info.totalStages + '段相位[' + info.effectiveAngle + '°±' + info.tol + '°] · 靶深[' + stg.targetDrive + '%]';
       } else {
-        const knobTag = sweet ? '●甜区命中' : (nearSweet ? '◐谐振逼近' : '○待寻位');
-        recipeHint.textContent = '探针: ' + chProbeTags.join(' ') + ' // 旋钮A[' + knobTag + '] · 推进[' + (state.knobDrive || 0) + '%]';
+        recipeHint.textContent = sig.tierRule;
       }
     }
 
-    // Update KNOB A (Harmonic Sweet-Spot Seeker 0°..300°)
-    const curAngle = typeof state.knobAngle === 'number' ? state.knobAngle : 45;
+    // Update KNOB A (Blind Phase Seeker 0°..300° — Zero Sonar Arc or Color Spoilers)
+    const curAngle = typeof state.knobAngle === 'number' ? state.knobAngle : 35;
     const rotDegA = -135 + (curAngle / 300) * 270;
     const rotorA = document.getElementById('knob-a-rotor');
     if (rotorA) rotorA.setAttribute('transform', 'rotate(' + rotDegA.toFixed(1) + ', 60, 35)');
     const readoutA = document.getElementById('knob-a-readout');
     if (readoutA) readoutA.textContent = String(curAngle).padStart(3, '0') + '°';
     const statusA = document.getElementById('knob-a-status');
-    const cardA = document.getElementById('knob-card-a');
-    const sonarArcA = document.getElementById('knob-a-sonar-arc');
-    const pointerA = document.getElementById('knob-a-pointer');
-    const haloA = document.getElementById('knob-a-halo');
-    const proximityRatio = Math.max(0.08, 1 - Math.min(1, angleDiff / 160));
-    if (sonarArcA) {
-      const arcLen = Math.round(16 + proximityRatio * 164);
-      sonarArcA.setAttribute('stroke-dasharray', arcLen + ' 220');
-      sonarArcA.setAttribute('stroke', sweet ? '#7EA403' : (nearSweet ? '#FED800' : '#0098DC'));
-    }
-    if (pointerA) {
-      pointerA.setAttribute('stroke', sweet ? '#7EA403' : (nearSweet ? '#FED800' : '#22BBFE'));
-    }
-    if (haloA) {
-      haloA.setAttribute('stroke', sweet ? '#7EA403' : (nearSweet ? '#FED800' : '#313131'));
-    }
-    if (cardA) {
-      cardA.classList.toggle('is-sweet', sweet);
-      cardA.classList.toggle('is-near', !sweet && nearSweet);
-    }
     if (statusA) {
-      if (sweet) {
-        statusA.textContent = '● SWEET';
-        statusA.style.color = 'var(--c-accent-green)';
-      } else if (nearSweet) {
-        statusA.textContent = '◐ NEAR';
-        statusA.style.color = 'var(--c-brand-yellow)';
-      } else {
-        statusA.textContent = '○ SEEK';
-        statusA.style.color = 'var(--c-ink-disabled)';
-      }
+      statusA.textContent = 'STG ' + (info.stageIndex + 1) + '/' + info.totalStages;
+      statusA.style.color = 'var(--c-ink-disabled)';
     }
 
-    // Update KNOB B (PLL Lock-In Depth Drive 0%..100%)
+    // Update KNOB B (PLL Lock-In Depth Drive 0%..100% with Stage Target Gate)
     const curDrive = typeof state.knobDrive === 'number' ? state.knobDrive : 0;
     const rotDegB = -135 + (curDrive / 100) * 270;
     const rotorB = document.getElementById('knob-b-rotor');
     if (rotorB) rotorB.setAttribute('transform', 'rotate(' + rotDegB.toFixed(1) + ', 60, 35)');
     const readoutB = document.getElementById('knob-b-readout');
-    if (readoutB) readoutB.textContent = curDrive + '%';
+    if (readoutB) readoutB.textContent = curDrive + '% / ' + stg.targetDrive + '%';
     const driveArcB = document.getElementById('knob-b-drive-arc');
     if (driveArcB) {
       const dLen = Math.round((curDrive / 100) * 180);
@@ -4063,13 +4160,13 @@ window.JC09_ENDINGS = {
     const statusB = document.getElementById('knob-b-status');
     if (statusB) {
       if (isOverloading) {
-        statusB.textContent = '⚡ SLIP';
+        statusB.textContent = '⚡ WIPE';
         statusB.style.color = 'var(--c-danger-red)';
       } else if (isNowLocked) {
         statusB.textContent = '● LOCK';
         statusB.style.color = 'var(--c-accent-green)';
       } else {
-        statusB.textContent = curDrive + '%';
+        statusB.textContent = 'GATE ' + stg.targetDrive + '%';
         statusB.style.color = 'var(--c-currency-blue)';
       }
     }
@@ -4092,7 +4189,9 @@ window.JC09_ENDINGS = {
 
     const matchBadge = document.getElementById('osc-match-badge');
     if (matchBadge) {
-      matchBadge.textContent = isNowLocked ? '锁相匹配 100%' : (isOverloading ? 'PLL 失步回弹!' : ('滤波匹配度 ' + pct + '%'));
+      matchBadge.textContent = isNowLocked
+        ? '锁相匹配 100%'
+        : (isOverloading ? '⚡ 熔断清零!' : ('STAGE ' + (info.stageIndex + 1) + '/' + info.totalStages + ' · 深度 ' + curDrive + '%/' + stg.targetDrive + '%'));
       matchBadge.style.background = isNowLocked ? 'var(--c-confirm-gold)' : (isOverloading ? 'var(--c-danger-red)' : 'var(--c-panel)');
       matchBadge.style.color = isNowLocked ? 'var(--c-canvas)' : 'var(--c-ink)';
     }
@@ -4110,25 +4209,35 @@ window.JC09_ENDINGS = {
     const oscTitle = document.getElementById('osc-status-title');
     if (oscTitle) {
       oscTitle.textContent = isNowLocked
-        ? 'XY 李萨如 & 2-UI 眼图 // 锁相完成'
-        : (isOverloading ? 'XY 李萨如 & 2-UI 眼图 // PLL 失步过载警告' : 'XY 李萨如 & 2-UI 眼图 // 实时波形监视');
+        ? ('双踪示波 // 锁相完成 · ' + sig.tierLabel)
+        : (isOverloading ? '双踪示波 // ⚡ 锁芯过冲或失步 · 全部破译进度已熔断清零' : ('双踪示波 // ' + sig.tierLabel));
     }
 
     // Update Dual-Scope Tints, Target Ghost Template & Diamond Eye Masks
     buildTargetGhostPaths(sig);
 
+    const stageGateLabel = document.getElementById('osc-stage-gate-label');
+    if (stageGateLabel) {
+      stageGateLabel.textContent = isNowLocked
+        ? ('LOCKED // STG ' + info.totalStages + '/' + info.totalStages + ' @ ' + stg.targetDrive + '%')
+        : ('STG ' + (info.stageIndex + 1) + '/' + info.totalStages + ' // TARGET ' + stg.targetDrive + '% (MAX ' + (info.stageIndex < info.totalStages - 1 ? (stg.targetDrive + 10) : sig.overshoot) + '%)');
+      stageGateLabel.setAttribute('fill', isNowLocked ? '#7EA403' : (isOverloading ? '#EC3140' : '#FED800'));
+    }
+
     const ratioLabel = document.getElementById('lis-ratio-label');
     if (ratioLabel) {
       const d0 = getChannelDelta(0, w);
-      ratioLabel.textContent = d0 === 0
-        ? ('RATIO ' + sig.ratioText + (sweet ? ' SWEET' : ' TUNE'))
-        : ('RATIO ' + (sig.fx + d0) + ':' + sig.fy + ' ERR');
-      ratioLabel.setAttribute('fill', (d0 === 0 && sweet) ? '#7EA403' : '#FED800');
+      const waveAligned = (matched === 4 && sweet);
+      ratioLabel.textContent = waveAligned
+        ? ('RATIO ' + sig.ratioText + ' PHASE-ALIGNED')
+        : ('RATIO ' + (sig.fx + d0) + ':' + sig.fy + ' WAVE');
+      ratioLabel.setAttribute('fill', waveAligned ? '#7EA403' : '#898989');
     }
 
     const reticle = document.getElementById('lis-lock-reticle');
     if (reticle) {
-      reticle.setAttribute('stroke', isNowLocked ? '#E8C400' : (sweet ? '#7EA403' : '#555555'));
+      const waveAligned = (matched === 4 && sweet);
+      reticle.setAttribute('stroke', isNowLocked ? '#E8C400' : (waveAligned ? '#7EA403' : '#555555'));
       reticle.setAttribute('fill', isNowLocked ? 'rgba(232, 196, 0, 0.22)' : 'none');
     }
 
@@ -4137,20 +4246,23 @@ window.JC09_ENDINGS = {
     const dot1 = document.getElementById('eye-sample-dot-1');
     const dot2 = document.getElementById('eye-sample-dot-2');
     const maskStatus = document.getElementById('eye-mask-status');
+    const waveAligned = (matched === 4 && sweet);
 
     [mask1, mask2].forEach(function (m) {
       if (!m) return;
-      m.setAttribute('stroke', isNowLocked ? '#E8C400' : '#EC3140');
-      m.setAttribute('fill', isNowLocked ? 'rgba(126, 164, 3, 0.16)' : 'rgba(236, 49, 64, 0.12)');
-      m.setAttribute('stroke-dasharray', isNowLocked ? 'none' : '3 2');
+      m.setAttribute('stroke', isNowLocked ? '#E8C400' : (waveAligned ? '#7EA403' : '#EC3140'));
+      m.setAttribute('fill', isNowLocked ? 'rgba(126, 164, 3, 0.16)' : (waveAligned ? 'rgba(126, 164, 3, 0.10)' : 'rgba(236, 49, 64, 0.12)'));
+      m.setAttribute('stroke-dasharray', (isNowLocked || waveAligned) ? 'none' : '3 2');
     });
     [dot1, dot2].forEach(function (d) {
       if (!d) return;
-      d.setAttribute('fill', isNowLocked ? '#7EA403' : '#EC3140');
+      d.setAttribute('fill', (isNowLocked || waveAligned) ? '#7EA403' : '#EC3140');
     });
     if (maskStatus) {
-      maskStatus.textContent = isNowLocked ? 'EYE OPEN // 100% LOCK' : (isOverloading ? 'PLL PHASE SLIP!' : 'MASK VIOLATION');
-      maskStatus.setAttribute('fill', isNowLocked ? '#7EA403' : '#EC3140');
+      maskStatus.textContent = isNowLocked
+        ? 'EYE OPEN // LOCKED'
+        : (isOverloading ? '⚡ PLL WIPE!' : (waveAligned ? ('WAVE ALIGNED -> PUSH ' + stg.targetDrive + '%') : 'MASK VIOLATION'));
+      maskStatus.setAttribute('fill', (isNowLocked || waveAligned) ? '#7EA403' : '#EC3140');
     }
 
     // Apply witness signature tint classes to live traces
@@ -4595,12 +4707,30 @@ window.JC09_ENDINGS = {
       });
     }
 
+    function selectSynapseTarget(wid) {
+      if (state.synapseTarget === wid) return;
+      state.synapseTarget = wid;
+      const sig = WITNESS_OSC_SIG[wid] || WITNESS_OSC_SIG.W05;
+      const finalStage = sig.stages[sig.stages.length - 1];
+      if (state.unlockedDeep[wid]) {
+        state.lockStage = sig.stages.length - 1;
+        state.knobAngle = finalStage.angle;
+        state.knobDrive = finalStage.targetDrive;
+        state.knobLocked = true;
+      } else {
+        state.lockStage = 0;
+        state.knobAngle = 35;
+        state.knobDrive = 0;
+        state.knobLocked = false;
+      }
+    }
+
     // 4. Witness Roster Cards & Layer Toggle (View 01)
     document.querySelectorAll('.witness-card').forEach(function (card) {
       card.addEventListener('click', function () {
         const wid = card.getAttribute('data-witness');
         state.selectedWitness = wid;
-        state.synapseTarget = wid;
+        selectSynapseTarget(wid);
         if (state.witnessLayer === 'deep' && !state.unlockedDeep[wid]) {
           state.witnessLayer = 'surface';
         }
@@ -4626,7 +4756,7 @@ window.JC09_ENDINGS = {
         const w = window.JC09_WITNESSES[state.selectedWitness];
         if (!w) return;
         if (!state.unlockedDeep[w.id]) {
-          state.synapseTarget = w.id;
+          selectSynapseTarget(w.id);
           switchView('synapse');
           renderSynapseView();
           logTicker(w.name + ' 的深层残响尚未破译，已跳转至 02 神经切片台');
@@ -4642,7 +4772,7 @@ window.JC09_ENDINGS = {
     const btnGotoSynapse = document.getElementById('btn-goto-synapse');
     if (btnGotoSynapse) {
       btnGotoSynapse.addEventListener('click', function () {
-        state.synapseTarget = state.selectedWitness;
+        selectSynapseTarget(state.selectedWitness);
         saveState();
         renderSynapseView();
         switchView('synapse');
@@ -4652,7 +4782,7 @@ window.JC09_ENDINGS = {
     const witnessCodeBadge = document.getElementById('witness-active-code');
     if (witnessCodeBadge) {
       witnessCodeBadge.addEventListener('click', function () {
-        state.synapseTarget = state.selectedWitness;
+        selectSynapseTarget(state.selectedWitness);
         saveState();
         renderSynapseView();
         switchView('synapse');
@@ -4662,7 +4792,7 @@ window.JC09_ENDINGS = {
     const witnessPortraitClick = document.getElementById('witness-portrait-click-box');
     if (witnessPortraitClick) {
       witnessPortraitClick.addEventListener('click', function () {
-        state.synapseTarget = state.selectedWitness;
+        selectSynapseTarget(state.selectedWitness);
         saveState();
         renderSynapseView();
         switchView('synapse');
@@ -4701,12 +4831,17 @@ window.JC09_ENDINGS = {
         state.synapseTarget = wid;
         state.selectedWitness = wid;
         const sig = WITNESS_OSC_SIG[wid] || WITNESS_OSC_SIG.W05;
+        const finalStage = sig.stages[sig.stages.length - 1];
         if (state.unlockedDeep[wid]) {
-          state.knobAngle = sig.sweetSpot;
-          state.knobDrive = 100;
+          state.lockStage = sig.stages.length - 1;
+          state.knobAngle = finalStage.angle;
+          state.knobDrive = finalStage.targetDrive;
+          state.knobLocked = true;
         } else {
-          state.knobAngle = 45;
+          state.lockStage = 0;
+          state.knobAngle = 35;
           state.knobDrive = 0;
+          state.knobLocked = false;
         }
         saveState();
         renderAll();
@@ -4720,8 +4855,12 @@ window.JC09_ENDINGS = {
       const nextState = SEVEN_STATES[nextIdx];
       state.filterStates[i] = nextState;
       const w = window.JC09_WITNESSES[state.synapseTarget] || window.JC09_WITNESSES.W05;
+      if (state.knobLocked) {
+        state.knobLocked = false;
+      }
       if (!isSynapseFullyLocked(w) && state.knobDrive > 0) {
         state.knobDrive = 0;
+        state.lockStage = 0;
       }
       saveState();
       renderSynapseView();
@@ -4744,19 +4883,19 @@ window.JC09_ENDINGS = {
       }
     }
 
-    // KNOB A Controls: Drag, Wheel, and ±15° Step Buttons
+    // KNOB A Controls: Drag, Wheel, and ±5° Precision Step Buttons
     const btnKnobADec = document.getElementById('btn-knob-a-dec');
     if (btnKnobADec) {
       btnKnobADec.addEventListener('click', function (ev) {
         ev.stopPropagation();
-        setKnobAngle((state.knobAngle || 0) - 15);
+        setKnobAngle((state.knobAngle || 0) - 5);
       });
     }
     const btnKnobAInc = document.getElementById('btn-knob-a-inc');
     if (btnKnobAInc) {
       btnKnobAInc.addEventListener('click', function (ev) {
         ev.stopPropagation();
-        setKnobAngle((state.knobAngle || 0) + 15);
+        setKnobAngle((state.knobAngle || 0) + 5);
       });
     }
 
@@ -4765,7 +4904,7 @@ window.JC09_ENDINGS = {
     if (knobCardA) {
       knobCardA.addEventListener('wheel', function (ev) {
         ev.preventDefault();
-        const delta = ev.deltaY < 0 ? 15 : -15;
+        const delta = ev.deltaY < 0 ? 5 : -5;
         setKnobAngle((state.knobAngle || 0) + delta);
       }, { passive: false });
     }
@@ -4773,19 +4912,19 @@ window.JC09_ENDINGS = {
       let draggingA = false;
       let startYA = 0;
       let startXA = 0;
-      let startAngA = 45;
+      let startAngA = 35;
       knobSvgA.addEventListener('pointerdown', function (ev) {
         draggingA = true;
         startYA = ev.clientY;
         startXA = ev.clientX;
-        startAngA = typeof state.knobAngle === 'number' ? state.knobAngle : 45;
+        startAngA = typeof state.knobAngle === 'number' ? state.knobAngle : 35;
         try { knobSvgA.setPointerCapture(ev.pointerId); } catch (_) {}
       });
       knobSvgA.addEventListener('pointermove', function (ev) {
         if (!draggingA) return;
         const dy = startYA - ev.clientY;
         const dx = ev.clientX - startXA;
-        const degDelta = Math.round((dy * 1.8 + dx * 1.4) / 5) * 5;
+        const degDelta = Math.round((dy * 1.6 + dx * 1.2) / 5) * 5;
         setKnobAngle(startAngA + degDelta);
       });
       const stopDragA = function () { draggingA = false; };
@@ -4793,19 +4932,19 @@ window.JC09_ENDINGS = {
       knobSvgA.addEventListener('pointercancel', stopDragA);
     }
 
-    // KNOB B Controls: Drag, Wheel, -25% Release & Push-to-Lock Button
+    // KNOB B Controls: Drag, Wheel, -10% Backoff & +15% Stage Push Button
     const btnKnobBDec = document.getElementById('btn-knob-b-dec');
     if (btnKnobBDec) {
       btnKnobBDec.addEventListener('click', function (ev) {
         ev.stopPropagation();
-        advanceKnobDrive(Math.max(0, (state.knobDrive || 0) - 25));
+        advanceKnobDrive(Math.max(0, (state.knobDrive || 0) - 10));
       });
     }
     const btnKnobBPush = document.getElementById('btn-knob-b-push');
     if (btnKnobBPush) {
       btnKnobBPush.addEventListener('click', function (ev) {
         ev.stopPropagation();
-        advanceKnobDrive((state.knobDrive || 0) + 35);
+        advanceKnobDrive((state.knobDrive || 0) + 15);
       });
     }
 
@@ -4814,7 +4953,7 @@ window.JC09_ENDINGS = {
     if (knobCardB) {
       knobCardB.addEventListener('wheel', function (ev) {
         ev.preventDefault();
-        const delta = ev.deltaY < 0 ? 25 : -25;
+        const delta = ev.deltaY < 0 ? 10 : -10;
         advanceKnobDrive((state.knobDrive || 0) + delta);
       }, { passive: false });
     }
@@ -4834,7 +4973,7 @@ window.JC09_ENDINGS = {
         if (!draggingB) return;
         const dy = startYB - ev.clientY;
         const dx = ev.clientX - startXB;
-        const pctDelta = Math.round((dy * 1.2 + dx * 1.0));
+        const pctDelta = Math.round((dy * 1.0 + dx * 0.8) / 5) * 5;
         advanceKnobDrive(startDriveB + pctDelta);
       });
       const stopDragB = function () { draggingB = false; };
@@ -4872,15 +5011,18 @@ window.JC09_ENDINGS = {
         oscAnim.overloadUntil = 0;
         const w = window.JC09_WITNESSES[state.synapseTarget] || window.JC09_WITNESSES.W05;
         const sig = WITNESS_OSC_SIG[w.id] || WITNESS_OSC_SIG.W05;
+        const finalStage = sig.stages[sig.stages.length - 1];
         state.filterStates = w.recipe.slice();
-        state.knobAngle = sig.sweetSpot;
-        state.knobDrive = 100;
+        state.lockStage = sig.stages.length - 1;
+        state.knobAngle = finalStage.angle;
+        state.knobDrive = finalStage.targetDrive;
+        state.knobLocked = true;
         state.unlockedDeep[w.id] = true;
         saveState();
         renderAll();
         ensureOscilloscopeLoop();
         sfxBreakthrough();
-        logTicker('[AUTO] 已一键校准四通道与双旋钮甜区，成功破译 ' + w.name + ' 的深层记忆残响！');
+        logTicker('[AUTO] 已一键完成全段盲调校准 (' + finalStage.angle + '° / ' + finalStage.targetDrive + '%)，成功破译 ' + w.name + ' 的深层记忆残响！');
       });
     }
 
@@ -4894,9 +5036,12 @@ window.JC09_ENDINGS = {
         oscAnim.overloadUntil = 0;
         const w = window.JC09_WITNESSES[state.synapseTarget] || window.JC09_WITNESSES.W05;
         const sig = WITNESS_OSC_SIG[w.id] || WITNESS_OSC_SIG.W05;
+        const finalStage = sig.stages[sig.stages.length - 1];
         state.filterStates = w.recipe.slice();
-        state.knobAngle = sig.sweetSpot;
-        state.knobDrive = 100;
+        state.lockStage = sig.stages.length - 1;
+        state.knobAngle = finalStage.angle;
+        state.knobDrive = finalStage.targetDrive;
+        state.knobLocked = true;
         state.unlockedDeep[w.id] = true;
         state.selectedWitness = w.id;
         state.witnessLayer = 'deep';
