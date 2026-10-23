@@ -8,7 +8,7 @@
   'use strict';
 
   const SEVEN_STATES = ['normal', 'on', 'off', 'select', 'selected', 'unselect', 'unselected'];
-  const STORAGE_KEY = 'jc09:state:v1';
+  const STORAGE_KEY = 'jc09:state:v2';
 
   const defaultState = {
     activeView: 'witness',
@@ -27,13 +27,14 @@
     slotB: null,
     verdict: null,               // 'broadcast' | 'coverup' | 'silence' | null
     hintOn: false,
-    audioOn: false
+    audioOn: true
   };
 
   let state = loadState();
   let audioCtx = null;
   let humOsc = null;
   let humGain = null;
+  let lastHoverSfxAt = 0;
 
   function loadState() {
     try {
@@ -78,43 +79,93 @@
         humGain = audioCtx.createGain();
         humOsc.type = 'sine';
         humOsc.frequency.value = 55; // 55Hz judicial console transformer hum
-        humGain.gain.value = 0.018;
+        humGain.gain.value = 0.014;
         humOsc.connect(humGain);
         humGain.connect(audioCtx.destination);
         humOsc.start();
       } catch (_) {}
     } else if (humGain) {
-      try { humGain.gain.setTargetAtTime(0.018, audioCtx.currentTime, 0.1); } catch (_) {}
+      try { humGain.gain.setTargetAtTime(0.014, audioCtx.currentTime, 0.1); } catch (_) {}
     }
   }
 
-  function playTone(freq, durationMs, type, gainVal) {
+  function playTone(freq, durationMs, type, gainVal, slideToFreq) {
     if (!state.audioOn) return;
     ensureAudio();
     if (!audioCtx) return;
     try {
+      const now = audioCtx.currentTime;
+      const dur = durationMs / 1000;
       const osc = audioCtx.createOscillator();
       const g = audioCtx.createGain();
       osc.type = type || 'triangle';
-      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-      g.gain.setValueAtTime(gainVal || 0.04, audioCtx.currentTime);
-      g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + durationMs / 1000);
+      osc.frequency.setValueAtTime(freq, now);
+      if (slideToFreq) {
+        osc.frequency.exponentialRampToValueAtTime(Math.max(20, slideToFreq), now + dur);
+      }
+      g.gain.setValueAtTime(gainVal || 0.04, now);
+      g.gain.exponentialRampToValueAtTime(0.0001, now + dur);
       osc.connect(g);
       g.connect(audioCtx.destination);
-      osc.start();
-      osc.stop(audioCtx.currentTime + durationMs / 1000 + 0.02);
+      osc.start(now);
+      osc.stop(now + dur + 0.02);
     } catch (_) {}
   }
 
-  function sfxClick() { playTone(680, 45, 'square', 0.025); }
-  function sfxSwitch() { playTone(440, 70, 'triangle', 0.04); }
-  function sfxBreakthrough() {
-    playTone(523.25, 140, 'triangle', 0.05);
-    setTimeout(function () { playTone(659.25, 160, 'triangle', 0.05); }, 90);
-    setTimeout(function () { playTone(783.99, 260, 'sine', 0.06); }, 180);
+  function sfxHover() {
+    if (!state.audioOn) return;
+    const nowMs = performance.now();
+    if (nowMs - lastHoverSfxAt < 45) return;
+    lastHoverSfxAt = nowMs;
+    playTone(2300, 14, 'sine', 0.012, 2950);
   }
+
+  function sfxClick() {
+    playTone(740, 42, 'square', 0.024, 460);
+  }
+
+  function sfxSwitch() {
+    playTone(460, 65, 'triangle', 0.038, 690);
+  }
+
+  function sfxTabSwitch() {
+    playTone(340, 48, 'triangle', 0.034, 520);
+    setTimeout(function () { playTone(680, 55, 'square', 0.022, 820); }, 32);
+  }
+
+  function sfxCardSelect() {
+    playTone(540, 52, 'triangle', 0.035, 810);
+    setTimeout(function () { playTone(1080, 38, 'sine', 0.02); }, 24);
+  }
+
+  function sfxFilterRelay(stateName) {
+    const idx = Math.max(0, SEVEN_STATES.indexOf(stateName));
+    const baseFreq = 380 + idx * 88;
+    playTone(baseFreq, 55, 'square', 0.026, baseFreq * 1.25);
+    setTimeout(function () { playTone(baseFreq * 1.5, 35, 'triangle', 0.02); }, 22);
+  }
+
+  function sfxSlotLoad() {
+    playTone(195, 70, 'triangle', 0.045, 130);
+    setTimeout(function () { playTone(840, 58, 'square', 0.028, 1120); }, 35);
+  }
+
+  function sfxBreakthrough() {
+    playTone(523.25, 130, 'triangle', 0.05);
+    setTimeout(function () { playTone(659.25, 150, 'triangle', 0.05); }, 80);
+    setTimeout(function () { playTone(783.99, 180, 'sine', 0.055); }, 160);
+    setTimeout(function () { playTone(1046.5, 280, 'sine', 0.06); }, 240);
+  }
+
+  function sfxVerdictStamp() {
+    playTone(92, 240, 'sawtooth', 0.065, 48);
+    setTimeout(function () { playTone(440, 260, 'triangle', 0.05); }, 45);
+    setTimeout(function () { playTone(659.25, 320, 'sine', 0.055); }, 95);
+  }
+
   function sfxError() {
-    playTone(160, 180, 'sawtooth', 0.045);
+    playTone(162, 185, 'sawtooth', 0.045, 128);
+    setTimeout(function () { playTone(146, 170, 'sawtooth', 0.04, 118); }, 35);
   }
 
   function logTicker(msg) {
@@ -138,7 +189,7 @@
       panel.classList.toggle('is-active', panel.id === 'view-' + viewName);
     });
 
-    sfxClick();
+    sfxTabSwitch();
     logTicker('已切换至主视图 // ' + viewName.toUpperCase());
   }
 
@@ -423,7 +474,7 @@
         epilogueEl.innerHTML = '<strong style="color:var(--c-brand-yellow);">' + endObj.title + '</strong><br>' + endObj.text;
       }
       if (clearBtn) clearBtn.style.display = 'inline-flex';
-      if (sigEl) sigEl.textContent = endObj.code;
+      if (sigEl) sigEl.textContent = endObj.code.split(' // ')[0];
     } else {
       if (statusBadge) {
         statusBadge.textContent = state.completedActs.length >= 4
@@ -544,7 +595,7 @@
     else state.slotB = item;
     saveState();
     renderInspectorAndHud();
-    sfxClick();
+    sfxSlotLoad();
     const fb = document.getElementById('inspector-feedback');
     if (fb) {
       fb.style.borderLeftColor = 'var(--c-primary)';
@@ -617,8 +668,72 @@
     renderVerdictView();
   }
 
+  // ---- 60fps Damped Mouse 3D Parallax Loop ----
+  function initParallax3D() {
+    const root = document.getElementById('app-root');
+    if (!root) return;
+
+    let targetX = 0;
+    let targetY = 0;
+    let curX = 0;
+    let curY = 0;
+    let rafId = null;
+
+    function tick() {
+      const dx = targetX - curX;
+      const dy = targetY - curY;
+      curX += dx * 0.12;
+      curY += dy * 0.12;
+
+      root.style.setProperty('--mx', curX.toFixed(4));
+      root.style.setProperty('--my', curY.toFixed(4));
+
+      if (Math.abs(dx) > 0.0008 || Math.abs(dy) > 0.0008) {
+        rafId = requestAnimationFrame(tick);
+      } else {
+        rafId = null;
+      }
+    }
+
+    function scheduleTick() {
+      if (!rafId) rafId = requestAnimationFrame(tick);
+    }
+
+    window.addEventListener('pointermove', function (ev) {
+      if (window.innerWidth <= 1024 || window.innerHeight > window.innerWidth) return;
+      targetX = Math.max(-1, Math.min(1, (ev.clientX / window.innerWidth - 0.5) * 2));
+      targetY = Math.max(-1, Math.min(1, (ev.clientY / window.innerHeight - 0.5) * 2));
+      scheduleTick();
+    }, { passive: true });
+
+    window.addEventListener('pointerleave', function () {
+      targetX = 0;
+      targetY = 0;
+      scheduleTick();
+    }, { passive: true });
+  }
+
   // ---- Event Listeners Binding ----
   function bindEvents() {
+    // 0. Global Audio Auto-Unlock + Hover Micro-Ticks + Click Press Animation
+    const interactiveSelector = '.btn, .btn-compact, .state-chip, .act-pill, .nav-tab, .witness-card, .evidence-row, .guide-char-chip';
+
+    document.querySelectorAll(interactiveSelector).forEach(function (el) {
+      el.addEventListener('pointerenter', function () {
+        if (el.hasAttribute('disabled') || el.getAttribute('data-state') === 'locked') return;
+        sfxHover();
+      });
+      el.addEventListener('pointerdown', function () {
+        if (el.hasAttribute('disabled') || el.getAttribute('data-state') === 'locked') return;
+        if (state.audioOn) {
+          ensureAudio();
+          setAmbientHum(true);
+        }
+        el.classList.add('is-pressing');
+        setTimeout(function () { el.classList.remove('is-pressing'); }, 140);
+      });
+    });
+
     // 1. View switcher tabs
     document.querySelectorAll('.nav-tab').forEach(function (btn) {
       btn.addEventListener('click', function () {
@@ -634,7 +749,7 @@
         state.dossierActTab = actN;
         saveState();
         renderAll();
-        sfxClick();
+        sfxTabSwitch();
       });
     });
 
@@ -669,7 +784,7 @@
         state = JSON.parse(JSON.stringify(defaultState));
         const gm = document.getElementById('guide-modal-overlay');
         if (gm) gm.classList.remove('is-open');
-        setAmbientHum(false);
+        setAmbientHum(state.audioOn);
         const fb = document.getElementById('inspector-feedback');
         if (fb) {
           fb.style.borderLeftColor = 'var(--c-hairline)';
@@ -692,7 +807,7 @@
         }
         saveState();
         renderAll();
-        sfxClick();
+        sfxCardSelect();
       });
     });
 
@@ -768,7 +883,7 @@
         state.selectedWitness = wid;
         saveState();
         renderAll();
-        sfxClick();
+        sfxCardSelect();
       });
     });
 
@@ -778,10 +893,11 @@
         chip.addEventListener('click', function () {
           const cur = state.filterStates[i] || 'normal';
           const nextIdx = (SEVEN_STATES.indexOf(cur) + 1) % SEVEN_STATES.length;
-          state.filterStates[i] = SEVEN_STATES[nextIdx];
+          const nextState = SEVEN_STATES[nextIdx];
+          state.filterStates[i] = nextState;
           saveState();
           renderSynapseView();
-          sfxSwitch();
+          sfxFilterRelay(nextState);
         });
       }
     }
@@ -820,7 +936,7 @@
         state.activeTimeNode = Number(btn.getAttribute('data-time-node'));
         saveState();
         renderSynapseView();
-        sfxClick();
+        sfxCardSelect();
       });
     });
 
@@ -830,7 +946,7 @@
         state.selectedExhibit = row.getAttribute('data-evidence');
         saveState();
         renderBlackboxView();
-        sfxClick();
+        sfxCardSelect();
       });
     });
 
@@ -864,7 +980,7 @@
         state.slotB = null;
         saveState();
         renderInspectorAndHud();
-        sfxClick();
+        sfxSlotLoad();
       });
     }
 
@@ -879,7 +995,7 @@
         state.dossierActTab = Number(btn.getAttribute('data-dossier-act'));
         saveState();
         renderVerdictView();
-        sfxClick();
+        sfxTabSwitch();
       });
     });
 
@@ -889,7 +1005,7 @@
         state.verdict = endingKey;
         saveState();
         renderAll();
-        sfxBreakthrough();
+        sfxVerdictStamp();
         logTicker('已签署终局公诉裁决 // ' + endingKey.toUpperCase());
       });
     });
@@ -960,6 +1076,7 @@
         closeGuideModal();
         switchView('witness');
         renderAll();
+        sfxCardSelect();
         logTicker('已从指引速览切换至幸存者 // ' + wid);
       });
     });
@@ -985,12 +1102,13 @@
         state.synapseTarget = nextId;
         saveState();
         renderAll();
-        sfxClick();
+        sfxCardSelect();
       }
     });
   }
 
   // ---- Boot ----
+  initParallax3D();
   bindEvents();
   renderAll();
   switchView(state.activeView || 'witness');

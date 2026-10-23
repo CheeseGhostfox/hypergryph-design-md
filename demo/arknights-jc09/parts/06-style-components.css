@@ -24,7 +24,7 @@
   padding: var(--s-sm);
 }
 
-/* Offset Backing Plate (#313131 shifted 6px right-down behind #1B1B1B) */
+/* Offset Backing Plate (#313131 shifted behind #1B1B1B with counter-parallax on tilted 3D plane) */
 .offset-plate {
   position: relative;
   z-index: 1;
@@ -32,28 +32,76 @@
 .offset-plate::after {
   content: "";
   position: absolute;
-  top: 6px;
-  left: 6px;
-  right: -6px;
-  bottom: -6px;
+  top: 7px;
+  left: 7px;
+  right: -7px;
+  bottom: -7px;
   background-color: var(--c-panel);
   border: 1px solid var(--c-hairline);
+  border-right: 3px solid var(--c-primary);
+  border-bottom: 3px solid var(--c-surface-6);
   border-radius: var(--r-slice-md);
   z-index: -1;
   pointer-events: none;
+  transform: translate(
+    calc(var(--mx, 0) * -9px),
+    calc(var(--my, 0) * -9px)
+  );
+  transition: transform 0.08s linear, border-color 0.2s ease;
 }
 
-/* Subtle Camera-Space Plane Tilt (1.5deg Y-axis perspective on tactical deck) */
+/* Wing Backing Plates for Left Telemetry & Right Inspector Rail */
+.wing-plate-left,
+.wing-plate-right {
+  position: relative;
+  z-index: 1;
+}
+.wing-plate-left::after,
+.wing-plate-right::after {
+  content: "";
+  position: absolute;
+  top: 6px;
+  bottom: -6px;
+  background-color: var(--c-panel);
+  border: 1px solid var(--c-hairline);
+  border-bottom: 3px solid var(--c-surface-6);
+  border-radius: var(--r-slice-md);
+  z-index: -1;
+  pointer-events: none;
+  transition: transform 0.08s linear;
+}
+.wing-plate-left::after {
+  left: -6px;
+  right: 6px;
+  border-left: 3px solid var(--c-primary);
+  transform: translate(
+    calc(var(--mx, 0) * -7px),
+    calc(var(--my, 0) * -7px)
+  );
+}
+.wing-plate-right::after {
+  left: 6px;
+  right: -6px;
+  border-right: 3px solid var(--c-brand-yellow);
+  transform: translate(
+    calc(var(--mx, 0) * -8px),
+    calc(var(--my, 0) * -8px)
+  );
+}
+
+/* Multi-Plane Camera-Space Perspective Stage */
 .tilt-stage {
-  perspective: 1400px;
+  perspective: 1100px;
+  transform-style: preserve-3d;
 }
 .tilt-plane {
-  transform: rotateY(-1.2deg);
   transform-style: preserve-3d;
 }
 
 /* ---- Buttons (50px Primary/Confirm/Danger/Secondary · 30px Compact) ---- */
 .btn {
+  position: relative;
+   overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -68,10 +116,45 @@
   cursor: pointer;
   text-decoration: none;
   white-space: nowrap;
-  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+  transform: translate3d(0, 0, 0);
+  transition:
+    background-color 0.16s ease,
+    border-color 0.16s ease,
+    color 0.16s ease,
+    transform 0.16s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.btn:active {
-  transform: translateY(1px);
+/* Tactical Diagonal Sheen Sweep */
+.btn::after,
+.btn-compact::after,
+.state-chip::after,
+.act-pill::after,
+.nav-tab::after,
+.witness-card::after,
+.evidence-row::after,
+.guide-char-chip::after {
+  content: "";
+  position: absolute;
+  top: -20%;
+  bottom: -20%;
+  left: -130%;
+  width: 65%;
+  background: linear-gradient(
+    115deg,
+    transparent 15%,
+    rgba(254, 254, 254, 0.18) 48%,
+    rgba(34, 187, 254, 0.24) 52%,
+    transparent 85%
+  );
+  transform: skewX(-20deg);
+  pointer-events: none;
+  transition: left 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 2;
+}
+
+.btn:active,
+.btn.is-pressing {
+  transform: translate3d(0, 3px, -6px) scale(0.98) !important;
+  border-color: var(--c-brand-yellow) !important;
 }
 .btn[disabled] {
   background-color: var(--c-panel-deep) !important;
@@ -113,6 +196,8 @@
 }
 
 .btn-compact {
+  position: relative;
+  overflow: hidden;
   height: var(--s-row); /* 30px */
   padding: 0 var(--s-xs);
   font-size: var(--fs-body-sm);
@@ -120,21 +205,36 @@
   background-color: var(--c-panel);
   color: var(--c-ink);
   border: 1px solid var(--c-hairline);
+  border-bottom: 2px solid var(--c-surface-6);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: var(--s-xxs);
   white-space: nowrap;
   flex-shrink: 0;
+  transform: translate3d(0, 0, 0);
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.15s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .btn-compact.is-active {
   background-color: var(--c-primary);
   color: var(--c-on-primary);
   border-color: var(--c-currency-blue);
+  border-bottom-color: var(--c-deep-blue);
+}
+.btn-compact:active,
+.btn-compact.is-pressing {
+  transform: translate3d(0, 2px, -4px) scale(0.975) !important;
+  border-color: var(--c-brand-yellow) !important;
 }
 
 /* ---- Seven-Way Toggle State Family (Touch-First, No Hover Dependency) ---- */
 .state-chip {
+  position: relative;
+  overflow: hidden;
   height: var(--s-row); /* 30px */
   padding: 0 var(--s-xs);
   border-radius: var(--r-xs);
@@ -147,7 +247,18 @@
   gap: var(--s-xs);
   cursor: pointer;
   border: 1px solid var(--c-surface-5);
-  transition: background-color 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+  border-bottom: 2px solid var(--c-surface-6);
+  transform: translate3d(0, 0, 0);
+  transition:
+    background-color 0.14s ease,
+    color 0.14s ease,
+    border-color 0.14s ease,
+    transform 0.15s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.state-chip:active,
+.state-chip.is-pressing {
+  transform: translate3d(0, 2px, -4px) scale(0.975) !important;
+  border-color: var(--c-brand-yellow) !important;
 }
 
 .state-chip[data-state="normal"] {
@@ -197,14 +308,24 @@
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
-  transition: border-color 0.15s ease, background-color 0.15s ease;
+  transform: translate3d(0, 0, 0);
+  transition:
+    border-color 0.16s ease,
+    background-color 0.16s ease,
+    transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .witness-card.is-selected {
   border-color: var(--c-brand-yellow);
   background-color: var(--c-surface-2);
+  transform: translate3d(0, -2px, 10px);
 }
 .witness-card.is-hinted {
   border-color: var(--c-accent-green);
+}
+.witness-card:active,
+.witness-card.is-pressing {
+  transform: translate3d(0, 2px, -4px) scale(0.98) !important;
+  border-color: var(--c-brand-yellow) !important;
 }
 
 /* Rarity Bottom Glow Bar + Top Corner Accent */
@@ -216,6 +337,7 @@
   bottom: 0;
   height: 5px;
   background-color: var(--rarity-color, var(--c-rarity-1));
+  transition: height 0.16s ease;
 }
 .witness-card[data-rarity="1"] { --rarity-color: var(--c-rarity-1); }
 .witness-card[data-rarity="2"] { --rarity-color: var(--c-rarity-2); }
@@ -335,4 +457,119 @@
   font-family: var(--f-tech);
   font-size: var(--fs-caption);
   color: var(--c-ink-light-1);
+}
+
+/* ---- 3D View Entry Keyframe ---- */
+@keyframes jc09ViewEnter3D {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 10px, -28px) rotateX(4deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotateX(0deg);
+  }
+}
+
+/* ---- Hover Micro-Interactions (Isolated in @media (any-hover: hover)) ---- */
+@media (any-hover: hover) {
+  .btn:not([disabled]):hover::after,
+  .btn-compact:not([disabled]):hover::after,
+  .state-chip:not([data-state="locked"]):hover::after,
+  .act-pill:hover::after,
+  .nav-tab:hover::after,
+  .witness-card:hover::after,
+  .evidence-row:hover::after,
+  .guide-char-chip:hover::after {
+    left: 145%;
+  }
+
+  .btn:not([disabled]):hover {
+    transform: translate3d(0, -2px, 12px);
+    border-color: var(--c-brand-yellow);
+  }
+  .btn-primary:not([disabled]):hover {
+    background-color: var(--c-currency-blue);
+    color: var(--c-canvas);
+  }
+  .btn-confirm:not([disabled]):hover {
+    background-color: var(--c-brand-yellow-light);
+  }
+  .btn-danger:not([disabled]):hover {
+    background-color: var(--c-danger-red-deep);
+    border-color: var(--c-ink);
+  }
+  .btn-secondary:not([disabled]):hover {
+    background-color: var(--c-surface-4);
+    border-color: var(--c-currency-blue);
+  }
+
+  .btn-compact:not([disabled]):hover {
+    transform: translate3d(0, -2px, 10px);
+    border-color: var(--c-currency-blue);
+    background-color: var(--c-surface-4);
+  }
+  .btn-compact.is-active:hover {
+    background-color: var(--c-currency-blue);
+    color: var(--c-canvas);
+  }
+
+  .state-chip:not([data-state="locked"]):hover {
+    transform: translate3d(0, -2px, 10px);
+    border-color: var(--c-currency-blue);
+  }
+
+  .act-pill:hover {
+    transform: translate3d(0, -2px, 10px);
+    border-color: var(--c-brand-yellow);
+    color: var(--c-ink);
+  }
+
+  .nav-tab:hover {
+    transform: translate3d(5px, -1px, 14px);
+    background-color: var(--c-surface-3);
+    border-color: var(--c-currency-blue);
+    color: var(--c-ink);
+  }
+  .nav-tab:hover::before {
+    width: 8px;
+    background-color: var(--c-currency-blue);
+  }
+  .nav-tab.is-active:hover::before {
+    width: 8px;
+    background-color: var(--c-brand-yellow);
+  }
+
+  .witness-card:hover {
+    transform: translate3d(0, -4px, 16px);
+    border-color: var(--c-currency-blue);
+    background-color: var(--c-surface-3);
+  }
+  .witness-card.is-selected:hover {
+    border-color: var(--c-brand-yellow);
+  }
+  .witness-card:hover::before {
+    height: 8px;
+  }
+  .witness-card:hover .card-mini-avatar {
+    transform: translate3d(-3px, -3px, 12px) scale(1.06);
+  }
+
+  .evidence-row:hover {
+    transform: translate3d(5px, -1px, 12px);
+    background-color: var(--c-surface-3);
+    border-color: var(--c-currency-blue);
+    border-left-color: var(--c-brand-yellow);
+  }
+
+  .guide-char-chip:hover {
+    transform: translate3d(0, -2px, 10px);
+    border-color: var(--c-currency-blue);
+    background-color: var(--c-surface-3);
+  }
+
+  .slot-card:hover {
+    transform: translate3d(0, -2px, 10px);
+    border-color: var(--c-currency-blue);
+  }
 }

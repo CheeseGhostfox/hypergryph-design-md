@@ -161,7 +161,7 @@ html, body {
   padding: var(--s-sm);
 }
 
-/* Offset Backing Plate (#313131 shifted 6px right-down behind #1B1B1B) */
+/* Offset Backing Plate (#313131 shifted behind #1B1B1B with counter-parallax on tilted 3D plane) */
 .offset-plate {
   position: relative;
   z-index: 1;
@@ -169,28 +169,76 @@ html, body {
 .offset-plate::after {
   content: "";
   position: absolute;
-  top: 6px;
-  left: 6px;
-  right: -6px;
-  bottom: -6px;
+  top: 7px;
+  left: 7px;
+  right: -7px;
+  bottom: -7px;
   background-color: var(--c-panel);
   border: 1px solid var(--c-hairline);
+  border-right: 3px solid var(--c-primary);
+  border-bottom: 3px solid var(--c-surface-6);
   border-radius: var(--r-slice-md);
   z-index: -1;
   pointer-events: none;
+  transform: translate(
+    calc(var(--mx, 0) * -9px),
+    calc(var(--my, 0) * -9px)
+  );
+  transition: transform 0.08s linear, border-color 0.2s ease;
 }
 
-/* Subtle Camera-Space Plane Tilt (1.5deg Y-axis perspective on tactical deck) */
+/* Wing Backing Plates for Left Telemetry & Right Inspector Rail */
+.wing-plate-left,
+.wing-plate-right {
+  position: relative;
+  z-index: 1;
+}
+.wing-plate-left::after,
+.wing-plate-right::after {
+  content: "";
+  position: absolute;
+  top: 6px;
+  bottom: -6px;
+  background-color: var(--c-panel);
+  border: 1px solid var(--c-hairline);
+  border-bottom: 3px solid var(--c-surface-6);
+  border-radius: var(--r-slice-md);
+  z-index: -1;
+  pointer-events: none;
+  transition: transform 0.08s linear;
+}
+.wing-plate-left::after {
+  left: -6px;
+  right: 6px;
+  border-left: 3px solid var(--c-primary);
+  transform: translate(
+    calc(var(--mx, 0) * -7px),
+    calc(var(--my, 0) * -7px)
+  );
+}
+.wing-plate-right::after {
+  left: 6px;
+  right: -6px;
+  border-right: 3px solid var(--c-brand-yellow);
+  transform: translate(
+    calc(var(--mx, 0) * -8px),
+    calc(var(--my, 0) * -8px)
+  );
+}
+
+/* Multi-Plane Camera-Space Perspective Stage */
 .tilt-stage {
-  perspective: 1400px;
+  perspective: 1100px;
+  transform-style: preserve-3d;
 }
 .tilt-plane {
-  transform: rotateY(-1.2deg);
   transform-style: preserve-3d;
 }
 
 /* ---- Buttons (50px Primary/Confirm/Danger/Secondary · 30px Compact) ---- */
 .btn {
+  position: relative;
+   overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -205,10 +253,45 @@ html, body {
   cursor: pointer;
   text-decoration: none;
   white-space: nowrap;
-  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+  transform: translate3d(0, 0, 0);
+  transition:
+    background-color 0.16s ease,
+    border-color 0.16s ease,
+    color 0.16s ease,
+    transform 0.16s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.btn:active {
-  transform: translateY(1px);
+/* Tactical Diagonal Sheen Sweep */
+.btn::after,
+.btn-compact::after,
+.state-chip::after,
+.act-pill::after,
+.nav-tab::after,
+.witness-card::after,
+.evidence-row::after,
+.guide-char-chip::after {
+  content: "";
+  position: absolute;
+  top: -20%;
+  bottom: -20%;
+  left: -130%;
+  width: 65%;
+  background: linear-gradient(
+    115deg,
+    transparent 15%,
+    rgba(254, 254, 254, 0.18) 48%,
+    rgba(34, 187, 254, 0.24) 52%,
+    transparent 85%
+  );
+  transform: skewX(-20deg);
+  pointer-events: none;
+  transition: left 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 2;
+}
+
+.btn:active,
+.btn.is-pressing {
+  transform: translate3d(0, 3px, -6px) scale(0.98) !important;
+  border-color: var(--c-brand-yellow) !important;
 }
 .btn[disabled] {
   background-color: var(--c-panel-deep) !important;
@@ -250,6 +333,8 @@ html, body {
 }
 
 .btn-compact {
+  position: relative;
+  overflow: hidden;
   height: var(--s-row); /* 30px */
   padding: 0 var(--s-xs);
   font-size: var(--fs-body-sm);
@@ -257,21 +342,36 @@ html, body {
   background-color: var(--c-panel);
   color: var(--c-ink);
   border: 1px solid var(--c-hairline);
+  border-bottom: 2px solid var(--c-surface-6);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: var(--s-xxs);
   white-space: nowrap;
   flex-shrink: 0;
+  transform: translate3d(0, 0, 0);
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.15s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .btn-compact.is-active {
   background-color: var(--c-primary);
   color: var(--c-on-primary);
   border-color: var(--c-currency-blue);
+  border-bottom-color: var(--c-deep-blue);
+}
+.btn-compact:active,
+.btn-compact.is-pressing {
+  transform: translate3d(0, 2px, -4px) scale(0.975) !important;
+  border-color: var(--c-brand-yellow) !important;
 }
 
 /* ---- Seven-Way Toggle State Family (Touch-First, No Hover Dependency) ---- */
 .state-chip {
+  position: relative;
+  overflow: hidden;
   height: var(--s-row); /* 30px */
   padding: 0 var(--s-xs);
   border-radius: var(--r-xs);
@@ -284,7 +384,18 @@ html, body {
   gap: var(--s-xs);
   cursor: pointer;
   border: 1px solid var(--c-surface-5);
-  transition: background-color 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+  border-bottom: 2px solid var(--c-surface-6);
+  transform: translate3d(0, 0, 0);
+  transition:
+    background-color 0.14s ease,
+    color 0.14s ease,
+    border-color 0.14s ease,
+    transform 0.15s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.state-chip:active,
+.state-chip.is-pressing {
+  transform: translate3d(0, 2px, -4px) scale(0.975) !important;
+  border-color: var(--c-brand-yellow) !important;
 }
 
 .state-chip[data-state="normal"] {
@@ -334,14 +445,24 @@ html, body {
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
-  transition: border-color 0.15s ease, background-color 0.15s ease;
+  transform: translate3d(0, 0, 0);
+  transition:
+    border-color 0.16s ease,
+    background-color 0.16s ease,
+    transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .witness-card.is-selected {
   border-color: var(--c-brand-yellow);
   background-color: var(--c-surface-2);
+  transform: translate3d(0, -2px, 10px);
 }
 .witness-card.is-hinted {
   border-color: var(--c-accent-green);
+}
+.witness-card:active,
+.witness-card.is-pressing {
+  transform: translate3d(0, 2px, -4px) scale(0.98) !important;
+  border-color: var(--c-brand-yellow) !important;
 }
 
 /* Rarity Bottom Glow Bar + Top Corner Accent */
@@ -353,6 +474,7 @@ html, body {
   bottom: 0;
   height: 5px;
   background-color: var(--rarity-color, var(--c-rarity-1));
+  transition: height 0.16s ease;
 }
 .witness-card[data-rarity="1"] { --rarity-color: var(--c-rarity-1); }
 .witness-card[data-rarity="2"] { --rarity-color: var(--c-rarity-2); }
@@ -473,6 +595,121 @@ html, body {
   font-size: var(--fs-caption);
   color: var(--c-ink-light-1);
 }
+
+/* ---- 3D View Entry Keyframe ---- */
+@keyframes jc09ViewEnter3D {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 10px, -28px) rotateX(4deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotateX(0deg);
+  }
+}
+
+/* ---- Hover Micro-Interactions (Isolated in @media (any-hover: hover)) ---- */
+@media (any-hover: hover) {
+  .btn:not([disabled]):hover::after,
+  .btn-compact:not([disabled]):hover::after,
+  .state-chip:not([data-state="locked"]):hover::after,
+  .act-pill:hover::after,
+  .nav-tab:hover::after,
+  .witness-card:hover::after,
+  .evidence-row:hover::after,
+  .guide-char-chip:hover::after {
+    left: 145%;
+  }
+
+  .btn:not([disabled]):hover {
+    transform: translate3d(0, -2px, 12px);
+    border-color: var(--c-brand-yellow);
+  }
+  .btn-primary:not([disabled]):hover {
+    background-color: var(--c-currency-blue);
+    color: var(--c-canvas);
+  }
+  .btn-confirm:not([disabled]):hover {
+    background-color: var(--c-brand-yellow-light);
+  }
+  .btn-danger:not([disabled]):hover {
+    background-color: var(--c-danger-red-deep);
+    border-color: var(--c-ink);
+  }
+  .btn-secondary:not([disabled]):hover {
+    background-color: var(--c-surface-4);
+    border-color: var(--c-currency-blue);
+  }
+
+  .btn-compact:not([disabled]):hover {
+    transform: translate3d(0, -2px, 10px);
+    border-color: var(--c-currency-blue);
+    background-color: var(--c-surface-4);
+  }
+  .btn-compact.is-active:hover {
+    background-color: var(--c-currency-blue);
+    color: var(--c-canvas);
+  }
+
+  .state-chip:not([data-state="locked"]):hover {
+    transform: translate3d(0, -2px, 10px);
+    border-color: var(--c-currency-blue);
+  }
+
+  .act-pill:hover {
+    transform: translate3d(0, -2px, 10px);
+    border-color: var(--c-brand-yellow);
+    color: var(--c-ink);
+  }
+
+  .nav-tab:hover {
+    transform: translate3d(5px, -1px, 14px);
+    background-color: var(--c-surface-3);
+    border-color: var(--c-currency-blue);
+    color: var(--c-ink);
+  }
+  .nav-tab:hover::before {
+    width: 8px;
+    background-color: var(--c-currency-blue);
+  }
+  .nav-tab.is-active:hover::before {
+    width: 8px;
+    background-color: var(--c-brand-yellow);
+  }
+
+  .witness-card:hover {
+    transform: translate3d(0, -4px, 16px);
+    border-color: var(--c-currency-blue);
+    background-color: var(--c-surface-3);
+  }
+  .witness-card.is-selected:hover {
+    border-color: var(--c-brand-yellow);
+  }
+  .witness-card:hover::before {
+    height: 8px;
+  }
+  .witness-card:hover .card-mini-avatar {
+    transform: translate3d(-3px, -3px, 12px) scale(1.06);
+  }
+
+  .evidence-row:hover {
+    transform: translate3d(5px, -1px, 12px);
+    background-color: var(--c-surface-3);
+    border-color: var(--c-currency-blue);
+    border-left-color: var(--c-brand-yellow);
+  }
+
+  .guide-char-chip:hover {
+    transform: translate3d(0, -2px, 10px);
+    border-color: var(--c-currency-blue);
+    background-color: var(--c-surface-3);
+  }
+
+  .slot-card:hover {
+    transform: translate3d(0, -2px, 10px);
+    border-color: var(--c-currency-blue);
+  }
+}
 </style>
 
 <!-- ==== 07-style-layout.css ==== -->
@@ -483,6 +720,8 @@ html, body {
    ========================================================================== */
 
 .jc09-viewport {
+  --mx: 0;
+  --my: 0;
   position: relative;
   width: 100vw;
   height: 100vh;
@@ -491,15 +730,18 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
+  perspective: 1100px;
+  perspective-origin: 50% 50%;
 }
 
-/* Background Architectural Void Layer (45%–55% Dark Canvas + #242424 Ghost Type) */
+/* Background Architectural Void Layer (45%–55% Dark Canvas + #242424 Ghost Type — Locked Static) */
 .void-backdrop {
   position: absolute;
   inset: 0;
   pointer-events: none;
   overflow: hidden;
   z-index: 0;
+  transform: none !important;
 }
 .void-ghost-word {
   position: absolute;
@@ -531,35 +773,48 @@ html, body {
   opacity: 0.16;
 }
 
-/* Main 1280x720 Console Shell */
+/* Main 1280x720 Console Shell (3D Multi-Plane Camera Stage) */
 .jc09-stage {
   position: relative;
   z-index: 2;
-  width: min(100vw, 1440px);
-  height: min(100vh, 860px);
-  padding: var(--s-sm) var(--s-gutter); /* 20px 50px per arknights.md 50px screen gutter */
+  width: min(94vw, 1320px);
+  height: min(92vh, 810px);
+  padding: 10px 16px;
   display: grid;
-  grid-template-rows: 50px 1fr 40px;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: 50px minmax(0, 1fr) 40px;
   gap: var(--s-xs);
-  overflow: hidden;
+  overflow: visible;
+  transform-style: preserve-3d;
+  transform:
+    translate3d(calc(var(--mx, 0) * -8px), calc(var(--my, 0) * -6px), -36px)
+    rotateX(calc(var(--my, 0) * -4.2deg))
+    rotateY(calc(var(--mx, 0) * 4.6deg));
+  will-change: transform;
 }
 
-/* ---- Top Tactical Status Bar (50px height) ---- */
+/* ---- Top Tactical Status Bar (50px height · Upper Angled Canopy) ---- */
 .top-hud {
   height: var(--bh-headline); /* 50px */
+  min-width: 0;
   background-color: var(--c-panel-deep);
-  border: 1px solid var(--c-surface-4);
+  border: 1px solid var(--c-surface-5);
+  border-bottom: 2px solid var(--c-primary);
   border-radius: var(--r-slice-sm);
   padding: 0 var(--s-sm);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--s-sm);
+  gap: var(--s-xs);
+  transform:
+    translate3d(calc(var(--mx, 0) * 6px), calc(var(--my, 0) * 4px), 14px)
+    rotateX(-2.8deg);
 }
 .top-hud-brand {
   display: flex;
   align-items: center;
   gap: var(--s-xs);
+  min-width: 0;
 }
 .top-hud-code {
   font-family: var(--f-display);
@@ -567,10 +822,12 @@ html, body {
   font-weight: 700;
   color: var(--c-ink);
   letter-spacing: -1px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 .top-hud-title {
   font-family: var(--f-cjk);
-  font-size: var(--fs-body);
+  font-size: var(--fs-body-sm);
   font-weight: 500;
   color: var(--c-ink-light-1);
   border-left: 2px solid var(--c-brand-yellow);
@@ -586,6 +843,8 @@ html, body {
   flex-shrink: 0;
 }
 .act-pill {
+  position: relative;
+  overflow: hidden;
   height: var(--s-row); /* 30px */
   padding: 0 7px;
   border-radius: var(--r-xs);
@@ -597,8 +856,20 @@ html, body {
   align-items: center;
   gap: var(--s-xxs);
   border: 1px solid var(--c-surface-4);
+  border-bottom: 2px solid var(--c-surface-6);
   cursor: pointer;
   white-space: nowrap;
+  transform: translate3d(0, 0, 0);
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.act-pill:active,
+.act-pill.is-pressing {
+  transform: translate3d(0, 2px, -4px) scale(0.975) !important;
+  border-color: var(--c-brand-yellow) !important;
 }
 .act-pill.is-unlocked {
   background-color: var(--c-panel);
@@ -609,6 +880,7 @@ html, body {
   background-color: var(--c-primary);
   color: var(--c-on-primary);
   border-color: var(--c-currency-blue);
+  border-bottom-color: var(--c-deep-blue);
   font-weight: 700;
 }
 .top-hud-controls {
@@ -622,17 +894,19 @@ html, body {
   white-space: nowrap;
 }
 
-/* ---- Core 3-Column Deck (Left Nav Rail · Center Active View · Right Contradiction Lock) ---- */
+/* ---- Core 3-Column Deck (Left Nav Wing · Center Focal Stage · Right Inspector Wing) ---- */
 .deck-grid {
   display: grid;
-  grid-template-columns: 190px 1fr 310px;
+  grid-template-columns: 184px minmax(0, 1fr) 296px;
   gap: var(--s-sm);
   height: 100%;
   min-height: 0;
-  overflow: hidden;
+  min-width: 0;
+  overflow: visible;
+  transform-style: preserve-3d;
 }
 
-/* Left View Switcher Rail */
+/* Left View Switcher Rail (Angled Inward +6.5deg toward Operator) */
 .nav-rail {
   display: flex;
   flex-direction: column;
@@ -640,6 +914,12 @@ html, body {
   gap: var(--s-xs);
   height: 100%;
   min-height: 0;
+  min-width: 0;
+  transform-origin: center center;
+  transform:
+    translate3d(calc(var(--mx, 0) * 10px), calc(var(--my, 0) * 6px), 18px)
+    rotateY(6.5deg)
+    rotateX(calc(var(--my, 0) * -1.2deg));
 }
 .nav-rail-tabs {
   display: flex;
@@ -648,11 +928,14 @@ html, body {
 }
 .nav-tab {
   position: relative;
+  overflow: hidden;
   height: 60px;
   padding: 0 var(--s-xs) 0 var(--s-sm);
   background-color: var(--c-panel-deep);
   color: var(--c-ink-disabled);
   border: 1px solid var(--c-surface-4);
+  border-right: 2px solid var(--c-surface-6);
+  border-bottom: 2px solid var(--c-surface-5);
   border-radius: var(--r-slice-sm);
   display: flex;
   flex-direction: column;
@@ -660,7 +943,12 @@ html, body {
   align-items: flex-start;
   cursor: pointer;
   text-align: left;
-  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  transform: translate3d(0, 0, 0);
+  transition:
+    background-color 0.16s ease,
+    color 0.16s ease,
+    border-color 0.16s ease,
+    transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .nav-tab::before {
   content: "";
@@ -670,14 +958,23 @@ html, body {
   bottom: 0;
   width: var(--s-xxs); /* 5px control step */
   background-color: var(--c-surface-5);
+  transition: width 0.16s ease, background-color 0.16s ease;
 }
 .nav-tab.is-active {
   background-color: var(--c-panel);
   color: var(--c-ink);
   border-color: var(--c-primary);
+  border-right-color: var(--c-currency-blue);
+  transform: translate3d(4px, 0, 10px);
 }
 .nav-tab.is-active::before {
   background-color: var(--c-brand-yellow);
+  width: 6px;
+}
+.nav-tab:active,
+.nav-tab.is-pressing {
+  transform: translate3d(1px, 2px, -4px) scale(0.98) !important;
+  border-color: var(--c-brand-yellow) !important;
 }
 .nav-tab-en {
   font-family: var(--f-display);
@@ -693,16 +990,20 @@ html, body {
   line-height: 1.2;
 }
 
-/* Center Tactical Workspace (One Active View at a Time, Zero Scroll) */
+/* Center Tactical Workspace (Elevated Focal Plane + Offset Backing Plate) */
 .workspace-pane {
   position: relative;
   height: 100%;
   min-height: 0;
   min-width: 0;
-  padding: 0 8px 8px 0; /* Reserve 8px for 6px bottom-right offset backing plate */
-  overflow: hidden;
+  padding: 0 8px 8px 0; /* Reserve 8px for bottom-right offset backing plate */
+  overflow: visible;
   display: flex;
   flex-direction: column;
+  transform:
+    translate3d(calc(var(--mx, 0) * 14px), calc(var(--my, 0) * 9px), 10px)
+    rotateY(calc(-1.8deg + var(--mx, 0) * 1.6deg))
+    rotateX(calc(0.6deg + var(--my, 0) * -1.2deg));
 }
 .view-panel {
   display: none;
@@ -713,9 +1014,11 @@ html, body {
   flex-direction: column;
   justify-content: space-between;
   gap: var(--s-xs);
+  border-top: 2px solid var(--c-primary);
 }
 .view-panel.is-active {
   display: flex;
+  animation: jc09ViewEnter3D 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 /* View Header Bar */
@@ -782,6 +1085,7 @@ html, body {
   border-radius: var(--r-slice-sm);
   clip-path: polygon(14% 0, 100% 0, 100% 100%, 0 100%);
   z-index: 1;
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .witness-card {
   padding: 6px 7px !important;
@@ -803,18 +1107,21 @@ html, body {
   gap: var(--s-sm);
   height: 100%;
   min-height: 0;
-  overflow: hidden;
+  overflow: visible;
+  transform-style: preserve-3d;
 }
 .witness-portrait-well {
   position: relative;
   background-color: var(--c-canvas);
   border: 1px solid var(--c-surface-5);
+  border-bottom: 3px solid var(--c-primary);
   border-radius: var(--r-slice-sm);
   padding: 6px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
+  transform: translate3d(calc(var(--mx, 0) * 5px), calc(var(--my, 0) * 4px), 10px);
 }
 .portrait-stage-frame {
   position: relative;
@@ -831,6 +1138,7 @@ html, body {
   width: 100%;
   height: 100%;
   display: block;
+  transform: scale(1.04) translate3d(calc(var(--mx, 0) * -5px), calc(var(--my, 0) * -4px), 0);
 }
 .witness-statement-well {
   display: flex;
@@ -840,18 +1148,21 @@ html, body {
   height: 100%;
   min-height: 0;
   min-width: 0;
+  transform-style: preserve-3d;
 }
 .statement-body-card {
   flex: 1;
   min-width: 0;
   background-color: var(--c-surface-3);
   border: 1px solid var(--c-surface-5);
+  border-bottom: 3px solid var(--c-surface-6);
   border-radius: var(--r-slice-sm);
   padding: var(--s-sm);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
+  transform: translate3d(calc(var(--mx, 0) * 3px), calc(var(--my, 0) * 2px), 6px);
 }
 
 /* ---- View 02: 17-Second Neural Synapse Slicer + 7-State Filter Matrix ---- */
@@ -861,31 +1172,37 @@ html, body {
   gap: var(--s-xs);
   height: 100%;
   min-height: 0;
+  transform-style: preserve-3d;
 }
 .filter-matrix-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: var(--s-xs);
+  transform-style: preserve-3d;
 }
 .filter-channel-card {
   background-color: var(--c-panel-deep);
   border: 1px solid var(--c-surface-5);
+  border-bottom: 3px solid var(--c-surface-6);
   border-radius: var(--r-slice-sm);
   padding: var(--s-xs);
   display: flex;
   flex-direction: column;
   gap: var(--s-xxs);
+  transform: translate3d(0, 0, 8px);
 }
 .timeline-oscilloscope {
   position: relative;
   background-color: var(--c-canvas);
   border: 1px solid var(--c-hairline);
+  border-bottom: 3px solid var(--c-primary);
   border-radius: var(--r-slice-sm);
   padding: var(--s-xs);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
+  transform: translate3d(calc(var(--mx, 0) * 5px), calc(var(--my, 0) * 3px), 10px);
 }
 .time-nodes-bar {
   display: grid;
@@ -905,30 +1222,46 @@ html, body {
   gap: var(--s-sm);
   height: 100%;
   min-height: 0;
+  transform-style: preserve-3d;
 }
 .evidence-list {
   display: flex;
   flex-direction: column;
   gap: var(--s-unit); /* 2px lattice step */
+  transform-style: preserve-3d;
 }
 .evidence-row {
+  position: relative;
+  overflow: hidden;
   height: 52px;
   padding: 0 var(--s-xs);
   background-color: var(--c-panel-deep);
   border: 1px solid var(--c-surface-4);
   border-left: 3px solid var(--c-surface-6);
+  border-bottom: 2px solid var(--c-surface-5);
   display: flex;
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
+  transform: translate3d(0, 0, 0);
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.16s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .evidence-row.is-selected {
   background-color: var(--c-panel);
   border-color: var(--c-primary);
-  border-left-color: var(--c-brand-yellow);
+  border-left: 5px solid var(--c-brand-yellow);
+  transform: translate3d(4px, 0, 10px);
 }
 .evidence-row.is-hinted {
   border-left-color: var(--c-accent-green);
+}
+.evidence-row:active,
+.evidence-row.is-pressing {
+  transform: translate3d(1px, 2px, -4px) scale(0.98) !important;
+  border-color: var(--c-brand-yellow) !important;
 }
 
 /* ---- View 04: Four-Act Case Reconstruction & Final Indictment ---- */
@@ -938,31 +1271,46 @@ html, body {
   gap: var(--s-sm);
   height: 100%;
   min-height: 0;
+  transform-style: preserve-3d;
 }
 .act-dossier-tabs {
   display: flex;
-  gap: var(--s-xxs);
+  gap: 4px;
+}
+.act-dossier-tabs .btn-compact {
+  padding: 0 6px;
+  font-size: var(--fs-caption);
 }
 
-/* ---- Right Column: Contradiction Lock Inspector ---- */
+/* ---- Right Column: Contradiction Lock Inspector (Angled Inward -6.8deg toward Operator) ---- */
 .inspector-rail {
   height: 100%;
   min-height: 0;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: var(--s-xs);
+  border-top: 2px solid var(--c-brand-yellow);
+  transform-origin: center center;
+  transform:
+    translate3d(calc(var(--mx, 0) * 11px), calc(var(--my, 0) * 7px), 20px)
+    rotateY(-6.8deg)
+    rotateX(calc(var(--my, 0) * -1.2deg));
 }
 .slot-card {
   background-color: var(--c-canvas);
   border: 1px solid var(--c-surface-5);
   border-left: 4px solid var(--c-primary);
+  border-bottom: 2px solid var(--c-surface-6);
   border-radius: var(--r-slice-sm);
   padding: var(--s-xs);
   min-height: 92px;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  transition: border-color 0.16s ease, transform 0.16s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .slot-card.slot-b {
   border-left-color: var(--c-brand-yellow);
@@ -972,16 +1320,21 @@ html, body {
   color: var(--c-ink-muted);
 }
 
-/* ---- Bottom Status & Telemetry Ticker (40px height) ---- */
+/* ---- Bottom Status & Telemetry Ticker (40px height · Lower Angled Sill) ---- */
 .bottom-bar {
   height: var(--bh-card-title); /* 40px */
+  min-width: 0;
   background-color: var(--c-panel-deep);
   border: 1px solid var(--c-surface-4);
+  border-top: 2px solid var(--c-surface-5);
   padding: 0 var(--s-sm);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--s-sm);
+  transform:
+    translate3d(calc(var(--mx, 0) * 8px), calc(var(--my, 0) * 5px), 18px)
+    rotateX(3.2deg);
 }
 
 /* ---- Gameplay Guide Modal Overlay (00 // TACTICAL BRIEFING) ---- */
@@ -994,6 +1347,7 @@ html, body {
   align-items: center;
   justify-content: center;
   padding: var(--s-sm);
+  perspective: 1100px;
 }
 .guide-modal-backdrop.is-open {
   display: flex;
@@ -1003,12 +1357,17 @@ html, body {
   max-height: 92vh;
   background-color: var(--c-panel);
   border: 1px solid var(--c-brand-yellow);
+  border-bottom: 3px solid var(--c-confirm-gold);
   border-radius: var(--r-slice-md);
   padding: var(--s-sm);
   display: flex;
   flex-direction: column;
   gap: var(--s-xs);
   overflow: hidden;
+  transform:
+    rotateX(calc(var(--my, 0) * -2.2deg))
+    rotateY(calc(var(--mx, 0) * 2.5deg));
+  animation: jc09ViewEnter3D 0.24s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 .guide-steps-grid {
   display: grid;
@@ -1032,6 +1391,8 @@ html, body {
   gap: 6px;
 }
 .guide-char-chip {
+  position: relative;
+  overflow: hidden;
   background-color: var(--c-panel-deep);
   border: 1px solid var(--c-surface-5);
   border-radius: var(--r-slice-sm);
@@ -1041,9 +1402,15 @@ html, body {
   gap: 6px;
   cursor: pointer;
   text-align: left;
-  transition: border-color 0.15s ease, background-color 0.15s ease;
+  transform: translate3d(0, 0, 0);
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease,
+    transform 0.16s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.guide-char-chip:active {
+.guide-char-chip:active,
+.guide-char-chip.is-pressing {
+  transform: translate3d(0, 2px, -4px) scale(0.98) !important;
   border-color: var(--c-brand-yellow);
   background-color: var(--c-surface-3);
 }
@@ -1063,6 +1430,24 @@ html, body {
   gap: 2px;
 }
 
+/* ---- Reduced Motion Accessibility ---- */
+@media (prefers-reduced-motion: reduce) {
+  .jc09-stage,
+  .top-hud,
+  .nav-rail,
+  .workspace-pane,
+  .inspector-rail,
+  .bottom-bar,
+  .witness-portrait-well,
+  .statement-body-card,
+  .timeline-oscilloscope,
+  .guide-modal-dialog,
+  #w-portrait-svg {
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
 /* ---- Portrait Orientation & Compact Viewport Adaptation (Zero Root Scroll) ---- */
 @media (orientation: portrait), (max-width: 1024px) {
   .jc09-stage {
@@ -1071,11 +1456,14 @@ html, body {
     padding: 6px;
     grid-template-rows: 36px 32px 1fr 94px;
     gap: 4px;
+    overflow: hidden;
+    transform: none !important;
   }
   .top-hud {
     height: 36px;
     padding: 0 6px;
     gap: 4px;
+    transform: none !important;
   }
   .top-hud-code {
     font-size: var(--fs-body);
@@ -1097,15 +1485,31 @@ html, body {
   .deck-grid {
     display: contents;
   }
-  .tilt-plane {
-    transform: none;
+  .tilt-plane,
+  .workspace-pane,
+  .inspector-rail,
+  .bottom-bar,
+  .witness-portrait-well,
+  .statement-body-card,
+  .timeline-oscilloscope,
+  .filter-channel-card,
+  .slot-card,
+  #w-portrait-svg {
+    transform: none !important;
   }
-  .offset-plate::after {
+  .workspace-pane {
+    overflow: hidden;
+    padding: 0;
+  }
+  .offset-plate::after,
+  .wing-plate-left::after,
+  .wing-plate-right::after {
     display: none;
   }
   .nav-rail {
     height: 32px;
     flex-direction: row;
+    transform: none !important;
   }
   .nav-rail-tabs {
     flex-direction: row;
@@ -1364,8 +1768,8 @@ html, body {
           <button type="button" class="state-chip" data-state="off" id="btn-hint-toggle" title="高亮当前幕次的关键矛盾证词与物证">
             <span>推演辅助</span><strong id="hint-state-label">OFF</strong>
           </button>
-          <button type="button" class="state-chip" data-state="off" id="btn-audio-toggle" title="切换审讯室环境与交互声效">
-            <span>声效合成</span><strong id="audio-state-label">OFF</strong>
+          <button type="button" class="state-chip" data-state="on" id="btn-audio-toggle" title="切换审讯室环境与交互声效">
+            <span>声效合成</span><strong id="audio-state-label">ON</strong>
           </button>
           <button type="button" class="btn-compact" id="btn-reset-save" title="清除本地审讯进度并重新开始">
             <span>重置卷宗</span>
@@ -1397,7 +1801,7 @@ html, body {
           </div>
 
           <!-- Zero-Slack 2px Telemetry Cluster -->
-          <div class="nav-rail-telemetry ak-panel-deep">
+          <div class="nav-rail-telemetry ak-panel-deep wing-plate-left">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
               <span style="font-family:var(--f-display);font-size:var(--fs-caption);color:var(--c-brand-yellow);">BCI TELEMETRY</span>
               <span class="rarity-pill" style="background:var(--c-primary);color:var(--c-on-primary);">LIVE</span>
@@ -1607,7 +2011,7 @@ html, body {
           <div class="view-panel ak-panel offset-plate" id="view-synapse" role="tabpanel" aria-labelledby="tab-synapse">
             <div class="view-header">
               <div class="view-header-title">
-                <span class="view-header-en">02 // 17-SEC NEURAL SYNAPSE SLICER</span>
+                <span class="view-header-en">02 // SYNAPSE SLICER</span>
                 <span class="view-header-zh">T-17.0s 脑机信号去噪与残响分离</span>
               </div>
               <div style="display:flex;align-items:center;gap:var(--s-xs);">
@@ -1930,7 +2334,7 @@ html, body {
         </section>
 
         <!-- Right Column: Persistent Dual-Slot Contradiction Lock Inspector -->
-        <aside class="inspector-rail ak-panel-deep" aria-label="双槽矛盾指证比对器">
+        <aside class="inspector-rail ak-panel-deep wing-plate-right" aria-label="双槽矛盾指证比对器">
           <div class="inspector-header">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
               <span style="font-family:var(--f-display);font-size:var(--fs-row-title);font-weight:700;color:var(--c-ink);">CONTRADICTION LOCK</span>
@@ -2625,7 +3029,7 @@ window.JC09_ENDINGS = {
   'use strict';
 
   const SEVEN_STATES = ['normal', 'on', 'off', 'select', 'selected', 'unselect', 'unselected'];
-  const STORAGE_KEY = 'jc09:state:v1';
+  const STORAGE_KEY = 'jc09:state:v2';
 
   const defaultState = {
     activeView: 'witness',
@@ -2644,13 +3048,14 @@ window.JC09_ENDINGS = {
     slotB: null,
     verdict: null,               // 'broadcast' | 'coverup' | 'silence' | null
     hintOn: false,
-    audioOn: false
+    audioOn: true
   };
 
   let state = loadState();
   let audioCtx = null;
   let humOsc = null;
   let humGain = null;
+  let lastHoverSfxAt = 0;
 
   function loadState() {
     try {
@@ -2695,43 +3100,93 @@ window.JC09_ENDINGS = {
         humGain = audioCtx.createGain();
         humOsc.type = 'sine';
         humOsc.frequency.value = 55; // 55Hz judicial console transformer hum
-        humGain.gain.value = 0.018;
+        humGain.gain.value = 0.014;
         humOsc.connect(humGain);
         humGain.connect(audioCtx.destination);
         humOsc.start();
       } catch (_) {}
     } else if (humGain) {
-      try { humGain.gain.setTargetAtTime(0.018, audioCtx.currentTime, 0.1); } catch (_) {}
+      try { humGain.gain.setTargetAtTime(0.014, audioCtx.currentTime, 0.1); } catch (_) {}
     }
   }
 
-  function playTone(freq, durationMs, type, gainVal) {
+  function playTone(freq, durationMs, type, gainVal, slideToFreq) {
     if (!state.audioOn) return;
     ensureAudio();
     if (!audioCtx) return;
     try {
+      const now = audioCtx.currentTime;
+      const dur = durationMs / 1000;
       const osc = audioCtx.createOscillator();
       const g = audioCtx.createGain();
       osc.type = type || 'triangle';
-      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-      g.gain.setValueAtTime(gainVal || 0.04, audioCtx.currentTime);
-      g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + durationMs / 1000);
+      osc.frequency.setValueAtTime(freq, now);
+      if (slideToFreq) {
+        osc.frequency.exponentialRampToValueAtTime(Math.max(20, slideToFreq), now + dur);
+      }
+      g.gain.setValueAtTime(gainVal || 0.04, now);
+      g.gain.exponentialRampToValueAtTime(0.0001, now + dur);
       osc.connect(g);
       g.connect(audioCtx.destination);
-      osc.start();
-      osc.stop(audioCtx.currentTime + durationMs / 1000 + 0.02);
+      osc.start(now);
+      osc.stop(now + dur + 0.02);
     } catch (_) {}
   }
 
-  function sfxClick() { playTone(680, 45, 'square', 0.025); }
-  function sfxSwitch() { playTone(440, 70, 'triangle', 0.04); }
-  function sfxBreakthrough() {
-    playTone(523.25, 140, 'triangle', 0.05);
-    setTimeout(function () { playTone(659.25, 160, 'triangle', 0.05); }, 90);
-    setTimeout(function () { playTone(783.99, 260, 'sine', 0.06); }, 180);
+  function sfxHover() {
+    if (!state.audioOn) return;
+    const nowMs = performance.now();
+    if (nowMs - lastHoverSfxAt < 45) return;
+    lastHoverSfxAt = nowMs;
+    playTone(2300, 14, 'sine', 0.012, 2950);
   }
+
+  function sfxClick() {
+    playTone(740, 42, 'square', 0.024, 460);
+  }
+
+  function sfxSwitch() {
+    playTone(460, 65, 'triangle', 0.038, 690);
+  }
+
+  function sfxTabSwitch() {
+    playTone(340, 48, 'triangle', 0.034, 520);
+    setTimeout(function () { playTone(680, 55, 'square', 0.022, 820); }, 32);
+  }
+
+  function sfxCardSelect() {
+    playTone(540, 52, 'triangle', 0.035, 810);
+    setTimeout(function () { playTone(1080, 38, 'sine', 0.02); }, 24);
+  }
+
+  function sfxFilterRelay(stateName) {
+    const idx = Math.max(0, SEVEN_STATES.indexOf(stateName));
+    const baseFreq = 380 + idx * 88;
+    playTone(baseFreq, 55, 'square', 0.026, baseFreq * 1.25);
+    setTimeout(function () { playTone(baseFreq * 1.5, 35, 'triangle', 0.02); }, 22);
+  }
+
+  function sfxSlotLoad() {
+    playTone(195, 70, 'triangle', 0.045, 130);
+    setTimeout(function () { playTone(840, 58, 'square', 0.028, 1120); }, 35);
+  }
+
+  function sfxBreakthrough() {
+    playTone(523.25, 130, 'triangle', 0.05);
+    setTimeout(function () { playTone(659.25, 150, 'triangle', 0.05); }, 80);
+    setTimeout(function () { playTone(783.99, 180, 'sine', 0.055); }, 160);
+    setTimeout(function () { playTone(1046.5, 280, 'sine', 0.06); }, 240);
+  }
+
+  function sfxVerdictStamp() {
+    playTone(92, 240, 'sawtooth', 0.065, 48);
+    setTimeout(function () { playTone(440, 260, 'triangle', 0.05); }, 45);
+    setTimeout(function () { playTone(659.25, 320, 'sine', 0.055); }, 95);
+  }
+
   function sfxError() {
-    playTone(160, 180, 'sawtooth', 0.045);
+    playTone(162, 185, 'sawtooth', 0.045, 128);
+    setTimeout(function () { playTone(146, 170, 'sawtooth', 0.04, 118); }, 35);
   }
 
   function logTicker(msg) {
@@ -2755,7 +3210,7 @@ window.JC09_ENDINGS = {
       panel.classList.toggle('is-active', panel.id === 'view-' + viewName);
     });
 
-    sfxClick();
+    sfxTabSwitch();
     logTicker('已切换至主视图 // ' + viewName.toUpperCase());
   }
 
@@ -3040,7 +3495,7 @@ window.JC09_ENDINGS = {
         epilogueEl.innerHTML = '<strong style="color:var(--c-brand-yellow);">' + endObj.title + '</strong><br>' + endObj.text;
       }
       if (clearBtn) clearBtn.style.display = 'inline-flex';
-      if (sigEl) sigEl.textContent = endObj.code;
+      if (sigEl) sigEl.textContent = endObj.code.split(' // ')[0];
     } else {
       if (statusBadge) {
         statusBadge.textContent = state.completedActs.length >= 4
@@ -3161,7 +3616,7 @@ window.JC09_ENDINGS = {
     else state.slotB = item;
     saveState();
     renderInspectorAndHud();
-    sfxClick();
+    sfxSlotLoad();
     const fb = document.getElementById('inspector-feedback');
     if (fb) {
       fb.style.borderLeftColor = 'var(--c-primary)';
@@ -3234,8 +3689,72 @@ window.JC09_ENDINGS = {
     renderVerdictView();
   }
 
+  // ---- 60fps Damped Mouse 3D Parallax Loop ----
+  function initParallax3D() {
+    const root = document.getElementById('app-root');
+    if (!root) return;
+
+    let targetX = 0;
+    let targetY = 0;
+    let curX = 0;
+    let curY = 0;
+    let rafId = null;
+
+    function tick() {
+      const dx = targetX - curX;
+      const dy = targetY - curY;
+      curX += dx * 0.12;
+      curY += dy * 0.12;
+
+      root.style.setProperty('--mx', curX.toFixed(4));
+      root.style.setProperty('--my', curY.toFixed(4));
+
+      if (Math.abs(dx) > 0.0008 || Math.abs(dy) > 0.0008) {
+        rafId = requestAnimationFrame(tick);
+      } else {
+        rafId = null;
+      }
+    }
+
+    function scheduleTick() {
+      if (!rafId) rafId = requestAnimationFrame(tick);
+    }
+
+    window.addEventListener('pointermove', function (ev) {
+      if (window.innerWidth <= 1024 || window.innerHeight > window.innerWidth) return;
+      targetX = Math.max(-1, Math.min(1, (ev.clientX / window.innerWidth - 0.5) * 2));
+      targetY = Math.max(-1, Math.min(1, (ev.clientY / window.innerHeight - 0.5) * 2));
+      scheduleTick();
+    }, { passive: true });
+
+    window.addEventListener('pointerleave', function () {
+      targetX = 0;
+      targetY = 0;
+      scheduleTick();
+    }, { passive: true });
+  }
+
   // ---- Event Listeners Binding ----
   function bindEvents() {
+    // 0. Global Audio Auto-Unlock + Hover Micro-Ticks + Click Press Animation
+    const interactiveSelector = '.btn, .btn-compact, .state-chip, .act-pill, .nav-tab, .witness-card, .evidence-row, .guide-char-chip';
+
+    document.querySelectorAll(interactiveSelector).forEach(function (el) {
+      el.addEventListener('pointerenter', function () {
+        if (el.hasAttribute('disabled') || el.getAttribute('data-state') === 'locked') return;
+        sfxHover();
+      });
+      el.addEventListener('pointerdown', function () {
+        if (el.hasAttribute('disabled') || el.getAttribute('data-state') === 'locked') return;
+        if (state.audioOn) {
+          ensureAudio();
+          setAmbientHum(true);
+        }
+        el.classList.add('is-pressing');
+        setTimeout(function () { el.classList.remove('is-pressing'); }, 140);
+      });
+    });
+
     // 1. View switcher tabs
     document.querySelectorAll('.nav-tab').forEach(function (btn) {
       btn.addEventListener('click', function () {
@@ -3251,7 +3770,7 @@ window.JC09_ENDINGS = {
         state.dossierActTab = actN;
         saveState();
         renderAll();
-        sfxClick();
+        sfxTabSwitch();
       });
     });
 
@@ -3286,7 +3805,7 @@ window.JC09_ENDINGS = {
         state = JSON.parse(JSON.stringify(defaultState));
         const gm = document.getElementById('guide-modal-overlay');
         if (gm) gm.classList.remove('is-open');
-        setAmbientHum(false);
+        setAmbientHum(state.audioOn);
         const fb = document.getElementById('inspector-feedback');
         if (fb) {
           fb.style.borderLeftColor = 'var(--c-hairline)';
@@ -3309,7 +3828,7 @@ window.JC09_ENDINGS = {
         }
         saveState();
         renderAll();
-        sfxClick();
+        sfxCardSelect();
       });
     });
 
@@ -3385,7 +3904,7 @@ window.JC09_ENDINGS = {
         state.selectedWitness = wid;
         saveState();
         renderAll();
-        sfxClick();
+        sfxCardSelect();
       });
     });
 
@@ -3395,10 +3914,11 @@ window.JC09_ENDINGS = {
         chip.addEventListener('click', function () {
           const cur = state.filterStates[i] || 'normal';
           const nextIdx = (SEVEN_STATES.indexOf(cur) + 1) % SEVEN_STATES.length;
-          state.filterStates[i] = SEVEN_STATES[nextIdx];
+          const nextState = SEVEN_STATES[nextIdx];
+          state.filterStates[i] = nextState;
           saveState();
           renderSynapseView();
-          sfxSwitch();
+          sfxFilterRelay(nextState);
         });
       }
     }
@@ -3437,7 +3957,7 @@ window.JC09_ENDINGS = {
         state.activeTimeNode = Number(btn.getAttribute('data-time-node'));
         saveState();
         renderSynapseView();
-        sfxClick();
+        sfxCardSelect();
       });
     });
 
@@ -3447,7 +3967,7 @@ window.JC09_ENDINGS = {
         state.selectedExhibit = row.getAttribute('data-evidence');
         saveState();
         renderBlackboxView();
-        sfxClick();
+        sfxCardSelect();
       });
     });
 
@@ -3481,7 +4001,7 @@ window.JC09_ENDINGS = {
         state.slotB = null;
         saveState();
         renderInspectorAndHud();
-        sfxClick();
+        sfxSlotLoad();
       });
     }
 
@@ -3496,7 +4016,7 @@ window.JC09_ENDINGS = {
         state.dossierActTab = Number(btn.getAttribute('data-dossier-act'));
         saveState();
         renderVerdictView();
-        sfxClick();
+        sfxTabSwitch();
       });
     });
 
@@ -3506,7 +4026,7 @@ window.JC09_ENDINGS = {
         state.verdict = endingKey;
         saveState();
         renderAll();
-        sfxBreakthrough();
+        sfxVerdictStamp();
         logTicker('已签署终局公诉裁决 // ' + endingKey.toUpperCase());
       });
     });
@@ -3577,6 +4097,7 @@ window.JC09_ENDINGS = {
         closeGuideModal();
         switchView('witness');
         renderAll();
+        sfxCardSelect();
         logTicker('已从指引速览切换至幸存者 // ' + wid);
       });
     });
@@ -3602,12 +4123,13 @@ window.JC09_ENDINGS = {
         state.synapseTarget = nextId;
         saveState();
         renderAll();
-        sfxClick();
+        sfxCardSelect();
       }
     });
   }
 
   // ---- Boot ----
+  initParallax3D();
   bindEvents();
   renderAll();
   switchView(state.activeView || 'witness');

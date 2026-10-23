@@ -1,6 +1,6 @@
 {
   "ok": true,
-  "timestamp": "2026-10-23T07:46:26.332Z",
+  "timestamp": "2026-10-23T08:22:24.636Z",
   "consoleErrors": [],
   "pageExceptions": [],
   "failedRequests": [],
@@ -42,7 +42,7 @@
     },
     {
       "ok": true,
-      "name": "Web Audio 声效合成开关正确切换至 ON 状态",
+      "name": "Web Audio 声效合成默认开启且可正常切换 ON/OFF 状态",
       "detail": ""
     },
     {

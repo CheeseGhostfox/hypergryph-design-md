@@ -4,6 +4,8 @@
    ========================================================================== */
 
 .jc09-viewport {
+  --mx: 0;
+  --my: 0;
   position: relative;
   width: 100vw;
   height: 100vh;
@@ -12,15 +14,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  perspective: 1100px;
+  perspective-origin: 50% 50%;
 }
 
-/* Background Architectural Void Layer (45%–55% Dark Canvas + #242424 Ghost Type) */
+/* Background Architectural Void Layer (45%–55% Dark Canvas + #242424 Ghost Type — Locked Static) */
 .void-backdrop {
   position: absolute;
   inset: 0;
   pointer-events: none;
   overflow: hidden;
   z-index: 0;
+  transform: none !important;
 }
 .void-ghost-word {
   position: absolute;
@@ -52,35 +57,48 @@
   opacity: 0.16;
 }
 
-/* Main 1280x720 Console Shell */
+/* Main 1280x720 Console Shell (3D Multi-Plane Camera Stage) */
 .jc09-stage {
   position: relative;
   z-index: 2;
-  width: min(100vw, 1440px);
-  height: min(100vh, 860px);
-  padding: var(--s-sm) var(--s-gutter); /* 20px 50px per arknights.md 50px screen gutter */
+  width: min(94vw, 1320px);
+  height: min(92vh, 810px);
+  padding: 10px 16px;
   display: grid;
-  grid-template-rows: 50px 1fr 40px;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: 50px minmax(0, 1fr) 40px;
   gap: var(--s-xs);
-  overflow: hidden;
+  overflow: visible;
+  transform-style: preserve-3d;
+  transform:
+    translate3d(calc(var(--mx, 0) * -8px), calc(var(--my, 0) * -6px), -36px)
+    rotateX(calc(var(--my, 0) * -4.2deg))
+    rotateY(calc(var(--mx, 0) * 4.6deg));
+  will-change: transform;
 }
 
-/* ---- Top Tactical Status Bar (50px height) ---- */
+/* ---- Top Tactical Status Bar (50px height · Upper Angled Canopy) ---- */
 .top-hud {
   height: var(--bh-headline); /* 50px */
+  min-width: 0;
   background-color: var(--c-panel-deep);
-  border: 1px solid var(--c-surface-4);
+  border: 1px solid var(--c-surface-5);
+  border-bottom: 2px solid var(--c-primary);
   border-radius: var(--r-slice-sm);
   padding: 0 var(--s-sm);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--s-sm);
+  gap: var(--s-xs);
+  transform:
+    translate3d(calc(var(--mx, 0) * 6px), calc(var(--my, 0) * 4px), 14px)
+    rotateX(-2.8deg);
 }
 .top-hud-brand {
   display: flex;
   align-items: center;
   gap: var(--s-xs);
+  min-width: 0;
 }
 .top-hud-code {
   font-family: var(--f-display);
@@ -88,10 +106,12 @@
   font-weight: 700;
   color: var(--c-ink);
   letter-spacing: -1px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 .top-hud-title {
   font-family: var(--f-cjk);
-  font-size: var(--fs-body);
+  font-size: var(--fs-body-sm);
   font-weight: 500;
   color: var(--c-ink-light-1);
   border-left: 2px solid var(--c-brand-yellow);
@@ -107,6 +127,8 @@
   flex-shrink: 0;
 }
 .act-pill {
+  position: relative;
+  overflow: hidden;
   height: var(--s-row); /* 30px */
   padding: 0 7px;
   border-radius: var(--r-xs);
@@ -118,8 +140,20 @@
   align-items: center;
   gap: var(--s-xxs);
   border: 1px solid var(--c-surface-4);
+  border-bottom: 2px solid var(--c-surface-6);
   cursor: pointer;
   white-space: nowrap;
+  transform: translate3d(0, 0, 0);
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.act-pill:active,
+.act-pill.is-pressing {
+  transform: translate3d(0, 2px, -4px) scale(0.975) !important;
+  border-color: var(--c-brand-yellow) !important;
 }
 .act-pill.is-unlocked {
   background-color: var(--c-panel);
@@ -130,6 +164,7 @@
   background-color: var(--c-primary);
   color: var(--c-on-primary);
   border-color: var(--c-currency-blue);
+  border-bottom-color: var(--c-deep-blue);
   font-weight: 700;
 }
 .top-hud-controls {
@@ -143,17 +178,19 @@
   white-space: nowrap;
 }
 
-/* ---- Core 3-Column Deck (Left Nav Rail · Center Active View · Right Contradiction Lock) ---- */
+/* ---- Core 3-Column Deck (Left Nav Wing · Center Focal Stage · Right Inspector Wing) ---- */
 .deck-grid {
   display: grid;
-  grid-template-columns: 190px 1fr 310px;
+  grid-template-columns: 184px minmax(0, 1fr) 296px;
   gap: var(--s-sm);
   height: 100%;
   min-height: 0;
-  overflow: hidden;
+  min-width: 0;
+  overflow: visible;
+  transform-style: preserve-3d;
 }
 
-/* Left View Switcher Rail */
+/* Left View Switcher Rail (Angled Inward +6.5deg toward Operator) */
 .nav-rail {
   display: flex;
   flex-direction: column;
@@ -161,6 +198,12 @@
   gap: var(--s-xs);
   height: 100%;
   min-height: 0;
+  min-width: 0;
+  transform-origin: center center;
+  transform:
+    translate3d(calc(var(--mx, 0) * 10px), calc(var(--my, 0) * 6px), 18px)
+    rotateY(6.5deg)
+    rotateX(calc(var(--my, 0) * -1.2deg));
 }
 .nav-rail-tabs {
   display: flex;
@@ -169,11 +212,14 @@
 }
 .nav-tab {
   position: relative;
+  overflow: hidden;
   height: 60px;
   padding: 0 var(--s-xs) 0 var(--s-sm);
   background-color: var(--c-panel-deep);
   color: var(--c-ink-disabled);
   border: 1px solid var(--c-surface-4);
+  border-right: 2px solid var(--c-surface-6);
+  border-bottom: 2px solid var(--c-surface-5);
   border-radius: var(--r-slice-sm);
   display: flex;
   flex-direction: column;
@@ -181,7 +227,12 @@
   align-items: flex-start;
   cursor: pointer;
   text-align: left;
-  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  transform: translate3d(0, 0, 0);
+  transition:
+    background-color 0.16s ease,
+    color 0.16s ease,
+    border-color 0.16s ease,
+    transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .nav-tab::before {
   content: "";
@@ -191,14 +242,23 @@
   bottom: 0;
   width: var(--s-xxs); /* 5px control step */
   background-color: var(--c-surface-5);
+  transition: width 0.16s ease, background-color 0.16s ease;
 }
 .nav-tab.is-active {
   background-color: var(--c-panel);
   color: var(--c-ink);
   border-color: var(--c-primary);
+  border-right-color: var(--c-currency-blue);
+  transform: translate3d(4px, 0, 10px);
 }
 .nav-tab.is-active::before {
   background-color: var(--c-brand-yellow);
+  width: 6px;
+}
+.nav-tab:active,
+.nav-tab.is-pressing {
+  transform: translate3d(1px, 2px, -4px) scale(0.98) !important;
+  border-color: var(--c-brand-yellow) !important;
 }
 .nav-tab-en {
   font-family: var(--f-display);
@@ -214,16 +274,20 @@
   line-height: 1.2;
 }
 
-/* Center Tactical Workspace (One Active View at a Time, Zero Scroll) */
+/* Center Tactical Workspace (Elevated Focal Plane + Offset Backing Plate) */
 .workspace-pane {
   position: relative;
   height: 100%;
   min-height: 0;
   min-width: 0;
-  padding: 0 8px 8px 0; /* Reserve 8px for 6px bottom-right offset backing plate */
-  overflow: hidden;
+  padding: 0 8px 8px 0; /* Reserve 8px for bottom-right offset backing plate */
+  overflow: visible;
   display: flex;
   flex-direction: column;
+  transform:
+    translate3d(calc(var(--mx, 0) * 14px), calc(var(--my, 0) * 9px), 10px)
+    rotateY(calc(-1.8deg + var(--mx, 0) * 1.6deg))
+    rotateX(calc(0.6deg + var(--my, 0) * -1.2deg));
 }
 .view-panel {
   display: none;
@@ -234,9 +298,11 @@
   flex-direction: column;
   justify-content: space-between;
   gap: var(--s-xs);
+  border-top: 2px solid var(--c-primary);
 }
 .view-panel.is-active {
   display: flex;
+  animation: jc09ViewEnter3D 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 /* View Header Bar */
@@ -303,6 +369,7 @@
   border-radius: var(--r-slice-sm);
   clip-path: polygon(14% 0, 100% 0, 100% 100%, 0 100%);
   z-index: 1;
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .witness-card {
   padding: 6px 7px !important;
@@ -324,18 +391,21 @@
   gap: var(--s-sm);
   height: 100%;
   min-height: 0;
-  overflow: hidden;
+  overflow: visible;
+  transform-style: preserve-3d;
 }
 .witness-portrait-well {
   position: relative;
   background-color: var(--c-canvas);
   border: 1px solid var(--c-surface-5);
+  border-bottom: 3px solid var(--c-primary);
   border-radius: var(--r-slice-sm);
   padding: 6px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
+  transform: translate3d(calc(var(--mx, 0) * 5px), calc(var(--my, 0) * 4px), 10px);
 }
 .portrait-stage-frame {
   position: relative;
@@ -352,6 +422,7 @@
   width: 100%;
   height: 100%;
   display: block;
+  transform: scale(1.04) translate3d(calc(var(--mx, 0) * -5px), calc(var(--my, 0) * -4px), 0);
 }
 .witness-statement-well {
   display: flex;
@@ -361,18 +432,21 @@
   height: 100%;
   min-height: 0;
   min-width: 0;
+  transform-style: preserve-3d;
 }
 .statement-body-card {
   flex: 1;
   min-width: 0;
   background-color: var(--c-surface-3);
   border: 1px solid var(--c-surface-5);
+  border-bottom: 3px solid var(--c-surface-6);
   border-radius: var(--r-slice-sm);
   padding: var(--s-sm);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
+  transform: translate3d(calc(var(--mx, 0) * 3px), calc(var(--my, 0) * 2px), 6px);
 }
 
 /* ---- View 02: 17-Second Neural Synapse Slicer + 7-State Filter Matrix ---- */
@@ -382,31 +456,37 @@
   gap: var(--s-xs);
   height: 100%;
   min-height: 0;
+  transform-style: preserve-3d;
 }
 .filter-matrix-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: var(--s-xs);
+  transform-style: preserve-3d;
 }
 .filter-channel-card {
   background-color: var(--c-panel-deep);
   border: 1px solid var(--c-surface-5);
+  border-bottom: 3px solid var(--c-surface-6);
   border-radius: var(--r-slice-sm);
   padding: var(--s-xs);
   display: flex;
   flex-direction: column;
   gap: var(--s-xxs);
+  transform: translate3d(0, 0, 8px);
 }
 .timeline-oscilloscope {
   position: relative;
   background-color: var(--c-canvas);
   border: 1px solid var(--c-hairline);
+  border-bottom: 3px solid var(--c-primary);
   border-radius: var(--r-slice-sm);
   padding: var(--s-xs);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
+  transform: translate3d(calc(var(--mx, 0) * 5px), calc(var(--my, 0) * 3px), 10px);
 }
 .time-nodes-bar {
   display: grid;
@@ -426,30 +506,46 @@
   gap: var(--s-sm);
   height: 100%;
   min-height: 0;
+  transform-style: preserve-3d;
 }
 .evidence-list {
   display: flex;
   flex-direction: column;
   gap: var(--s-unit); /* 2px lattice step */
+  transform-style: preserve-3d;
 }
 .evidence-row {
+  position: relative;
+  overflow: hidden;
   height: 52px;
   padding: 0 var(--s-xs);
   background-color: var(--c-panel-deep);
   border: 1px solid var(--c-surface-4);
   border-left: 3px solid var(--c-surface-6);
+  border-bottom: 2px solid var(--c-surface-5);
   display: flex;
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
+  transform: translate3d(0, 0, 0);
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.16s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .evidence-row.is-selected {
   background-color: var(--c-panel);
   border-color: var(--c-primary);
-  border-left-color: var(--c-brand-yellow);
+  border-left: 5px solid var(--c-brand-yellow);
+  transform: translate3d(4px, 0, 10px);
 }
 .evidence-row.is-hinted {
   border-left-color: var(--c-accent-green);
+}
+.evidence-row:active,
+.evidence-row.is-pressing {
+  transform: translate3d(1px, 2px, -4px) scale(0.98) !important;
+  border-color: var(--c-brand-yellow) !important;
 }
 
 /* ---- View 04: Four-Act Case Reconstruction & Final Indictment ---- */
@@ -459,31 +555,46 @@
   gap: var(--s-sm);
   height: 100%;
   min-height: 0;
+  transform-style: preserve-3d;
 }
 .act-dossier-tabs {
   display: flex;
-  gap: var(--s-xxs);
+  gap: 4px;
+}
+.act-dossier-tabs .btn-compact {
+  padding: 0 6px;
+  font-size: var(--fs-caption);
 }
 
-/* ---- Right Column: Contradiction Lock Inspector ---- */
+/* ---- Right Column: Contradiction Lock Inspector (Angled Inward -6.8deg toward Operator) ---- */
 .inspector-rail {
   height: 100%;
   min-height: 0;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: var(--s-xs);
+  border-top: 2px solid var(--c-brand-yellow);
+  transform-origin: center center;
+  transform:
+    translate3d(calc(var(--mx, 0) * 11px), calc(var(--my, 0) * 7px), 20px)
+    rotateY(-6.8deg)
+    rotateX(calc(var(--my, 0) * -1.2deg));
 }
 .slot-card {
   background-color: var(--c-canvas);
   border: 1px solid var(--c-surface-5);
   border-left: 4px solid var(--c-primary);
+  border-bottom: 2px solid var(--c-surface-6);
   border-radius: var(--r-slice-sm);
   padding: var(--s-xs);
   min-height: 92px;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  transition: border-color 0.16s ease, transform 0.16s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .slot-card.slot-b {
   border-left-color: var(--c-brand-yellow);
@@ -493,16 +604,21 @@
   color: var(--c-ink-muted);
 }
 
-/* ---- Bottom Status & Telemetry Ticker (40px height) ---- */
+/* ---- Bottom Status & Telemetry Ticker (40px height · Lower Angled Sill) ---- */
 .bottom-bar {
   height: var(--bh-card-title); /* 40px */
+  min-width: 0;
   background-color: var(--c-panel-deep);
   border: 1px solid var(--c-surface-4);
+  border-top: 2px solid var(--c-surface-5);
   padding: 0 var(--s-sm);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--s-sm);
+  transform:
+    translate3d(calc(var(--mx, 0) * 8px), calc(var(--my, 0) * 5px), 18px)
+    rotateX(3.2deg);
 }
 
 /* ---- Gameplay Guide Modal Overlay (00 // TACTICAL BRIEFING) ---- */
@@ -515,6 +631,7 @@
   align-items: center;
   justify-content: center;
   padding: var(--s-sm);
+  perspective: 1100px;
 }
 .guide-modal-backdrop.is-open {
   display: flex;
@@ -524,12 +641,17 @@
   max-height: 92vh;
   background-color: var(--c-panel);
   border: 1px solid var(--c-brand-yellow);
+  border-bottom: 3px solid var(--c-confirm-gold);
   border-radius: var(--r-slice-md);
   padding: var(--s-sm);
   display: flex;
   flex-direction: column;
   gap: var(--s-xs);
   overflow: hidden;
+  transform:
+    rotateX(calc(var(--my, 0) * -2.2deg))
+    rotateY(calc(var(--mx, 0) * 2.5deg));
+  animation: jc09ViewEnter3D 0.24s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 .guide-steps-grid {
   display: grid;
@@ -553,6 +675,8 @@
   gap: 6px;
 }
 .guide-char-chip {
+  position: relative;
+  overflow: hidden;
   background-color: var(--c-panel-deep);
   border: 1px solid var(--c-surface-5);
   border-radius: var(--r-slice-sm);
@@ -562,9 +686,15 @@
   gap: 6px;
   cursor: pointer;
   text-align: left;
-  transition: border-color 0.15s ease, background-color 0.15s ease;
+  transform: translate3d(0, 0, 0);
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease,
+    transform 0.16s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.guide-char-chip:active {
+.guide-char-chip:active,
+.guide-char-chip.is-pressing {
+  transform: translate3d(0, 2px, -4px) scale(0.98) !important;
   border-color: var(--c-brand-yellow);
   background-color: var(--c-surface-3);
 }
@@ -584,6 +714,24 @@
   gap: 2px;
 }
 
+/* ---- Reduced Motion Accessibility ---- */
+@media (prefers-reduced-motion: reduce) {
+  .jc09-stage,
+  .top-hud,
+  .nav-rail,
+  .workspace-pane,
+  .inspector-rail,
+  .bottom-bar,
+  .witness-portrait-well,
+  .statement-body-card,
+  .timeline-oscilloscope,
+  .guide-modal-dialog,
+  #w-portrait-svg {
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
 /* ---- Portrait Orientation & Compact Viewport Adaptation (Zero Root Scroll) ---- */
 @media (orientation: portrait), (max-width: 1024px) {
   .jc09-stage {
@@ -592,11 +740,14 @@
     padding: 6px;
     grid-template-rows: 36px 32px 1fr 94px;
     gap: 4px;
+    overflow: hidden;
+    transform: none !important;
   }
   .top-hud {
     height: 36px;
     padding: 0 6px;
     gap: 4px;
+    transform: none !important;
   }
   .top-hud-code {
     font-size: var(--fs-body);
@@ -618,15 +769,31 @@
   .deck-grid {
     display: contents;
   }
-  .tilt-plane {
-    transform: none;
+  .tilt-plane,
+  .workspace-pane,
+  .inspector-rail,
+  .bottom-bar,
+  .witness-portrait-well,
+  .statement-body-card,
+  .timeline-oscilloscope,
+  .filter-channel-card,
+  .slot-card,
+  #w-portrait-svg {
+    transform: none !important;
   }
-  .offset-plate::after {
+  .workspace-pane {
+    overflow: hidden;
+    padding: 0;
+  }
+  .offset-plate::after,
+  .wing-plate-left::after,
+  .wing-plate-right::after {
     display: none;
   }
   .nav-rail {
     height: 32px;
     flex-direction: row;
+    transform: none !important;
   }
   .nav-rail-tabs {
     flex-direction: row;
