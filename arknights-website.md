@@ -618,10 +618,11 @@ Square is not a stylistic preference here, it is the rule: 0px appears in the sh
 **`list-row`** — the information rail's unit.
 - 360px wide, 96px tall, 1px `{colors.hairline}` bottom rule, `{colors.canvas}` ground.
 - Structure: a Bender date (`{typography.caption}`, e.g. `2026 // 10 / 11`) on the first line, then a cyan category label (`活动`, `公告`) followed by a white Source Han title at `{typography.list-title}`, clamped to 2 lines.
+- **Active / selected state:** communicated solely by lifting the row background to `{colors.surface-1}` (`#121212`) and shifting the title text to `{colors.primary}` (`#18d1ff`) — **never add a `4px` or `2px` cyan left border to `list-row`**. Across the entire system, `8px` (`section-heading` and `section-tab`) is the only authorised cyan left-rule weight.
 
-**`news-card`** — a 180px-tall solid `{colors.primary}` panel with white display text (`{typography.card-title}`, 32px–36px bold, 2px tracking), `padding: 24px 32px`, used as the emphatic stamp inside a media column. Offset from the block above by 60px. Never place body-scale or label-scale white text inside this cyan slab; any accompanying paragraph copy belongs in a dark `{colors.surface-1}` inset panel below it.
+**`news-card`** — a 180px-tall solid `{colors.primary}` panel with white display text (`{typography.card-title}`, 32px–36px bold, 2px tracking), `padding: 24px 32px`, used as the emphatic stamp inside a media column. Offset from the block above by 60px. Never place body-scale or label-scale white text inside this cyan slab; any accompanying paragraph copy must be placed in a sibling `{colors.surface-1}` (`#121212`) `panel-inset` block directly below it (separated by a 1px `{colors.hairline-soft}` top rule, never a 4px left border).
 
-**`media-panel`** — full-bleed art plane, masked on the leading edge, with a `linear-gradient(0deg,#000, transparent)` scrim and a `mix-blend-mode: overlay` texture layer.
+**`media-panel`** — full-bleed art plane, masked on the leading edge, with a `linear-gradient(0deg,#000, transparent)` scrim and a `mix-blend-mode: overlay` texture layer. When implementing the grain texture via procedural SVG (`feTurbulence`), mount it as a static `position: fixed; inset: 0; pointer-events: none` layer (or a pre-baked tile) so the browser never re-rasterizes the filter during scroll or layout transitions.
 
 **`ghost-display`** — the oversized watermark: `{typography.display-xl}` (Oswald Medium 112px, -5.6px tracking) in `{colors.surface-4}` (#242424), positioned behind and below content. In the information view it reads "BREAKING NEWS" across the bottom-left.
 
@@ -652,6 +653,12 @@ Square is not a stylistic preference here, it is the rule: 0px appears in the sh
 
 **`scrim-overlay`** — the black protection layer placed between artwork and type. Always black, never tinted, and always at alpha (0.3–0.9) rather than opaque.
 
+### Diegetic Copy & Anti-Meta Guardrails
+
+- **Zero spec-jargon leakage (Anti-Meta Copy).** Never surface internal specification terms (`#18d1ff`, `#000000`, `8px left rule`, `1.81:1 contrast`, `ghost-display`, `panel-inset`, `feTurbulence`, `DESIGN.md`) or implementation labels (`Web Audio API`, `prefers-reduced-motion`, `SVG Filter`) anywhere in visible page headings, subtitles, marginalia or status rails. All technical coordinates, timestamps and telemetry must belong 100% to the page's in-universe narrative (e.g. `FREQ: 121.5 MHz // TX-POWER: 0.0 kW // ARCHIVE: EB-07-04`).
+- **Domain vocabulary translation.** When adapting this editorial archive system beyond game marketing (such as civil-defence dossiers, geological monitoring logs or investigative reports), translate game-specific navigation labels (`OPERATOR`, `WORLD`) and category tags into domain-authentic terminology while preserving the two-line tracked-out Latin caps + CJK subtitle rhythm.
+- **Diegetic narrative isolation.** Keep archive transcripts, footnotes and decrypted attachments strictly in-universe; never embed fourth-wall-breaking UI instructions or design-system commentary inside narrative copy.
+
 ## Do's and Don'ts
 
 ### Do
@@ -666,6 +673,7 @@ Square is not a stylistic preference here, it is the rule: 0px appears in the sh
 - Put the oversized ghost display at `{colors.surface-4}` behind content — as texture, never as the thing to read.
 - Gate every hover style behind `@media (any-hover:hover)`.
 - Keep metadata and button labels in Bender with 1px tracking, uppercase where the copy allows.
+- Keep all visible copy, marginalia and telemetry **100% diegetic (in-universe)**, and isolate any procedural `feTurbulence` noise overlay on a static `position: fixed; pointer-events: none` layer.
 
 ### Don't
 
@@ -676,7 +684,8 @@ Square is not a stylistic preference here, it is the rule: 0px appears in the sh
 - Don't set ghost display type in a colour lighter than `{colors.surface-4}` — it stops being texture and starts competing with content.
 - Don't use white type on cyan at label, button or body scale. The one sanctioned exception is the `news-card` tile, where white on cyan is a deliberate 1.81:1 decorative fill read at display scale, never for long copy.
 - Don't set black type directly on `{colors.canvas}` — black on black is a hole, not a state.
-- Don't replace the 8px left rule with a 1px or 4px rule — the weight is calibrated.
+- Don't replace the 8px left rule with a 1px or 4px rule — the weight is calibrated, and `list-row` active states or `panel-inset` blocks must never invent a 4px left border.
+- Don't leak specification meta-terms (`#18d1ff`, `8px left rule`, `ghost-display`, `DESIGN.md`, `Web Audio`) or fourth-wall-breaking commentary into visible page copy.
 - Don't animate with easing flourishes or spring physics. Transitions are 0.2s / 0.3s / 0.6s linear-feeling.
 - Don't lay out with width breakpoints. The system switches on orientation.
 - Don't let a title wrap to three lines; clamp it to two.

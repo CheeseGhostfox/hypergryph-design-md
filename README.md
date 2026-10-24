@@ -59,24 +59,26 @@ against it. These analyses are unofficial and are not affiliated with or endorse
 
 ---
 
-### Demo 1（基于 `arknights.md` 游戏本体规范）：《寒鸦审讯室：第 09 号记忆取证台》// JACKDAW-09
+### Demo 1（基于 `arknights.md` 游戏本体规范）：《寒鸦审讯室：第 09 号记忆取证台》// JACKDAW-09（By Gemini4 Argon）
 
 [![jc09 demo preview](demo/arknights-jc09/verify-out/landscape-1440x900.hero.png)](https://cheeseghostfox.github.io/hypergryph-design-md/demo/arknights-jc09/)
 
-一份**严格照着 `arknights.md`（游戏本体 UI）做出来**的**非滚动锁屏交互式推理解谜终端**：一起离奇的跨江自动驾驶列车断桥坠江案，03 车厢六名幸存者的商用脑机接口在坠桥前 `T-17.0s` 至 `T-00.0s` 出现了高度一致的假记忆与空白；你作为第 09 号记忆取证台操作员，在锁屏战术控制台中通过四幕逻辑击穿揭开惊天共谋。
+> **作者 / Author**：**By Gemini4 Argon**
 
+一份**严格照着 `arknights.md`（游戏本体 UI）做出来**的**非滚动锁屏交互式推理解谜终端（By Gemini4 Argon）**：一起离奇的跨江自动驾驶列车断桥坠江案，03 车厢六名幸存者的商用脑机接口在坠桥前 `T-17.0s` 至 `T-00.0s` 出现了高度一致的假记忆与空白；你作为第 09 号记忆取证台操作员，在锁屏战术控制台中通过双示波器盲拧破译与四幕逻辑击穿揭开惊天共谋。
+
+- **作者署名**：**By Gemini4 Argon**
 - **在线预览**：<https://cheeseghostfox.github.io/hypergryph-design-md/demo/arknights-jc09/>
-- **源码**：`demo/arknights-jc09/index.html` —— 自包含单文件（内联 6 位幸存少女无描边构成主义几何切面 SVG 立绘），零外部依赖、无构建步骤，双击即玩
-- **构建分片**：`demo/arknights-jc09/parts/` —— 完整映射 `arknights.md` 的 40 色令牌、校准后光学字号 + 容器盒高呼吸比、上圆下方 `(N,N,N,0)` 九宫格圆角与错位背板
-- **验收输出**：`demo/arknights-jc09/verify-out/` —— 五张实测截图（含四步游玩指引弹窗）及 `audit.json`（`16/16` 端到端交互断言全通过，`FAIL 0`）
+- **源码**：`demo/arknights-jc09/index.html` —— 自包含单文件（内联 6 位幸存少女 `2×` 高清立绘、双路 60fps 实时示波器与 Web Audio 合成器），零外部依赖、无构建步骤，双击即玩
+- **构建分片**：`demo/arknights-jc09/parts/` —— 完整映射 `arknights.md` 的 40 色令牌、校准后光学字号 + 容器盒高呼吸比、上圆下方 `(N,N,N,0)` 九宫格圆角、单层错位背板与 100% 世界观沉浸文案（零规范术语外泄）
+- **验收输出**：`demo/arknights-jc09/verify-out/` —— 横竖双朝向与五视图实测截图及 `audit.json`（`16/16` 端到端交互断言全通过，`FAIL 0`）
 
 | 核心机制（映射自 `arknights.md`） | 交互与叙事说明 |
 | --- | --- |
-| **1280×720 锁屏非滚动舞台** | 根视口严格 `overflow: hidden` 零滚动条；通过左侧 4 视图战术切页（快捷键 `1`–`4`）与顶部可随时呼出的**四步交互游玩指引弹窗（`?` 键）**承载约 9,500 字高张力悬疑叙事 |
-| **六人差异化构成主义矢量立绘** | 6 名幸存少女（盲眼调音师沈听澜、见习乘务周野、战术安全员陆峥、神经科医师温莎·林、智驾总架构师顾言、最高司法督察严律）各自具备独立的姿势、服饰、神态与俄式构成主义几何背景，全部以纯内联 SVG 矢量块面绘制 |
-| **六阶光晕卡池 + 恒黄星标** | 6 名幸存者卡片按「神经覆写阶位」应用 `1★ #FEFEFE` → `6★ #FE7200` 六阶底边光晕，而星标在所有阶位恒为 `#FEDC01`（`ArrowLeft`/`Right` 快速切人） |
-| **七态开关神经滤波台** | 完整实现 `normal / on / off / select / selected / unselect / unselected` 七态开关矩阵；匹配证人特征码（或一键校准）即可剥离表层伪证、解锁 `LAYER B` 深层残响与动态示波器包络 |
-| **白模遮罩 + 运行时染色** | 转向架液压曲线、爆炸螺栓与声学频谱等工程图纸均以 `#FEFEFE` 纯白 SVG 遮罩绘制，通过 CSS `.ui-color-graphic` 在运行时动态赋予语义色 |
+| **1280×720 锁屏非滚动 3D 视差舞台** | 根视口严格 `overflow: hidden` 零滚动条；具备微倾透视与鼠标跟随视差，通过左侧 4 视图战术切页（快捷键 `1`–`4`）与顶部可随时呼出的**四步交互游玩指引弹窗（`?` 键）**承载约 9,500 字高张力悬疑叙事 |
+| **六阶涉案乘员档案与 2× 视网膜立绘** | 6 名幸存少女（盲眼调音师沈听澜、见习乘务周野、战术安全员陆峥、神经科医师温莎·林、智驾总架构师顾言、最高司法督察严律）按「神经覆写阶位」应用 `#FEFEFE` → `#FE7200` 六阶底边色标（`ArrowLeft`/`Right` 快速切人，所有徽章与立绘均支持点击联动） |
+| **解耦双子关卡：七态开关 ➔ 李萨如图 & 双旋钮 ➔ 2-UI 眼图** | **子关卡 ①（左屏）**：拨动 4 路七态滤波开关（`CH-01..04`）独立驱动 60fps **XY 李萨如荧光示波器**收敛至正圆（`LOCKED [4/4]`）；**子关卡 ②（右屏）**：拖拽/滚轮/步进微调 2 枚无刻度提示的盲拧旋钮（`KNOB-A 载波粗调`、`KNOB-B 相位微调`）独立驱动 **2-UI 眼图包络**撑开菱形眼孔（`LOCKED [2/2]`）。6 名角色拥有递进的隐藏目标角度、甜蜜点容差（`±10° → ±4°`）、双轴交叉耦合与动态漂移，强行剥离失败将触发**全角色破译进度清零惩罚**；同时提供 **`AUTO 一键破译`** 跳过开关兼顾叙事玩家 |
+| **白模遮罩 + 运行时染色 & 实时声效合成** | 转向架液压曲线、爆炸螺栓与声学频谱均以 `#FEFEFE` 纯白遮罩绘制并通过 `.ui-color-graphic` 动态染色；内置 Web Audio API 实时合成环境低频嗡鸣、机械拨杆咔哒声、旋钮棘轮声与锁相和弦 |
 | **双槽矛盾指证锁与三向终局** | 右侧常驻 `SLOT [A]` / `SLOT [B]` 交叉比对器，依次击穿四幕伪证锁（含可选「推演辅助线索高亮」与「一键自动装填第一幕示范」），最终在 `#E8C400` 确认金 / `#EC3140` 危险红 / `#0098DC` 品牌蓝三向公诉结局中做出裁决并持久化至 `localStorage` |
 
 ---
@@ -112,6 +114,22 @@ against it. These analyses are unofficial and are not affiliated with or endorse
 ## 更新说明 / Release Notes
 
 完整的历史变更记录见 [CHANGELOG.md](CHANGELOG.md)。
+
+### 2026-10-24 · 实战复盘防呆加固与《寒鸦审讯室》（By Gemini4 Argon）双子关卡波形破译终版
+
+基于两套生产级交互演示（`demo/arknights-jc09` **By Gemini4 Argon** 与 `demo/arknights-eb07`）的完整实战踩坑与复盘，对 [`arknights.md`](arknights.md) 与 [`arknights-website.md`](arknights-website.md) 进行了 **12 项工程与世界观防呆升级**：
+
+1. **新增「世界观沉浸与反出戏文案铁律（Diegetic Copy & Anti-Meta Guardrails）」**
+   - **严禁设计规范术语与技术栈外泄**：明确禁止将 `UIColorGraphic`、`RectTransform`、`7-state toggle`、`#FEDC01`、`#18d1ff`、`2px Grid`、`Zero Root Scroll`、`8px left rule`、`DESIGN.md`、`Web Audio API`、`二次元立绘` 等幕后规范词或前端技术词写入用户可见的标题、副标题、底栏遥测（Telemetry）或 Tooltip 中。
+   - **跨题材领域词汇转译**：将 `arknights.md` 应用于非抽卡手游界面时，严禁照搬“卡池（Pool）”、“干员（Operator）”、“6★”等抽卡黑话，必须转译为目标产品世界观内的专业术语（如“涉案乘员档案”、“加密阶位 I–VI”）。
+   - **叙事层与攻略层物理隔离**：严禁在世界观内部的档案正文或取证批注中夹带第四面墙外的 UI 指路或答案剧透。
+2. **UI 结构、点击命中与视网膜锐度防呆加固**
+   - **固定高度与多行叙事流边界（`arknights.md`）**：明确 `30px` / `50px` 固定盒高仅限单行短标签，多行中文叙事容器严禁组合固定 `height` + `overflow: hidden`，彻底杜绝长文本被静默截断。
+   - **禁止嵌套双层错位背板与 3D 倾角点击遮挡（`arknights.md`）**：禁止在外层视口壳体与直接子面板上同时套用 `.plate-offset`（杜绝双层背景框）；Web 3D 倾角仅限顶层容器 `transform-style: flat`，防止 `preserve-3d` 导致浏览器点击命中失效。
+   - **状态机 Token 与可见文案解耦、立绘 2× 锐度守则（`arknights.md`）**：`_normal` / `_unselected` 等后缀仅作 `data-state` 属性；角色立绘须提供 `≥2×` 物理容器分辨率且禁止在面部上方叠加模糊/扫描线滤镜。
+   - **唯一 `8px` 青色左规与静态噪点合成层（`arknights-website.md`）**：明确 `list-row` 选中态仅靠 `#121212` 底色与 `#18d1ff` 字色表达，严禁臆造 `4px` 左边框；`news-card` 正文必须剥离至下方 `#121212` `panel-inset`；SVG `feTurbulence` 噪点必须置于 `position: fixed; pointer-events: none` 静态层。
+3. **Demo 1《寒鸦审讯室：第 09 号记忆取证台》（By Gemini4 Argon）双子关卡解耦升级**
+   - 将 `02 // 17-SEC NEURAL SYNAPSE SLICER` 升级为**双子关卡独立闭环解谜**：4 路七态滤波开关独立控制左屏 **XY 李萨如示波器（子关卡 ①）**，2 枚连续盲拧旋钮独立控制右屏 **2-UI 眼图示波器（子关卡 ②）**，配备 6 阶递增难度、失误全清零惩罚与 `AUTO 一键破译` 辅助模式。
 
 ### 2026-10-22 · 审美与视觉工程校准（Aesthetic & Optical Scale Calibration）
 

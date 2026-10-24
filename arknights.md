@@ -665,6 +665,8 @@ By component family (`text_*` n=1,290; `btn_*`/`button_*` n=297; `icon_*`/`img_*
 - `icon_*` / `img_*` — heights 42 / 45 / 112 / 120.
 - `panel_*` — widths 1280 (full) and 1180 (inset).
 
+**Fixed-height controls vs. multi-line narrative flow (Anti-Truncation Rule):** Fixed ladder heights (`30px`, `50px`, `100px`) apply strictly to single-line tactical controls, header bars and compact status chips (where CJK labels must stay concise, typically ≤6 characters, or scale via `clamp()`). Any container holding multi-line CJK narrative copy, witness transcripts or dossier paragraphs must **never** combine a fixed `height` with `overflow: hidden`; use `height: auto` or an internal `overflow-y: auto` scroll region inside the locked `1280×720` outer shell so copy is never silently clipped.
+
 ### Anchoring & Composition
 
 - **Anchor `(0.5,0.5)`** — 2,739 objects (42.7%). The system anchors at the centre far more than at the top-left.
@@ -701,8 +703,8 @@ Depth is expressed as **a flat panel step plus a hairline**, and above that as *
 
 ### Decorative Depth
 
-- **Offset backing plates (mechanical thickness without shadows).** Because drop shadows are forbidden, major `#313131` (`{colors.panel}`) panels and `50px` action buttons achieve physical thickness by sitting 4px–6px offset over a `#1B1B1B` (`{colors.panel-deep}`) backing plate or carrying a 2px–4px solid accent lip (`{colors.primary}` or `{colors.brand-yellow}`) along one edge.
-- **Camera-space plane tilt.** Because 76 Canvases run in `ScreenSpaceCamera` and 30 in `WorldSpace`, terminal clusters can sit on subtly tilted 3D planes (2°–5° Y-axis perspective rotation on home/terminal modules) while keeping crisp 2px-lattice internal geometry.
+- **Offset backing plates (mechanical thickness without shadows).** Because drop shadows are forbidden, major `#313131` (`{colors.panel}`) panels and `50px` action buttons achieve physical thickness by sitting 4px–6px offset over a `#1B1B1B` (`{colors.panel-deep}`) backing plate or carrying a 2px–4px solid accent lip (`{colors.primary}` or `{colors.brand-yellow}`) along one edge. Apply offset backing plates only to standalone leaf/mid-level modules or primary action buttons — **never nest offset backing plates on both an outer viewport shell and its immediate child panel simultaneously** (which creates a redundant double-frame border).
+- **Camera-space plane tilt.** Because 76 Canvases run in `ScreenSpaceCamera` and 30 in `WorldSpace`, terminal clusters can sit on subtly tilted 3D planes (2°–5° Y-axis perspective rotation on home/terminal modules) while keeping crisp 2px-lattice internal geometry. In Web DOM/CSS implementations, apply `perspective(1200px) rotateX(...) rotateY(...)` **only on the top-level stage wrapper with `transform-style: flat`** — never nest `transform-style: preserve-3d` with `translateZ` across interactive child trees, or browser compositor hit-testing will misroute pointer clicks onto background layers. Always declare `pointer-events: none` on decorative backing pseudo-elements, scanlines and ambient grids.
 - **Runtime tinting.** 152 `UIColorGraphic` components tint white masks. A single mask can render as blue, gold or grey, which is how the client keeps its texture count low.
 - **Soft masking.** 86 `SoftMaskable` components allow masked content to fade rather than clip hard.
 - **Alpha shape masks.** 128 pure-flat `#FEFEFE` and 61 pure-flat `#FFFFFF` textures are the vocabulary of tintable shapes.
@@ -789,6 +791,8 @@ Plus availability: `_locked` 43, `_empty` 49, `_disable` 2. Plus themes: `_black
 
 **`state-chip-normal` / `-on` / `-off` / `-locked`** are the rendered forms: 30px tall, `{rounded.xs}`, 10px padding, with `{colors.panel}` → `{colors.primary}` → `{colors.panel-deep}` as the fill ladder.
 
+**State tokens vs. user-facing labels:** `_normal`, `_on`, `_off`, `_select`, `_selected`, `_unselect` and `_unselected` are internal state-machine tokens and CSS `data-state` attribute values — **never render raw state suffix strings as visible button text**. Always translate states into domain-specific in-world labels (e.g. `0dB 直通`, `反相门 ON`, `窄带陷波`, `锁频 PLL`). Every status badge, target pill or character portrait slot that displays an entity ID must also be wired as an interactive navigation trigger.
+
 ### Tabs
 
 **`tab-normal`** — `{colors.canvas}` ground, `{colors.ink-disabled}` #898989 label, no radius, 50px tall.
@@ -798,7 +802,7 @@ Plus availability: `_locked` 43, `_empty` 49, `_disable` 2. Plus themes: `_black
 
 **`row-160x30`** — the 160×30 row is the single most repeated geometry in the client (138 instances). `{rounded.xs}`, 5px padding.
 **`list-row`** — 100px tall, `{colors.canvas}` ground, 20px horizontal padding.
-**`rarity-frame-1…6`** — the rarity presentation. The frame takes the rarity colour; the star inside stays `{colors.star}` #FEDC01 at every level.
+**`rarity-frame-1…6`** — the rarity presentation. The frame takes the rarity colour; the star inside stays `{colors.star}` #FEDC01 at every level. In non-gacha applications (forensic dossiers, narrative terminals, system monitors), reuse the six-step colour ramp (`{colors.rarity-1}` → `{colors.rarity-6}`) to encode clearance tier, threat level or signal band **without** rendering literal `★★★★★★` star strings. Where stars are rendered on operator cards, place them on a dedicated top-left overlay with compact tracking (`letter-spacing: -2px`) rather than sharing a narrow single-line flex header with right-aligned ID badges.
 **`star-glyph`** — `{colors.star}` numerals via Bender.
 **`currency-chip`** — `{colors.panel-deep}` ground with `{colors.currency-blue}` #22BBFE numerals.
 
@@ -813,6 +817,14 @@ Plus availability: `_locked` 43, `_empty` 49, `_disable` 2. Plus themes: `_black
 **`dialog`** — `{colors.panel}` #313131, `{rounded.lg}` 12px, 30px padding. Ten `*_dialog` objects are documented, including `login_`, `logout_`, `panel_ok_`, `warning_dialog`, `voice_pref_`, `sdk_license_`, `netcheck`.
 
 Floating content runs on a shared layer rather than per-screen: `UIPopupWindow`, `UIReentrantFloatPanel`, `UIFadeFloatPanel`, `UIBlurFloatPanel`, `UICustomDialogMgr`, `UIItemDescFloatController`, `CommonResourceBarItem`.
+
+### Diegetic Copy, Character Art & Interactive Instrument Guardrails
+
+- **Zero spec-jargon or engine-class leakage (Anti-Meta Copy).** Never surface internal specification terms (`UIColorGraphic`, `RectTransform`, `CanvasGroup`, `DynFontLoader`, `7-state toggle`, `Rarity Glow Ramp`, `#FEDC01`, `#FEFEFE`, `2px Grid`, `Zero Root Scroll`, `DESIGN.md`) or implementation/art-style labels (`Web Audio API`, `SVG Filter`, `Canvas 2D`, `二次元立绘`, `构成主义插画`) anywhere in visible UI headings, subtitles, tooltips or status bars. Footer and corner telemetry must stay 100% in-universe (e.g. `TERMINAL: JC-09 // SECTOR: BRIDGE-K9 // AUTH: ROOT-0x7F`).
+- **Domain vocabulary translation.** When applying this system outside a gacha roster (e.g. forensic terminals, tactical dossiers, industrial control rooms), never copy gacha-specific nouns (`卡池 / Card Pool`, `干员 / Operator`, `寻访`, `6★`) into the product copy; translate the underlying visual components into domain-authentic terminology (e.g. `涉案乘员档案`, `加密阶位 I–VI`).
+- **Strict boundary between diegetic text and walkthrough hints.** In-world dossier paragraphs, forensic annotations and instrument plates must never contain fourth-wall-breaking UI instructions or inline puzzle spoilers (such as *"Go to Tab 02 and toggle the 7-state switch to unlock"*). Isolate player guidance inside a dedicated `GUIDE` modal or an opt-in `HINT` toggle.
+- **Character portrait crispness (2× Retina rule).** Serve character portraits and cut-in illustrations at ≥2× their physical display container resolution (e.g. ≥760×1020 at WebP `q≥82` for a 380×510 slot). Never place SVG blur filters (`feGaussianBlur`) or heavy scanlines over character faces and line-art; keep tactical HUD grids strictly in the background plane behind the character.
+- **Decoupled instrument feedback for diagnostic puzzles.** When building interactive calibration or lockpicking mechanics, never place answer-spoiling probe LEDs or target-zone markers directly on switches or rotary knobs. Instead, decouple control groups into independent sub-stages mapped to separate real-time diagnostic scopes (e.g. discrete filter switches driving an XY Lissajous scope, continuous rotary knobs driving a 2-UI eye diagram) so players deduce lock states from waveform convergence.
 
 ## Do's and Don'ts
 
@@ -829,10 +841,14 @@ Floating content runs on a shared layer rather than per-screen: `UIPopupWindow`,
 - Use **`(N,N,N,0)` — rounded top, square bottom** — for panels that dock to content below.
 - Anchor at the **centre** with pivot `(0.5,0.5)`, and leave at least 45%–55% of the canvas open while clustering controls tightly.
 - Separate with a **flat panel step plus a hairline**; layer screens with **canvas sorting order**.
+- Keep all visible titles, telemetry and annotations **100% diegetic (in-universe)**, and serve character portraits at **≥2× Retina resolution** without foreground blur/scanline overlays.
 
 ### Don't
 
 - Don't set CSS `font-size` equal to the Unity `RectTransform` box height (e.g. don't set 30px glyphs inside a 30px row).
+- Don't combine fixed ladder heights (`30px` / `50px`) with `overflow: hidden` on multi-line CJK narrative or dossier containers — use `height: auto` or internal scrolling so copy never clips.
+- Don't nest offset backing plates on both an outer viewport shell and its immediate child panel (no double-framing), and don't nest `transform-style: preserve-3d` across interactive child trees where it breaks pointer hit-testing.
+- Don't leak specification meta-terms (`UIColorGraphic`, `7-state toggle`, `#FEDC01`, `2px Grid`, `DESIGN.md`, `Web Audio`), raw state suffixes (`_normal`, `_unselected`), gacha slang (`卡池`) or walkthrough spoilers into visible product copy.
 - Don't invent hover or pressed states. The system has none; adding them changes its character.
 - Don't use a drop shadow for elevation. None is used.
 - Don't paint rarity into the star glyph. The star is yellow at every level.
